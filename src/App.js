@@ -1,9 +1,9 @@
-import GuestHeader from './components/GuestHeader';
+import './App.css';
+
 
 function App() {
   return (
     <div>
-      <GuestHeader />
     </div>
   );
 }
