@@ -1,13 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export class UserHeader extends Component {
-  render() {
-    return (
-      <div>
-        
-      </div>
-    )
-  }
+function UserHeader() {
+  return (
+    <div>
+      
+    </div>
+  )
 }
 
 export default UserHeader
