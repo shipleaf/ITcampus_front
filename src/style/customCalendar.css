@@ -1,0 +1,120 @@
+.container {
+    width: 1000px;
+    margin: 15px auto;
+}
+
+.fc-media-screen {
+    width: 100% !important;
+}
+
+.fc .fc-toolbar-title {
+    color: #444;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.fc .fc-daygrid-day-top {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center;
+}
+
+.fc .fc-daygrid-day-top a {
+    width: 28px;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.fc-daygrid-day-frame {
+    box-sizing: border-box;
+    padding: 2px;
+    position: relative;
+}
+
+.fc-daygrid-day:hover .fc-daygrid-day-frame {
+    border: 2px solid #ddd !important;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 0;
+}
+
+.fc .fc-daygrid-event {
+    pointer-events: none;
+}
+
+.fc .fc-col-header-cell {
+    background-color: #f0f0f0;
+}
+
+.fc .fc-day-today {
+    background-color: #fff !important;
+}
+
+.fc .fc-day-today .fc-daygrid-day-number {
+    background-color: #000;
+    color: #fff;
+}
+
+.fc .fc-event {
+    color: #fff;
+    border: 1px solid #0056b3;
+    box-sizing: border-box;
+}
+
+.custom-event-content {
+    background-color: inherit;
+    padding: 2px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-event-content span {
+    color: #000;
+    font-weight: 500;
+}
+
+.fc .fc-event:hover {
+    opacity: 0.8;
+}
+
+.fc .fc-daygrid-event-dot {
+    display: none;
+}
+
+.fc .fc-event {
+    background-color: inherit;
+}
+
+.fc-daygrid-day {
+    height: 100px;
+    min-height: 100px;
+    max-height: 100px;
+}
+
+.fc-button {
+    background-color: #fff !important;
+    border: none !important;
+}
+
+.fc-button span {
+    color: #000;
+}
+
+.fc-prev-button {
+    margin-right: 30px !important;
+}
+
+.fc-next-button {
+    margin-left: 30px !important;
+}
+
+.fc-toolbar.fc-header-toolbar {
+    display: flex;
+    justify-content: center;
+}
+
+.fc-toolbar-chunk {
+    margin: 0 5px;
+}
