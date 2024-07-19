@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Logo from './modules/Logo';
+import Logo from '../modules/Logo';
 import { CiSearch } from "react-icons/ci";
-import DropdownMenu from './modules/DropdownMenu';
+import DropdownMenu from '../modules/DropdownMenu';
 
 const GuestHeaderComp = styled.div`
     display: flex;
