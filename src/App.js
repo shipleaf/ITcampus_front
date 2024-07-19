@@ -1,11 +1,10 @@
 import './App.css';
-import SignUpComponent from './components/SignUpComponent';
-import ScrapButton from './components/modules/ScrapButton';
+import Carousel from './components/modules/Carousel';
 
 function App() {
   return (
     <div>
-      <ScrapButton />
+      <Carousel />
     </div>
   );
 }
