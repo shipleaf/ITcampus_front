@@ -1,10 +1,11 @@
 import './App.css';
-import CalendarComponent from './components/CalendarComponent';
+import MainPage from './pages/MainPage';
 
 function App() {
   return (
-    <div style={{width: '100%', height: '100%'}}>
-      <CalendarComponent />
+    <div>
+      <MainPage />
+      
     </div>
   );
 }
