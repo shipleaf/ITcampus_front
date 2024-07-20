@@ -1,10 +1,10 @@
 import './App.css';
-import Carousel from './components/modules/Carousel';
+import MainPage from './pages/MainPage';
 
 function App() {
   return (
     <div>
-      <Carousel />
+      <MainPage />
     </div>
   );
 }

@@ -89,6 +89,8 @@ const DropdownMenuContainer = styled.div`
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 10000;
+    background-color: #fff;
 `;
 
 function GuestHeader() {
