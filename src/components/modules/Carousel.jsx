@@ -7,9 +7,9 @@ import "slick-carousel/slick/slick-theme.css";
 const CarouselContainer = styled.div`
   width: 1000px;
   height: 330px;
-  margin: auto;
   overflow: hidden; /* 이미지가 넘치지 않도록 설정 */
   position: relative; /* 절대 위치를 사용하기 위해 부모 요소를 상대 위치로 설정 */
+  margin: auto;
 `;
 
 const SlideImageContainer = styled.div`
@@ -26,10 +26,9 @@ const SlideImage = styled.img`
   max-height: 300px;
   width: auto;
   height: auto;
-  margin: auto; /* 이미지가 중앙에 오도록 설정 */
+  margin: auto;
 `;
 
-// 커스텀 스타일을 적용하여 slick-dots를 중앙 하단에 배치
 const CustomSlider = styled(Slider)`
 
   .slick-dots {

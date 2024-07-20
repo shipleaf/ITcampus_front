@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const InfoHeader = styled.div`
@@ -6,64 +6,17 @@ const InfoHeader = styled.div`
     padding-bottom: 10px;
     font-size: 15px;
     font-weight: 550;
-`
+`;
 
-function DateInfo() {
-    const [dateDetails, setDateDetails] = useState([
-        {
-            key: 1,
-            index: 1,
-            title: "카카오 모집 공고",
-            start: '2024-07-18T10:00:00',
-            end: '2024-07-20T12:00:00',
-        },
-        {
-            key: 2,
-            index: 2,
-            title: "세종 학생 지원 프로그램",
-            start: '2024-07-19T09:00:00',
-            end: '2024-07-23T10:00:00',
-        },
-        {
-            key: 3,
-            index: 3,
-            title: "IT 자격증 필기 시험",
-            start: '2024-07-18T08:00:00',
-            end: '2024-07-30T09:00:00',
-        },
-        {
-            key: 4,
-            index: 3,
-            title: "IT 자격증 필기 시험",
-            start: '2024-07-18T08:00:00',
-            end: '2024-07-30T09:00:00',
-        },
-        {
-            key: 5,
-            index: 1,
-            title: "토스 채용 공고",
-            start: '2024-07-18T08:00:00',
-            end: '2024-07-30T09:00:00',
-        },
-        {
-            key: 6,
-            index: 2,
-            title: "국가 지원 프로그램",
-            start: '2024-07-18T08:00:00',
-            end: '2024-07-30T09:00:00',
-        },
-        {
-            key: 7,
-            index: 3,
-            title: "IT 자격증 필기 시험",
-            start: '2024-07-18T08:00:00',
-            end: '2024-07-30T09:00:00',
-        }
-    ]);
+function formatDate(dateString) {
+    const options = { month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('ko-KR', options);
+}
 
+function DateInfo({ dateDetails, selectedDate }) {
     return (
         <div>
-            <InfoHeader>7월 19일 일정</InfoHeader>
+            <InfoHeader>{formatDate(selectedDate)} 일정</InfoHeader>
             <hr />
             <div className="jobPostings">
                 <h2>채용 공고</h2>
