@@ -1,10 +1,10 @@
 import './App.css';
-import MainPage from './pages/MainPage';
+import AppRouter from './Router';
 
 function App() {
   return (
     <div>
-      <MainPage />
+      <AppRouter/>
     </div>
   );
 }

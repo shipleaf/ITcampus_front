@@ -3,17 +3,17 @@ import styled from 'styled-components';
 
 const SignInHeader = styled.div`
     margin-bottom: 15%;
-`
+`;
 
 const LoginForm = styled.form`
     font-size: 15px;
     padding-top: 80px;
     padding-bottom: 100px;
-    width: 35%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid #00ACEE;
+    border: none;
     border-radius: 10px;
 `;
 
@@ -24,7 +24,7 @@ const Input = styled.input`
     margin-bottom: 20%;
     padding-bottom: 15px;
 
-    &:focus{
+    &:focus {
         outline: none;
     }
 `;
@@ -41,7 +41,7 @@ const SignInButton = styled.button`
     border: none;
     border-radius: 10px;
     cursor: pointer;
-`
+`;
 
 const SignUpButton = styled.button`
     width: 60%;
@@ -51,28 +51,31 @@ const SignUpButton = styled.button`
     border: 1px solid #00ACEE;
     border-radius: 10px;
     cursor: pointer;
-`
+`;
 
 const HRComponent = styled.div`
-font-size: 12px;
-width: 60%;
+    font-size: 12px;
+    width: 60%;
     display: flex;
     margin: 15px auto;
     justify-content: space-between;
-    & hr{
+    & div {
+        width: 20%;
+    }
+
+    & hr {
         width: 150px;
         height: 0;
     }
-    & hr.left{
+    & hr.left {
         margin-right: 30px;
     }
-    & hr.right{
+    & hr.right {
         margin-left: 30px;
     }
-`
+`;
 
-
-function SignInComponent({ setIsLoggedIn }) {
+function SignInComponent({ toggleComponent }) {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
 
@@ -84,7 +87,7 @@ function SignInComponent({ setIsLoggedIn }) {
             password
         };
 
-        console.log(userData)
+        console.log(userData);
 
         try {
             const response = await fetch('http://localhost:8080/api/login', {
@@ -102,7 +105,7 @@ function SignInComponent({ setIsLoggedIn }) {
 
             const result = await response.json();
             console.log('로그인 성공:', result);
-            setIsLoggedIn(true);
+            // 로그인 성공 후 추가 작업
         } catch (error) {
             alert(error.message);
         }
@@ -112,7 +115,7 @@ function SignInComponent({ setIsLoggedIn }) {
         <div>
             <LoginForm onSubmit={handleLogin}>
                 <SignInHeader>로그인</SignInHeader>
-                <div id="logincomp" style={{width: '60%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <div id="logincomp" style={{ width: '60%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <InputDiv className="loginId">
                         <Input
                             type="text"
@@ -125,7 +128,7 @@ function SignInComponent({ setIsLoggedIn }) {
                         />
                     </InputDiv>
                 </div>
-                <div id="passwordcomp" style={{width: '60%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <div id="passwordcomp" style={{ width: '60%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <InputDiv className="loginPassword">
                         <Input
                             type="password"
@@ -139,11 +142,11 @@ function SignInComponent({ setIsLoggedIn }) {
                 </div>
                 <SignInButton type="submit">로그인</SignInButton>
                 <HRComponent>
-                    <hr className='left'/>
+                    <hr className='left' />
                     <div>또는</div>
-                    <hr className='right'/>
+                    <hr className='right' />
                 </HRComponent>
-                <SignUpButton>회원가입</SignUpButton>
+                <SignUpButton type="button" onClick={toggleComponent}>회원가입</SignUpButton>
             </LoginForm>
         </div>
     );
