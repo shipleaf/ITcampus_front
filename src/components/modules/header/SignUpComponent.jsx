@@ -9,11 +9,11 @@ const LoginForm = styled.form`
     font-size: 15px;
     padding-top: 80px;
     padding-bottom: 100px;
-    width: 35%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid #00ACEE;
+    border: none;
     border-radius: 10px;
 `;
 
@@ -23,7 +23,7 @@ const Input = styled.input`
     border-bottom: 1px solid #000;
     margin-bottom: 10%;
     padding-bottom: 10px;
-    &:focus{
+    &:focus {
         outline: none;
     }
 `;
@@ -64,6 +64,10 @@ const HRComponent = styled.div`
     display: flex;
     margin: 15px auto;
     justify-content: space-between;
+    & div {
+        width: 20%;
+    }
+
     & hr {
         width: 150px;
         height: 0;
@@ -75,17 +79,17 @@ const HRComponent = styled.div`
         margin-left: 30px;
     }
 `;
-
-const Label = styled.label``;
-
-const GenderDiv = styled(InputDiv)`
-    width: 40%;
-    display: flex;
-    justify-content: space-between;
-    padding-right: 30%;
+const Label = styled.label`
 `;
 
-function SignUpComponent({ setIsLoggedIn }) {
+const GenderDiv = styled(InputDiv)`
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 25%;
+`;
+
+function SignUpComponent({ toggleComponent }) {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const [passwordCheck, setPasswordCheck] = useState('');
@@ -98,7 +102,7 @@ function SignUpComponent({ setIsLoggedIn }) {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        
+
         if (password !== passwordCheck) {
             alert('비밀번호가 일치하지 않습니다!');
             return;
@@ -136,7 +140,7 @@ function SignUpComponent({ setIsLoggedIn }) {
 
             const result = await response.json();
             console.log('로그인 성공:', result);
-            setIsLoggedIn(true);
+            // 로그인 성공 후 추가 작업
         } catch (error) {
             alert(error.message);
         }
@@ -232,7 +236,7 @@ function SignUpComponent({ setIsLoggedIn }) {
                             남성
                         </Label>
                         <Label>
-                            <input type="radio" name="gender" value="female" onChange={(event) => setGender(event.target.value)}/>
+                            <input type="radio" name="gender" value="female" onChange={(event) => setGender(event.target.value)} />
                             여성
                         </Label>
                     </GenderDiv>
@@ -254,7 +258,7 @@ function SignUpComponent({ setIsLoggedIn }) {
                     <div>또는</div>
                     <hr className='right' />
                 </HRComponent>
-                <SignUpButton>로그인</SignUpButton>
+                <SignUpButton type="button" onClick={toggleComponent}>로그인</SignUpButton>
             </LoginForm>
         </div>
     );
