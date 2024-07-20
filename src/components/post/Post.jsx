@@ -1,35 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
 import star from '../../assets/scrap.png'
+import Today from '../../assets/Today'
 
-function Post(title, detail, writer , img, scrap,startDate, endDate){
+function Post({ title, detail, writer, img, scrap, startDate, endDate }) {
     return (
         <ButtonFrame>
-          <ContentContainer >
-            <Title>
-                [공지] 12기 중앙 해커톤 안내
-            </Title>
-            <Content>이러쿵저러쿵vdsssssssssss
-                sssssssssssssssssssssssssssssss이러쿵저러쿵vdssssssssssssssssssssssssssssssssssssssssss이러쿵저러쿵vdssssssssssssssssssssssssssssssssssssssssss이러쿵저러쿵vdssssssssssssssssssssssssssssssssssssssssss이러쿵저러쿵vdssssssssssssssssssssssssssssssssssssssssss</Content>
-            <Footer>
-                <Writer>
-                    멋쟁이사자처럼 대학
-                </Writer>
-                <Date>
-                    2024. 7.5 ~ 2024. 7. 14
-                </Date>
-                <ScrapContainer>
-                    <ScrapImg src = {star} />
-                    <ScrapCount>215</ScrapCount>
-                </ScrapContainer>
-            </Footer>
-          </ContentContainer>
-          <ThumbnailContainer>
-            <Thumbnail src = {star}/>
-          </ThumbnailContainer>
+            <ContentContainer>
+                <Title>{title}</Title>
+                <Content>{detail}</Content>
+                <Footer>
+                    <Writer>{writer}</Writer>
+                    <Date>{`${Today()} ~ ${endDate}`}</Date>
+                    <ScrapContainer>
+                        <ScrapImg src={star} />
+                        <ScrapCount>{scrap}</ScrapCount>
+                    </ScrapContainer>
+                </Footer>
+            </ContentContainer>
+            <ThumbnailContainer>
+                <Thumbnail src={img} />
+            </ThumbnailContainer>
         </ButtonFrame>
     );
 }
+
 export default Post;
 
 const ButtonFrame = styled.button`

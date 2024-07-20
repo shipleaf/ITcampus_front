@@ -22,6 +22,7 @@ const Frame = styled.div`
   align-items: flex-end;
   width: 60%;
   margin : 10px auto;
+  margin-top : 40px;
   justify-content: space-between;
 `
 
