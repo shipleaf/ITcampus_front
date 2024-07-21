@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import SignInComponent from './modules/header/SignInComponent';
-import SignUpComponent from './modules/header/SignUpComponent';
+import SignInComponent from './SignInComponent';
+import SignUpComponent from './SignUpComponent';
 import Modal from 'react-modal';
 import { HiMiniXMark } from "react-icons/hi2";
 

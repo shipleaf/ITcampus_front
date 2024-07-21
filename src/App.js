@@ -1,10 +1,13 @@
-import './App.css';
+import React, { useState } from 'react';
 import AppRouter from './Router';
+import ITLicense from './pages/ITLicense';
+import Mainpage from './pages/MainPage'
 
-function App() {
+const App = () => {
+
   return (
     <div>
-      <AppRouter/>
+      <Mainpage/>
     </div>
   );
 }
