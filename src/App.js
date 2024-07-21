@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { RecoilRoot } from 'recoil';
 import AppRouter from './Router';
-import ITLicense from './pages/ITLicense';
-import Mainpage from './pages/MainPage'
 
 const App = () => {
-
   return (
-    <div>
-      <Mainpage/>
-    </div>
+    <RecoilRoot>
+      <div>
+        <AppRouter />
+      </div>
+    </RecoilRoot>
   );
 }
 
