@@ -11,7 +11,7 @@ function Post({ title, detail, writer, img, scrap, startDate, endDate }) {
                 <Content>{detail}</Content>
                 <Footer>
                     <Writer>{writer}</Writer>
-                    <Date>{`${Today()} ~ ${endDate}`}</Date>
+                    <Date>{`${startDate} ~ ${endDate}`}</Date>
                     <ScrapContainer>
                         <ScrapImg src={star} />
                         <ScrapCount>{scrap}</ScrapCount>
@@ -30,7 +30,7 @@ export default Post;
 const ButtonFrame = styled.button`
     display: flex;
     width: 60%;
-    height: 12%;
+    height: 200px;
     margin: 15px auto;
     align-items: center;
     justify-content: space-between;
@@ -48,6 +48,7 @@ const ButtonFrame = styled.button`
 const ContentContainer = styled.div`
     display: flex;
     flex-direction: column;
+    
     align-items: flex-start;
     width: 70%;
     height: 100%;
@@ -64,10 +65,13 @@ const Title = styled.div`
 `
 const Content = styled.div`
   font-size: 18px;
+  height: 75px;
   color: #666;
   text-align: left;
   margin: 10px 0;
+  margin-top: 15px;
   display: -webkit-box;
+  line-height: 26px;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;

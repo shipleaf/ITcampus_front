@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import GuestHeader from '../../components/header/GuestHeader';
-import Top from "../../components/post/Top";
-import Post from "../../components/post/Post";
-import star from '../../assets/scrap.png'; 
+import Top from "../components/post/Top";
+import Post from "../components/post/Post";
+import star from '../assets/scrap.png'; 
+import CustomSelect from "../components/filter/CustomSelect";
+import FilterButton from "../components/filter/Filterbutton";
 
 function ITLicense(){
     const dummyPosts = [
@@ -145,9 +146,11 @@ function ITLicense(){
     const [currentPage, setCurrentPage] = useState(1); 
     const [sortOption, setSortOption] = useState('scrap');
     const [sortOrder, setSortOrder] = useState('desc'); 
+    const [isFilterActive, setIsFilterActive] = useState(false);
     const postsPerPage = 7; 
 
-    // 정렬 함수
+    const today = new Date();
+
     const sortedPosts = [...dummyPosts].sort((a, b) => {
         if (sortOption === 'startdate') {
             return sortOrder === 'desc'
@@ -165,40 +168,62 @@ function ITLicense(){
         return 0;
     });
 
+    const filteredPosts = sortedPosts.filter(post => {
+        if (!isFilterActive) return true;
+        const startDate = new Date(post.startDate);
+        const endDate = new Date(post.endDate);
+        return startDate <= today && today <= endDate;
+    });
+
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = sortedPosts.slice(indexOfFirstPost, indexOfLastPost);
+    const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
 
-    const handleSortChange = (e) => {
-        setSortOption(e.target.value);
+    const handleSortChange = (value) => {
+        setSortOption(value);
         setCurrentPage(1);
     };
 
-    const handleSortOrderChange = (e) => {
-        setSortOrder(e.target.value);
+    const handleSortOrderChange = (value) => {
+        setSortOrder(value);
         setCurrentPage(1);
     };
 
-    const totalPages = Math.ceil(dummyPosts.length / postsPerPage);
+    const handleFilterToggle = () => {
+        setIsFilterActive(!isFilterActive);
+        setCurrentPage(1);
+    };
+
+    const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
     return (
         <>
-            <GuestHeader />
-            <Top />
+            <Top title='IT 자격증' />
             <SortContainer>
-                <Select value={sortOption} onChange={handleSortChange}>
-                    <option value="startdate">응시 시작일</option>
-                    <option value="enddate">응시 종료일</option>
-                    <option value="scrap">스크랩</option>
-                </Select>
-                <Select value={sortOrder} onChange={handleSortOrderChange}>
-                    <option value="desc">내림차순</option>
-                    <option value="asc">오름차순</option>
-                </Select>
+                <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop = '응시 가능' />
+                <Right>
+                <CustomSelect
+                    selectedOption={sortOption}
+                    options={[
+                        { value: "startdate", label: "응시 시작일" },
+                        { value: "enddate", label: "응시 종료일" },
+                        { value: "scrap", label: "스크랩" }
+                    ]}
+                    onOptionSelect={handleSortChange}
+                />
+                <CustomSelect
+                    selectedOption={sortOrder}
+                    options={[
+                        { value: "desc", label: "내림차순" },
+                        { value: "asc", label: "오름차순" }
+                    ]}
+                    onOptionSelect={handleSortOrderChange}
+                />
+                </Right>
             </SortContainer>
             {currentPosts.map((post, index) => (
                 <Post
@@ -221,21 +246,20 @@ function ITLicense(){
     );
 }
 
-export default ITLicense;
-
 const SortContainer = styled.div`
     display: flex;
     width: 60%;
     margin: 20px auto;
+    margin-bottom: 40px;
     align-items: center;
 `;
 
-const Select = styled.select`
-    margin-left: 10px;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-`;
+const Right = styled.div`
+    display: flex;
+    flex:1;
+    flex-direction: row;
+    justify-content: flex-end;
+`
 
 const Pagination = styled.div`
     display: flex;
@@ -244,7 +268,8 @@ const Pagination = styled.div`
 `;
 
 const PageNumber = styled.button`
-    background: ${(props) => (props.active ? '#36bef1' : '#fff')};
+    background: ${(props) => (props.active ? '#36bef1' : 'white')};
+    color : ${(props) => (props.active ? 'white' : 'black')};
     border: 1px solid #ddd;
     padding: 10px 20px;
     margin: 0 5px;
@@ -255,3 +280,5 @@ const PageNumber = styled.button`
         color: #fff;
     }
 `;
+
+export default ITLicense;

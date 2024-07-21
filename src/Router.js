@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Top from './components/post/Top';
-import CalendarComponent from './components/calendarcomponent/CalendarComponent';
 import StudyPost from './components/studypost/StudyPost';
 
 const AppRouter = ({ setIsLoggedIn }) => {
