@@ -1,8 +1,13 @@
-import './App.css';
+import React, { useState } from 'react';
+import AppRouter from './Router';
+import ITLicense from './page/ITLicense';
 
-function App() {
+
+const App = () => {
+
   return (
     <div>
+      <ITLicense/>
     </div>
   );
 }
