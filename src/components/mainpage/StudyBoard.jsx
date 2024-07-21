@@ -5,13 +5,15 @@ import { IoIosArrowForward } from "react-icons/io";
 
 const StudyBoardDiv = styled.div`
     background-color: #fff;
-    width: 1000px;
+    width: 900px;
     height: 45px;
     display: flex;
     align-items: center;
     border: 1px solid #ddd;
     justify-content: space-between;
     border-radius: 10px;
+    position: relative;
+    right: 50px;
 `
 
 const StudyDescrribe = styled.div`

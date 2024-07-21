@@ -2,48 +2,41 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import CalendarComponent from '../components/calander/CalendarComponent2';
 import DateInfo from '../components/calander/DateInfo';
-import Carousel from '../components/mainpage/Carousel'
+import Carousel from '../components/mainpage/Carousel';
 import StudyBoard from '../components/mainpage/StudyBoard';
-import ScrapRankings from '../components/mainpage/ScrapRankings';
 import NearDeadlineJobs from '../components/mainpage/NearDeadlineJobs';
 import GuestHeader from '../components/header/GuestHeader';
+import UserHeader from '../components/header/UserHeader';
 import MyCalendar from '../components/calander/MyCalendar';
 import { CSSTransition } from 'react-transition-group';
 import '../style/MainPage.css';
+import { loginState } from '../state/atoms';
+import { useRecoilValue } from 'recoil';
 
 const ContentsContainer = styled.div`
   display: grid;
   justify-content: center;
-  align-items: center;
   background-color: #eff5ff;
-  grid-template-columns: 1000px 330px;
-  grid-template-rows: auto auto;
+  grid-template-columns: 600px 300px;
+  grid-template-rows: 300px 50px;
   gap: 10px 20px;
   padding: 20px;
   grid-template-areas: 
-    "carousel scrap"
-    "studyboard scrap";
+    "carousel nearDeadline"
+    "studyboard nearDeadline";
 `;
 
 const CarouselArea = styled.div`
   grid-area: carousel;
-  width: 1000px;
-  margin: 0 auto;
 `;
 
 const StudyBoardArea = styled.div`
   grid-area: studyboard;
-  width: 1000px;
-  margin: 0 auto;
-`;
-
-const ScrapRankingsArea = styled.div`
-  grid-area: scrap;
+  width: 900px;
 `;
 
 const NearDeadlineJobsArea = styled.div`
-  grid-area: scrap;
-  margin-top: 10px;
+  grid-area: nearDeadline;
 `;
 
 const Row = styled.div`
@@ -86,7 +79,7 @@ const Button = styled.button`
   cursor: pointer;
   background-color: #fff;
   border: none;
-  color: ${(props) => (props.active ? '#000': '#999')};
+  color: ${(props) => (props.active ? '#000' : '#999')};
   border-bottom: ${(props) => (props.active ? '1px solid #000' : 'none')};
 `;
 
@@ -94,6 +87,7 @@ function MainPage() {
   const [dateDetails, setDateDetails] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showSecondCalendar, setShowSecondCalendar] = useState(false);
+  const isLoggedIn = useRecoilValue(loginState);
 
   const allDetails = [
     {
@@ -165,20 +159,21 @@ function MainPage() {
 
   return (
     <div>
-      <GuestHeader />
+      {isLoggedIn ? (
+        <UserHeader />
+      ) : (
+        <GuestHeader />
+      )}
       <ContentsContainer>
         <CarouselArea>
           <Carousel />
         </CarouselArea>
+        <NearDeadlineJobsArea>
+          <NearDeadlineJobs />
+        </NearDeadlineJobsArea>
         <StudyBoardArea>
           <StudyBoard />
         </StudyBoardArea>
-        <ScrapRankingsArea>
-          <ScrapRankings />
-          <NearDeadlineJobsArea>
-            <NearDeadlineJobs />
-          </NearDeadlineJobsArea>
-        </ScrapRankingsArea>
       </ContentsContainer>
       <CalendarTitle>주요 일정</CalendarTitle>
       <ButtonContainer>

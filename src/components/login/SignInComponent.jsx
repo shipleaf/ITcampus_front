@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { login } from '../../APIs/loginAPI';
+import { loginState } from '../../state/atoms';
 
 const SignInHeader = styled.div`
     margin-bottom: 15%;
@@ -87,27 +89,15 @@ function SignInComponent({ toggleComponent }) {
             password
         };
 
-        console.log(userData);
-
         try {
-            const response = await fetch('http://localhost:8080/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userData),
-                credentials: 'include' // 쿠키를 포함하도록 설정
-            });
+            const response = await login(userData);
+            console.log('로그인 성공', response);
+            setIsLoggedIn(true);
+            console.log(isLoggedIn);
 
-            if (!response.ok) {
-                throw new Error('로그인에 실패했습니다!');
-            }
-
-            const result = await response.json();
-            console.log('로그인 성공:', result);
-            // 로그인 성공 후 추가 작업
         } catch (error) {
-            alert(error.message);
+            console.error('로그인 실패: ', error);
+            alert('로그인에 실패 했습니다');
         }
     };
 

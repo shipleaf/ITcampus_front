@@ -1,48 +1,46 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
+import axios from 'axios';
 
 const ScrapButtonContainer = styled.div`
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    border: 1px solid #e0e0e0;
+    width: 8%;
+    height: 40px;
+    cursor: pointer;
+    background-color: #fff;
 `;
 
 function ScrapButton() {
     const [isScrapped, setIsScrapped] = useState(false);
 
-    const handleScrap = useCallback(async () => {
-        setIsScrapped((prev) => !prev);
-
+    const handleScrap = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/scrap', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ isScrapped: !isScrapped }),
-                credentials: 'include',
-            });
-
-            if (!response.ok) {
-                throw new Error('서버에 기록하는데 실패했습니다.');
+            setIsScrapped((prev) => !prev);
+            if (!isScrapped) {
+                await axios.post('/api/scrap', { action: 'add' });
+                alert('스크랩 되었습니다!');
+            } else {
+                await axios.post('/api/scrap', { action: 'remove' });
+                alert('스크랩이 취소되었습니다.');
             }
-
-            const result = await response.json();
-            console.log('서버 기록 성공:', result);
         } catch (error) {
-            alert(error.message);
+            console.error('스크랩 요청 중 오류 발생:', error);
         }
-    }, [isScrapped]);
+    };
 
     return (
-        <ScrapButtonContainer>
+        <ScrapButtonContainer onClick={handleScrap}>
             {isScrapped ? (
-                <FaStar size={80} style={{ color: '#ffff00' }} onClick={handleScrap} />
+                <FaStar size={30} style={{ color: '#ffff00' }} />
             ) : (
-                <CiStar size={80} style={{ color: '#A8A8A8' }} onClick={handleScrap} />
+                <CiStar size={30} style={{ color: '#A8A8A8' }} />
             )}
+            <div style={{color: '#999', marginLeft: '5px'}}>스크랩</div>
         </ScrapButtonContainer>
     );
 }

@@ -2,16 +2,17 @@ import React from 'react'
 import styled from 'styled-components'
 
 const DeadlinenJobsContainer = styled.div`
-    width: 330px;
-    height: 190px;
+    width: 280px;
+    height: 300px;
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.5);
+    border: 1px solid #eaedf4;
+    padding: 10px;
 `
 
 const DeadlinenJobsHeader = styled.div`
     font-size: 15px;
-    color: #000;
+    color: #373f57;
     font-weight: bold;
     position: relative;
     left: 15px;
@@ -20,7 +21,7 @@ const DeadlinenJobsHeader = styled.div`
 
 const DeadlinenJobsContents = styled.div`
     padding: 15px;
-    color: #000;
+    color: #373f57;
     margin-top: 15px;
 `
 
@@ -53,8 +54,9 @@ function NearDeadlineJobs() {
         <div>
             <DeadlinenJobsContainer>
                 <DeadlinenJobsHeader>
-                    마감이 얼마 남지 않은 공고
+                    지금 핫한 공고
                 </DeadlinenJobsHeader>
+                <hr style={{width: '85%', }}/>
                 <DeadlinenJobsContents>
                     {sortedJobListings.map((job, index) => (
                         <CompanyItem key={job.id}>
