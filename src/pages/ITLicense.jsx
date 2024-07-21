@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import GuestHeader from '../components/modules/header/GuestHeader';
+import GuestHeader from "../components/header/GuestHeader";
 import Top from "../components/post/Top";
 import Post from "../components/post/Post";
 import CustomSelect from "../components/filter/CustomSelect";

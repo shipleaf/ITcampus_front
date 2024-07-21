@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
-import Logo from './Logo'
+import Logo from './Logo';
 import { CiSearch } from "react-icons/ci";
-import DropdownMenu from './DropdownMenu'
-import LoginModal from './login/LoginModal';
+import DropdownMenu from './DropdownMenu';
+import LoginModal from '../login/LoginModal';
 
 const GuestHeaderComp = styled.div`
   display: flex;
