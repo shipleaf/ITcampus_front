@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AppRouter from './Router';
-import ITLicense from './page/ITLicense';
+import ITLicense from './pages/ITLicense';
 
 
 const App = () => {

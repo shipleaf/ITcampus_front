@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Top from "../component/post/Top";
-import Post from "../component/post/Post";
-import CustomSelect from "../component/filter/CustomSelect";
-import FilterButton from "../component/filter/FilterButton";
+import GuestHeader from '../components/modules/header/GuestHeader';
+import Top from "../components/post/Top";
+import Post from "../components/post/Post";
+import CustomSelect from "../components/filter/CustomSelect";
+import FilterButton from "../components/filter/FilterButton";
 import star from '../assets/scrap.png';
 
 function ITLicense(){
@@ -202,6 +203,7 @@ function ITLicense(){
 
     return (
         <>
+            <GuestHeader/>
             <Top title='IT 자격증' />
             <SortContainer>
                 <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop = '응시가능'/>
