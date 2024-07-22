@@ -198,10 +198,12 @@ const DetailedSearchContainer = styled.div`
   margin: 20px auto;
 `;
 
+
 const Title = styled.h2`
   margin-bottom: 10px;
   font-size: 20px;
 `;
+
 
 const Table = styled.table`
   width: 100%;
@@ -233,6 +235,7 @@ const Td = styled.td`
   `}
 `;
 
+
 const Overlay = styled.div`
   position: absolute;
   top: 100%;
@@ -244,6 +247,7 @@ const Overlay = styled.div`
   z-index: 1;
   box-sizing: border-box;
 `;
+
 
 const CheckboxContainer = styled.div`
   display: flex;
@@ -258,6 +262,7 @@ const CheckboxContainer = styled.div`
     margin-bottom: 0;
   }
 `;
+
 
 const SelectedContainer = styled.div`
   padding: 10px;

@@ -80,7 +80,7 @@ const Content = styled.div`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-`;
+`
 
 const Footer = styled.div`
     display : flex;
@@ -137,4 +137,4 @@ const Divider = styled.div`
   width: 60%;
   height: 1px;
   background-color: #ccc;
-`;
+`
