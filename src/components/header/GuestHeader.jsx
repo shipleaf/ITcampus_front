@@ -12,6 +12,7 @@ const GuestHeaderComp = styled.div`
   justify-content: space-between;
   position: relative;
   border-bottom: 1px solid #ddd;
+  background-color: #fff;
 `;
 
 const LogoContainer = styled.div`
