@@ -44,9 +44,9 @@ const SelectBox = styled.div`
     position: relative;
     width: 120px;
     height: 35px;
-    border: 2.5px solid black;
+    border: 2px solid black;
     margin: 10px 10px 10px 0;
-`;
+`
 
 const Select = styled.div`
     display: flex;
@@ -57,7 +57,7 @@ const Select = styled.div`
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-`;
+`
 
 const Options = styled.div`
     position: absolute;
@@ -70,7 +70,7 @@ const Options = styled.div`
     border-radius: 0 0 9px 9px;
     max-height: 200px;
     overflow-y: auto;
-`;
+`
 
 const Option = styled.div`
     padding: 5px 10px;
@@ -78,16 +78,16 @@ const Option = styled.div`
     &:hover {
         background-color: #f0f0f0;
     }
-`;
+`
 
 const IcoArrow = styled.div`
     display: flex;
     align-items: center;
     pointer-events: none;
-`;
+`
 
 const ArrowImg = styled.img`
     width: 20px;
     transition: transform 0.3s;
     transform: ${({ isOpen }) => (isOpen ? 'scaleX(-1) scaleY(-1)' : 'scaleX(1) scaleY(1)')};
-`;
+`

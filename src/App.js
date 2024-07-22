@@ -1,16 +1,12 @@
 import React from 'react';
-import { RecoilRoot } from 'recoil';
 import AppRouter from './Router';
-import ITLicense from './pages/ITLicense';
-import Mainpage from './pages/MainPage'
-import GovermentSupport from './pages/GovernmentSupport';
-import CoporateProgram from './pages/CorporateProgram';
 import Recruitment from './pages/Recruitment';
+import CompanyList from './pages/CompanyList';
 
 const App = () => {
   return (
     <div>
-      <Recruitment />
+      <CompanyList />
     </div>
   );
 }
