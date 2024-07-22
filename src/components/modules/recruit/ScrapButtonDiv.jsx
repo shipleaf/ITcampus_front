@@ -7,15 +7,14 @@ const Button = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 15px;
+  width: 100%;
 `
 
 function ScrapButtonDiv() {
   return (
-    <div>
       <Button>
         <ScrapButton />
       </Button>
-    </div>
   )
 }
 

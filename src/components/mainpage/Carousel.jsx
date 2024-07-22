@@ -5,8 +5,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const CarouselContainer = styled.div`
-  width: 600px;
-  height: 330px;
+  width: 100%;
+  height: 100%;
   overflow: hidden; /* 이미지가 넘치지 않도록 설정 */
   position: relative; /* 절대 위치를 사용하기 위해 부모 요소를 상대 위치로 설정 */
   margin: auto;
@@ -71,9 +71,9 @@ const CustomSlider = styled(Slider)`
 `;
 
 const carouselImages = [
-    'https://img.hankyung.com/photo/202403/01.36047379.1.jpg',
-    'https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202403/09/21e88381-7867-410a-b0c3-5d6c9cd430b1.jpg',
-    'https://ilyo.co.kr/contents/article/images/2022/1013/1665663228269667.jpg',
+    'https://lh6.googleusercontent.com/proxy/tX_vSqnx7EPDPTkspwuq8xAemv7LXat1ixTdhQ31uHileNYXJ1UogOzm5KK1wnZBc1eaCNHH0wjtbKH91onHmYJvDPAogLEjpa2VU7keJkKS',
+    'https://old.bufs.ac.kr/Fileroom/Board/UPLOAD/10000748/2021/10/15/%EA%B3%A0%EC%9A%A9%EB%85%B8%EB%8F%99%EB%B6%80%EA%B5%AD%EB%AF%BC%EC%B7%A8%EC%97%85%EC%A7%80%EC%9B%90%EC%A0%9C%EB%8F%84%ED%8F%AC%EC%8A%A4%ED%84%B0.jpg',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT776dORdv7_rujj-mAV1q8oZotau_kdDTU0A&s',
     'https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2023/06/10/d464555c-81c2-42d6-a068-ef1fc49bdabe.jpg'
 ];
 
