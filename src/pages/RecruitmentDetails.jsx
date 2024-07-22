@@ -4,6 +4,14 @@ import RecruitDetailHeader from '../components/modules/recruit/RecruitDetailHead
 import ScrapButtonDiv from '../components/modules/recruit/ScrapButtonDiv';
 import RecruitDetailBody from '../components/modules/recruit/RecruitDetailBody';
 import RecruitCompanyInfo from '../components/modules/recruit/RecruitCompanyInfo';
+import styled from 'styled-components';
+import RecruitNotice from '../components/modules/recruit/RecruitNotice';
+import OtherAnnouncements from '../components/modules/recruit/OtherAnnouncements';
+import RelatedRecruitments from '../components/modules/recruit/RelatedRecruitments';
+
+const ScrapContainer = styled.div`
+    width: 8%;
+`
 
 // import { fetchJobDetails } from '../api/RecruitAPI';
 
@@ -43,7 +51,7 @@ function RecruitmentDetails() {
         enddate: '2024-07-20T12:00:00',
         resultdate: '2024-07-30T12:00:00',
         pic1: 'https://daoift3qrrnil.cloudfront.net/content_images/images/000/170/334/original/%EC%83%81%ED%92%88%EB%B3%B8%EB%B6%80_%EA%B2%BD%EB%A0%A5_2%EA%B1%B4%28%EC%95%95%EC%B6%95%29.jpg?1676946275',
-        pic2: 'https://cdn.spotvnews.co.kr/news/photo/202405/681149_1047749_1528.jpg',
+        pic2: 'https://lh6.googleusercontent.com/proxy/QOLaf-JFQW4OEdcF3MDil4DQATl_KcKwGsTYX9CVkFo9qjKegC4kycCaMcRac0ajms32uLCosT1LqV21o08sGabCn1FYFPeAlYaZdnxOg4Ty6h-CmumrBg   ',
         pic3: '',
         pic4: '',
         pic5: '',
@@ -64,14 +72,21 @@ function RecruitmentDetails() {
         link: 'https://www.saramin.co.kr/zf_user/',
         companyname: '(주)우아한 형제들'
     };
-    
+
     return (
-        <div style={{backgroundColor: '#f9f9f9', display: 'flex', flexDirection: 'column'}}>
+        <div style={{ backgroundColor: '#f9f9f9', display: 'flex', flexDirection: 'column' }}>
             <GuestHeader />
             <RecruitDetailHeader jobDetailData={jobDetailData} />
-            <ScrapButtonDiv />
+            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <ScrapContainer>
+                    <ScrapButtonDiv />
+                </ScrapContainer>
+            </div>
             <RecruitDetailBody jobDetailData={jobDetailData} />
-            <RecruitCompanyInfo jobDetailData={jobDetailData}/>
+            <RecruitCompanyInfo jobDetailData={jobDetailData} />
+            <RecruitNotice jobDetailData={jobDetailData}/>
+            <OtherAnnouncements />
+            <RelatedRecruitments />
         </div>
     )
 }

@@ -9,7 +9,7 @@ const ScrapButtonContainer = styled.div`
     align-items: center;
     justify-content: center;
     border: 1px solid #e0e0e0;
-    width: 8%;
+    width: 100%;
     height: 40px;
     cursor: pointer;
     background-color: #fff;
@@ -34,14 +34,16 @@ function ScrapButton() {
     };
 
     return (
-        <ScrapButtonContainer onClick={handleScrap}>
-            {isScrapped ? (
-                <FaStar size={30} style={{ color: '#ffff00' }} />
-            ) : (
-                <CiStar size={30} style={{ color: '#A8A8A8' }} />
-            )}
-            <div style={{color: '#999', marginLeft: '5px'}}>스크랩</div>
-        </ScrapButtonContainer>
+        <div style={{width: '100%'}}>
+            <ScrapButtonContainer onClick={handleScrap}>
+                {isScrapped ? (
+                    <FaStar size={30} style={{ color: '#ffff00' }} />
+                ) : (
+                    <CiStar size={30} style={{ color: '#A8A8A8' }} />
+                )}
+                <div style={{ color: '#999', marginLeft: '5px' }}>스크랩</div>
+            </ScrapButtonContainer>
+        </div>
     );
 }
 
