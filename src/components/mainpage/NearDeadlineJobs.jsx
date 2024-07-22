@@ -59,7 +59,7 @@ function NearDeadlineJobs() {
                 <hr style={{width: '85%', }}/>
                 <DeadlinenJobsContents>
                     {sortedJobListings.map((job, index) => (
-                        <CompanyItem key={job.id}>
+                        <CompanyItem key={job. id}>
                             <div>
                                 {index + 1}. {job.name}
                             </div>
