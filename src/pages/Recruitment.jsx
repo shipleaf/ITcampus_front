@@ -194,7 +194,6 @@ function Recruitment() {
         }
     ];
 
-    
     const [currentPage, setCurrentPage] = useState(1);
     const [sortOption, setSortOption] = useState('scrap');
     const [sortOrder, setSortOrder] = useState('desc');
@@ -333,7 +332,7 @@ const SortContainer = styled.div`
     margin: 20px auto;
     margin-bottom: 40px;
     align-items: center;
-`
+`;
 
 const Right = styled.div`
     display: flex;
@@ -346,7 +345,8 @@ const Pagination = styled.div`
     display: flex;
     justify-content: center;
     margin: 20px 0;
-`
+`;
+
 
 const PageNumber = styled.button`
     background: ${(props) => (props.active ? '#36bef1' : '#fff')};
@@ -359,4 +359,4 @@ const PageNumber = styled.button`
         background: #36bef1;
         color: #fff;
     }
-`
+`;

@@ -10,6 +10,7 @@ const CompanyInfo = styled.div`
     margin-top: 50px;
     border-top: 1px solid #999;
     border-bottom: 1px solid #999;
+    background-color: #fff;
 `;
 
 const HeaderContainer = styled.div`
@@ -77,6 +78,7 @@ const Button = styled(Link)`
     justify-content: center;
     text-decoration: none;
     font-size: 13px;
+    margin-left: 30px;
 `
 
 const Contents = styled.div`
@@ -88,9 +90,13 @@ const InfoItem = styled.div`
     margin-bottom: 10px;
 `;
 
-const CompanyScrapButton = styled(ScrapButton)`
-`
 
+const ScrapButtonCotainer = styled(Button)`
+    width: 130px;
+    & div{
+        border: none;
+    }
+`
 function RecruitCompanyInfo({ jobDetailData }) {
 
     const companyInfo = {
@@ -135,7 +141,9 @@ function RecruitCompanyInfo({ jobDetailData }) {
                 </LogoContainer>
                 <CompanyInfoBodyTitle>
                     <div>{companyInfo.companyName}</div>
-                    <CompanyScrapButton/>
+                    <ScrapButtonCotainer>
+                        <ScrapButton />
+                    </ScrapButtonCotainer>
                     <Button to={companyInfo.link}>기업 홈페이지<IoIosArrowForward /></Button>
                 </CompanyInfoBodyTitle>
                 <CompanyInfoBody>
