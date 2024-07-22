@@ -9,12 +9,13 @@ import InformationList from './pages/InformationList';
 import ITLicense from './pages/GovernmentSupport';
 import StudyList from './pages/StudyList';
 import RelatedRecruitments from './components/modules/recruit/RelatedRecruitments';
+import CompanyDetails from './pages/CompanyDetails';
 
 const AppRouter = () => {
     return (
       <Router>
         <Routes>
-          <Route path='/' element={<MainPage/>} />
+        <Route path='/' element={<CompanyDetails/>} />
           <Route path='/jobdetails' element={<RecruitmentDetails/>} />
           <Route path='/other' element={<RelatedRecruitments/>} />
           <Route path='/company' element={<CompanyList/>} />
@@ -29,4 +30,4 @@ const AppRouter = () => {
   };
 
   export default AppRouter;
-  
+  //<Route path='/' element={<MainPage/>} />
