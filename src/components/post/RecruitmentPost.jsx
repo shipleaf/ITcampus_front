@@ -3,12 +3,19 @@ import styled from 'styled-components';
 import star from '../../assets/scrap.png';
 import Today from '../../assets/Today';
 
-function Post({ title, detail, writer, img, scrap, startDate, endDate }) {
+function RecruitmentPost({ title, detail, writer, img, scrap, startDate, endDate, job, stack, experience, education, employmentType }) {
     return (
         <ButtonFrame>
             <ContentContainer>
                 <Title>{title}</Title>
                 <Content>{detail}</Content>
+                <RequirementContainer>
+                    <Requirement>{job}</Requirement>
+                    <Requirement>{stack}</Requirement>
+                    <Requirement>{experience}</Requirement>
+                    <Requirement>{education}</Requirement>
+                    <Requirement>{employmentType}</Requirement>
+                </RequirementContainer>
                 <Footer>
                     <Writer>{writer}</Writer>
                     <Date>{`${startDate} ~ ${endDate}`}</Date>
@@ -25,7 +32,7 @@ function Post({ title, detail, writer, img, scrap, startDate, endDate }) {
     );
 }
 
-export default Post;
+export default RecruitmentPost;
 
 const ButtonFrame = styled.button`
     display: flex;
@@ -40,10 +47,10 @@ const ButtonFrame = styled.button`
     cursor: pointer;
 
     &:hover {
-    border: 3px solid #36bef1;
-    transform: scale(1.05);
-  }
-`
+        border: 3px solid #36bef1;
+        transform: scale(1.05);
+    }
+`;
 
 const ContentContainer = styled.div`
     display: flex;
@@ -53,7 +60,8 @@ const ContentContainer = styled.div`
     height: 100%;
     margin: 5px;
     overflow: hidden;
-`
+`;
+
 const Title = styled.div`
     font-size: 25px;
     font-weight: bold;
@@ -61,64 +69,82 @@ const Title = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-`
+`;
+
 const Content = styled.div`
-  font-size: 18px;
-  color: #666;
-  text-align: left;
-  height: 70px;
-  margin: 10px 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    font-size: 18px;
+    color: #666;
+    text-align: left;
+    height: 70px;
+    margin: 10px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+
+const RequirementContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0;
+`;
+
+const Requirement = styled.div`
+    font-size: 15px;
+    color: #666;
+    background-color: #f3f3f3;
+    padding: 5px 10px;
+    border-radius: 20px;
 `;
 
 const Footer = styled.div`
-    display : flex;
+    display: flex;
     align-items: center;
-    margin : 15px 0px;
+    margin: 15px 0px;
     height: 10%;
-`
+`;
+
 const Writer = styled.div`
     font-size: 16px;
     font-weight: bold;
     width: 200px;
     color: black;
-`
+`;
 
 const Date = styled.div`
     font-size: 14px;
     color: #999;
-    margin : auto 10px;
-`
+    margin: auto 10px;
+`;
 
 const ScrapContainer = styled.div`
     display: flex;
     justify-content: center;
     margin-left: 30px;
-`
+`;
 
 const ScrapImg = styled.img`
     width: 25px;
     height: 25px;
-`
+`;
 
 const ScrapCount = styled.div`
     font-size: 18px;
     font-weight: bold;
     color: #999;
-    margin-left : 7px;
-    margin-top : 2.4px;
-`
+    margin-left: 7px;
+    margin-top: 2.4px;
+`;
 
 const ThumbnailContainer = styled.div`
     flex-shrink: 1;
     margin-right: 20px;
-`
+`;
+
 const Thumbnail = styled.img`
     width: 150px;
     height: 150px;
     object-fit: cover;
-`
+`;
