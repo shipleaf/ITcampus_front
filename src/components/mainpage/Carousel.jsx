@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const CarouselContainer = styled.div`
-  width: 1000px;
+  width: 600px;
   height: 330px;
   overflow: hidden; /* 이미지가 넘치지 않도록 설정 */
   position: relative; /* 절대 위치를 사용하기 위해 부모 요소를 상대 위치로 설정 */
@@ -18,7 +18,7 @@ const SlideImageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #000;
+  background-color: #fff;
 `;
 
 const SlideImage = styled.img`
