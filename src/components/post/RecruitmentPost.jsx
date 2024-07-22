@@ -51,6 +51,7 @@ const ButtonFrame = styled.button`
     }
 `
 
+
 const ContentContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -60,6 +61,7 @@ const ContentContainer = styled.div`
     margin: 5px;
     overflow: hidden;
 `
+
 
 const Title = styled.div`
     font-size: 25px;
@@ -98,6 +100,7 @@ const Requirement = styled.div`
     border-radius: 20px;
 `
 
+
 const Footer = styled.div`
     display: flex;
     align-items: center;
@@ -111,6 +114,7 @@ const Writer = styled.div`
     width: 200px;
     color: black;
 `
+
 
 const Date = styled.div`
     font-size: 14px;
@@ -136,6 +140,7 @@ const ScrapCount = styled.div`
     margin-left: 7px;
     margin-top: 2.4px;
 `
+
 
 const ThumbnailContainer = styled.div`
     flex-shrink: 1;

@@ -194,7 +194,6 @@ function Recruitment() {
         }
     ];
 
-    
     const [currentPage, setCurrentPage] = useState(1);
     const [sortOption, setSortOption] = useState('scrap');
     const [sortOrder, setSortOrder] = useState('desc');
@@ -347,6 +346,7 @@ const Pagination = styled.div`
     justify-content: center;
     margin: 20px 0;
 `
+
 
 const PageNumber = styled.button`
     background: ${(props) => (props.active ? '#36bef1' : '#fff')};
