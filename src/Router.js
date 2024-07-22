@@ -11,23 +11,22 @@ import StudyList from './pages/StudyList';
 import RelatedRecruitments from './components/modules/recruit/RelatedRecruitments';
 import CompanyDetails from './pages/CompanyDetails';
 
-const AppRouter = () => {
-    return (
-      <Router>
-        <Routes>
-        <Route path='/' element={<CompanyDetails/>} />
-          <Route path='/jobdetails' element={<RecruitmentDetails/>} />
-          <Route path='/other' element={<RelatedRecruitments/>} />
-          <Route path='/company' element={<CompanyList/>} />
-          <Route path='/corporateprogram' element={<CorporateProgram/>} />
-          <Route path='/govermentsupport' element={<GovermentSupport/>} />
-          <Route path='/informatiuonlist' element={<InformationList/>} />
-          <Route path='/itlicense' element={<ITLicense/>} />
-          <Route path='/studylist' element={<StudyList/>} />
-        </Routes>
-      </Router>
-    );
-  };
 
-  export default AppRouter;
-  //<Route path='/' element={<MainPage/>} />
+const AppRouter = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path='/' element={<MainPage />} />
+        <Route path='/jobdetails' element={<RecruitmentDetails />} />
+        <Route path='/licensedetails' element={<ITLicenseDetails />} />
+        <Route path='/licenselist' element={<ITLicense />} />
+        <Route path='/recruittlist' element={<Recruitment />} />
+        <Route path='/governmentlist' element={<GovernmentsSupport />} />
+        <Route path='/corporatelist' element={<CorporateProgram />} />
+        <Route path='/companydetail' element={<CompanyDetails/>} />
+      </Routes>
+    </Router>
+  );
+};
+
+export default AppRouter;
