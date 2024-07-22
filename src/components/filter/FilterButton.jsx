@@ -29,7 +29,7 @@ const Button = styled.button`
         border-color: #FF7F00;
         color :#FF7F00;
     }
-`;
+`
 
 /*const CheckIcon = styled.img`
     width: 16px;
@@ -41,4 +41,4 @@ const Button = styled.button`
 const CheckIcon = styled.div`
     font-size: 30px;
     margin-right: 10px;
-`;
+`

@@ -94,8 +94,8 @@ function SignInComponent({ toggleComponent }) {
         try {
             const response = await login(userData);
             console.log('로그인 성공', response);
-            setIsLoggedIn(true);
-            console.log(isLoggedIn);
+            //setIsLoggedIn(true);
+            //console.log(isLoggedIn);
 
         } catch (error) {
             console.error('로그인 실패: ', error);
