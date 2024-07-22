@@ -12,7 +12,7 @@ const Title = styled.div`
 `;
 
 const Container = styled.div`
-`;
+`;  
 
 function OtherLicense() {
     const postDetails = {

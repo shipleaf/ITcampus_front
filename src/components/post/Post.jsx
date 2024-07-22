@@ -73,7 +73,7 @@ const Content = styled.div`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-`;
+`
 
 const Footer = styled.div`
     display : flex;
