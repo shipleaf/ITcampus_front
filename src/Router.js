@@ -2,7 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import RecruitmentDetails from './pages/RecruitmentDetails';
-import RelatedRecruitments from './components/modules/recruit/RelatedRecruitments';
+import ITLicense from './pages/ITLicense';
+import Recruitment from './pages/Recruitment';
 
 const AppRouter = () => {
     return (
@@ -10,7 +11,8 @@ const AppRouter = () => {
         <Routes>
           <Route path='/' element={<MainPage/>} />
           <Route path='/jobdetails' element={<RecruitmentDetails/>} />
-          <Route path='/other' element={<RelatedRecruitments/>} />
+          <Route path='/license' element={<ITLicense/>} />
+          <Route path='/recruittlist' element={<Recruitment/>} />
         </Routes>
       </Router>
     );
