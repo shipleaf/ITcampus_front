@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { regist } from '../../APIs/loginAPI';
 
 const SignInHeader = styled.div`
     margin-bottom: 10%;
@@ -125,24 +126,13 @@ function SignUpComponent({ toggleComponent }) {
         console.log(registData);
 
         try {
-            const response = await fetch('http://localhost:8080/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(registData),
-                registData: 'include', // 쿠키를 포함하도록 설정
-            });
-
-            if (!response.ok) {
-                throw new Error('로그인에 실패했습니다!');
-            }
-
-            const result = await response.json();
-            console.log('로그인 성공:', result);
-            // 로그인 성공 후 추가 작업
+            const response = await regist(registData);
+            console.log('회원가입 성공', response);
+            alert('회원가입 성공!');
+            toggleComponent(); // 회원가입 성공 시 로그인 화면으로 전환
         } catch (error) {
-            alert(error.message);
+            console.error('회원가입 실패: ', error);
+            alert('회원가입에 실패 했습니다');
         }
     };
 
