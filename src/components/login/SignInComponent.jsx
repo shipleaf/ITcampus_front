@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { login } from '../../APIs/loginAPI';
 import { loginState } from '../../state/atoms';
+import { useRecoilState } from 'recoil';
 
 const SignInHeader = styled.div`
     margin-bottom: 15%;
@@ -80,6 +81,7 @@ const HRComponent = styled.div`
 function SignInComponent({ toggleComponent }) {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useRecoilState(loginState);
 
     const handleLogin = async (e) => {
         e.preventDefault();
