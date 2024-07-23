@@ -39,7 +39,7 @@ function CompanyPost({ company, detail, img, scrap, width }) {
                 <ScrapCount>{scrap}</ScrapCount>
             </ShowScrap>
             <ScrapButtonContainer onClick={handleScrap}>
-                <ScrapButtonText>스크랩</ScrapButtonText>
+                <ScrapButtonText >스크랩</ScrapButtonText>
                 {isScrapped ? (
                     <FaStar size={30} style={{ color: '#ffff00' }} />
                 ) : (

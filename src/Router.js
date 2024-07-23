@@ -12,12 +12,13 @@ import StudyList from './pages/StudyList';
 import CompanyDetails from './pages/CompanyDetails';
 import Recruitment from './pages/Recruitment';
 import MyPage from './pages/MyPage';
+import PostDetail from './pages/PostWithComments';
 
 const AppRouter = () => {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<MyPage />} />
+        <Route path='/' element={<PostDetail />} />
         <Route path='/jobdetails' element={<RecruitmentDetails />} />
         <Route path='/licensedetails' element={<ITLicenseDetails />} />
         <Route path='/licenselist' element={<ITLicense />} />
