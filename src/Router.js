@@ -7,10 +7,10 @@ import CorporateProgram from './pages/CorporateProgram';
 import GovermentSupport from './pages/GovernmentSupport';
 import InformationList from './pages/InformationList';
 import ITLicense from './pages/GovernmentSupport';
+import ITLicenseDetails from './pages/ITLicenseDetails'
 import StudyList from './pages/StudyList';
-import RelatedRecruitments from './components/modules/recruit/RelatedRecruitments';
 import CompanyDetails from './pages/CompanyDetails';
-
+import Recruitment from './pages/Recruitment';
 
 const AppRouter = () => {
   return (
@@ -21,9 +21,12 @@ const AppRouter = () => {
         <Route path='/licensedetails' element={<ITLicenseDetails />} />
         <Route path='/licenselist' element={<ITLicense />} />
         <Route path='/recruittlist' element={<Recruitment />} />
-        <Route path='/governmentlist' element={<GovernmentsSupport />} />
+        <Route path='/governmentlist' element={<GovermentSupport />} />
         <Route path='/corporatelist' element={<CorporateProgram />} />
         <Route path='/companydetail' element={<CompanyDetails/>} />
+        <Route path='/companylist' element={<CompanyList/>} />
+        <Route path='/informationlist' element={<InformationList/>} />
+        <Route path='/studylist' element={<StudyList/>} />
       </Routes>
     </Router>
   );
