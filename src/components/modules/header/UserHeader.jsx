@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Modal from 'react-modal';
 import Logo from '../../header/Logo'
 import { CiSearch } from "react-icons/ci";
 import DropdownMenu from '../../header/DropdownMenu'
@@ -118,8 +117,6 @@ const DropdownMenuContainer = styled.div`
   z-index: 10000;
   background-color: #fff;
 `;
-
-Modal.setAppElement('#root'); // 모달을 렌더링하는 앱 요소 설정
 
 function GuestHeader() {
   const [showDropdown, setShowDropdown] = useState(false);
