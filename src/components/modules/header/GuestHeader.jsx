@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
-import Logo from './Logo'
+import Logo from '../../header/Logo'
 import { CiSearch } from "react-icons/ci";
-import DropdownMenu from './DropdownMenu'
+import DropdownMenu from '../../header/DropdownMenu'
 import LoginModal from '../../login/LoginModal';
 
 const GuestHeaderComp = styled.div`

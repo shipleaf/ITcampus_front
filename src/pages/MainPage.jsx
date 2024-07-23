@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import CalendarComponent from '../components/calander/CalendarComponent2';
-import DateInfo from '../components/calander/DateInfo';
+import CalendarComponent from '../components/mainpage/calander/CalendarComponent2'
+import DateInfo from '../components/mainpage/calander/DateInfo'
 import Carousel from '../components/mainpage/Carousel';
 import StudyBoard from '../components/mainpage/StudyBoard';
 import NearDeadlineJobs from '../components/mainpage/NearDeadlineJobs';
-import GuestHeader from '../components/header/GuestHeader';
-import UserHeader from '../components/header/UserHeader';
-import MyCalendar from '../components/calander/MyCalendar';
+import GuestHeader from '../components/modules/header/GuestHeader'
+import UserHeader from '../components/modules/header/UserHeader'
+import MyCalendar from '../components/mainpage/calander/MyCalendar';
 import { CSSTransition } from 'react-transition-group';
 import '../style/MainPage.css';
 import { loginState } from '../state/atoms';

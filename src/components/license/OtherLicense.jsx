@@ -12,9 +12,10 @@ const Title = styled.div`
 `;
 
 const Container = styled.div`
-`;  
+`;
 
 function OtherLicense() {
+
     const postDetails = {
         title: "[공지] 12기 중앙 해커톤 안내",
         detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
@@ -29,7 +30,7 @@ function OtherLicense() {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '50px' }}>
             <Title>다른 IT자격증을 보고 싶다면?</Title>
             <Container>
-                <Post 
+                <Post
                     title={postDetails.title}
                     detail={postDetails.detail}
                     writer={postDetails.writer}
@@ -38,7 +39,7 @@ function OtherLicense() {
                     startDate={postDetails.startDate}
                     endDate={postDetails.endDate}
                 />
-                <Post 
+                <Post
                     title={postDetails.title}
                     detail={postDetails.detail}
                     writer={postDetails.writer}
@@ -47,7 +48,7 @@ function OtherLicense() {
                     startDate={postDetails.startDate}
                     endDate={postDetails.endDate}
                 />
-                <Post 
+                <Post
                     title={postDetails.title}
                     detail={postDetails.detail}
                     writer={postDetails.writer}
