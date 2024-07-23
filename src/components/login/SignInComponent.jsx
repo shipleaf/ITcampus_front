@@ -86,21 +86,22 @@ function SignInComponent({ toggleComponent }) {
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        const userData = {
-            id,
-            password
-        };
+        setIsLoggedIn(true);
+        // const userData = {
+        //     id,
+        //     password
+        // };
 
-        try {
-            const response = await login(userData);
-            console.log('로그인 성공', response);
-            //setIsLoggedIn(true);
-            //console.log(isLoggedIn);
+        // try {
+        //     const response = await login(userData);
+        //     console.log('로그인 성공', response);
+        //     //setIsLoggedIn(true);
+        //     //console.log(isLoggedIn);
 
-        } catch (error) {
-            console.error('로그인 실패: ', error);
-            alert('로그인에 실패 했습니다');
-        }
+        // } catch (error) {
+        //     console.error('로그인 실패: ', error);
+        //     alert('로그인에 실패 했습니다');
+        // }
     };
 
     return (
