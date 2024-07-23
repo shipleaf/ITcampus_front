@@ -12,7 +12,7 @@ import StudyList from './pages/StudyList';
 import CompanyDetails from './pages/CompanyDetails';
 import Recruitment from './pages/Recruitment';
 import MyPage from './pages/MyPage';
-import PostDetail from './components/PostDetail/PostDetail';
+import PostDetail from './pages/PostWithComments';
 
 const AppRouter = () => {
   return (
