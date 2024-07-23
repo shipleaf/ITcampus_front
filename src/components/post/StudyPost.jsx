@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import commentImg from '../../assets/commentImg.png';
 
-function StudyPost({ title, detail, writer, img, datecreate, commentNum }) {
+function StudyPost({ title, detail, writer, img, datecreate, commentNum, width }) {
     return (
         <>
-            <ButtonFrame>
+            <ButtonFrame width = {width}>
                 <ContentContainer>
                     <Title>{title}</Title>
                     <Content>{detail}</Content>
@@ -24,7 +24,7 @@ function StudyPost({ title, detail, writer, img, datecreate, commentNum }) {
                     </ThumbnailContainer>
                 )}
             </ButtonFrame>
-            <Divider></Divider>
+            <Divider width = {width}/>
         </>
     );
 }
@@ -33,7 +33,7 @@ export default StudyPost;
 
 const ButtonFrame = styled.button`
     display: flex;
-    width: 60%;
+    width: ${(props) => props.width || '60%'};
     height: 150px;
     margin: 20px auto 15px auto;
     align-items: center;
@@ -139,4 +139,5 @@ const Divider = styled.div`
     width: 60%;
     height: 1px;
     background-color: #ccc;
+    display: ${(props) => (props.width === '100%' ? 'none' : 'block')};
 `

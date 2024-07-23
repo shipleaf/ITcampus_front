@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Modal from 'react-modal';
-import Logo from '../../header/Logo';
+import Logo from '../../header/Logo'
 import { CiSearch } from "react-icons/ci";
-import DropdownMenu from '../../header/DropdownMenu';
-import LoginModal from '../../login/LoginModal';
+import DropdownMenu from '../../header/DropdownMenu'
+import { FaRegBell } from "react-icons/fa";
+import { FaRegUserCircle } from "react-icons/fa";
+import { VscTriangleDown } from "react-icons/vsc";
+import UserDropdownMenu from './UserDropdownMenu';
+
 
 const GuestHeaderComp = styled.div`
   display: flex;
@@ -66,19 +69,41 @@ const SearchBar = styled.div`
   }
 `;
 
-const LoginButton = styled.button`
-  width: 100px;
-  height: 30px;
+const NoticeButton = styled.div`
+  width: 10%;
+  margin-left: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #999;
+  margin-right: 10px;
+
+  & button {
+    width: 100px;
+    height: 100%;
+    border: none;
+    box-shadow: 0 0 0 0.5px #000;
+    border-radius: 10px;
+    background-color: #fff;
+    font-weight: 500;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`;
+
+const UserButton = styled.button`
+  width: 45%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
   background-color: #fff;
   position: relative;
   cursor: pointer;
   border-radius: 1rem;
 
-  &:hover {
+  &:hover{
     background-color: #f5f5f5;
   }
 `;
@@ -93,21 +118,9 @@ const DropdownMenuContainer = styled.div`
   background-color: #fff;
 `;
 
-Modal.setAppElement('#root'); // 모달을 렌더링하는 앱 요소 설정
-
 function GuestHeader() {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  const openModal = () => {
-    setModalIsOpen(true);
-    document.body.style.overflow = 'hidden'; // Disable scroll when modal is open
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-    document.body.style.overflow = 'unset'; // Enable scroll when modal is closed
-  };
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
 
   return (
     <div>
@@ -140,9 +153,15 @@ function GuestHeader() {
             <CiSearch style={{ color: '#00ACEE' }} size={25} />
             <input type='text' />
           </SearchBar>
-          <LoginButton onClick={openModal}>
-            로그인
-          </LoginButton>
+          <NoticeButton>
+            <FaRegBell style={{ color: '#00ACEE' }} size={25} />
+          </NoticeButton>
+          <UserButton onClick={() => setShowUserDropdown(!showUserDropdown)}>
+            <FaRegUserCircle style={{ color: '#bbb' }} size={30} />
+            <div style={{ fontSize: '12px', marginLeft: '5px' }}>김선엽</div>
+            <VscTriangleDown size={10} />
+            {showUserDropdown && <UserDropdownMenu />}
+          </UserButton>
         </HeaderRight>
       </GuestHeaderComp>
       <DropdownMenuContainer
@@ -152,31 +171,6 @@ function GuestHeader() {
       >
         <DropdownMenu />
       </DropdownMenuContainer>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        shouldCloseOnOverlayClick={true}
-        style={{
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            zIndex: 1001,
-          },
-          content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            width: '400px',
-            borderRadius: '10px',
-            padding: '10px',
-            border: '3px solid #00ACEE',
-          },
-        }}
-      >
-        <LoginModal closeModal={closeModal} />
-      </Modal>
     </div>
   );
 }

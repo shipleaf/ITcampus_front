@@ -1,42 +1,48 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { loginState } from '../../state/atoms';
 import SignInComponent from './SignInComponent';
 import SignUpComponent from './SignUpComponent';
-import Modal from 'react-modal';
-import { HiMiniXMark } from "react-icons/hi2";
+import { IoClose } from 'react-icons/io5';
 
-const ModalOffButton = styled.button`
-  background-color: #fff;
+const ModalContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
+  padding: 20px;
+  position: relative;
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
   border: none;
-  color: #999;
-
-  &:hover{
-    color: #000;
-  }
-`
-
-Modal.setAppElement('#root');
+  cursor: pointer;
+  font-size: 1.5rem;
+`;
 
 function LoginModal({ closeModal }) {
-  const [showSignIn, setShowSignIn] = useState(true);
+  const [isSignUp, setIsSignUp] = useState(false); // 상태 추가
+  const [, setIsLoggedIn] = useRecoilState(loginState);
 
-  const toggleComponent = () => {
-    setShowSignIn(!showSignIn);
+  const handleLogin = () => {
+    setIsLoggedIn(true);
   };
 
   return (
-    <div>
-      {showSignIn ? (
-        <SignInComponent toggleComponent={toggleComponent} />
+    <ModalContainer>
+      <CloseButton onClick={closeModal}>
+        <IoClose />
+      </CloseButton>
+      {isSignUp ? (
+        <SignUpComponent toggleComponent={() => setIsSignUp(false)} />
       ) : (
-        <SignUpComponent toggleComponent={toggleComponent} />
+        <SignInComponent toggleComponent={() => setIsSignUp(true)} handleLogin={handleLogin} closeModal={closeModal} />
       )}
-      <ModalOffButton onClick={closeModal} style={{ position: 'absolute', top: '10px', right: '10px', cursor: 'pointer' }}>
-        <HiMiniXMark size={22}/>
-      </ModalOffButton>
-    </div>
+    </ModalContainer>
   );
 }
 

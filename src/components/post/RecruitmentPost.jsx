@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import star from '../../assets/scrap.png';
 
-function RecruitmentPost({ title, detail, writer, img, scrap, startDate, endDate, job, stack, experience, education, employmentType }) {
+function RecruitmentPost({ title, detail, writer, img, scrap, startDate, endDate, job, stack, experience, education, employmentType, width }) {
     return (
-        <ButtonFrame>
+        <ButtonFrame width={width} >
             <ContentContainer>
                 <Title>{title}</Title>
                 <Content>{detail}</Content>
@@ -35,7 +35,7 @@ export default RecruitmentPost;
 
 const ButtonFrame = styled.button`
     display: flex;
-    width: 60%;
+    width: ${(props) => props.width || '60%'};
     height: 12%;
     margin: 15px auto;
     align-items: center;

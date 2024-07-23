@@ -7,27 +7,31 @@ import CorporateProgram from './pages/CorporateProgram';
 import GovermentSupport from './pages/GovernmentSupport';
 import InformationList from './pages/InformationList';
 import ITLicense from './pages/GovernmentSupport';
+import ITLicenseDetails from './pages/ITLicenseDetails'
 import StudyList from './pages/StudyList';
-import RelatedRecruitments from './components/modules/recruit/RelatedRecruitments';
 import CompanyDetails from './pages/CompanyDetails';
+import Recruitment from './pages/Recruitment';
+import MyPage from './pages/MyPage';
+import PostDetail from './components/PostDetail/PostDetail';
 
 const AppRouter = () => {
-    return (
-      <Router>
-        <Routes>
-        <Route path='/' element={<CompanyDetails/>} />
-          <Route path='/jobdetails' element={<RecruitmentDetails/>} />
-          <Route path='/other' element={<RelatedRecruitments/>} />
-          <Route path='/company' element={<CompanyList/>} />
-          <Route path='/corporateprogram' element={<CorporateProgram/>} />
-          <Route path='/govermentsupport' element={<GovermentSupport/>} />
-          <Route path='/informatiuonlist' element={<InformationList/>} />
-          <Route path='/itlicense' element={<ITLicense/>} />
-          <Route path='/studylist' element={<StudyList/>} />
-        </Routes>
-      </Router>
-    );
-  };
+  return (
+    <Router>
+      <Routes>
+        <Route path='/' element={<PostDetail />} />
+        <Route path='/jobdetails' element={<RecruitmentDetails />} />
+        <Route path='/licensedetails' element={<ITLicenseDetails />} />
+        <Route path='/licenselist' element={<ITLicense />} />
+        <Route path='/recruittlist' element={<Recruitment />} />
+        <Route path='/governmentlist' element={<GovermentSupport />} />
+        <Route path='/corporatelist' element={<CorporateProgram />} />
+        <Route path='/companydetail' element={<CompanyDetails/>} />
+        <Route path='/companylist' element={<CompanyList/>} />
+        <Route path='/informationlist' element={<InformationList/>} />
+        <Route path='/studylist' element={<StudyList/>} />
+      </Routes>
+    </Router>
+  );
+};
 
-  export default AppRouter;
-  //<Route path='/' element={<MainPage/>} />
+export default AppRouter;
