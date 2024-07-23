@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const PostComments = ({ comments, currentUser, onDeleteComment }) => {
+const PostComments = ({ comments, currentUser }) => {
   return (
     <CommentBackground>
       <CommentsContainer>
@@ -13,7 +13,7 @@ const PostComments = ({ comments, currentUser, onDeleteComment }) => {
           <Comment key={index}>
             <CommentHeader>
               <CommentAuthor>{comment.id}</CommentAuthor>
-              <DeleteButton onClick={() => onDeleteComment(index)}>x</DeleteButton>
+              <DeleteButton onClick={11}>x</DeleteButton>
             </CommentHeader>
             <CommentText>{comment.text}</CommentText>
             <Meta style={{ marginLeft: '5px' }}>{comment.date}</Meta>
