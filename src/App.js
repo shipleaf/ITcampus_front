@@ -1,4 +1,5 @@
 import React from 'react';
+import { RecoilRoot } from 'recoil';
 import AppRouter from './Router';
 
 const App = () => {
