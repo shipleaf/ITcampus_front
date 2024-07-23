@@ -12,7 +12,6 @@ const GuestHeaderComp = styled.div`
   justify-content: space-between;
   position: relative;
   border-bottom: 1px solid #ddd;
-  background-color: #fff;
 `;
 
 const LogoContainer = styled.div`
@@ -43,6 +42,10 @@ const MenuBar = styled.div`
 const HeaderRight = styled.div`
   display: flex;
   padding-right: 30px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 `;
 
 const SearchBar = styled.div`
@@ -63,26 +66,20 @@ const SearchBar = styled.div`
   }
 `;
 
-const LoginButton = styled.div`
-  width: 30%;
-  margin-left: 10px;
-  margin-right: 10px;
+const LoginButton = styled.button`
+  width: 100px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid #999;
+  background-color: #fff;
+  position: relative;
+  cursor: pointer;
+  border-radius: 1rem;
 
-  & button {
-    width: 100px;
-    height: 100%;
-    border: none;
-    box-shadow: 0 0 0 0.5px #000;
-    border-radius: 10px;
-    background-color: #fff;
-    font-weight: 500;
-
-    &:hover {
-      cursor: pointer;
-    }
+  &:hover {
+    background-color: #f5f5f5;
   }
 `;
 
@@ -143,8 +140,8 @@ function GuestHeader() {
             <CiSearch style={{ color: '#00ACEE' }} size={25} />
             <input type='text' />
           </SearchBar>
-          <LoginButton>
-            <button onClick={openModal}>로그인</button>
+          <LoginButton onClick={openModal}>
+            로그인
           </LoginButton>
         </HeaderRight>
       </GuestHeaderComp>
@@ -158,7 +155,7 @@ function GuestHeader() {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        shouldCloseOnOverlayClick={false} // Prevent closing modal by clicking outside
+        shouldCloseOnOverlayClick={true}
         style={{
           overlay: {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
