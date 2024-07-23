@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import star from '../../assets/scrap.png';
 import Today from '../../assets/Today';
 
-function Post({ title, detail, writer, img, scrap, startDate, endDate }) {
+function Post({ title, detail, writer, img, scrap, startDate, endDate, width }) {
     return (
-        <ButtonFrame>
+        <ButtonFrame width={width}>
             <ContentContainer>
                 <Title>{title}</Title>
                 <Content>{detail}</Content>
@@ -29,7 +29,7 @@ export default Post;
 
 const ButtonFrame = styled.button`
     display: flex;
-    width: 60%;
+    width: ${(props) => props.width || '60%'};
     height: 12%;
     margin: 15px auto;
     align-items: center;
