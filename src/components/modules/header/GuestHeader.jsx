@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
-import Logo from '../../header/Logo'
+import Logo from '../../header/Logo';
 import { CiSearch } from "react-icons/ci";
-import DropdownMenu from '../../header/DropdownMenu'
+import DropdownMenu from '../../header/DropdownMenu';
 import LoginModal from '../../login/LoginModal';
 
 const GuestHeaderComp = styled.div`
@@ -12,6 +12,7 @@ const GuestHeaderComp = styled.div`
   justify-content: space-between;
   position: relative;
   border-bottom: 1px solid #ddd;
+  background-color: #fff;
 `;
 
 const LogoContainer = styled.div`
@@ -140,18 +141,18 @@ function GuestHeader() {
         <HeaderRight>
           <SearchBar>
             <CiSearch style={{ color: '#00ACEE' }} size={25} />
-            <input
-              type='text'
-            />
+            <input type='text' />
           </SearchBar>
           <LoginButton>
             <button onClick={openModal}>로그인</button>
           </LoginButton>
         </HeaderRight>
       </GuestHeaderComp>
-      <DropdownMenuContainer show={showDropdown}
+      <DropdownMenuContainer
+        show={showDropdown}
         onMouseEnter={() => setShowDropdown(true)}
-        onMouseLeave={() => setShowDropdown(false)}>
+        onMouseLeave={() => setShowDropdown(false)}
+      >
         <DropdownMenu />
       </DropdownMenuContainer>
       <Modal
