@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import star from '../../assets/scrap.png';
-import Today from '../../assets/Today';
+// import Today from '../../assets/Today';
 
 function Post({ title, detail, writer, img, scrap, startDate, endDate }) {
     return (
@@ -35,13 +35,12 @@ const ButtonFrame = styled.button`
     align-items: center;
     justify-content: space-between;
     background-color: #ffffff;
-    border : none;
+    border: 3px solid #fff;
     border-radius: 5px;
     cursor: pointer;
 
     &:hover {
     border: 3px solid #36bef1;
-    transform: scale(1.05);
   }
 `
 
