@@ -13,14 +13,15 @@ import Recruitment from './pages/Recruitment';
 import SupportDetails from './pages/SupportDetails';
 import MyPage from './pages/MyPage';
 import PostDetail from './pages/PostWithComments';
-import MainCalendarPage from './pages/MainCalendarPage';
+// import MainCalendarPage from './pages/MainCalendarPage';
+import Header from './components/header/Header';
 
 
 const AppRouter = () => {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<MainCalendarPage />} />
+        <Route path='/' element={<Header/>} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/studydetail' element={<PostDetail />} />
         <Route path='/jobdetails' element={<RecruitmentDetails />} />

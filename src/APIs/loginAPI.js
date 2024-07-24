@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = '';
+const API_URL = 'itcampus-server.duckdns.org';
 
 export const login = async (userData) => {
 
@@ -17,7 +17,7 @@ export const login = async (userData) => {
 export const regist = async (registData) => {
 
     try {
-        const response = await axios.post(`${API_URL}/login`, registData);
+        const response = await axios.post(`${API_URL}/register`, registData);
         return response.data;
 
     } catch (error) {
