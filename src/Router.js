@@ -11,8 +11,11 @@ import ITLicenseDetails from './pages/ITLicenseDetails'
 import StudyList from './pages/StudyList';
 import CompanyDetails from './pages/CompanyDetails';
 import Recruitment from './pages/Recruitment';
+import SupportDetails from './pages/SupportDetails';
+import MainCalendarPage from './pages/MainCalendarPage';
 import MyPage from './pages/MyPage';
 import PostDetail from './pages/PostWithComments';
+
 
 const AppRouter = () => {
   return (
@@ -29,6 +32,8 @@ const AppRouter = () => {
         <Route path='/companylist' element={<CompanyList/>} />
         <Route path='/informationlist' element={<InformationList/>} />
         <Route path='/studylist' element={<StudyList/>} />
+        <Route path='/supportdetails' element={<SupportDetails/>} />
+        <Route path='/mainpage' element={<MainCalendarPage/>} />
       </Routes>
     </Router>
   );

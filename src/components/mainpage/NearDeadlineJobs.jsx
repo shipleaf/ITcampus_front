@@ -74,4 +74,4 @@ function NearDeadlineJobs() {
     )
 }
 
-export default NearDeadlineJobs
+export default NearDeadlineJobs;
