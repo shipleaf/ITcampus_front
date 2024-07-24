@@ -89,14 +89,21 @@ function SignInComponent({ toggleComponent, handleLogin, closeModal }) {
       password
     };
 
+    console.log(userData)
+
     try {
       const response = await login(userData);
-      console.log('로그인 성공', response);
-      handleLogin();
 
-      if (!response.ok) {
+      if (response.status >= 200 && response.status < 300) {
+        console.log('로그인 성공');
+        alert("로그인 성공");
+      
+      } else {
         throw new Error('로그인에 실패했습니다!');
       }
+
+      console.log('로그인 성공', response);
+      handleLogin();
 
     } catch (error) {
       console.error('로그인 실패: ', error);

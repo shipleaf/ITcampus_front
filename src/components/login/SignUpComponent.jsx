@@ -127,18 +127,20 @@ function SignUpComponent({ toggleComponent }) {
 
         try {
             const response = await regist(registData);
-            console.log('회원가입 성공', response);
-            alert('회원가입 성공!');
-            toggleComponent();
 
-            if (!response.ok) {
-                throw new Error('로그인에 실패했습니다!');
+            if (response.status >= 200 && response.status < 300) {
+                console.log('회원가입 성공', response.data);
+                alert('회원가입 성공!');
+                toggleComponent();
+            } else {
+                throw new Error('회원가입에 실패했습니다!');
             }
         } catch (error) {
             console.error('회원가입 실패: ', error);
             alert('회원가입에 실패 했습니다');
         }
     };
+
 
     return (
         <div>
