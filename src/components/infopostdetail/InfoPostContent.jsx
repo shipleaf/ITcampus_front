@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-const PostContent = ({ title, id, date, body, tag}) => {
+const InfoPostContent = ({ title, id, date, body, tag}) => {
   return (
     <ContentContainer>
       <ArrowButtonLeft onClick={1+1}>
@@ -35,7 +35,7 @@ const PostContent = ({ title, id, date, body, tag}) => {
   );
 };
 
-export default PostContent;
+export default InfoPostContent;
 
 const ContentContainer = styled.div`
   background-color: white;

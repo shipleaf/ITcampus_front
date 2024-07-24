@@ -2,6 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 const InfoPostComments = ({ comments, currentUser }) => {
+  
+const handleDelete = (id) => {
+  console.log(`삭제`);
+}
+
   return (
     <CommentBackground>
       <CommentsContainer>
@@ -13,7 +18,7 @@ const InfoPostComments = ({ comments, currentUser }) => {
           <Comment key={index}>
             <CommentHeader>
               <CommentAuthor>{comment.id}</CommentAuthor>
-              <DeleteButton onClick={11}>x</DeleteButton>
+              <DeleteButton onClick={() => handleDelete(comment.id)}>x</DeleteButton>
             </CommentHeader>
             <CommentText>{comment.text}</CommentText>
             <Meta style={{ marginLeft: '5px' }}>{comment.date}</Meta>
@@ -142,7 +147,7 @@ const SubmitButton = styled.button`
 `
 
 const Meta = styled.div`
-  font-size: 0.9em;
+  font-size: 14px;
   color: #666;
   white-space: nowrap;
 `

@@ -17,7 +17,7 @@ import MainCalendarPage from './pages/MainCalendarPage';
 import MyPage from './pages/MyPage';
 import StudyDetails from './pages/StudyDetails';
 import Header from './components/header/Header';
-
+import WritePost from './pages/CreatePost';
 
 
 const AppRouter = () => {
@@ -37,6 +37,7 @@ const AppRouter = () => {
         <Route path='/licenselist' element={<ITLicense />} />
         <Route path='/licensedetails/:key' element={<ITLicenseDetails />} />
         <Route path='/studylist' element={<StudyList/>} />
+        <Route Path='/studypostwrite' element = {<WritePost/>} />
         <Route path='/studydetails/:key' element={<StudyDetails />} />
         <Route path='/informationlist' element={<InformationList/>} />
         <Route path='/informationdetails/:key' element={<InformationDetails/>} />
