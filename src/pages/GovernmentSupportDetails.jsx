@@ -7,7 +7,7 @@ const ScrapContainer = styled.div`
     width: 8%;
 `
 
-function SupportDetails() {
+function GovernmentSupportDetails() {
     return (
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
             <SupportHeader />
@@ -18,4 +18,4 @@ function SupportDetails() {
     )
 }
 
-export default SupportDetails
+export default GovernmentSupportDetails;

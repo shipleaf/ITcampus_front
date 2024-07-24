@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import GuestHeader from '../components/header/GuestHeader';
 import CompanyHeader from '../components/modules/company/CompanyHeader';
@@ -7,8 +9,8 @@ import CompanyPost from '../components/post/CompanyPost';
 import star from '../assets/scrap.png'
 
 const CompanyDetails = () => {
-    const DummyData = {
-        companyID: 1,
+    const dummyData = [{
+        key: 1,
         companyName: "현대자동차(주)",
         establish: "1967. 12. 29",
         logo: "example_logo.png",
@@ -33,7 +35,8 @@ const CompanyDetails = () => {
         link: "https://www.example.com",
         revenue: "100억",
         scrapCount: 1
-    };
+    }
+];
 
     const OtherCompany ={
         company: "가",
@@ -42,11 +45,20 @@ const CompanyDetails = () => {
         scrap: 215,
     };
 
+
     const [isExpanded, setIsExpanded] = useState(false);
 
     const handleExpandClick = () => {
         setIsExpanded(!isExpanded);
     };
+
+    const { key } = useParams();
+
+    const companyDetailData = dummyData.find(company => company.key === Number(key));
+    
+    if (!companyDetailData) {
+        return <div>데이터를 불러오지 못했습니다.</div>;
+    }
 
     return (
         <>
@@ -54,14 +66,14 @@ const CompanyDetails = () => {
             <Container>
                 <Title>기업소개</Title>
                 <Divder />
-                <CompanyHeader data={DummyData} />
+                <CompanyHeader data={companyDetailData} />
                 <ScrapContainer>
                     <ScrapButtonDiv />
                 </ScrapContainer>
                 <Section>
                     <SectionTitle>회사 소개</SectionTitle>
                     <SectionContent isExpanded={isExpanded}>
-                        {DummyData.body.split('\n').map((line, index) => (
+                        {companyDetailData.body.split('\n').map((line, index) => (
                             <p key={index}>{line}</p>
                         ))}
                     </SectionContent>
@@ -70,15 +82,15 @@ const CompanyDetails = () => {
                     </ExpandButton>
                 </Section>
                 <ImageGallery>
-                    <GalleryImage src={DummyData.pic1} alt="이미지1" />
-                    <GalleryImage src={DummyData.pic2} alt="이미지2" />
-                    <GalleryImage src={DummyData.pic3} alt="이미지3" />
-                    <GalleryImage src={DummyData.pic4} alt="이미지4" />
+                    <GalleryImage src={companyDetailData.pic1} alt="이미지1" />
+                    <GalleryImage src={companyDetailData.pic2} alt="이미지2" />
+                    <GalleryImage src={companyDetailData.pic3} alt="이미지3" />
+                    <GalleryImage src={companyDetailData.pic4} alt="이미지4" />
                 </ImageGallery>
                 <Section>
                     <SectionTitle>복지 및 혜택</SectionTitle>
                     <SectionContent>
-                        {DummyData.welfare}
+                        {companyDetailData.welfare}
                     </SectionContent>
                 </Section>
                 <Section style = {{marginTop: '100px'}}>

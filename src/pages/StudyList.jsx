@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import GuestHeader from "../components/header/GuestHeader";
 import Top from "../components/post/Top";
 import StudyPost from "../components/post/StudyPost";
@@ -8,6 +9,7 @@ import star from "../assets/scrap.png"
 function StudyList(){
     const dummyPosts = [
         {
+            key: 1,
             title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
             detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
             writer : "정준용",
@@ -15,6 +17,7 @@ function StudyList(){
             commentNum  : "10"
         },
         {
+            key: 2,
             title : "멋사",
             detail : "가나다라마바사아자차카타파하",
             writer : "정준용",
@@ -22,86 +25,113 @@ function StudyList(){
             img : star
         },
         {
+            key: 3,
             title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
             detail : "가나다라마바사아자차카타파하가나다라마바사아자차카타파하",
             writer : "정준용",
             datecreate : "2024. 8. 15"
         },
         {
+            key: 4,
             title : "생각이 안니네",
             detail : "가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하",
             writer : "정준용",
             datecreate : "2026. 7. 12"
         },
         {
+            key: 5,
             title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
             detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
             writer : "정준용",
             datecreate : "2024. 7. 15"
         },
         {
+            key: 6,
             title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
             detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
             writer : "정준용",
             datecreate : "2024. 7. 15"
         },
         {
+            key: 7,
             title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
             detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
             writer : "정준용",
             datecreate : "2024. 7. 15"
-        },{
+        },
+        {
+            key: 8,
             title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
             detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
             writer : "정준용",
             datecreate : "2024. 7. 15",
             img : star
-        },{
+        },
+        {
+            key: 9,
             title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
             detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
             writer : "정준용",
             datecreate : "2024. 7. 15"
-        },{
+        },
+        {
+            key: 10,
             title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
             detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
             writer : "정준용",
             datecreate : "2024. 7. 15"
-        },{
+        },
+        {
+            key: 11,
             title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
             detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
             writer : "정준용",
             datecreate : "2024. 7. 15"
-        },{
+        },
+        {
+            key: 12,
             title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
             detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
             writer : "정준용",
             datecreate : "2024. 7. 15"
-        },{
+        },
+        {
+            key: 13,
             title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
             detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
             writer : "정준용",
             datecreate : "2024. 7. 15"
-        },{
+        },
+        {
+            key: 14,
             title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
             detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
             writer : "정준용",
             datecreate : "2024. 7. 15"
-        },{
+        },
+        {
+            key: 15,
             title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
             detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
             writer : "정준용",
             datecreate : "2024. 7. 15"
-        },{
+        },
+        {
+            key: 16,
             title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
             detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
             writer : "정준용",
             datecreate : "2024. 7. 15"
-        },{
+        },
+        {
+            key: 17,
             title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
             detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
             writer : "정준용",
             datecreate : "2024. 7. 15"
-        },{
+        },
+        {
+            key: 18,
             title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
             detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
             writer : "정준용",
@@ -136,10 +166,12 @@ function StudyList(){
                 <Write> 글쓰기</Write>
             </WriteContainer>
             {currentPosts.map((post, index) => (
+                <StyledLink to={`/studydetails/${post.key}`}>
                 <StudyPost
                     key={index}
                     {...post}
                 />
+                </StyledLink>
             ))}
             <Pagination>
                 {Array.from({ length: totalPages }, (_, index) => (
@@ -198,3 +230,11 @@ const PageNumber = styled.button`
         color: #fff;
     }
 `;
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+    &:hover {
+        text-decoration: none;
+    }
+`

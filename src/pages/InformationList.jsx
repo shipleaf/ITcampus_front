@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import GuestHeader from "../components/header/GuestHeader";
 import Top from "../components/post/Top";
 import StudyPost from "../components/post/StudyPost";
@@ -136,10 +137,12 @@ function InformationList(){
                 <Write> 글쓰기</Write>
             </WriteContainer>
             {currentPosts.map((post, index) => (
+                <StyledLink to={`/informationdetails/${post.key}`}>
                 <StudyPost
                     key={index}
                     {...post}
                 />
+                </StyledLink>
             ))}
             <Pagination>
                 {Array.from({ length: totalPages }, (_, index) => (
@@ -198,3 +201,11 @@ const PageNumber = styled.button`
         color: #fff;
     }
 `;
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+    &:hover {
+        text-decoration: none;
+    }
+`

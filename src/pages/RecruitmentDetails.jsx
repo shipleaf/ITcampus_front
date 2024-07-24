@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import GuestHeader from '../components/header/GuestHeader';
 import RecruitDetailHeader from '../components/modules/recruit/RecruitDetailHeader';
 import ScrapButtonDiv from '../components/modules/recruit/ScrapButtonDiv';
@@ -44,7 +45,7 @@ const ScrapContainer = styled.div`
 //     }
 function RecruitmentDetails() {
 
-    const jobDetailData = {
+    const dummyData = [{
         key: 1,
         title: "우아한 형제들 하반기 채용[프론트엔드 개발자]",
         startdate: '2024-07-18T10:00:00',
@@ -71,8 +72,15 @@ function RecruitmentDetails() {
         recruit_num: '00명',
         link: 'https://www.saramin.co.kr/zf_user/',
         companyname: '(주)우아한 형제들'
-    };
+    }];
 
+    const { key } = useParams();
+    const jobDetailData = dummyData.find(job => job.key === Number(key));
+
+    if (!jobDetailData) {
+        return <div>데이터를 불러오지 못했습니다.</div>;
+    }
+    
     return (
         <div style={{ backgroundColor: '#f9f9f9', display: 'flex', flexDirection: 'column' }}>
             <GuestHeader />

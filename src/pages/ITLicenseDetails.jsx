@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import LicenseHeader from '../components/license/LicenseHeader';
 import GuestHeader from '../components/header/GuestHeader';
 import ScrapButtonDiv from '../components/modules/recruit/ScrapButtonDiv';
@@ -12,7 +13,7 @@ const ScrapContainer = styled.div`
 `
 
 function ITLicenseDetails() {
-    const licenseDetails = {
+    const dummyData = [{
         key: 1,
         title: "2024 국가공인 자격증 시험",
         startdate: "2024-08-01T00:00:00.000Z",
@@ -40,7 +41,15 @@ function ITLicenseDetails() {
         agency: "교육부",
         link: "https://example.com/apply",
         fee: "50,000원"
-    };
+    }];
+
+    const { key } = useParams();
+    const licenseDetails = dummyData.find(license => license.key === Number(key));
+
+    if (!licenseDetails) {
+        return <div>데이터를 불러오지 못했습니다.</div>;
+    }
+    
     return (
         <div style={{ backgroundColor: '#f1f4f7' }}>
             <GuestHeader />

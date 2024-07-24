@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import GuestHeader from "../components/header/GuestHeader";
 import Top from "../components/post/Top";
 import Post from "../components/post/Post";
@@ -7,7 +8,7 @@ import CustomSelect from "../components/filter/CustomSelect";
 import FilterButton from "../components/filter/FilterButton";
 import star from '../assets/scrap.png';
 
-function ITLicense(){
+function GovernmentSupport(){
     const dummyPosts = [
         {
             title: "[공지] 12기 중앙 해커톤 안내",
@@ -228,10 +229,12 @@ function ITLicense(){
                 </Right>
             </SortContainer>
             {currentPosts.map((post, index) => (
+                <StyledLink to={`/governmentsupportdetails/${post.key}`}>
                 <Post
                     key={index}
                     {...post}
                 />
+                </StyledLink>
             ))}
             <Pagination>
                 {Array.from({ length: totalPages }, (_, index) => (
@@ -248,7 +251,7 @@ function ITLicense(){
     );
 }
 
-export default ITLicense;
+export default GovernmentSupport;
 
 const SortContainer = styled.div`
     display: flex;
@@ -269,7 +272,7 @@ const Pagination = styled.div`
     display: flex;
     justify-content: center;
     margin: 20px 0;
-`;
+`
 
 const PageNumber = styled.button`
     background: ${(props) => (props.active ? '#36bef1' : '#fff')};
@@ -282,4 +285,12 @@ const PageNumber = styled.button`
         background: #36bef1;
         color: #fff;
     }
-`;
+`
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+    &:hover {
+        text-decoration: none;
+    }
+`

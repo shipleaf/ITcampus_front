@@ -63,6 +63,9 @@ const Contents = styled.div`
 `;
 
 function RecruitDetailHeader({ jobDetailData }) {
+    if (!jobDetailData) {
+        return null;
+    }
     return (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
             <div style={{ fontSize: '20px', fontWeight: '700', width: '62%', padding: '15px', marginLeft: '20px' }}>채용공고</div>

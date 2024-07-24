@@ -9,6 +9,7 @@ function Post({ title, detail, writer, img, scrap, startDate, endDate, width }) 
             <ContentContainer>
                 <Title>{title}</Title>
                 <Content>{detail}</Content>
+                <Remain>
                 <Footer>
                     <Writer>{writer}</Writer>
                     <Date>{`${startDate} ~ ${endDate}`}</Date>
@@ -17,6 +18,7 @@ function Post({ title, detail, writer, img, scrap, startDate, endDate, width }) 
                         <ScrapCount>{scrap}</ScrapCount>
                     </ScrapContainer>
                 </Footer>
+                </Remain>
             </ContentContainer>
             <ThumbnailContainer>
                 <Thumbnail src={img} />
@@ -27,10 +29,16 @@ function Post({ title, detail, writer, img, scrap, startDate, endDate, width }) 
 
 export default Post;
 
+const Remain = styled.div`
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
+`
+
 const ButtonFrame = styled.button`
     display: flex;
     width: ${(props) => props.width || '60%'};
-    height: 12%;
+    height: 190px;
     margin: 15px auto;
     align-items: center;
     justify-content: space-between;
@@ -65,7 +73,7 @@ const Content = styled.div`
   font-size: 18px;
   color: #666;
   text-align: left;
-  height: 70px;
+  height: auto;
   margin: 10px 0;
   display: -webkit-box;
   -webkit-line-clamp: 3;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Header = styled.div`
     display: flex;
-    width: 60%
+    width: 60%;
 `;
 
 const Body = styled.div`
@@ -30,6 +30,11 @@ const Container = styled.div`
 
 
 function LicenseBody({ licenseDetails }) {
+
+    if (!licenseDetails) {
+        return null;
+    }
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Container>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import GuestHeader from "../components/header/GuestHeader";
 import Top from "../components/post/Top";
@@ -228,10 +229,12 @@ function CorporateProgram(){
                 </Right>
             </SortContainer>
             {currentPosts.map((post, index) => (
+                <StyledLink to={`/corporatedetails/${post.key}`}>
                 <Post
                     key={index}
                     {...post}
                 />
+                </StyledLink>
             ))}
             <Pagination>
                 {Array.from({ length: totalPages }, (_, index) => (
@@ -256,7 +259,7 @@ const SortContainer = styled.div`
     margin: 20px auto;
     margin-bottom: 40px;
     align-items: center;
-`;
+`
 
 const Right = styled.div`
     display: flex;
@@ -269,7 +272,7 @@ const Pagination = styled.div`
     display: flex;
     justify-content: center;
     margin: 20px 0;
-`;
+`
 
 const PageNumber = styled.button`
     background: ${(props) => (props.active ? '#36bef1' : '#fff')};
@@ -282,4 +285,12 @@ const PageNumber = styled.button`
         background: #36bef1;
         color: #fff;
     }
-`;
+`
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+    &:hover {
+        text-decoration: none;
+    }
+`

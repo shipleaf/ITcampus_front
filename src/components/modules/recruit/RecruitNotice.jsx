@@ -73,7 +73,9 @@ const RecruitButton = styled.button`
 `
 
 function RecruitNotice({ jobDetailData }) {
-
+    if (!jobDetailData) {
+        return null;
+    }
     const recruitStart = new Date(jobDetailData.startdate).toLocaleDateString();
     const recruitEnd = new Date(jobDetailData.enddate).toLocaleDateString();
     const recruitResult = new Date(jobDetailData.resultdate).toLocaleDateString();

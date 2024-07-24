@@ -67,7 +67,6 @@ const ButtonFrame = styled.div`
 
     &:hover {
         border: 3px solid #36bef1;
-        transform: scale(1.05);
     }
 `
 
