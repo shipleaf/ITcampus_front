@@ -141,17 +141,6 @@ const SubmitButton = styled.button`
   margin-right: 5px;
 `
 
-const SecretCheckbox = styled.label`
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  color: #666;
-`
-
-const SecretCheckboxInput = styled.input`
-  margin-right: 5px;
-`
-
 const Meta = styled.div`
   font-size: 0.9em;
   color: #666;
