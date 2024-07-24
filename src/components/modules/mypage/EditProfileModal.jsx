@@ -19,15 +19,15 @@ function EditProfileModal({ isOpen, onClose }) {
   const handleJobChange = (e) => setJob(e.target.value);
 
   const handleSave = () => {
-    const userProfile = {
-      email,
-      name,
-      password,
-      confirmPassword,
-      gender,
-      birthdate,
-      job
-    };
+    // const userProfile = {
+    //   email,
+    //   name,
+    //   password,
+    //   confirmPassword,
+    //   gender,
+    //   birthdate,
+    //   job
+    // };
   };
 
   useEffect(() => {

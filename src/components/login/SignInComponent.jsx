@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { login } from '../../APIs/loginAPI';
 
 const SignInHeader = styled.div`
   margin-bottom: 15%;
@@ -81,21 +82,22 @@ function SignInComponent({ toggleComponent, handleLogin, closeModal }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    handleLogin();
-    closeModal(); // 모달을 닫습니다.
-    // const userData = {
-    //     id,
-    //     password
-    // };
+    closeModal();
 
-    // try {
-    //     const response = await login(userData);
-    //     console.log('로그인 성공', response);
-    //     handleLogin();
-    // } catch (error) {
-    //     console.error('로그인 실패: ', error);
-    //     alert('로그인에 실패 했습니다');
-    // }
+    const userData = {
+      id,
+      password
+    };
+
+    try {
+      const response = await login(userData);
+      console.log('로그인 성공', response);
+      handleLogin();
+      
+    } catch (error) {
+      console.error('로그인 실패: ', error);
+      alert('로그인에 실패 했습니다');
+    }
   };
 
   return (

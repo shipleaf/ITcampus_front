@@ -129,7 +129,7 @@ function SignUpComponent({ toggleComponent }) {
             const response = await regist(registData);
             console.log('회원가입 성공', response);
             alert('회원가입 성공!');
-            toggleComponent(); // 회원가입 성공 시 로그인 화면으로 전환
+            toggleComponent();
         } catch (error) {
             console.error('회원가입 실패: ', error);
             alert('회원가입에 실패 했습니다');

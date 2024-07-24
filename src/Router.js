@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MainPage from './pages/MainPage';
 import RecruitmentDetails from './pages/RecruitmentDetails';
 import CompanyList from './pages/CompanyList';
 import CorporateProgram from './pages/CorporateProgram';
@@ -19,12 +18,14 @@ import MyPage from './pages/MyPage';
 import StudyDetails from './pages/StudyDetails';
 
 
+
 const AppRouter = () => {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<MainPage />} />
+        <Route path='/' element={<Header />} />
         <Route path='/mainpage' element={<MainCalendarPage/>} />
+        <Route path='/' element={<Header/>} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/companylist' element={<CompanyList/>} />
         <Route path='/companydetails/:key' element={<CompanyDetails/>} />
@@ -40,7 +41,7 @@ const AppRouter = () => {
         <Route path='/informationlist' element={<InformationList/>} />
         <Route path='/informationdetails/:key' element={<InformationDetails/>} />
       </Routes>
-    </Router>
+    </Router> 
   );
 };
 
