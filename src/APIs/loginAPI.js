@@ -5,7 +5,7 @@ const API_URL = 'itcampus-server.duckdns.org';
 export const login = async (userData) => {
 
     try {
-        const response = await axios.post(`${API_URL}/login`, userData);
+        const response = await axios.post(`${API_URL}/api/login`, userData);
         return response.data;
 
     } catch (error) {
@@ -17,7 +17,7 @@ export const login = async (userData) => {
 export const regist = async (registData) => {
 
     try {
-        const response = await axios.post(`${API_URL}/register`, registData);
+        const response = await axios.post(`${API_URL}/api/register`, registData);
         return response.data;
 
     } catch (error) {
