@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import koLocale from '@fullcalendar/core/locales/ko';
-import '../../../style/customCalendar.css'
+import '../../../style/customCalendar.css';
 
 function CalendarComponent({ onDateClick }) {
+    const [isInitialRender,] = useState(true);
+
     const handleDateClick = (info) => {
         onDateClick(info.dateStr);
     };
@@ -21,6 +23,20 @@ function CalendarComponent({ onDateClick }) {
     const renderDayCellContent = (dayCellContent) => {
         return dayCellContent.dayNumberText.replace('일', ''); // '일' 제거
     };
+
+    useEffect(() => {
+        if (isInitialRender) {
+            // 날짜 셀이 렌더링된 후 5주만 표시하고 나머지 숨기기
+            const calendarApi = document.querySelector('.fc-daygrid-body');
+            const weeks = calendarApi.querySelectorAll('table.fc-scrollgrid-sync-table tbody tr');
+            weeks.forEach((week, index) => {
+                if (index >= 5) {
+                    week.classList.add('hidden-week');
+                }
+            });
+
+        }
+    }, [isInitialRender])
 
     return (
         <div className="container">

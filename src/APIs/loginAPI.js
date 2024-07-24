@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://itcampus-server.duckdns.org';  // 프로토콜 추가
+const API_URL = '223.130.135.136';  // 프로토콜 추가
 
 export const login = async (userData) => {
     try {
