@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import GuestHeader from '../components/header/GuestHeader';
 import CompanyHeader from '../components/modules/company/CompanyHeader';

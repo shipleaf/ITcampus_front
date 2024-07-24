@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import GuestHeader from '../components/header/GuestHeader';
 import RecruitDetailHeader from '../components/modules/recruit/RecruitDetailHeader';

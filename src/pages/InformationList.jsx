@@ -111,12 +111,16 @@ function InformationList(){
     ];
 
     const [currentPage, setCurrentPage] = useState(1); 
-    const [isFilterActive, setIsFilterActive] = useState(false);
+    const [isFilterActive,] = useState(false);
     const postsPerPage = 7; 
 
-    const filteredPosts = dummyPosts.filter(post => {
+    const filteredPosts = dummyPosts.filter((post) => {
         if (!isFilterActive) return true;
+    
+        // 예시 조건: 포스트의 제목이 "example"을 포함하는 경우만 필터링
+        return post.title.includes("example");
     });
+    
 
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;

@@ -1,8 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import InfoPostComments from '../components/infopostdetail/InfoPostComments';
-import InfoPostContent from '../components/infopostdetail/InfoPostContent';
 import PostContent from '../components/studypostdetail/StudyPostContent';
 import PostComments from '../components/studypostdetail/StudyPostComments';
 
