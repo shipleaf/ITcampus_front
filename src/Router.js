@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MainPage from './pages/MainPage';
 import RecruitmentDetails from './pages/RecruitmentDetails';
 import CompanyList from './pages/CompanyList';
 import CorporateProgram from './pages/CorporateProgram';
@@ -12,17 +11,16 @@ import StudyList from './pages/StudyList';
 import CompanyDetails from './pages/CompanyDetails';
 import Recruitment from './pages/Recruitment';
 import SupportDetails from './pages/SupportDetails';
-import MainCalendarPage from './pages/MainCalendarPage';
 import MyPage from './pages/MyPage';
 import PostDetail from './pages/PostWithComments';
-import GuestHeader from './components/header/GuestHeader';
+import MainCalendarPage from './pages/MainCalendarPage';
 
 
 const AppRouter = () => {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<GuestHeader />} />
+        <Route path='/' element={<MainCalendarPage />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/studydetail' element={<PostDetail />} />
         <Route path='/jobdetails' element={<RecruitmentDetails />} />
@@ -36,9 +34,8 @@ const AppRouter = () => {
         <Route path='/informationlist' element={<InformationList/>} />
         <Route path='/studylist' element={<StudyList/>} />
         <Route path='/supportdetails' element={<SupportDetails/>} />
-        <Route path='/mainpage' element={<MainCalendarPage/>} />
       </Routes>
-    </Router>
+    </Router> 
   );
 };
 
