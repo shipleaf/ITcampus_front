@@ -5,7 +5,7 @@ import { FaStar } from "react-icons/fa";
 import axios from 'axios';
 import logoImg from '../../assets/hyundai.png';
 
-function CompanyPost({ company, detail, img, scrap }) {
+function CompanyPost({ company, detail, img, scrap, width }) {
     const [isScrapped, setIsScrapped] = useState(false);
 
     const handleScrap = async (e) => {
@@ -25,7 +25,7 @@ function CompanyPost({ company, detail, img, scrap }) {
     };
 
     return (
-        <ButtonFrame>
+        <ButtonFrame width={width}>
             <ThumbnailContainer>
                 <Thumbnail src={logoImg} />
             </ThumbnailContainer>
@@ -39,7 +39,7 @@ function CompanyPost({ company, detail, img, scrap }) {
                 <ScrapCount>{scrap}</ScrapCount>
             </ShowScrap>
             <ScrapButtonContainer onClick={handleScrap}>
-                <ScrapButtonText>스크랩</ScrapButtonText>
+                <ScrapButtonText >스크랩</ScrapButtonText>
                 {isScrapped ? (
                     <FaStar size={30} style={{ color: '#ffff00' }} />
                 ) : (
@@ -54,9 +54,9 @@ export default CompanyPost;
 
 const ButtonFrame = styled.div`
     display: flex;
-    width: 60%;
+    width: ${(props) => props.width || '60%'};
     height: 100px;
-    margin: 20px auto;
+    margin: 15px auto;
     margin-bottom: 35px;
     align-items: center;
     background-color: #ffffff;
@@ -156,6 +156,7 @@ const ScrapButtonText = styled.div`
     color: #999;
     margin-left: 5px;
     margin-right: 8px;
+    font-size : 15px;
     pointer-events: none;
     white-space: nowrap;
     overflow: hidden;
