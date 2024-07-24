@@ -4,6 +4,20 @@ html, body {
     padding: 0;
 }
 
+.hidden-week {
+    display: none !important;
+}
+
+
+.fc-scrollgrid-sync-table{
+    & tbody{
+        & tr{
+            height: 20% !important;
+        }
+    }
+}
+
+
 .container {
     display: flex;
     flex-direction: column;
@@ -42,12 +56,11 @@ html, body {
 
 .fc-daygrid-day-frame {
     box-sizing: border-box;
-    padding: 2px;
+    padding: 0px;
     position: relative;
 }
 
 .fc-daygrid-day:hover .fc-daygrid-day-frame {
-    border: 2px solid #ddd !important;
     cursor: pointer;
     border-radius: 10px;
     padding: 0;
@@ -126,12 +139,7 @@ html, body {
 }
 
 .fc-toolbar.fc-header-toolbar {
-    display: flex;
-    justify-content: center;
-    background-color: #999;
-    height: 64px;
-    padding: 8px;
-    margin-bottom: 0 !important;
+    display: none;
 }
 
 .fc-toolbar-chunk {
