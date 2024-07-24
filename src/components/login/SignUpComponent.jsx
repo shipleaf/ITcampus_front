@@ -130,6 +130,10 @@ function SignUpComponent({ toggleComponent }) {
             console.log('회원가입 성공', response);
             alert('회원가입 성공!');
             toggleComponent();
+
+            if (!response.ok) {
+                throw new Error('로그인에 실패했습니다!');
+            }
         } catch (error) {
             console.error('회원가입 실패: ', error);
             alert('회원가입에 실패 했습니다');
