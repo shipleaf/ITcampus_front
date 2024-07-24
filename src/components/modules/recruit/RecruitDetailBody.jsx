@@ -46,7 +46,9 @@ const StyledImage = styled.img`
 `;
 
 function RecruitDetailBody({ jobDetailData }) {
-
+    if (!jobDetailData) {
+        return null;
+    }
     const images = [jobDetailData.pic1, jobDetailData.pic2, jobDetailData.pic3, jobDetailData.pic4, jobDetailData.pic5];
 
     return (

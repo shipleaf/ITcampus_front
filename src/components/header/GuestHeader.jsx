@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
+import { Link }  from 'react-router-dom';
 import Logo from './Logo';
 import { CiSearch } from "react-icons/ci";
 import DropdownMenu from './DropdownMenu';
@@ -17,6 +18,7 @@ const GuestHeaderComp = styled.div`
 
 const LogoContainer = styled.div`
   flex-shrink: 0;
+  cursor: pointer;
 `;
 
 const MenuBar = styled.div`
@@ -115,9 +117,11 @@ function GuestHeader() {
   return (
     <div>
       <GuestHeaderComp>
+      <Link to="/mainpage" style={{ textDecoration: 'none' }}>
         <LogoContainer>
           <Logo />
         </LogoContainer>
+        </Link>
         <MenuBar
           onMouseEnter={() => setShowDropdown(true)}
           onMouseLeave={() => setShowDropdown(false)}

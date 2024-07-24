@@ -36,7 +36,7 @@ export default RecruitmentPost;
 const ButtonFrame = styled.button`
     display: flex;
     width: ${(props) => props.width || '60%'};
-    height: 12%;
+    height: 250px;
     margin: 15px auto;
     align-items: center;
     justify-content: space-between;
@@ -47,7 +47,6 @@ const ButtonFrame = styled.button`
 
     &:hover {
         border: 3px solid #36bef1;
-        transform: scale(1.05);
     }
 `;
 
@@ -76,7 +75,7 @@ const Content = styled.div`
     font-size: 18px;
     color: #666;
     text-align: left;
-    height: 70px;
+    height: auto;
     margin: 10px 0;
     display: -webkit-box;
     -webkit-line-clamp: 3;

@@ -136,7 +136,7 @@ const Thumbnail = styled.img`
 
 const Divider = styled.div`
     margin: 5px auto;  
-    width: 60%;
+    width: 50%;
     height: 1px;
     background-color: #ccc;
     display: ${(props) => (props.width === '100%' ? 'none' : 'block')};

@@ -68,7 +68,9 @@ const InstitutionToc = styled(Toc)`
 
 function LicenseHeader({licenseDetails}) {
 
-    
+    if (!licenseDetails) {
+        return null;
+    }
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -81,7 +83,6 @@ function LicenseHeader({licenseDetails}) {
     const formattedResultDate = formatDate(licenseDetails.resultdate);
     const formattedExamStartDate = formatDate(licenseDetails.exam_startdate);
     const formattedExamEndDate = formatDate(licenseDetails.exam_enddate);
-
 
 
     return (

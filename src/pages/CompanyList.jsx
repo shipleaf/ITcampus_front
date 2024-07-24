@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import GuestHeader from "../components/header/GuestHeader";
 import Top from "../components/post/Top";
 import CompanyPost from "../components/post/CompanyPost";
@@ -9,30 +10,35 @@ import star from '../assets/scrap.png';
 function CompanyList() {
     const dummyPosts = [
         {
+            key: 1,
             company: "가",
             detail: "#프리한 복장 가능 #정시출근 #편균 연령 40대이상 외 13가지",
             img: star,
             scrap: 215,
         },
         {
+            key: 2,
             company: "다",
             detail: "#프리한 복장 가능 #정시출근 #편균 연령 40대이상 외 13가지",
             img: star,
             scrap: 200,
         },
         {
+            key: 3,
             company: "현대자동차(주)",
             detail: "#프리한 복장 가능 #정시출근 #편균 연령 40대이상 외 13가지",
             img: star,
             scrap: 150,
         },
         {
+            key: 4,
             company: "현대자동차(주)",
             detail: "#프리한 복장 가능 #정시출근 #편균 연령 40대이상 외 13가지fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             img: star,
             scrap: 5,
         },
         {
+            key: 5,
             company: "현대자동차(주)",
             detail: "#프리한 복장 가능 #정시출근 #편균 연령 40대이상 외 13가지",
             img: star,
@@ -103,10 +109,9 @@ function CompanyList() {
                 </Right>
             </SortContainer>
             {currentPosts.map((post, index) => (
-                <CompanyPost
-                    key={index}
-                    {...post}
-                />
+                <StyledLink to={`/companydetails/${post.key}`}>
+                    <CompanyPost {...post} />
+                </StyledLink>
             ))}
             <Pagination>
                 {Array.from({ length: totalPages }, (_, index) => (
@@ -131,20 +136,20 @@ const SortContainer = styled.div`
     margin: 20px auto;
     margin-bottom: 40px;
     align-items: center;
-`;
+`
 
 const Right = styled.div`
     display: flex;
     flex: 1;
     flex-direction: row;
     justify-content: flex-end;
-`;
+`
 
 const Pagination = styled.div`
     display: flex;
     justify-content: center;
     margin: 20px 0;
-`;
+`
 
 const PageNumber = styled.button`
     background: ${(props) => (props.active ? '#36bef1' : '#fff')};
@@ -157,4 +162,12 @@ const PageNumber = styled.button`
         background: #36bef1;
         color: #fff;
     }
-`;
+`
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+    &:hover {
+        text-decoration: none;
+    }
+`

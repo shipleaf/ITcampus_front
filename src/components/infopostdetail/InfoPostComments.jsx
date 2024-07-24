@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const PostComments = ({ comments, currentUser }) => {
+const InfoPostComments = ({ comments, currentUser }) => {
   return (
     <CommentBackground>
       <CommentsContainer>
@@ -23,10 +23,6 @@ const PostComments = ({ comments, currentUser }) => {
           <UserName>{currentUser}</UserName>
           <CommentTextArea placeholder="댓글을 남겨보세요" />
           <OptionsWrapper>
-            <SecretCheckbox>
-              <SecretCheckboxInput type="checkbox" />
-              비밀글
-            </SecretCheckbox>
             <SubmitButton>등록</SubmitButton>
           </OptionsWrapper>
         </CommentInputContainer>
@@ -35,7 +31,7 @@ const PostComments = ({ comments, currentUser }) => {
   );
 };
 
-export default PostComments;
+export default InfoPostComments;
 
 const CommentBackground = styled.div`
   background-color: #f0f8ff;

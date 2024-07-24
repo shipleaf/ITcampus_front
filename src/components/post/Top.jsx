@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import SearchIcon from '../../assets/searchicon.png';
 
-function Top({title, search}){
+function Top({title, search, width}){
     return (
-        <Frame>
+        <Frame width = {width}>
           <TitleContainer>
-            <Title>{title}</Title>
+            <Title >{title}</Title>
           </TitleContainer>
           <SearchContainer>
             <SearchImage src={SearchIcon} />
@@ -20,7 +20,7 @@ export default Top;
 const Frame = styled.div`
   display : flex;
   align-items: flex-end;
-  width: 60%;
+  width: ${(props) => props.width || '60%'};
   margin : 10px auto;
   margin-top : 40px;
   justify-content: space-between;
@@ -56,7 +56,7 @@ const Search = styled.input`
   //box-shadow: 0px 0px 1px #777777, -1px 1px 3px #777777;
   border-radius: 10px;
   outline: none;
-`;
+`
 
 const SearchImage = styled.img`
   position: absolute;
@@ -65,4 +65,4 @@ const SearchImage = styled.img`
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-`;
+`

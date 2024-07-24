@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import GuestHeader from "../components/header/GuestHeader";
 import Top from "../components/post/Top";
 import RecruitmentPost from "../components/post/RecruitmentPost";
@@ -11,6 +12,7 @@ import DetailSearch from "../components/filter/DetailSearch";
 function Recruitment() {
     const dummyPosts = [
         {
+            key: 1,
             title: "[공지] 12기 중앙 해커톤 안내",
             detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
             writer: "멋쟁이사자처럼 대학",
@@ -25,6 +27,7 @@ function Recruitment() {
             endDate: "2024. 7. 14"
         },
         {
+            key: 2,
             title: "[공지] 13기 중앙 해커톤 안내",
             detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
             writer: "멋쟁이사자처럼 대학",
@@ -39,6 +42,7 @@ function Recruitment() {
             endDate: "2024. 8. 10"
         },
         {
+            key: 3,
             title: "[공지] 12기 중앙 해커톤 안내",
             detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
             writer: "멋쟁이사자처럼 대학",
@@ -53,6 +57,7 @@ function Recruitment() {
             endDate: "2024. 7. 30"
         },
         {
+            key: 4,
             title: "[공지] 12기 중앙 해커톤 안내",
             detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
             writer: "멋쟁이사자처럼 대학",
@@ -67,6 +72,7 @@ function Recruitment() {
             endDate: "2024. 7. 14"
         },
         {
+            key: 5,
             title: "[공지] 13기 중앙 해커톤 안내",
             detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
             writer: "멋쟁이사자처럼 대학",
@@ -81,6 +87,7 @@ function Recruitment() {
             endDate: "2024. 8. 10"
         },
         {
+            key: 6,
             title: "[공지] 14기 중앙 해커톤 안내",
             detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
             writer: "멋쟁이사자처럼 대학",
@@ -95,6 +102,7 @@ function Recruitment() {
             endDate: "2024. 9. 10"
         },
         {
+            key: 7,
             title: "[공지] 15기 중앙 해커톤 안내",
             detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
             writer: "멋쟁이사자처럼 대학",
@@ -109,6 +117,7 @@ function Recruitment() {
             endDate: "2024. 10. 10"
         },
         {
+            key: 8,
             title: "[공지] 16기 중앙 해커톤 안내",
             detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
             writer: "멋쟁이사자처럼 대학",
@@ -123,6 +132,7 @@ function Recruitment() {
             endDate: "2024. 11. 10"
         },
         {
+            key: 9,
             title: "[공지] 17기 중앙 해커톤 안내",
             detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
             writer: "멋쟁이사자처럼 대학",
@@ -137,6 +147,7 @@ function Recruitment() {
             endDate: "2024. 12. 10"
         },
         {
+            key: 10,
             title: "[공지] 18기 중앙 해커톤 안내",
             detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
             writer: "멋쟁이사자처럼 대학",
@@ -151,6 +162,7 @@ function Recruitment() {
             endDate: "2024. 12. 25"
         },
         {
+            key: 11,
             title: "[공지] 19기 중앙 해커톤 안내",
             detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
             writer: "멋쟁이사자처럼 대학",
@@ -165,6 +177,7 @@ function Recruitment() {
             endDate: "2025. 1. 15"
         },
         {
+            key: 12,
             title: "[공지] 20기 중앙 해커톤 안내",
             detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
             writer: "멋쟁이사자처럼 대학",
@@ -179,6 +192,7 @@ function Recruitment() {
             endDate: "2025. 2. 10"
         },
         {
+            key: 13,
             title: "[공지] 21기 중앙 해커톤 안내",
             detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
             writer: "멋쟁이사자처럼 대학",
@@ -304,10 +318,12 @@ function Recruitment() {
                 </Right>
             </SortContainer>
             {currentPosts.map((post, index) => (
+                <StyledLink to={`/recruitmentdetails/${post.key}`}>
                 <RecruitmentPost
                     key={index}
                     {...post}
                 />
+                </StyledLink>
             ))}
             <Pagination>
                 {Array.from({ length: totalPages }, (_, index) => (
@@ -360,3 +376,11 @@ const PageNumber = styled.button`
         color: #fff;
     }
 `;
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+    &:hover {
+        text-decoration: none;
+    }
+`
