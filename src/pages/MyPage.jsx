@@ -5,9 +5,15 @@ import Post from "../components/post/Post";
 import CompanyPost from "../components/post/CompanyPost";
 import RecruitmentPost from "../components/post/RecruitmentPost";
 import StudyPost from "../components/post/StudyPost";
+import EditProfileModal from "../components/modules/mypage/EditProfileModal";
 
-function Recruitment() {
+function MyPage() {
     const OtherCompany = [
+        {
+            company: "현대",
+            detail: "자동차에 관심있으신분이면 아무나",
+            scrap: 120
+        },
         {
             company: "가",
             detail: "#프리한 복장 가능 #정시출근 #편균 연령 40대이상 외 13가지",
@@ -99,7 +105,8 @@ function Recruitment() {
 
     const [selectedTab, setSelectedTab] = useState('기업');
     const [selectedWriteTab, setSelectedWriteTab] = useState('스터디게시판');
-    
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const scrapSectionRef = useRef(null);
     const writtenSectionRef = useRef(null);
 
@@ -207,10 +214,11 @@ function Recruitment() {
                 </SidebarTitle>
                 <SidebarTitle>작성한 글
                     <SidebarItemContainer>
-                        <SidebarItem onClick={() => handleSidebarClick('정보게시판', true)}>정보게시판</SidebarItem>
+                        <SidebarItem  onClick={() => handleSidebarClick('정보게시판', true)}>정보게시판</SidebarItem>
                         <SidebarItem onClick={() => handleSidebarClick('스터디게시판', true)}>스터디게시판</SidebarItem>
                     </SidebarItemContainer>
                 </SidebarTitle>
+                <SidebarTitle>회원탈퇴</SidebarTitle>
             </SidebarContainer>
             <Container>
                 <Header>
@@ -218,16 +226,16 @@ function Recruitment() {
                     <WelcomeMessage>
                         <UserName>김선엽님 환영합니다!</UserName>
                         <UserStatus>학생</UserStatus>
-                        <UserEdit>개인정보 수정</UserEdit>
+                        <UserEdit onClick={() => setIsModalOpen(true)}>개인정보 수정</UserEdit>
                     </WelcomeMessage>
                 </Header>
                 <ContentFrame ref={scrapSectionRef}>
                     <ContentTitle>스크랩 정보</ContentTitle>
                     <Content>
                         <Section>
-                            <SectionTitle onClick={() => setSelectedTab('기업')}>기업</SectionTitle>
-                            <SectionTitle onClick={() => setSelectedTab('자격증')}>자격증</SectionTitle>
-                            <SectionTitle onClick={() => setSelectedTab('취업공고')}>취업공고</SectionTitle>
+                            <SectionTitle active={selectedTab === '기업'} onClick={() => setSelectedTab('기업')}>기업</SectionTitle>
+                            <SectionTitle active={selectedTab === '자격증'} onClick={() => setSelectedTab('자격증')}>자격증</SectionTitle>
+                            <SectionTitle active={selectedTab === '취업공고'} onClick={() => setSelectedTab('취업공고')}>취업공고</SectionTitle>
                         </Section>
                         {renderContent()}
                     </Content>
@@ -236,18 +244,19 @@ function Recruitment() {
                     <ContentTitle>내가 작성한 글</ContentTitle>
                     <Content>
                         <Section>
-                            <SectionTitle onClick={() => setSelectedWriteTab('정보게시판')}>정보게시판</SectionTitle>
-                            <SectionTitle onClick={() => setSelectedWriteTab('스터디게시판')}>스터디게시판</SectionTitle>
+                            <SectionTitle active={selectedWriteTab === '정보게시판'} onClick={() => setSelectedWriteTab('정보게시판')}>정보게시판</SectionTitle>
+                            <SectionTitle active={selectedWriteTab === '스터디게시판'} onClick={() => setSelectedWriteTab('스터디게시판')}>스터디게시판</SectionTitle>
                         </Section>
                         {renderWriterContent()}
                     </Content>
                 </ContentFrame>
             </Container>
+            <EditProfileModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </Frame>
     );
 }
 
-export default Recruitment;
+export default MyPage;
 
 const Frame = styled.div`
   width: 100%;
@@ -303,9 +312,11 @@ const UserEdit = styled.a`
   margin-top: 20px;
   font-size: 18px;
   font-weight: bold;
-  color: blue;
+  color: #002AFF;
+
   &:hover {
-    color: yellow;
+    color: #ffd500;
+    cursor: pointer;
   }
 `
 
@@ -343,7 +354,9 @@ const SectionTitle = styled.div`
   align-items: center;
   margin: 10px 20px;
   font-weight: bold;
+  color: ${({ active }) => (active ? '#456456' : '#999')};
   cursor: pointer;
+  border-bottom: ${({ active }) => (active ? '2px solid #456456' : 'none')};
 `
 
 const ContentList = styled.div`
@@ -377,7 +390,7 @@ const SidebarContainer = styled.div`
 const SidebarTitle = styled.div`
     margin: 10px 0;
     width: 100%;
-    font-size: 20px;
+    font-size: 18px;
     padding: 5px;
     padding-bottom: 20px;
     font-weight: bold;
