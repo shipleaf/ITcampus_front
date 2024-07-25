@@ -1,217 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
+import { fetchRecruitmentList } from "../APIs/RecruitmentAPI";
 import { Link } from "react-router-dom";
 import GuestHeader from "../components/header/GuestHeader";
 import Top from "../components/post/Top";
 import RecruitmentPost from "../components/post/RecruitmentPost";
 import CustomSelect from "../components/filter/CustomSelect";
 import FilterButton from "../components/filter/FilterButton";
-import star from '../assets/scrap.png';
 import DetailSearch from "../components/filter/DetailSearch";
 
 function Recruitment() {
-    const dummyPosts = [
-        {
-            key: 1,
-            title: "[공지] 12기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            job: "프론트엔드",
-            stack: "C++",
-            experience: "신입",
-            education: "대학교졸업(2,3년)",
-            employmentType: "정규직",
-            scrap: 215,
-            startDate: "2024. 7. 5",
-            endDate: "2024. 7. 14"
-        },
-        {
-            key: 2,
-            title: "[공지] 13기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            job: "백엔드",
-            stack: "Java",
-            experience: "1~3년",
-            education: "대학교졸업(4년)",
-            employmentType: "계약직",
-            scrap: 180,
-            startDate: "2024. 8. 1",
-            endDate: "2024. 8. 10"
-        },
-        {
-            key: 3,
-            title: "[공지] 12기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            job: "프론트엔드",
-            stack: "C++",
-            experience: "신입",
-            education: "대학교졸업(2,3년)",
-            employmentType: "정규직",
-            scrap: 215,
-            startDate: "2024. 7. 22",
-            endDate: "2024. 7. 30"
-        },
-        {
-            key: 4,
-            title: "[공지] 12기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            job: "프론트엔드",
-            stack: "C++",
-            experience: "신입",
-            education: "대학교졸업(2,3년)",
-            employmentType: "정규직",
-            scrap: 215,
-            startDate: "2024. 7. 5",
-            endDate: "2024. 7. 14"
-        },
-        {
-            key: 5,
-            title: "[공지] 13기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            job: "백엔드",
-            stack: "Java",
-            experience: "1~3년",
-            education: "대학교졸업(4년)",
-            employmentType: "계약직",
-            scrap: 180,
-            startDate: "2024. 8. 1",
-            endDate: "2024. 8. 10"
-        },
-        {
-            key: 6,
-            title: "[공지] 14기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            job: "앱개발",
-            stack: "Kotlin",
-            experience: "3~5년",
-            education: "대학교졸업(4년)",
-            employmentType: "인턴",
-            scrap: 150,
-            startDate: "2024. 9. 1",
-            endDate: "2024. 9. 10"
-        },
-        {
-            key: 7,
-            title: "[공지] 15기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            job: "게임개발",
-            stack: "Unity",
-            experience: "5~7년",
-            education: "대학교졸업(4년)",
-            employmentType: "정규직",
-            scrap: 300,
-            startDate: "2024. 10. 1",
-            endDate: "2024. 10. 10"
-        },
-        {
-            key: 8,
-            title: "[공지] 16기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            job: "웹개발",
-            stack: "React",
-            experience: "신입",
-            education: "대학교졸업(2,3년)",
-            employmentType: "정규직",
-            scrap: 200,
-            startDate: "2024. 11. 1",
-            endDate: "2024. 11. 10"
-        },
-        {
-            key: 9,
-            title: "[공지] 17기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            job: "데이터 분석",
-            stack: "Python",
-            experience: "2~4년",
-            education: "대학교졸업(4년)",
-            employmentType: "계약직",
-            scrap: 220,
-            startDate: "2024. 12. 1",
-            endDate: "2024. 12. 10"
-        },
-        {
-            key: 10,
-            title: "[공지] 18기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            job: "정보보안",
-            stack: "Cybersecurity",
-            experience: "4~6년",
-            education: "대학교졸업(4년)",
-            employmentType: "정규직",
-            scrap: 175,
-            startDate: "2024. 12. 15",
-            endDate: "2024. 12. 25"
-        },
-        {
-            key: 11,
-            title: "[공지] 19기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            job: "QA/테스터",
-            stack: "Selenium",
-            experience: "1~3년",
-            education: "대학교졸업(2,3년)",
-            employmentType: "인턴",
-            scrap: 160,
-            startDate: "2025. 1. 5",
-            endDate: "2025. 1. 15"
-        },
-        {
-            key: 12,
-            title: "[공지] 20기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            job: "개발PM",
-            stack: "Project Management",
-            experience: "5~7년",
-            education: "대학교졸업(4년)",
-            employmentType: "정규직",
-            scrap: 250,
-            startDate: "2025. 2. 1",
-            endDate: "2025. 2. 10"
-        },
-        {
-            key: 13,
-            title: "[공지] 21기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용... 이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            job: "네트워크 엔지니어",
-            stack: "Cisco",
-            experience: "3~5년",
-            education: "대학교졸업(2,3년)",
-            employmentType: "계약직",
-            scrap: 130,
-            startDate: "2025. 3. 1",
-            endDate: "2025. 3. 10"
-        }
-    ];
-
+    const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [sortOption, setSortOption] = useState('scrap');
     const [sortOrder, setSortOrder] = useState('desc');
     const [isFilterActive, setIsFilterActive] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     const [selectedFilters, setSelectedFilters] = useState({
         job: [],
         stack: [],
@@ -220,11 +26,27 @@ function Recruitment() {
         employmentType: []
     });
 
-    const postsPerPage = 7;
+    useEffect(() => {
+        const getCompanies = async () => {
+            try {
+                const response = await fetchRecruitmentList();
+                if (response.status >= 200 && response.status < 300) {
+                    setPosts(response.data);
+                }
+            } catch (error) {
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
+        getCompanies();
+    }, []);
+
+    const postsPerPage = 7;
     const today = new Date();
 
-    const sortedPosts = [...dummyPosts].sort((a, b) => {
+    const sortedPosts = [...posts].sort((a, b) => {
         if (sortOption === 'startdate') {
             return sortOrder === 'desc'
                 ? new Date(b.startDate) - new Date(a.startDate)
@@ -254,7 +76,7 @@ function Recruitment() {
             const endDate = new Date(post.endDate);
             return startDate <= today && today <= endDate;
         }
-        
+
         return true;
     });
 
@@ -281,12 +103,13 @@ function Recruitment() {
         setCurrentPage(1);
     };
 
-    const handleFilterChange = (category, values) => {
+    const handleFilterChange = useCallback((category, values) => {
         setSelectedFilters(prevFilters => ({
             ...prevFilters,
             [category]: values
         }));
-    };
+        setCurrentPage(1);
+    }, []);
 
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
@@ -317,12 +140,28 @@ function Recruitment() {
                     />
                 </Right>
             </SortContainer>
-            {currentPosts.map((post, index) => (
-                <StyledLink to={`/recruitmentdetails/${post.key}`}>
-                <RecruitmentPost
-                    key={index}
-                    {...post}
-                />
+            {loading ? (
+                <p>Loading...</p>
+            ) : error ? (
+                <p>Error loading posts: {error.message}</p>
+            ) : currentPosts.map((post) => (
+                <StyledLink to={`/recruitmentdetails/${post.key}`} key={post.key}>
+                    <RecruitmentPost
+                        key={post.key}
+                        title={post.title}
+                        body={post.body}
+                        companyname={post.companyname}
+                        pic1={post.pic1}
+                        scrap={post.scrap}
+                        startdate={post.startdate}
+                        enddate={post.enddate}
+                        recruit_part={post.recruit_part}
+                        stack={post.stack}
+                        experience={post.experience}
+                        education={post.education}
+                        work_type={post.work_type}
+                        width={post.width}
+                    />
                 </StyledLink>
             ))}
             <Pagination>
@@ -348,11 +187,11 @@ const SortContainer = styled.div`
     margin: 20px auto;
     margin-bottom: 40px;
     align-items: center;
-`;
+`
 
 const Right = styled.div`
     display: flex;
-    flex:1;
+    flex: 1;
     flex-direction: row;
     justify-content: flex-end;
 `
@@ -361,8 +200,7 @@ const Pagination = styled.div`
     display: flex;
     justify-content: center;
     margin: 20px 0;
-`;
-
+`
 
 const PageNumber = styled.button`
     background: ${(props) => (props.active ? '#36bef1' : '#fff')};
@@ -375,7 +213,7 @@ const PageNumber = styled.button`
         background: #36bef1;
         color: #fff;
     }
-`;
+`
 
 const StyledLink = styled(Link)`
     text-decoration: none;

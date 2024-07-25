@@ -3,9 +3,8 @@ import styled from 'styled-components';
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
 import axios from 'axios';
-import logoImg from '../../assets/hyundai.png';
 
-function CompanyPost({ company, detail, img, scrap, width }) {
+function CompanyPost({ logo, companyName, scrapCount,  width }) {
     const [isScrapped, setIsScrapped] = useState(false);
 
     const handleScrap = async (e) => {
@@ -27,16 +26,16 @@ function CompanyPost({ company, detail, img, scrap, width }) {
     return (
         <ButtonFrame width={width}>
             <ThumbnailContainer>
-                <Thumbnail src={logoImg} />
+                <Thumbnail src={logo} />
             </ThumbnailContainer>
             <CompanyContainer>
-                <Company>{company}</Company>
+                <Company>{companyName}</Company>
                 <CompanyRecruitment>현재 채용중 00건</CompanyRecruitment>
             </CompanyContainer>
-            <Detail>{detail}</Detail>
+            <Detail></Detail>
             <ShowScrap>
                 <FaStar size={30} style={{ color: '#ffff00' }} />
-                <ScrapCount>{scrap}</ScrapCount>
+                <ScrapCount>{scrapCount}</ScrapCount>
             </ShowScrap>
             <ScrapButtonContainer onClick={handleScrap}>
                 <ScrapButtonText >스크랩</ScrapButtonText>

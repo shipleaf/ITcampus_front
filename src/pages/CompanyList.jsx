@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { fetchCompany } from "../APIs/companyAPI";
-import styled from "styled-components";
+import { fetchCompanyList } from "../APIs/companyListAPI";
+import { fetchCompanyDetails } from "../APIs/companyDetailAPI";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 import GuestHeader from "../components/header/GuestHeader";
 import Top from "../components/post/Top";
 import CompanyPost from "../components/post/CompanyPost";
@@ -14,13 +15,18 @@ function CompanyList() {
     const [sortOrder, setSortOrder] = useState('asc');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [, setSelectedCompany] = useState(null);
     const postsPerPage = 7;
-
+    
     useEffect(() => {
         const getCompanies = async () => {
             try {
-                const data = await fetchCompany();
-                setPosts(data);
+                const response = await fetchCompanyList();
+                if(200<=response.status && response.status < 300){
+                    setPosts(response.data);
+                    console.log('API response data:', response.data);
+                }
+                
             } catch (error) {
                 setError(error);
             } finally {
@@ -31,11 +37,20 @@ function CompanyList() {
         getCompanies();
     }, []);
 
+    const handleCompanyClick = async (companyId) => {
+        try {
+            const response = await fetchCompanyDetails(companyId);
+            setSelectedCompany(response.data);
+        } catch (error) {
+            setError(error);
+        }
+    };
+
     const sortedPosts = [...posts].sort((a, b) => {
         if (sortOption === 'scrap') {
-            return sortOrder === 'desc' ? b.scrap - a.scrap : a.scrap - b.scrap;
+            return sortOrder === 'desc' ? b.scrapCount - a.scrapCount : a.scrapCount - b.scrapCount;
         } else if (sortOption === 'company') {
-            return sortOrder === 'desc' ? b.company.localeCompare(a.company) : a.company.localeCompare(b.company);
+            return sortOrder === 'desc' ? b.companyName.localeCompare(a.companyName) : a.companyName.localeCompare(b.companyName);
         }
         return 0;
     });
@@ -52,6 +67,7 @@ function CompanyList() {
         setSortOption(value);
         setCurrentPage(1);
     };
+    
 
     const handleSortOrderChange = (value) => {
         setSortOrder(value);
@@ -63,7 +79,7 @@ function CompanyList() {
     return (
         <>
             <GuestHeader />
-            <Top title='정부 지원' />
+            <Top title='기업 소개' />
             <SortContainer>
                 <Right>
                     <CustomSelect
@@ -91,9 +107,14 @@ function CompanyList() {
             ) : (
                 <>
                     {currentPosts.map((post) => (
-                        <StyledLink key={post.key} to={`/companydetails/${post.key}`}>
-                            <CompanyPost {...post} />
-                        </StyledLink>
+                        
+                        <StyledLink to={`/companydetails/${post.companyID}`}>
+                        <CompanyPost 
+                        key={post.companyID}
+                         {...post}
+                         onClick={handleCompanyClick} >
+                            </CompanyPost >
+                            </StyledLink>
                     ))}
                     <Pagination>
                         {Array.from({ length: totalPages }, (_, index) => (

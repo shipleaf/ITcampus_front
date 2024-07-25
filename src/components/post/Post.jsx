@@ -3,25 +3,32 @@ import styled from 'styled-components';
 import star from '../../assets/scrap.png';
 // import Today from '../../assets/Today';
 
-function Post({ title, detail, writer, img, scrap, startDate, endDate, width }) {
+function Post({ title, body, writer, pic1, scrapCount, startdate, enddate, width }) {
+    const formatDate = (dateString) => {
+        const date = new window.Date(dateString);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1; 
+        const day = date.getDate();
+        return `${year}. ${month}. ${day}`;
+    };
     return (
         <ButtonFrame width={width}>
             <ContentContainer>
                 <Title>{title}</Title>
-                <Content>{detail}</Content>
+                <Content>{body}</Content>
                 <Remain>
                 <Footer>
                     <Writer>{writer}</Writer>
-                    <Date>{`${startDate} ~ ${endDate}`}</Date>
+                    <Date>{`${formatDate(startdate)} ~ ${formatDate(enddate)}`}</Date>
                     <ScrapContainer>
                         <ScrapImg src={star} />
-                        <ScrapCount>{scrap}</ScrapCount>
+                        <ScrapCount>{scrapCount}</ScrapCount>
                     </ScrapContainer>
                 </Footer>
                 </Remain>
             </ContentContainer>
             <ThumbnailContainer>
-                <Thumbnail src={img} />
+                <Thumbnail src={pic1} />
             </ThumbnailContainer>
         </ButtonFrame>
     );
