@@ -91,7 +91,7 @@ const GenderDiv = styled(InputDiv)`
 `;
 
 function SignUpComponent({ toggleComponent }) {
-    const [id, setId] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordCheck, setPasswordCheck] = useState('');
     const [name, setName] = useState('');
@@ -111,16 +111,15 @@ function SignUpComponent({ toggleComponent }) {
 
         const formattedMonth = month.padStart(2, '0');
         const formattedDay = day.padStart(2, '0');
-        const birthDate = `${year}${formattedMonth}${formattedDay}`;
+        const birth = `${year}-${formattedMonth}-${formattedDay}`;
 
         const registData = {
-            id,
+            email,
             password,
-            birthDate,
             name,
-            passwordCheck,
+            birth,
+            gender,
             job,
-            gender
         };
 
         console.log(registData);
@@ -150,10 +149,10 @@ function SignUpComponent({ toggleComponent }) {
                     <InputDiv className="loginId">
                         <Input
                             type="text"
-                            maxLength="10"
+                            maxLength="20"
                             id="username"
-                            value={id}
-                            onChange={(event) => setId(event.target.value)}
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
                             placeholder='아이디'
                         />
                     </InputDiv>
@@ -173,7 +172,6 @@ function SignUpComponent({ toggleComponent }) {
                     <InputDiv className='loginId'>
                         <Input
                             type="password"
-                            maxLength="10"
                             id="passwordCheck"
                             value={passwordCheck}
                             onChange={(event) => setPasswordCheck(event.target.value)}
@@ -228,11 +226,11 @@ function SignUpComponent({ toggleComponent }) {
                     <div style={{ color: '#999', fontSize: '14px' }}>성별</div>
                     <GenderDiv>
                         <Label>
-                            <input type="radio" name="gender" value="male" onChange={(event) => setGender(event.target.value)} />
+                            <input type="radio" name="gender" value="남자" onChange={(event) => setGender(event.target.value)} />
                             남성
                         </Label>
                         <Label>
-                            <input type="radio" name="gender" value="female" onChange={(event) => setGender(event.target.value)} />
+                            <input type="radio" name="gender" value="여자" onChange={(event) => setGender(event.target.value)} />
                             여성
                         </Label>
                     </GenderDiv>

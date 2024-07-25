@@ -77,7 +77,7 @@ const HRComponent = styled.div`
 `;
 
 function SignInComponent({ toggleComponent, handleLogin, closeModal }) {
-  const [id, setId] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
@@ -85,7 +85,7 @@ function SignInComponent({ toggleComponent, handleLogin, closeModal }) {
     closeModal();
 
     const userData = {
-      id,
+      email,
       password
     };
 
@@ -119,11 +119,11 @@ function SignInComponent({ toggleComponent, handleLogin, closeModal }) {
           <InputDiv className="loginId">
             <Input
               type="text"
-              maxLength="10"
+              maxLength="20"
               id="username"
-              value={id}
+              value={email}
               autoComplete="new-password"
-              onChange={(event) => setId(event.target.value)}
+              onChange={(event) => setEmail(event.target.value)}
               placeholder='로그인'
             />
           </InputDiv>

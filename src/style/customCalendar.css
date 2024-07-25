@@ -57,6 +57,7 @@ html, body {
     box-sizing: border-box;
     padding: 0px;
     position: relative;
+    border-top: none !important;
 }
 
 .fc-daygrid-day:hover .fc-daygrid-day-frame {
@@ -78,7 +79,7 @@ html, body {
 }
 
 .fc .fc-day-today .fc-daygrid-day-number {
-    background-color: #000;
+    background-color: rgb(26, 115, 232);
     color: #fff;
 }
 
@@ -114,6 +115,28 @@ html, body {
     background-color: inherit;
 }
 
+.fc-scrollgrid-sync-inner{
+    height: 20px;
+    background-color: #fff;
+    border-bottom: none !important;
+
+    & a{
+        font-size: 10px;
+    }
+}
+
+.fc-daygrid-day-number{
+    font-weight: 600;
+    font-size: 12px !important;
+    width: 24px !important;
+    height: 24px !important;
+    margin: 3px 0 10px 0;
+}
+
+.fc-col-header-cell{
+    border-bottom: none !important;
+}
+
 .fc-daygrid-day {
     height: 100px;
     min-height: 100px;
@@ -135,7 +158,7 @@ html, body {
 
 .fc-next-button {
     margin-left: 30px !important;
-}
+}   
 
 .fc-toolbar.fc-header-toolbar {
     display: none;
