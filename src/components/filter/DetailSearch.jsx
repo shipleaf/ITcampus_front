@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 
 const DetailSearch = ({ onFilterChange }) => {
@@ -16,25 +16,29 @@ const DetailSearch = ({ onFilterChange }) => {
   const [educationCheckboxes, setEducationCheckboxes] = useState({});
   const [employmentTypeCheckboxes, setEmploymentTypeCheckboxes] = useState({});
 
-  useEffect(() => {
-    onFilterChange('job', Object.keys(jobCheckboxes).filter(key => jobCheckboxes[key]));
-  }, [jobCheckboxes]);
+  const handleFilterChange = useCallback((type, selectedItems) => {
+    onFilterChange(type, selectedItems);
+  }, [onFilterChange]);
 
   useEffect(() => {
-    onFilterChange('stack', Object.keys(techStackCheckboxes).filter(key => techStackCheckboxes[key]));
-  }, [techStackCheckboxes]);
+    handleFilterChange('job', Object.keys(jobCheckboxes).filter(key => jobCheckboxes[key]));
+  }, [jobCheckboxes, handleFilterChange]);
 
   useEffect(() => {
-    onFilterChange('experience', Object.keys(experienceCheckboxes).filter(key => experienceCheckboxes[key]));
-  }, [experienceCheckboxes]);
+    handleFilterChange('stack', Object.keys(techStackCheckboxes).filter(key => techStackCheckboxes[key]));
+  }, [techStackCheckboxes, handleFilterChange]);
 
   useEffect(() => {
-    onFilterChange('education', Object.keys(educationCheckboxes).filter(key => educationCheckboxes[key]));
-  }, [educationCheckboxes]);
+    handleFilterChange('experience', Object.keys(experienceCheckboxes).filter(key => experienceCheckboxes[key]));
+  }, [experienceCheckboxes, handleFilterChange]);
 
   useEffect(() => {
-    onFilterChange('employmentType', Object.keys(employmentTypeCheckboxes).filter(key => employmentTypeCheckboxes[key]));
-  }, [employmentTypeCheckboxes]);
+    handleFilterChange('education', Object.keys(educationCheckboxes).filter(key => educationCheckboxes[key]));
+  }, [educationCheckboxes, handleFilterChange]);
+
+  useEffect(() => {
+    handleFilterChange('employmentType', Object.keys(employmentTypeCheckboxes).filter(key => employmentTypeCheckboxes[key]));
+  }, [employmentTypeCheckboxes, handleFilterChange]);
 
   const handleToggle = (type) => {
     if (activeCategory === type) {
@@ -196,20 +200,18 @@ export default DetailSearch;
 const DetailedSearchContainer = styled.div`
   width: 60%;
   margin: 20px auto;
-`;
-
+`
 
 const Title = styled.h2`
   margin-bottom: 10px;
   font-size: 20px;
-`;
-
+`
 
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
   position: relative;
-`;
+`
 
 const Th = styled.th`
   background-color: ${(props) => (props.active ? '#007FFF' : '#F3F9FF')};
@@ -224,7 +226,7 @@ const Th = styled.th`
     background-color: ${(props) => (props.active ? '#007FFF' : '#E0E0E0')};
     color: ${(props) => (props.active ? 'white' : 'black')};
   }
-`;
+`
 
 const Td = styled.td`
   padding: 10px;
@@ -233,8 +235,7 @@ const Td = styled.td`
   ${({ active }) => active && `
     background-color: white;
   `}
-`;
-
+`
 
 const Overlay = styled.div`
   position: absolute;
@@ -246,8 +247,7 @@ const Overlay = styled.div`
   border: 1px solid gray;
   z-index: 1;
   box-sizing: border-box;
-`;
-
+`
 
 const CheckboxContainer = styled.div`
   display: flex;
@@ -261,8 +261,7 @@ const CheckboxContainer = styled.div`
   label:last-child {
     margin-bottom: 0;
   }
-`;
-
+`
 
 const SelectedContainer = styled.div`
   padding: 10px;
@@ -270,7 +269,7 @@ const SelectedContainer = styled.div`
   background-color: white;
   display: flex;
   flex-wrap: wrap;
-`;
+`
 
 const SelectedItem = styled.div`
   background-color: #007FFF;
@@ -279,4 +278,4 @@ const SelectedItem = styled.div`
   padding: 5px 10px;
   border-radius: 20px;
   margin: 5px;
-`;
+`
