@@ -5,7 +5,7 @@ import Sidebar from '../components/mainpage/Sidebar';
 import styled from 'styled-components';
 
 const SidebarContainer = styled.div`
-  width: 250px; // Sidebar의 고정 너비 설정
+  width: 264px; // Sidebar의 고정 너비 설정
   height: 100%; 
 `;
 
