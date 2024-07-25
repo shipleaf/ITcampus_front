@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import GuestHeader from "../components/header/GuestHeader";
 import { Link } from "react-router-dom";
@@ -6,169 +6,38 @@ import Top from "../components/post/Top";
 import Post from "../components/post/Post";
 import CustomSelect from "../components/filter/CustomSelect";
 import FilterButton from "../components/filter/FilterButton";
-import star from '../assets/scrap.png';
+import { fetchLicenseList } from "../APIs/licenseListAPI";
 
-function ITLicense(){
-    const dummyPosts = [
-        {
-            key: 1,
-            title: "[공지] 12기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 215,
-            startDate: "2024. 7. 5",
-            endDate: "2024. 7. 14"
-        },
-        {
-            key: 2,
-            title: "[공지] 13기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 180,
-            startDate: "2024. 8. 1",
-            endDate: "2024. 8. 10"
-        },
-        {
-            key: 3,
-            title: "[공지] 14기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 215,
-            startDate: "2024. 7. 5",
-            endDate: "2024. 7. 14"
-        },
-        {
-            key: 4,
-            title: "[공지] 15기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 180,
-            startDate: "2024. 8. 1",
-            endDate: "2024. 8. 10"
-        },
-        {
-            key: 5,
-            title: "[공지] 16기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 215,
-            startDate: "2024. 7. 5",
-            endDate: "2024. 7. 14"
-        },
-        {
-            key: 6,
-            title: "[공지] 17기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 180,
-            startDate: "2024. 8. 1",
-            endDate: "2024. 8. 10"
-        },
-        {
-            key: 7,
-            title: "[공지] 18기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 215,
-            startDate: "2024. 7. 5",
-            endDate: "2024. 7. 14"
-        },
-        {
-            key: 8,
-            title: "[공지] 19기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 180,
-            startDate: "2024. 8. 1",
-            endDate: "2024. 8. 10"
-        },
-        {
-            key: 9,
-            title: "[공지] 18기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 215,
-            startDate: "2024. 7. 5",
-            endDate: "2024. 7. 14"
-        },
-        {
-            key: 10,
-            title: "[공지] 19기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 180,
-            startDate: "2024. 8. 1",
-            endDate: "2024. 8. 10"
-        },{
-            key: 11,
-            title: "[공지] 18기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 215,
-            startDate: "2024. 7. 5",
-            endDate: "2024. 7. 14"
-        },
-        {
-            key: 12,
-            title: "[공지] 19기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 180,
-            startDate: "2024. 8. 1",
-            endDate: "2024. 8. 10"
-        },{
-            key: 13,
-            title: "[공지] 18기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 215,
-            startDate: "2024. 7. 5",
-            endDate: "2024. 7. 14"
-        },
-        {
-            key: 14,
-            title: "[공지] 19기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 180,
-            startDate: "2024. 8. 1",
-            endDate: "2024. 8. 10"
-        },
-        {
-            key: 15,
-            title: "[공지] 108기 중앙 해커톤 안내",
-            detail: "108기 뉴비",
-            writer: "우리 대학",
-            img: star,
-            scrap: 600,
-            startDate: "2024. 7. 9",
-            endDate: "2027. 8. 10"
-        },
-    ];
-
-    const [currentPage, setCurrentPage] = useState(1); 
+function ITLicense() {
+    const [posts, setPosts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
     const [sortOption, setSortOption] = useState('scrap');
-    const [sortOrder, setSortOrder] = useState('desc'); 
+    const [sortOrder, setSortOrder] = useState('desc');
     const [isFilterActive, setIsFilterActive] = useState(false);
-    const postsPerPage = 7; 
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const postsPerPage = 7;
+
+    useEffect(() => {
+        const getLicense = async () => {
+            try {
+                const response = await fetchLicenseList();
+                if (response.status >= 200 && response.status < 300) {
+                    setPosts(response.data);
+                }
+            } catch (error) {
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getLicense();
+    }, []);
 
     const today = new Date();
 
-    const sortedPosts = [...dummyPosts].sort((a, b) => {
+    const sortedPosts = [...posts].sort((a, b) => {
         if (sortOption === 'startdate') {
             return sortOrder === 'desc'
                 ? new Date(b.startDate) - new Date(a.startDate)
@@ -219,36 +88,46 @@ function ITLicense(){
 
     return (
         <>
-            <GuestHeader/>
+            <GuestHeader />
             <Top title='IT 자격증' />
             <SortContainer>
-                <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop = '응시가능'/>
+                <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='응시가능' />
                 <Right>
-                <CustomSelect
-                    selectedOption={sortOption}
-                    options={[
-                        { value: "startdate", label: "응시 시작일" },
-                        { value: "enddate", label: "응시 종료일" },
-                        { value: "scrap", label: "스크랩" }
-                    ]}
-                    onOptionSelect={handleSortChange}
-                />
-                <CustomSelect
-                    selectedOption={sortOrder}
-                    options={[
-                        { value: "desc", label: "내림차순" },
-                        { value: "asc", label: "오름차순" }
-                    ]}
-                    onOptionSelect={handleSortOrderChange}
-                />
+                    <CustomSelect
+                        selectedOption={sortOption}
+                        options={[
+                            { value: "startdate", label: "응시 시작일" },
+                            { value: "enddate", label: "응시 종료일" },
+                            { value: "scrap", label: "스크랩" }
+                        ]}
+                        onOptionSelect={handleSortChange}
+                    />
+                    <CustomSelect
+                        selectedOption={sortOrder}
+                        options={[
+                            { value: "desc", label: "내림차순" },
+                            { value: "asc", label: "오름차순" }
+                        ]}
+                        onOptionSelect={handleSortOrderChange}
+                    />
                 </Right>
             </SortContainer>
-            {currentPosts.map((post, index) => (
-                <StyledLink to={`/licensedetails/${post.key}`}>
-                <Post
-                    key={index}
-                    {...post}
-                />
+            {loading ? (
+                <p>Loading...</p>
+            ) : error ? (
+                <p>Error loading posts: {error.message}</p>
+            ) : currentPosts.map((post) => (
+                <StyledLink to={`/licensedetails/${post.key}`} key={post.key}>
+                    <Post
+                        key={post.key}
+                        title={post.title}
+                        body={post.body}
+                        writer={post.agency}
+                        pic1={post.pic1}
+                        scrapCount={post.scrapCount}
+                        startdate={post.startdate}
+                        enddate={post.enddate}
+                    />
                 </StyledLink>
             ))}
             <Pagination>

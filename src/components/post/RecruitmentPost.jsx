@@ -2,22 +2,30 @@ import React from 'react';
 import styled from 'styled-components';
 import star from '../../assets/scrap.png';
 
-function RecruitmentPost({ title, detail, writer, img, scrap, startDate, endDate, job, stack, experience, education, employmentType, width }) {
+function RecruitmentPost({ title, body, companyname, pic1, scrap, startdate, enddate, recruit_part, stack, experience, education, work_type, width }) {
+    const formatDate = (dateString) => {
+        const date = new window.Date(dateString);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1; 
+        const day = date.getDate();
+        return `${year}. ${month}. ${day}`;
+    };
+
     return (
         <ButtonFrame width={width} >
             <ContentContainer>
                 <Title>{title}</Title>
-                <Content>{detail}</Content>
+                <Content>{body}</Content>
                 <RequirementContainer>
-                    <Requirement>{job}</Requirement>
+                    <Requirement>{recruit_part}</Requirement>
                     <Requirement>{stack}</Requirement>
                     <Requirement>{experience}</Requirement>
                     <Requirement>{education}</Requirement>
-                    <Requirement>{employmentType}</Requirement>
+                    <Requirement>{work_type}</Requirement>
                 </RequirementContainer>
                 <Footer>
-                    <Writer>{writer}</Writer>
-                    <Date>{`${startDate} ~ ${endDate}`}</Date>
+                    <Writer>{companyname}</Writer>
+                    <Date>{`${formatDate(startdate)} ~ ${formatDate(enddate)}`}</Date>
                     <ScrapContainer>
                         <ScrapImg src={star} />
                         <ScrapCount>{scrap}</ScrapCount>
@@ -25,7 +33,7 @@ function RecruitmentPost({ title, detail, writer, img, scrap, startDate, endDate
                 </Footer>
             </ContentContainer>
             <ThumbnailContainer>
-                <Thumbnail src={img} />
+                <Thumbnail src={pic1} />
             </ThumbnailContainer>
         </ButtonFrame>
     );
@@ -48,8 +56,7 @@ const ButtonFrame = styled.button`
     &:hover {
         border: 3px solid #36bef1;
     }
-`;
-
+`
 
 const ContentContainer = styled.div`
     display: flex;
@@ -59,8 +66,7 @@ const ContentContainer = styled.div`
     height: 100%;
     margin: 5px;
     overflow: hidden;
-`;
-
+`
 
 const Title = styled.div`
     font-size: 25px;
@@ -69,7 +75,7 @@ const Title = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-`;
+`
 
 const Content = styled.div`
     font-size: 18px;
@@ -82,14 +88,14 @@ const Content = styled.div`
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-`;
+`
 
 const RequirementContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     margin: 10px 0;
-`;
+`
 
 const Requirement = styled.div`
     font-size: 15px;
@@ -97,7 +103,7 @@ const Requirement = styled.div`
     background-color: #f3f3f3;
     padding: 5px 10px;
     border-radius: 20px;
-`;
+`
 
 
 const Footer = styled.div`
@@ -105,32 +111,32 @@ const Footer = styled.div`
     align-items: center;
     margin: 15px 0px;
     height: 10%;
-`;
+`
 
 const Writer = styled.div`
     font-size: 16px;
     font-weight: bold;
     width: 200px;
     color: black;
-`;
+`
 
 
 const Date = styled.div`
     font-size: 14px;
     color: #999;
     margin: auto 10px;
-`;
+`
 
 const ScrapContainer = styled.div`
     display: flex;
     justify-content: center;
     margin-left: 30px;
-`;
+`
 
 const ScrapImg = styled.img`
     width: 25px;
     height: 25px;
-`;
+`
 
 const ScrapCount = styled.div`
     font-size: 18px;

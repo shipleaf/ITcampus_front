@@ -146,7 +146,7 @@ const DetailSearch = ({ onFilterChange }) => {
               {showExperience && (
                 <Overlay>
                   <CheckboxContainer>
-                    {['신입', '1~3년', '4~6년', '데이터베이스'].map(label => (
+                    {['신입 가능', '1~3년', '4~6년', '데이터베이스'].map(label => (
                       <label key={label}>
                         <input type="checkbox" checked={experienceCheckboxes[label] || false} onChange={() => handleCheckboxChange('experience', label)} /> {label}
                       </label>
