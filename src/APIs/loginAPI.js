@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-const API_URL = '223.130.135.136';  // 프로토콜 추가
+const API_URL = 'http://223.130.135.136';  // 프로토콜 추가
 
 export const login = async (userData) => {
     try {
         const response = await axios.post(`${API_URL}/api/login`, userData);
+        console.log(`${API_URL}/api/login`)
         return response.data;
     } catch (error) {
         console.error('로그인 실패사유:', error);

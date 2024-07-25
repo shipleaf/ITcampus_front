@@ -51,9 +51,9 @@ function CalendarComponent({ onDateClick }) {
                 height="85vh"
                 dateClick={handleDateClick}
                 events={[
-                    { title: '배달의 민족', start: '2024-07-18T10:00:00', end: '2024-07-20T12:00:00', color: '#f4cdac' },
-                    { title: '엘지', start: '2024-07-19T09:00:00', end: '2024-07-23T10:00:00', color: '#aee1ce' },
-                    { title: 'Github', start: '2024-07-18T08:00:00', end: '2024-07-30T09:00:00', color: '#e7a1a1' }
+                    // { title: '배달의 민족', start: '2024-07-18T10:00:00', end: '2024-07-20T12:00:00', color: '#f4cdac' },
+                    // { title: '엘지', start: '2024-07-19T09:00:00', end: '2024-07-23T10:00:00', color: '#aee1ce' },
+                    // { title: 'Github', start: '2024-07-18T08:00:00', end: '2024-07-30T09:00:00', color: '#e7a1a1' }
                 ]}
                 eventOrder="start,-duration,allDay,title"
                 displayEventTime={false}
