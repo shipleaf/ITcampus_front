@@ -6,7 +6,8 @@ import UserHeader from '../components/modules/header/UserHeader';
 function CreateInfoPost() {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  const [image, setImage] = useState(null);
+  const [imageBase64, setImageBase64] = useState('');
+  const [imageBase642, setImageBase642] = useState('');
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -17,7 +18,27 @@ function CreateInfoPost() {
   };
 
   const handleImageChange = (event) => {
-    setImage(event.target.files[0]);
+    const file = event.target.files[0];
+    console.log('Image 1 selected:', file);
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageBase64(reader.result);
+      console.log('Image 1 Base64:', reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleImageChange2 = (event) => {
+    const file = event.target.files[0];
+    console.log('Image 2 selected:', file);
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageBase642(reader.result);
+      console.log('Image 2 Base64:', reader.result);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleCancel = () => {
@@ -26,29 +47,42 @@ function CreateInfoPost() {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); 
-  
+    event.preventDefault();
+
     console.log('Title:', title);
     console.log('Body:', body);
-    console.log('Image:', image);
-  
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('body', body);
-    if (image) {
-      formData.append('image', image);
-    }
-  
+    console.log('Image:', imageBase64);
+    console.log('Image2:', imageBase642);
+
+    const postData = {
+      title: title,
+      body: body,
+      pic1: imageBase64,
+      pic2: imageBase642,
+    };
+
     try {
-      const response = await fetch('', {
+      const response = await fetch('http://localhost:8080/api/freeboard/create', {
         method: 'POST',
         credentials: 'include',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData),
       });
-  
+
       if (!response.ok) {
-        alert('글 작성 실패.');
-        throw new Error('글 작성 실패.');
+        if (response.status >= 400 && response.status < 500) {
+          const errorData = await response.json();
+          alert(`클라이언트 에러: ${errorData.message || '알 수 없는 에러가 발생했습니다.'}`);
+          throw new Error(`Client error: ${errorData.message || 'Unknown error'}`);
+        } else if (response.status >= 500) {
+          alert('서버 에러가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+          throw new Error('Server error');
+        } else {
+          alert('글 작성 실패.');
+          throw new Error('글 작성 실패.');
+        }
       }
       const result = await response.json();
       console.log('글 작성 성공:', result);
@@ -59,41 +93,59 @@ function CreateInfoPost() {
 
   return (
     <>
-    <UserHeader/>
-    <Frame onSubmit={handleSubmit} action='' method='POST' encType='multipart/form-data'>
-      <IntroContainer>
-        <Intro> 게시글 작성</Intro>
-      </IntroContainer>
-      <PostCreateFrame>
-        <TitleContainer>
-          <TitleInput
-            type="text"
-            placeholder="제목을 입력해 주세요."
-            value={title}
-            onChange={handleTitleChange}
+      <UserHeader />
+      <Frame onSubmit={handleSubmit}>
+        <IntroContainer>
+          <Intro> 게시글 작성</Intro>
+        </IntroContainer>
+        <PostCreateFrame>
+          <TitleContainer>
+            <TitleInput
+              type="text"
+              placeholder="제목을 입력해 주세요."
+              value={title}
+              onChange={handleTitleChange}
+            />
+            <StyledImgContainer>
+              <label htmlFor="imageUpload1">
+                <StyledIoImageOutline />
+                <StyledImageWord>사진</StyledImageWord>
+              </label>
+              <HiddenFileInput
+                id="imageUpload1"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+              <label htmlFor="imageUpload2">
+                <StyledIoImageOutline />
+                <StyledImageWord>사진</StyledImageWord>
+              </label>
+              <HiddenFileInput
+                id="imageUpload2"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange2}
+              />
+            </StyledImgContainer>
+          </TitleContainer>
+          <Textarea
+            placeholder="내용을 입력하세요."
+            value={body}
+            onChange={handleBodyChange}
           />
-          <StyledImgContainer>
-            <StyledIoImageOutline />
-            <StyledImageWord>사진</StyledImageWord>
-            <HiddenFileInput type="file" accept="image/*" onChange={handleImageChange} />
-          </StyledImgContainer>
-        </TitleContainer>
-        <Textarea
-          placeholder="내용을 입력하세요."
-          value={body}
-          onChange={handleBodyChange}
-        />
-        <ButtonContainer>
-          <CancelButton type="button" onClick={handleCancel}>취소</CancelButton>
-          <SaveButton type="button" onClick={handleSubmit}>저장</SaveButton>
-        </ButtonContainer>
-      </PostCreateFrame>
-    </Frame>
+          <ButtonContainer>
+            <CancelButton type="button" onClick={handleCancel}>취소</CancelButton>
+            <SaveButton type="submit">저장</SaveButton>
+          </ButtonContainer>
+        </PostCreateFrame>
+      </Frame>
     </>
   );
 };
 
 export default CreateInfoPost;
+
 
 const Frame = styled.div`
   display: flex;
