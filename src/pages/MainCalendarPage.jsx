@@ -5,8 +5,13 @@ import Sidebar from '../components/mainpage/Sidebar';
 import styled from 'styled-components';
 
 const SidebarContainer = styled.div`
+  width: 250px; // Sidebar의 고정 너비 설정
+  height: 100%; 
+`;
+
+const MainContent = styled.div`
   display: flex;
-  flex: 1; // SidebarContainer가 나머지 공간을 차지하도록 설정
+  flex: 1; // 나머지 공간을 차지하도록 설정
   overflow: hidden; // 내부 요소가 넘치지 않도록 설정
 `;
 
@@ -21,10 +26,12 @@ function MainCalendarPage() {
   return (
     <MainContainer>
       <Header style={{ height: '64px' }} />
-      <SidebarContainer>
-        <Sidebar />
-        <CalendarComponent />
-      </SidebarContainer>
+      <MainContent>
+        <SidebarContainer>
+          <Sidebar />
+        </SidebarContainer>
+        <CalendarComponent style={{ flex: 1 }} /> {/* 나머지 공간을 차지하도록 설정 */}
+      </MainContent>
     </MainContainer>
   );
 };
