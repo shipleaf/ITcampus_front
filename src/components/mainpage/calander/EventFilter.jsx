@@ -5,16 +5,23 @@ const FilterContainer = styled.div`
   width: 100%;
   box-sizing: border-box;
   padding: 5px;
-  padding-left: 20px;
+  padding-left: 25px;
   display: flex;
   align-items: center;
+  
+  &:hover{
+    background-color: #eff;
+  }
 `;
 
 const Title = styled.span`
   margin-left: 10px;
+  font-size: 14px;
+  font-weight: 400;
 `;
 
 const CustomCheckboxContainer = styled.label`
+border-radius: 10px;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -38,7 +45,7 @@ const CustomCheckboxContainer = styled.label`
   input:checked + label::after {
     content: '✔';
     color: white;
-    font-size: 14px;
+    font-size: 15px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -66,7 +73,20 @@ label {
   }
 `
 const ThirdCheckBox = styled(CustomCheckboxContainer)`
-    
+    label {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    border: 2px solid #4285F4;
+    background: #fff;
+    margin-right: 5px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    position: relative;
+  }
+  input:checked + label {
+    background: #4285F4;
+  }
 `
 
 function EventFilter() {
