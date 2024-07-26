@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import MyEventFilter from './EventFilter';
-import DropdownOn from './DropdownOn';
-import DropdownOff from './DropdownOff';
+import MyDropdownOn from './MyDropdownOn';
+import MyDropdownOff from './MyDropdownOff';
 
 const Container = styled.div`
   display: flex;
@@ -31,7 +31,7 @@ const DropdownButton = styled.button`
 `;
 
 const EventFilterContainer = styled.div`
-  display: ${props => (props.show ? 'none' : 'block')};
+  display: ${props => (props.show ? 'block' : 'none' )};
 `;
 
 function MyEventContainer() {
@@ -45,7 +45,7 @@ function MyEventContainer() {
     <div>
       <Container>
         <DropdownButton onClick={dropdownClicked}>
-          {isDropdownOff ? <DropdownOn /> : <DropdownOff />}
+          {isDropdownOff ? <MyDropdownOn /> : <MyDropdownOff />}
         </DropdownButton>
       </Container>
       <EventFilterContainer show={isDropdownOff}>

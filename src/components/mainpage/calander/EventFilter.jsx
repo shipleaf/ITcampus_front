@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { filterState } from '../../../state/atoms';
+import { useEffect } from 'react';
 
 const FilterContainer = styled.div`
   width: 100%;
@@ -9,7 +12,7 @@ const FilterContainer = styled.div`
   display: flex;
   align-items: center;
   
-  &:hover{
+  &:hover {
     background-color: #eff;
   }
 `;
@@ -21,7 +24,7 @@ const Title = styled.span`
 `;
 
 const CustomCheckboxContainer = styled.label`
-border-radius: 10px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -55,9 +58,9 @@ border-radius: 10px;
 
 const FirstCheckBox = styled(CustomCheckboxContainer)`
     
-`
+`;
 const SecondCheckBox = styled(CustomCheckboxContainer)`
-label {
+  label {
     width: 18px;
     height: 18px;
     display: inline-block;
@@ -71,9 +74,9 @@ label {
   input:checked + label {
     background: #33B679; /* 체크된 상태일 때의 배경색 */
   }
-`
+`;
 const ThirdCheckBox = styled(CustomCheckboxContainer)`
-    label {
+  label {
     width: 18px;
     height: 18px;
     display: inline-block;
@@ -87,34 +90,50 @@ const ThirdCheckBox = styled(CustomCheckboxContainer)`
   input:checked + label {
     background: #4285F4;
   }
-`
+`;
 
 function EventFilter() {
-    return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <FilterContainer>
-                <FirstCheckBox>
-                    <input type='checkbox' id='recruit' />
-                    <label htmlFor='recruit'></label>
-                </FirstCheckBox>
-                <Title>취업 공고</Title>
-            </FilterContainer>
-            <FilterContainer>
-                <SecondCheckBox>
-                    <input type='checkbox' id='support' />
-                    <label htmlFor="support"></label>
-                </SecondCheckBox>
-                <Title>지원 프로그램</Title>
-            </FilterContainer>
-            <FilterContainer>
-                <ThirdCheckBox>
-                    <input type='checkbox' id='license' />
-                    <label htmlFor='license'></label>
-                </ThirdCheckBox>
-                <Title>IT 자격증</Title>
-            </FilterContainer>
-        </div>
-    );
+  const [filters, setFilters] = useRecoilState(filterState);
+
+  const handleCheckboxChange = (event) => {
+    const { id, checked } = event.target;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [id]: checked
+    }));
+  };
+
+  useEffect(() => {
+    console.log('event_recruit:', filters.event_recruit);
+    console.log('event_support:', filters.event_support);
+    console.log('event_license:', filters.event_license);
+  }, [filters]);
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      <FilterContainer>
+        <FirstCheckBox>
+          <input type='checkbox' id='event_recruit' checked={filters.event_recruit} onChange={handleCheckboxChange} />
+          <label htmlFor='event_recruit'></label>
+        </FirstCheckBox>
+        <Title>취업 공고</Title>
+      </FilterContainer>
+      <FilterContainer>
+        <SecondCheckBox>
+          <input type='checkbox' id='event_support' checked={filters.event_support} onChange={handleCheckboxChange} />
+          <label htmlFor='event_support'></label>
+        </SecondCheckBox>
+        <Title>지원 프로그램</Title>
+      </FilterContainer>
+      <FilterContainer>
+        <ThirdCheckBox>
+          <input type='checkbox' id='event_license' checked={filters.event_license} onChange={handleCheckboxChange} />
+          <label htmlFor='event_license'></label>
+        </ThirdCheckBox>
+        <Title>IT 자격증</Title>
+      </FilterContainer>
+    </div>
+  );
 }
 
 export default EventFilter;

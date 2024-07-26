@@ -1,13 +1,20 @@
 import { atom } from 'recoil';
 
+export const filterState = atom({
+  key: 'filterState',
+  default: {
+    event_recruit: true,
+    event_support: true,
+    event_license: true,
+  },
+});
+
 export const loginState = atom({
-    key: 'loginState',
-    default: false,
+  key: 'loginState',
+  default: false,
 });
 
 export const sideState = atom({
-    key: 'sideState',
-    default: true,
+  key: 'sideState',
+  default: false,
 });
-
-// 로그인 상태를 전역에서 관리할 수 있는 recoil 라이브러리 사용해봄

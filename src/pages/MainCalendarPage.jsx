@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import CalendarComponent from '../components/mainpage/calander/CalendarComponent2';
-import Header from '../components/header/Header';
 import Sidebar from '../components/mainpage/Sidebar';
 import styled from 'styled-components';
+import CalendarHeader from '../components/modules/header/CalendarHeader';
 
 const SidebarContainer = styled.div`
   width: 264px; // Sidebar의 고정 너비 설정
@@ -23,17 +23,35 @@ const MainContainer = styled.div`
 `;
 
 function MainCalendarPage() {
+  const calendarRef = useRef(null);
+
+  const handlePrevMonth = () => {
+    if (calendarRef.current) {
+      calendarRef.current.prev();
+    }
+  };
+
+  const handleNextMonth = () => {
+    if (calendarRef.current) {
+      calendarRef.current.next();
+    }
+  };
+
+  const handleDateClick = (dateStr) => {
+    console.log("Clicked date:", dateStr);
+  };
+
   return (
     <MainContainer>
-      <Header style={{ height: '64px' }} />
+      <CalendarHeader onPrevMonth={handlePrevMonth} onNextMonth={handleNextMonth} style={{ height: '64px' }} />
       <MainContent>
         <SidebarContainer>
           <Sidebar />
         </SidebarContainer>
-        <CalendarComponent style={{ flex: 1 }} /> {/* 나머지 공간을 차지하도록 설정 */}
+        <CalendarComponent ref={calendarRef} onDateClick={handleDateClick} style={{ flex: 1 }} />
       </MainContent>
     </MainContainer>
   );
-};
+}
 
 export default MainCalendarPage;
