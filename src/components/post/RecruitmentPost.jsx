@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import star from '../../assets/scrap.png';
 
-function RecruitmentPost({ title, body, companyname, pic1, scrap, startdate, enddate, recruit_part, stack, experience, education, work_type, width }) {
+function RecruitmentPost({ title, body, companyname, pic1, scrapCount, startdate, enddate, recruit_part, stack, experience, education, work_type, width }) {
     const formatDate = (dateString) => {
         const date = new window.Date(dateString);
         const year = date.getFullYear();
@@ -28,7 +28,7 @@ function RecruitmentPost({ title, body, companyname, pic1, scrap, startdate, end
                     <Date>{`${formatDate(startdate)} ~ ${formatDate(enddate)}`}</Date>
                     <ScrapContainer>
                         <ScrapImg src={star} />
-                        <ScrapCount>{scrap}</ScrapCount>
+                        <ScrapCount>{scrapCount}</ScrapCount>
                     </ScrapContainer>
                 </Footer>
             </ContentContainer>

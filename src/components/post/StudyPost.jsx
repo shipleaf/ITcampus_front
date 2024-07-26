@@ -2,25 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 import commentImg from '../../assets/commentImg.png';
 
-function StudyPost({ title, detail, writer, img, datecreate, commentNum, width }) {
+function StudyPost({ title, body, id, pic1, date, commentNum, width }) {
     return (
         <>
             <ButtonFrame width = {width}>
                 <ContentContainer>
                     <Title>{title}</Title>
-                    <Content>{detail}</Content>
+                    <Content>{body}</Content>
                     <Footer>
-                        <Writer>{writer}</Writer>
-                        <Date>{datecreate}</Date>
+                        <Writer>{id}</Writer>
+                        <Date>{date}</Date>
                         <CommentContainer>
                             <CommentImg src={commentImg} />
                             <CommentCount>{commentNum}</CommentCount>
                         </CommentContainer>
                     </Footer>
                 </ContentContainer>
-                {img && (
+                {pic1 && (
                     <ThumbnailContainer>
-                        <Thumbnail src={img} />
+                        <Thumbnail src={pic1} />
                     </ThumbnailContainer>
                 )}
             </ButtonFrame>
@@ -93,7 +93,7 @@ const Footer = styled.div`
 const Writer = styled.div`
     font-size: 16px;
     font-weight: bold;
-    width: 150px;
+    width: 200px;
     color: black;
 `
 
@@ -136,7 +136,7 @@ const Thumbnail = styled.img`
 
 const Divider = styled.div`
     margin: 5px auto;  
-    width: 50%;
+    width: 60%;
     height: 1px;
     background-color: #ccc;
     display: ${(props) => (props.width === '100%' ? 'none' : 'block')};

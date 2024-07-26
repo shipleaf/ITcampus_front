@@ -24,9 +24,9 @@ const AppRouter = () => {
   return (
     <Router>
       <Routes>
+      <Route path='/' element={<Header/>} />
+        <Route path='/mypage' element={<MyPage/>} />
         <Route path='/mainpage' element={<MainCalendarPage/>} />
-        <Route path='/' element={<Header/>} />
-        <Route path='/mypage' element={<MyPage />} />
         <Route path='/companylist' element={<CompanyList/>} />
         <Route path='/companydetails/:key' element={<CompanyDetails/>} />
         <Route path='/governmentlist' element={<GovernmentSupport />} />
