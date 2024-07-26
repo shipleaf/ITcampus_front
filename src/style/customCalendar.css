@@ -83,19 +83,24 @@ html, body {
     color: #fff;
 }
 
+.custom-event-content{
+    span{
+        color: #fff;
+    }
+}
+
 .fc .fc-event {
     color: #fff;
-    border: 1px solid #0056b3;
-    box-sizing: border-box;
+    border: none !important;
 }
 
 .custom-event-content {
-    background-color: inherit;
     padding: 2px;
     border-radius: 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    padding-left: 10px;
+    border: none;
 }
 
 .custom-event-content span {

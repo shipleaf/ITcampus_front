@@ -20,7 +20,7 @@ const Title = styled.span`
   font-weight: 400;
 `;
 
-const CustomCheckboxContainer = styled.label`
+const CheckboxContainer = styled.label`
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -30,8 +30,8 @@ const CustomCheckboxContainer = styled.label`
   }
 `;
 
-const MyFirstCheckBox = styled(CustomCheckboxContainer)`
-  input + span {
+const MyFirstCheckBox = styled(CheckboxContainer)`
+  input + label {
     width: 18px;
     height: 18px;
     display: inline-block;
@@ -42,10 +42,10 @@ const MyFirstCheckBox = styled(CustomCheckboxContainer)`
     border-radius: 3px;
     position: relative;
   }
-  input:checked + span {
+  input:checked + label {
     background: #7986CB; /* 체크된 상태일 때의 배경색 */
   }
-  input:checked + span::after {
+  input:checked + label::after {
     content: '✔';
     color: white;
     font-size: 15px;
@@ -56,22 +56,22 @@ const MyFirstCheckBox = styled(CustomCheckboxContainer)`
   }
 `;
 
-const MySecondCheckBox = styled(CustomCheckboxContainer)`
-  input + span {
+const MySecondCheckBox = styled(CheckboxContainer)`
+  input + label {
     width: 18px;
     height: 18px;
     display: inline-block;
     border: 2px solid #33B679;
     background: #fff;
-    margin-right: 5px;
+    margin-right: 5px;  
     box-sizing: border-box;
     border-radius: 3px;
     position: relative;
   }
-  input:checked + span {
+  input:checked + label {
     background: #33B679; /* 체크된 상태일 때의 배경색 */
   }
-  input:checked + span::after {
+  input:checked + label::after {
     content: '✔';
     color: white;
     font-size: 15px;
@@ -82,8 +82,8 @@ const MySecondCheckBox = styled(CustomCheckboxContainer)`
   }
 `;
 
-const MyThirdCheckBox = styled(CustomCheckboxContainer)`
-  input + span {
+const MyThirdCheckBox = styled(CheckboxContainer)`
+  input + label {
     width: 18px;
     height: 18px;
     display: inline-block;
@@ -94,10 +94,10 @@ const MyThirdCheckBox = styled(CustomCheckboxContainer)`
     border-radius: 3px;
     position: relative;
   }
-  input:checked + span {
+  input:checked + label {
     background: #4285F4;
   }
-  input:checked + span::after {
+  input:checked + label::after {
     content: '✔';
     color: white;
     font-size: 15px;
@@ -113,22 +113,22 @@ function MyEventFilter() {
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       <FilterContainer>
         <MyFirstCheckBox>
-          <input type='checkbox' id='myrecruit' />
-          <span></span>
+          <input type='checkbox' id='my_recruit' defaultChecked/>
+          <label htmlFor='my_recruit'></label>
         </MyFirstCheckBox>
         <Title>취업 공고</Title>
       </FilterContainer>
       <FilterContainer>
         <MySecondCheckBox>
-          <input type='checkbox' id='mysupport' />
-          <span></span>
+          <input type='checkbox' id='my_support' defaultChecked/>
+          <label htmlFor='my_support'></label>
         </MySecondCheckBox>
         <Title>지원 프로그램</Title>
       </FilterContainer>
       <FilterContainer>
         <MyThirdCheckBox>
-          <input type='checkbox' id='mylicense' />
-          <span></span>
+          <input type='checkbox' id='my_license' defaultChecked/>
+          <label htmlFor='my_license'></label>
         </MyThirdCheckBox>
         <Title>IT 자격증</Title>
       </FilterContainer>
