@@ -49,12 +49,12 @@ function Recruitment() {
     const sortedPosts = [...posts].sort((a, b) => {
         if (sortOption === 'startdate') {
             return sortOrder === 'desc'
-                ? new Date(b.startDate) - new Date(a.startDate)
-                : new Date(a.startDate) - new Date(b.startDate);
+                ? new Date(b.startdate) - new Date(a.startdate)
+                : new Date(a.startdate) - new Date(b.startdate);
         } else if (sortOption === 'enddate') {
             return sortOrder === 'desc'
-                ? new Date(b.endDate) - new Date(a.endDate)
-                : new Date(a.endDate) - new Date(b.endDate);
+                ? new Date(b.enddate) - new Date(a.enddate)
+                : new Date(a.enddate) - new Date(b.endDate);
         } else if (sortOption === 'scrap') {
             return sortOrder === 'desc'
                 ? b.scrap - a.scrap
@@ -72,8 +72,8 @@ function Recruitment() {
         }
 
         if (isFilterActive) {
-            const startDate = new Date(post.startDate);
-            const endDate = new Date(post.endDate);
+            const startDate = new Date(post.startdate);
+            const endDate = new Date(post.enddate);
             return startDate <= today && today <= endDate;
         }
 

@@ -31,13 +31,6 @@ const Button = styled.button`
     }
 `
 
-/*const CheckIcon = styled.img`
-    width: 16px;
-    height: 16px;
-    margin-right: 5px;
-    filter: ${(props) => (props.isActive ? 'grayscale(0%)' : 'grayscale(100%)')};
-`;*/
-
 const CheckIcon = styled.div`
     font-size: 30px;
     margin-right: 10px;

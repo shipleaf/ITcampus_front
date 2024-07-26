@@ -6,7 +6,7 @@ import Top from "../components/post/Top";
 import Post from "../components/post/Post";
 import CustomSelect from "../components/filter/CustomSelect";
 import FilterButton from "../components/filter/FilterButton";
-import { fetchLicenseList } from "../APIs/licenseListAPI";
+import { fetchLicenseList, fetchLicenseDetails } from "../APIs/licenseAPI";
 
 function ITLicense() {
     const [posts, setPosts] = useState([]);
@@ -16,6 +16,7 @@ function ITLicense() {
     const [isFilterActive, setIsFilterActive] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [, setSelectedLicense] = useState(null);
     const postsPerPage = 7;
 
     useEffect(() => {
@@ -40,24 +41,24 @@ function ITLicense() {
     const sortedPosts = [...posts].sort((a, b) => {
         if (sortOption === 'startdate') {
             return sortOrder === 'desc'
-                ? new Date(b.startDate) - new Date(a.startDate)
-                : new Date(a.startDate) - new Date(b.startDate);
+                ? new Date(b.startdate) - new Date(a.startdate)
+                : new Date(a.startdate) - new Date(b.startdate);
         } else if (sortOption === 'enddate') {
             return sortOrder === 'desc'
-                ? new Date(b.endDate) - new Date(a.endDate)
-                : new Date(a.endDate) - new Date(b.endDate);
+                ? new Date(b.enddate) - new Date(a.enddate)
+                : new Date(a.enddate) - new Date(b.enddate);
         } else if (sortOption === 'scrap') {
             return sortOrder === 'desc'
-                ? b.scrap - a.scrap
-                : a.scrap - b.scrap;
+                ? b.scrapCount - a.scrapCount
+                : a.scrapCount - b.scrapCount;
         }
         return 0;
     });
 
     const filteredPosts = sortedPosts.filter(post => {
         if (!isFilterActive) return true;
-        const startDate = new Date(post.startDate);
-        const endDate = new Date(post.endDate);
+        const startDate = new Date(post.startdate);
+        const endDate = new Date(post.enddate);
         return startDate <= today && today <= endDate;
     });
 
@@ -82,6 +83,15 @@ function ITLicense() {
     const handleFilterToggle = () => {
         setIsFilterActive(!isFilterActive);
         setCurrentPage(1);
+    };
+
+    const handleLicenseClick = async (licenseId) => {
+        try {
+            const response = await fetchLicenseDetails(licenseId);
+            setSelectedLicense(response.data);
+        } catch (error) {
+            setError(error);
+        }
     };
 
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
@@ -125,8 +135,9 @@ function ITLicense() {
                         writer={post.agency}
                         pic1={post.pic1}
                         scrapCount={post.scrapCount}
-                        startdate={post.startdate}
-                        enddate={post.enddate}
+                        startdate={new Date(post.startdate).toLocaleDateString('ko-KR')}
+                        enddate={new Date(post.enddate).toLocaleDateString('ko-KR')}    
+                        onClick={handleLicenseClick}
                     />
                 </StyledLink>
             ))}
@@ -179,7 +190,7 @@ const PageNumber = styled.button`
         background: #36bef1;
         color: #fff;
     }
-`;
+`
 
 const StyledLink = styled(Link)`
     text-decoration: none;
