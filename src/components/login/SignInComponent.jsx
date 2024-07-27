@@ -143,7 +143,7 @@ function SignInComponent({ toggleComponent, handleLogin, closeModal }) {
         <SignInButton type="submit">로그인</SignInButton>
         <HRComponent>
           <hr className='left' />
-          <div>또는</div>
+          <div style={{width: '24%'}}>또는</div>
           <hr className='right' />
         </HRComponent>
         <SignUpButton type="button" onClick={toggleComponent}>회원가입</SignUpButton>

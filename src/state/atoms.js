@@ -18,3 +18,13 @@ export const sideState = atom({
   key: 'sideState',
   default: false,
 });
+
+export const mainEventState = atom({
+  key: 'eventDataState',
+  default: [],
+})
+
+export const sidebarState = atom({
+  key: 'sidebarState',
+  default: true,
+});

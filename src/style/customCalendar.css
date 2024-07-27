@@ -2,7 +2,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .hidden-week {
@@ -22,6 +22,7 @@ html, body {
     flex-direction: column;
     flex: 1;
     overflow: hidden;
+    z-index: 1000 !important;
 }
 
 .fc-view-harness {
@@ -171,4 +172,21 @@ html, body {
 
 .fc-toolbar-chunk {
     margin: 0 5px;
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(5%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.calendar-detail {
+    animation: slideInFromRight 0.2s ease-out;
+    position: absolute;
+    z-index: 12000;
 }
