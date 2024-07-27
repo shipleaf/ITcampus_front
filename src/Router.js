@@ -16,7 +16,6 @@ import GovernmentSupportDetails from './pages/GovernmentSupportDetails';
 import MainCalendarPage from './pages/MainCalendarPage';
 import MyPage from './pages/MyPage';
 import StudyDetails from './pages/StudyDetails';
-import Header from './components/header/Header';
 import CreateStudyPost from './pages/CreateStudyPost';
 import CreateInfoPost from './pages/CreateInfoPost';
 
@@ -24,9 +23,8 @@ const AppRouter = () => {
   return (
     <Router>
       <Routes>
-      <Route path='/' element={<Header/>} />
-        <Route path='/mypage' element={<MyPage/>} />
-        <Route path='/mainpage' element={<MainCalendarPage/>} />
+        <Route path='/' element={<MainCalendarPage/>} />
+        <Route path='/mypage' element={<MyPage />} />
         <Route path='/companylist' element={<CompanyList/>} />
         <Route path='/companydetails/:key' element={<CompanyDetails/>} />
         <Route path='/governmentlist' element={<GovernmentSupport />} />
