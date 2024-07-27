@@ -10,7 +10,6 @@ const Header = styled.div`
 function MainHeader() {
     return (
         <Header>
-            
         </Header>
     )
 };

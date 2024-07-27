@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import '../../style/smallCalendar.css';
 import calendarImage from '../../assets/smallcalendar.png';
 import EventContainer from './calander/EventContainer';
 import MyEventContainer from './calander/MyEventContainer';
@@ -35,11 +34,12 @@ const ToggleButtonContainer = styled.div`
   justify-content: center;
   padding: 20px;
   padding-bottom: 10px;
-  & span {
-    margin-right: 22px;
-    font-size: 14px;
-    color: #999;
-  }
+`;
+
+const ToggleLabel = styled.span`
+  margin-right: 22px;
+  font-size: 14px;
+  color: ${(props) => (props.isOn ? '#444' : '#999')};
 `;
 
 function Sidebar() {
@@ -51,13 +51,12 @@ function Sidebar() {
 
   return (
     <div style={{ height: '100%', width: '100%' }}>
-      <LogoContainer>
-      </LogoContainer>
+      <LogoContainer />
       <ImageContainer>
         <CalendarImage src={calendarImage} alt='Calendar' />
       </ImageContainer>
       <ToggleButtonContainer>
-        <span>마이 캘린더</span>
+        <ToggleLabel isOn={isOn}>마이 캘린더</ToggleLabel>
         <Toggle isOn={isOn} toggleHandler={toggleHandler} />
       </ToggleButtonContainer>
       {isOn ? <MyEventContainer /> : <EventContainer />}
