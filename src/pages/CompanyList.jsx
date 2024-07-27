@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchCompanyList } from "../APIs/companyListAPI";
-import { fetchCompanyDetails } from "../APIs/companyDetailAPI";
+import { fetchCompanyList,fetchCompanyDetails } from "../APIs/companyAPI";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import GuestHeader from "../components/header/GuestHeader";
