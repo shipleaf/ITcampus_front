@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import star from '../../assets/scrap.png';
 // import Today from '../../assets/Today';
 
-function Post({ title, body, writer, pic1, scrapCount, startdate, enddate, width }) {
+function Post({ title, body, agency, pic1, scrapCount, startdate, enddate, width }) {
     const formatDate = (dateString) => {
         const date = new window.Date(dateString);
         const year = date.getFullYear();
@@ -18,7 +18,7 @@ function Post({ title, body, writer, pic1, scrapCount, startdate, enddate, width
                 <Content>{body}</Content>
                 <Remain>
                 <Footer>
-                    <Writer>{writer}</Writer>
+                    <Writer>{agency}</Writer>
                     <Date>{`${formatDate(startdate)} ~ ${formatDate(enddate)}`}</Date>
                     <ScrapContainer>
                         <ScrapImg src={star} />

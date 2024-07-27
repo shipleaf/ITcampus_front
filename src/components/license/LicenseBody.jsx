@@ -19,6 +19,7 @@ const Button = styled.button`
     cursor: pointer;
     padding: 20px;
 `
+
 const Container = styled.div`
     width: 60%;
     border: 1px solid #79BFFF;
@@ -28,12 +29,13 @@ const Container = styled.div`
     margin-top: 50px;
 `
 
-
 function LicenseBody({ licenseDetails }) {
 
     if (!licenseDetails) {
         return null;
     }
+
+    const testInfoArray = typeof licenseDetails.testinfo === 'string' ? [licenseDetails.testinfo] : licenseDetails.testinfo;
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -44,7 +46,7 @@ function LicenseBody({ licenseDetails }) {
                     <Button>기출문제</Button>
                 </Header>
                 <Body>
-                    {licenseDetails.testinfo.map((info, index) => (
+                    {testInfoArray.map((info, index) => (
                         <div key={index}>{info}</div>
                     ))}
                 </Body>

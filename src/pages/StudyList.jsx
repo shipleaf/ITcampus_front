@@ -1,155 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import GuestHeader from "../components/header/GuestHeader";
 import Top from "../components/post/Top";
 import StudyPost from "../components/post/StudyPost";
-import star from "../assets/scrap.png"
+import { fetchStudyList } from "../APIs/studyAPI";
+import { useRecoilValue } from 'recoil';
+import { loginState } from "../state/atoms";
+import Modal from 'react-modal';
+import LoginModal from "../components/login/LoginModal";
 
-function StudyList(){
-    const dummyPosts = [
-        {
-            key: 1,
-            title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
-            detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
-            writer : "정준용",
-            datecreate : "2024. 7. 15",
-            commentNum  : "10"
-        },
-        {
-            key: 2,
-            title : "멋사",
-            detail : "가나다라마바사아자차카타파하",
-            writer : "정준용",
-            datecreate : "2024. 7. 15",
-            img : star
-        },
-        {
-            key: 3,
-            title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
-            detail : "가나다라마바사아자차카타파하가나다라마바사아자차카타파하",
-            writer : "정준용",
-            datecreate : "2024. 8. 15"
-        },
-        {
-            key: 4,
-            title : "생각이 안니네",
-            detail : "가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하",
-            writer : "정준용",
-            datecreate : "2026. 7. 12"
-        },
-        {
-            key: 5,
-            title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
-            detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
-            writer : "정준용",
-            datecreate : "2024. 7. 15"
-        },
-        {
-            key: 6,
-            title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
-            detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
-            writer : "정준용",
-            datecreate : "2024. 7. 15"
-        },
-        {
-            key: 7,
-            title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
-            detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
-            writer : "정준용",
-            datecreate : "2024. 7. 15"
-        },
-        {
-            key: 8,
-            title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
-            detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
-            writer : "정준용",
-            datecreate : "2024. 7. 15",
-            img : star
-        },
-        {
-            key: 9,
-            title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
-            detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
-            writer : "정준용",
-            datecreate : "2024. 7. 15"
-        },
-        {
-            key: 10,
-            title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
-            detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
-            writer : "정준용",
-            datecreate : "2024. 7. 15"
-        },
-        {
-            key: 11,
-            title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
-            detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
-            writer : "정준용",
-            datecreate : "2024. 7. 15"
-        },
-        {
-            key: 12,
-            title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
-            detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
-            writer : "정준용",
-            datecreate : "2024. 7. 15"
-        },
-        {
-            key: 13,
-            title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
-            detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
-            writer : "정준용",
-            datecreate : "2024. 7. 15"
-        },
-        {
-            key: 14,
-            title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
-            detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
-            writer : "정준용",
-            datecreate : "2024. 7. 15"
-        },
-        {
-            key: 15,
-            title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
-            detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
-            writer : "정준용",
-            datecreate : "2024. 7. 15"
-        },
-        {
-            key: 16,
-            title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
-            detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
-            writer : "정준용",
-            datecreate : "2024. 7. 15"
-        },
-        {
-            key: 17,
-            title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
-            detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
-            writer : "정준용",
-            datecreate : "2024. 7. 15"
-        },
-        {
-            key: 18,
-            title : "[이벤트] 멋사 장학금 이벤트 (~6/19)",
-            detail : "혹시 멋대생이라면 누구나 받을 수 있는 '무제한'멋사 장학금을 아세요?",
-            writer : "정준용",
-            datecreate : "2024. 7. 15"
-        },
-    ];
+function StudyList() {
+    const [posts, setPosts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [isFilterActive, ] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const postsPerPage = 7;
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [currentPage, setCurrentPage] = useState(1); 
-    const [isFilterActive,] = useState(false);
-    const postsPerPage = 7; 
+    const isLoggedIn = useRecoilValue(loginState);
 
-    const filteredPosts = dummyPosts.filter((post) => {
+    useEffect(() => {
+        const getStudies = async () => {
+            try {
+                const response = await fetchStudyList();
+                if (response.status >= 200 && response.status < 300) {
+                    setPosts(response.data);
+                }
+            } catch (error) {
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getStudies();
+    }, []);
+
+    const filteredPosts = posts.filter((post) => {
         if (!isFilterActive) return true;
-    
-        // 예시 조건: 포스트의 제목이 "example"을 포함하는 경우만 필터링
         return post.title.includes("example");
     });
-    
 
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -159,22 +51,37 @@ function StudyList(){
         setCurrentPage(pageNumber);
     };
 
+    const handleWriteClick = () => {
+        if (isLoggedIn) {
+            window.location.href = '/createstudypost';
+        } else {
+            setIsModalOpen(true);
+        }
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
     return (
         <>
-            <GuestHeader/>
+            <GuestHeader />
             <Top title='스터디 게시판' />
             <WriteContainer>
-                <Write> 글쓰기</Write>
+                <Write onClick={handleWriteClick}>글쓰기</Write>
             </WriteContainer>
-            {currentPosts.map((post, index) => (
-                <StyledLink to={`/studydetails/${post.key}`}>
-                <StudyPost
-                    key={index}
-                    {...post}
-                />
+            {loading ? (
+                <p>Loading...</p>
+            ) : error ? (
+                <p>Error loading posts: {error.message}</p>
+            ) : currentPosts.map((post) => (
+                <StyledLink to={`/studydetails/${post.key}`} key={post.key}>
+                    <StudyPost
+                        key={post.key}
+                        {...post}
+                    />
                 </StyledLink>
             ))}
             <Pagination>
@@ -188,38 +95,47 @@ function StudyList(){
                     </PageNumber>
                 ))}
             </Pagination>
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={closeModal}
+                style={customStyles}
+                contentLabel="로그인 모달"
+            >
+                <LoginModal closeModal={closeModal} />
+            </Modal>
         </>
     );
 }
 
 export default StudyList;
 
-
 const Pagination = styled.div`
     display: flex;
     justify-content: center;
     margin: 20px 0;
-`;
+`
 
 const WriteContainer = styled.div`
-    display :flex;
+    display: flex;
     width: 60%;
     height: 40px;
-    margin : 5px auto;
+    margin: 5px auto;
     justify-content: flex-end;
 `
+
 const Write = styled.button`
-    display : flex;
+    display: flex;
     width: 100px;
     height: 100%;
     justify-content: center;
     align-items: center;
-    padding : 5px auto;
+    padding: 5px auto;
     font-weight: bold;
-    border :none;
-    background-color: #00ACEE;
+    border: none;
+    background-color: #00acee;
     border-radius: 10px;
-    color : white;
+    color: white;
+    cursor: pointer;
 `
 
 const PageNumber = styled.button`
@@ -233,7 +149,7 @@ const PageNumber = styled.button`
         background: #36bef1;
         color: #fff;
     }
-`;
+`
 
 const StyledLink = styled(Link)`
     text-decoration: none;
@@ -242,3 +158,14 @@ const StyledLink = styled(Link)`
         text-decoration: none;
     }
 `
+
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+    },
+};

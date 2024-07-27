@@ -3,6 +3,15 @@ import styled from 'styled-components';
 import companyLogo from "../../../assets/hyundai.png";
 
 const CompanyHeader = ({ data }) => {
+
+    const formatDate = (dateString) => {
+        const date = new window.Date(dateString);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1; 
+        const day = date.getDate();
+        return `${year}년 ${month}월 ${day}일`;
+    };
+
     return (
         <Header>
             <CompanyInfo>
@@ -15,7 +24,7 @@ const CompanyHeader = ({ data }) => {
                     </CompanyDetail>
                     <CompanyDetail>
                         <DetailLabel>직원수</DetailLabel> 
-                        <DetailValue>{data.employee}</DetailValue>
+                        <DetailValue>{data.employee}명</DetailValue>
                     </CompanyDetail>
                     <CompanyDetail>
                         <DetailLabel>회사위치</DetailLabel> 
@@ -23,7 +32,7 @@ const CompanyHeader = ({ data }) => {
                     </CompanyDetail>
                     <CompanyDetail>
                         <DetailLabel>설립일</DetailLabel> 
-                        <DetailValue>{data.establish}</DetailValue>
+                        <DetailValue>{formatDate(data.establish)}</DetailValue>
                     </CompanyDetail>
                     <CompanyDetail>
                         <DetailLabel>스택</DetailLabel> 

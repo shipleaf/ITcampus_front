@@ -231,8 +231,12 @@ function GovernmentSupport(){
             {currentPosts.map((post, index) => (
                 <StyledLink to={`/governmentsupportdetails/${post.key}`}>
                 <Post
-                    key={index}
-                    {...post}
+                    key={post.key}
+                    body={post.body}
+                    agency={post.agency}
+                    startdate={post.startdate}
+                    enddate={post.enddate}
+                    pic1={post.pic1}
                 />
                 </StyledLink>
             ))}
