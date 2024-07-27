@@ -18,7 +18,7 @@ const LogoDiv = styled.div`
 function Logo() {
   return (
     <LogoDiv>
-      <span id="it">IT</span><span>campus</span>
+      <span id="it">JOB</span>calendar<span></span>
     </LogoDiv>
   );
 }

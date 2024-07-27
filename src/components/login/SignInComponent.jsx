@@ -77,7 +77,7 @@ const HRComponent = styled.div`
 `;
 
 function SignInComponent({ toggleComponent, handleLogin, closeModal }) {
-  const [id, setId] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
@@ -85,18 +85,25 @@ function SignInComponent({ toggleComponent, handleLogin, closeModal }) {
     closeModal();
 
     const userData = {
-      id,
+      email,
       password
     };
 
+    console.log(userData)
+
     try {
       const response = await login(userData);
-      console.log('로그인 성공', response);
-      handleLogin();
+      console.log(response.status)
 
-      if (!response.ok) {
+      if (response.status >= 200 && response.status < 300) {
+        alert("로그인 성공");
+
+      } else {
         throw new Error('로그인에 실패했습니다!');
       }
+
+      console.log('로그인 성공', response);
+      handleLogin();  
 
     } catch (error) {
       console.error('로그인 실패: ', error);
@@ -112,11 +119,11 @@ function SignInComponent({ toggleComponent, handleLogin, closeModal }) {
           <InputDiv className="loginId">
             <Input
               type="text"
-              maxLength="10"
+              maxLength="20"
               id="username"
-              value={id}
+              value={email}
               autoComplete="new-password"
-              onChange={(event) => setId(event.target.value)}
+              onChange={(event) => setEmail(event.target.value)}
               placeholder='로그인'
             />
           </InputDiv>

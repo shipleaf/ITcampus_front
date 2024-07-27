@@ -2,17 +2,31 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow: hidden;
+}
+
+.hidden-week {
+    display: none !important;
+}
+
+.fc-scrollgrid-sync-table{
+    & tbody{
+        & tr{
+            height: 20% !important;
+        }
+    }
 }
 
 .container {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 100%;
+    flex: 1;
+    overflow: hidden;
 }
 
 .fc-view-harness {
     flex: 1 0 auto;
+    overflow: hidden;
 }
 
 .fc-media-screen {
@@ -25,7 +39,6 @@ html, body {
     color: #444;
     font-size: 24px;
     font-weight: bold;
-
 }
 
 .fc .fc-daygrid-day-top {
@@ -42,12 +55,12 @@ html, body {
 
 .fc-daygrid-day-frame {
     box-sizing: border-box;
-    padding: 2px;
+    padding: 0px;
     position: relative;
+    border-top: none !important;
 }
 
 .fc-daygrid-day:hover .fc-daygrid-day-frame {
-    border: 2px solid #ddd !important;
     cursor: pointer;
     border-radius: 10px;
     padding: 0;
@@ -66,23 +79,28 @@ html, body {
 }
 
 .fc .fc-day-today .fc-daygrid-day-number {
-    background-color: #000;
+    background-color: rgb(26, 115, 232);
     color: #fff;
+}
+
+.custom-event-content{
+    span{
+        color: #fff;
+    }
 }
 
 .fc .fc-event {
     color: #fff;
-    border: 1px solid #0056b3;
-    box-sizing: border-box;
+    border: none !important;
 }
 
 .custom-event-content {
-    background-color: inherit;
     padding: 2px;
     border-radius: 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    padding-left: 10px;
+    border: none;
 }
 
 .custom-event-content span {
@@ -100,6 +118,28 @@ html, body {
 
 .fc .fc-event {
     background-color: inherit;
+}
+
+.fc-scrollgrid-sync-inner{
+    height: 20px;
+    background-color: #fff;
+    border-bottom: none !important;
+
+    & a{
+        font-size: 10px;
+    }
+}
+
+.fc-daygrid-day-number{
+    font-weight: 600;
+    font-size: 12px !important;
+    width: 24px !important;
+    height: 24px !important;
+    margin: 3px 0 10px 0;
+}
+
+.fc-col-header-cell{
+    border-bottom: none !important;
 }
 
 .fc-daygrid-day {
@@ -123,15 +163,10 @@ html, body {
 
 .fc-next-button {
     margin-left: 30px !important;
-}
+}   
 
 .fc-toolbar.fc-header-toolbar {
-    display: flex;
-    justify-content: center;
-    background-color: #999;
-    height: 64px;
-    padding: 8px;
-    margin-bottom: 0 !important;
+    display: none;
 }
 
 .fc-toolbar-chunk {

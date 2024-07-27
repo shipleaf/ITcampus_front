@@ -1,13 +1,15 @@
 import axios from 'axios';
 
-const API_URL = 'itcampus-server.duckdns.org';
+const API_URL = 'http://223.130.135.136:8080';  // 프로토콜 추가
+
+// const API_URL = 'http://localhost:8080'
 
 export const login = async (userData) => {
-
     try {
         const response = await axios.post(`${API_URL}/api/login`, userData);
-        return response.data;
-
+        console.log(`${API_URL}/api/login`)
+        console.log(response.status)
+        return response;
     } catch (error) {
         console.error('로그인 실패사유:', error);
         throw error;
@@ -15,13 +17,12 @@ export const login = async (userData) => {
 };
 
 export const regist = async (registData) => {
-
     try {
         const response = await axios.post(`${API_URL}/api/register`, registData);
-        return response.data;
-
+        return response;
     } catch (error) {
-        console.error('회원가입 실패사유:', error)
+        console.error('회원가입 실패사유:', error);
         throw error;
     }
 };
+
