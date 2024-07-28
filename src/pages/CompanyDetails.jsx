@@ -89,19 +89,19 @@ function CompanyDetails () {
                     <SectionContent>
                     </SectionContent >
                 </Section>
+            <CompanyPost
+                company={OtherCompany.company}
+                detail={OtherCompany.detail}
+                img={OtherCompany.img}
+                scrap={OtherCompany.scrap}
+            />
+            <CompanyPost
+                company={OtherCompany.company}
+                detail={OtherCompany.detail}
+                img={OtherCompany.img}
+                scrap={OtherCompany.scrap}
+            />
             </Container>
-            <CompanyPost
-                company={OtherCompany.company}
-                detail={OtherCompany.detail}
-                img={OtherCompany.img}
-                scrap={OtherCompany.scrap}
-            />
-            <CompanyPost
-                company={OtherCompany.company}
-                detail={OtherCompany.detail}
-                img={OtherCompany.img}
-                scrap={OtherCompany.scrap}
-            />
         </>
     );
 }

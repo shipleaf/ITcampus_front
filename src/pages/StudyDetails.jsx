@@ -66,4 +66,4 @@ export default StudyDetails;
 const Container = styled.div`
   width: 100%;
   overflow: hidden;
-`;
+`

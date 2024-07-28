@@ -1,179 +1,63 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { fetchSupportList } from "../APIs/supportAPI";
 import { Link } from "react-router-dom";
 import GuestHeader from "../components/header/GuestHeader";
 import Top from "../components/post/Top";
 import Post from "../components/post/Post";
 import CustomSelect from "../components/filter/CustomSelect";
 import FilterButton from "../components/filter/FilterButton";
-import star from '../assets/scrap.png';
 
 function GovernmentSupport(){
-    const dummyPosts = [
-        {
-            title: "[공지] 12기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 215,
-            startDate: "2024. 7. 5",
-            endDate: "2024. 7. 14"
-        },
-        {
-            title: "[공지] 13기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 180,
-            startDate: "2024. 8. 1",
-            endDate: "2024. 8. 10"
-        },
-        {
-            title: "[공지] 14기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 215,
-            startDate: "2024. 7. 5",
-            endDate: "2024. 7. 14"
-        },
-        {
-            title: "[공지] 15기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 180,
-            startDate: "2024. 8. 1",
-            endDate: "2024. 8. 10"
-        },
-        {
-            title: "[공지] 16기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 215,
-            startDate: "2024. 7. 5",
-            endDate: "2024. 7. 14"
-        },
-        {
-            title: "[공지] 17기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 180,
-            startDate: "2024. 8. 1",
-            endDate: "2024. 8. 10"
-        },
-        {
-            title: "[공지] 18기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 215,
-            startDate: "2024. 7. 5",
-            endDate: "2024. 7. 14"
-        },
-        {
-            title: "[공지] 19기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 180,
-            startDate: "2024. 8. 1",
-            endDate: "2024. 8. 10"
-        },
-        {
-            title: "[공지] 18기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 215,
-            startDate: "2024. 7. 5",
-            endDate: "2024. 7. 14"
-        },
-        {
-            title: "[공지] 19기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 180,
-            startDate: "2024. 8. 1",
-            endDate: "2024. 8. 10"
-        },{
-            title: "[공지] 18기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 215,
-            startDate: "2024. 7. 5",
-            endDate: "2024. 7. 14"
-        },
-        {
-            title: "[공지] 19기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 180,
-            startDate: "2024. 8. 1",
-            endDate: "2024. 8. 10"
-        },{
-            title: "[공지] 18기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 215,
-            startDate: "2024. 7. 5",
-            endDate: "2024. 7. 14"
-        },
-        {
-            title: "[공지] 19기 중앙 해커톤 안내",
-            detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-            writer: "멋쟁이사자처럼 대학",
-            img: star,
-            scrap: 180,
-            startDate: "2024. 8. 1",
-            endDate: "2024. 8. 10"
-        },
-        {
-            title: "[공지] 108기 중앙 해커톤 안내",
-            detail: "108기 뉴비",
-            writer: "우리 대학",
-            img: star,
-            scrap: 600,
-            startDate: "2024. 7. 9",
-            endDate: "2027. 8. 10"
-        },
-    ];
-
+    const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1); 
-    const [sortOption, setSortOption] = useState('scrap');
+    const [sortOption, setSortOption] = useState('scrapCount');
     const [sortOrder, setSortOrder] = useState('desc'); 
     const [isFilterActive, setIsFilterActive] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const postsPerPage = 7; 
+
+    useEffect(() => {
+        const getSupports = async () => {
+            try {
+                const response = await fetchSupportList();
+                if (response.status >= 200 && response.status < 300) {
+                    setPosts(response.data);
+                }
+            } catch (error) {
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getSupports();
+    }, []);
 
     const today = new Date();
 
-    const sortedPosts = [...dummyPosts].sort((a, b) => {
+    const sortedPosts = [...posts].sort((a, b) => {
         if (sortOption === 'startdate') {
             return sortOrder === 'desc'
-                ? new Date(b.startDate) - new Date(a.startDate)
-                : new Date(a.startDate) - new Date(b.startDate);
+                ? new Date(b.startdate) - new Date(a.startdate)
+                : new Date(a.startdate) - new Date(b.startdate);
         } else if (sortOption === 'enddate') {
             return sortOrder === 'desc'
-                ? new Date(b.endDate) - new Date(a.endDate)
-                : new Date(a.endDate) - new Date(b.endDate);
-        } else if (sortOption === 'scrap') {
+                ? new Date(b.enddate) - new Date(a.enddate)
+                : new Date(a.enddate) - new Date(b.enddate);
+        } else if (sortOption === 'scrapCount') {
             return sortOrder === 'desc'
-                ? b.scrap - a.scrap
-                : a.scrap - b.scrap;
+                ? b.scrapCount - a.scrapCount
+                : a.scrapCount - b.scrapCount;
         }
         return 0;
     });
 
     const filteredPosts = sortedPosts.filter(post => {
         if (!isFilterActive) return true;
-        const startDate = new Date(post.startDate);
-        const endDate = new Date(post.endDate);
+        const startDate = new Date(post.startdate);
+        const endDate = new Date(post.enddate);
         return startDate <= today && today <= endDate;
     });
 
@@ -205,39 +89,46 @@ function GovernmentSupport(){
     return (
         <>
             <GuestHeader/>
+            <Container>
             <Top title='정부 지원' />
             <SortContainer>
-                <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop = '지원중'/>
+                <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='지원중' />
                 <Right>
-                <CustomSelect
-                    selectedOption={sortOption}
-                    options={[
-                        { value: "startdate", label: "지원 시작일" },
-                        { value: "enddate", label: "지원 종료일" },
-                        { value: "scrap", label: "스크랩" }
-                    ]}
-                    onOptionSelect={handleSortChange}
-                />
-                <CustomSelect
-                    selectedOption={sortOrder}
-                    options={[
-                        { value: "desc", label: "내림차순" },
-                        { value: "asc", label: "오름차순" }
-                    ]}
-                    onOptionSelect={handleSortOrderChange}
-                />
+                    <CustomSelect
+                        selectedOption={sortOption}
+                        options={[
+                            { value: "startdate", label: "지원 시작일" },
+                            { value: "enddate", label: "지원 종료일" },
+                            { value: "scrapCount", label: "스크랩" }
+                        ]}
+                        onOptionSelect={handleSortChange}
+                    />
+                    <CustomSelect
+                        selectedOption={sortOrder}
+                        options={[
+                            { value: "desc", label: "내림차순" },
+                            { value: "asc", label: "오름차순" }
+                        ]}
+                        onOptionSelect={handleSortOrderChange}
+                    />
                 </Right>
             </SortContainer>
-            {currentPosts.map((post, index) => (
-                <StyledLink to={`/governmentsupportdetails/${post.key}`}>
-                <Post
-                    key={post.key}
-                    body={post.body}
-                    agency={post.agency}
-                    startdate={post.startdate}
-                    enddate={post.enddate}
-                    pic1={post.pic1}
-                />
+            {loading ? (
+                <p>Loading...</p>
+            ) : error ? (
+                <p>Error loading posts: {error.message}</p>
+            ) : currentPosts.map((post) => (
+                <StyledLink to={`/governmentsupportdetails/${post.key}`} key={post.key}>
+                    <Post
+                        key={post.key}
+                        title={post.title}
+                        body={post.body}
+                        agency={post.agency}
+                        startdate={post.startdate}
+                        enddate={post.enddate}
+                        pic1={post.pic1}
+                        scrapCount={post.scrapCount}
+                    />
                 </StyledLink>
             ))}
             <Pagination>
@@ -251,6 +142,7 @@ function GovernmentSupport(){
                     </PageNumber>
                 ))}
             </Pagination>
+            </Container>
         </>
     );
 }
@@ -259,15 +151,22 @@ export default GovernmentSupport;
 
 const SortContainer = styled.div`
     display: flex;
-    width: 60%;
+    width: 100%;
     margin: 20px auto;
     margin-bottom: 40px;
     align-items: center;
-`;
+`
+
+const Container = styled.div`
+    display:flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 20px auto;
+`
 
 const Right = styled.div`
     display: flex;
-    flex:1;
+    flex: 1;
     flex-direction: row;
     justify-content: flex-end;
 `

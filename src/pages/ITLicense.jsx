@@ -99,6 +99,7 @@ function ITLicense() {
     return (
         <>
             <GuestHeader />
+            <Container>
             <Top title='IT 자격증' />
             <SortContainer>
                 <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='응시가능' />
@@ -132,7 +133,7 @@ function ITLicense() {
                         key={post.key}
                         title={post.title}
                         body={post.body}
-                        writer={post.agency}
+                        agency={post.agency}
                         pic1={post.pic1}
                         scrapCount={post.scrapCount}
                         startdate={new Date(post.startdate).toLocaleDateString('ko-KR')}
@@ -152,6 +153,7 @@ function ITLicense() {
                     </PageNumber>
                 ))}
             </Pagination>
+            </Container>
         </>
     );
 }
@@ -160,11 +162,18 @@ export default ITLicense;
 
 const SortContainer = styled.div`
     display: flex;
-    width: 60%;
+    width: 100%;
     margin: 20px auto;
     margin-bottom: 40px;
     align-items: center;
-`;
+`
+
+const Container = styled.div`
+    display:flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 20px auto;
+`
 
 const Right = styled.div`
     display: flex;

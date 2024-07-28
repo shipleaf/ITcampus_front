@@ -34,11 +34,11 @@ function ITLicenseDetails() {
     }, [key]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div>로딩중...</div>;
     }
 
     if (error) {
-        return <div>Error loading data: {error.message}</div>;
+        return <div>에러 발생: {error.message}</div>;
     }
 
     if (!licenseDetails) {

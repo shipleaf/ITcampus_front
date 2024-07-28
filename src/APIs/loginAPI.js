@@ -25,4 +25,3 @@ export const regist = async (registData) => {
         throw error;
     }
 };
-
