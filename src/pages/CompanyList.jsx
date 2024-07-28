@@ -78,8 +78,9 @@ function CompanyList() {
     return (
         <>
             <GuestHeader />
-            <Top title='기업 소개' />
-            <SortContainer>
+            <Container>
+                <Top title='기업 소개' />
+                <SortContainer>
                 <Right>
                     <CustomSelect
                         selectedOption={sortOption}
@@ -98,17 +99,16 @@ function CompanyList() {
                         onOptionSelect={handleSortOrderChange}
                     />
                 </Right>
-            </SortContainer>
-            {loading ? (
-                <p>Loading...</p>
-            ) : error ? (
+                </SortContainer>
+                {loading ? (
+                  <p>Loading...</p>
+                 ) : error ? (
                 <p>회사 정보 불러오기 실패: {error.message}</p>
-            ) : (
-                <>
-                    {currentPosts.map((post) => (
-                        
-                        <StyledLink to={`/companydetails/${post.companyID}`}>
-                        <CompanyPost 
+                ) : (
+                    <>
+                        {currentPosts.map((post) => (
+                            <StyledLink to={`/companydetails/${post.companyID}`}>
+                            <CompanyPost 
                         key={post.companyID}
                          {...post}
                          onClick={handleCompanyClick} >
@@ -128,6 +128,7 @@ function CompanyList() {
                     </Pagination>
                 </>
             )}
+            </Container>
         </>
     );
 }
@@ -136,12 +137,18 @@ export default CompanyList;
 
 const SortContainer = styled.div`
     display: flex;
-    width: 60%;
+    width: 100%;
     margin: 20px auto;
     margin-bottom: 40px;
     align-items: center;
 `
 
+const Container = styled.div`
+    display : flex;
+    width: 60%;
+    flex-direction: column;
+    margin: 20px auto;
+    `
 const Right = styled.div`
     display: flex;
     flex: 1;

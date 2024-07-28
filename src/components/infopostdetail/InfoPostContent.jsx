@@ -1,36 +1,53 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-const InfoPostContent = ({ title, id, date, body, tag}) => {
+const InfoPostContent = ({ title, id, date, body, pic1, pic2, InfoKey}) => {
+  const hasPictures = pic1 || pic2;
+  pic1 = "https://url.kr/5jer3t"
+
   return (
     <ContentContainer>
-      <ArrowButtonLeft onClick={1+1}>
-        <FontAwesomeIcon style={{height : "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding : "10px"}} icon={faArrowLeft} />
+      <StyledLink to={`/informationdetails/${Number(InfoKey) + 1}`}>
+      <ArrowButtonLeft>
+        <FontAwesomeIcon style={{ height: "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding: "10px" }} icon={faArrowLeft} />
       </ArrowButtonLeft>
+      </StyledLink>
       <ContentWrapper>
-        <Header>
-          <Tag>{tag}</Tag>
-          <ActionButtons>
-            <ActionButton>수정</ActionButton>
-            <ActionButton>삭제</ActionButton>
-          </ActionButtons>
-        </Header>
-        <Title>{title}</Title>
-        <Meta>
-          작성자: {id}
-          <br />
-          작성일: {date}
-        </Meta>
-        <Divider />
-        <Content>
-          {body}
-        </Content>
+        <>
+          <Header>
+            <Tag>정보게시판</Tag>
+            <ActionButtons>
+              <ActionButton>수정</ActionButton>
+              <ActionButton>삭제</ActionButton>
+            </ActionButtons>
+          </Header>
+          <Title>{title}</Title>
+          <Meta>
+            작성자: {id}
+            <br />
+            작성일: {date}
+          </Meta>
+          <Divider />
+        </>
+        <ContentWithImages>
+          <Content>
+            {body}
+          </Content>
+          {hasPictures && (
+            <ImageWrapper>
+              {pic1 && <Image src={pic1}/>}
+            </ImageWrapper>
+          )}
+        </ContentWithImages>
       </ContentWrapper>
-      <ArrowButtonRight onClick={1+1}>
-        <FontAwesomeIcon style={{height : "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding : "10px"}} icon={faArrowRight} />
+      <StyledLink to={`/informationdetails/${InfoKey-1}`}>
+      <ArrowButtonRight>
+        <FontAwesomeIcon style={{ height: "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding: "10px" }} icon={faArrowRight} />
       </ArrowButtonRight>
+      </StyledLink>
     </ContentContainer>
   );
 };
@@ -45,7 +62,7 @@ const ContentContainer = styled.div`
   padding: 20px;
   min-height: 400px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   position: relative;
 `
 
@@ -107,6 +124,23 @@ const Content = styled.div`
   white-space: pre-line;
 `
 
+const ContentWithImages = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const ImageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`
+
+const Image = styled.img`
+  max-width: 300px;
+  max-height: 300px;
+  object-fit: cover;
+`
+
 const ArrowButton = styled.button`
   background: none;
   border: none;
@@ -114,7 +148,7 @@ const ArrowButton = styled.button`
   width: 100px;
   height: 100px;
   display: flex;
-  color : #79BFFF;
+  color: #79BFFF;
   align-items: center;
   justify-content: center;
   cursor: pointer;
@@ -129,4 +163,11 @@ const ArrowButtonLeft = styled(ArrowButton)`
 
 const ArrowButtonRight = styled(ArrowButton)`
   right: -60px;
+`
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+    &:hover {
+        text-decoration: none;
+    }
 `

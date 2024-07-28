@@ -50,6 +50,7 @@ function InformationList() {
     return (
         <>
             <GuestHeader />
+            <Container>
             <Top title='정보 게시판' />
             <WriteContainer>
                 <Write> 글쓰기</Write>
@@ -77,6 +78,7 @@ function InformationList() {
                     </PageNumber>
                 ))}
             </Pagination>
+            </Container>
         </>
     );
 }
@@ -87,15 +89,22 @@ const Pagination = styled.div`
     display: flex;
     justify-content: center;
     margin: 20px 0;
-`;
+`
+
+const Container = styled.div`
+    display : flex;
+    width: 60%;
+    flex-direction: column;
+    margin: 20px auto;
+`
 
 const WriteContainer = styled.div`
     display: flex;
-    width: 60%;
+    width: 100%;
     height: 40px;
     margin: 5px auto;
     justify-content: flex-end;
-`;
+`
 
 const Write = styled.button`
     display: flex;
@@ -110,7 +119,7 @@ const Write = styled.button`
     border-radius: 10px;
     color: white;
     cursor: pointer;
-`;
+`
 
 const PageNumber = styled.button`
     background: ${(props) => (props.active ? '#36bef1' : '#fff')};
@@ -123,7 +132,7 @@ const PageNumber = styled.button`
         background: #36bef1;
         color: #fff;
     }
-`;
+`
 
 const StyledLink = styled(Link)`
     text-decoration: none;
@@ -131,4 +140,4 @@ const StyledLink = styled(Link)`
     &:hover {
         text-decoration: none;
     }
-`;
+`

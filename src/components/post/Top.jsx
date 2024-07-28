@@ -20,7 +20,7 @@ export default Top;
 const Frame = styled.div`
   display : flex;
   align-items: flex-end;
-  width: ${(props) => props.width || '60%'};
+  width: ${(props) => props.width || '100%'};
   margin : 10px auto;
   margin-top : 40px;
   justify-content: space-between;

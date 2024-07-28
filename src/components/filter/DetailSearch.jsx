@@ -198,7 +198,7 @@ const DetailSearch = ({ onFilterChange }) => {
 export default DetailSearch;
 
 const DetailedSearchContainer = styled.div`
-  width: 60%;
+  width: 100%;
   margin: 20px auto;
 `
 

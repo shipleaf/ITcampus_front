@@ -1,11 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { deleteInfoComment, createInfoComment } from '../../APIs/infoAPI';
 
-const InfoPostComments = ({ comments, currentUser }) => {
-  
-const handleDelete = (id) => {
-  console.log(`삭제`);
-}
+const InfoPostComments = ({ comments = [], InfoKey }) => {
+  const [newComment, setNewComment] = useState('');
+
+  const handleDelete = async (commentKey) => {
+    try {
+      await deleteInfoComment(InfoKey, commentKey);
+      alert('댓글이 삭제되었습니다.');
+    } catch (error) {
+      console.error('댓글 삭제 실패:', error);
+      alert('댓글 삭제에 실패했습니다.');
+    }
+  };
+
+  const handleCommentChange = (e) => {
+    setNewComment(e.target.value);
+  };
+
+  const handleCommentSubmit = async () => {
+    console.log(newComment);
+    try {
+      const commentData = {
+        comment: newComment
+      };
+      await createInfoComment(InfoKey, commentData);
+      alert('댓글이 추가되었습니다.');
+      setNewComment('');
+    } catch (error) {
+      console.error('댓글 추가 실패:', error);
+      alert('댓글 추가에 실패했습니다.');
+    }
+  };
 
   return (
     <CommentBackground>
@@ -18,17 +45,21 @@ const handleDelete = (id) => {
           <Comment key={index}>
             <CommentHeader>
               <CommentAuthor>{comment.id}</CommentAuthor>
-              <DeleteButton onClick={() => handleDelete(comment.id)}>x</DeleteButton>
+              <DeleteButton onClick={() => handleDelete(comment.commentKey)}>x</DeleteButton>
             </CommentHeader>
-            <CommentText>{comment.text}</CommentText>
+            <CommentText>{comment.comment}</CommentText>
             <Meta style={{ marginLeft: '5px' }}>{comment.date}</Meta>
           </Comment>
         ))}
         <CommentInputContainer>
-          <UserName>{currentUser}</UserName>
-          <CommentTextArea placeholder="댓글을 남겨보세요" />
+          <UserName>나</UserName>
+          <CommentTextArea 
+            placeholder="댓글을 남겨보세요" 
+            value={newComment}
+            onChange={handleCommentChange}
+          />
           <OptionsWrapper>
-            <SubmitButton>등록</SubmitButton>
+            <SubmitButton onClick={handleCommentSubmit}>등록</SubmitButton>
           </OptionsWrapper>
         </CommentInputContainer>
       </CommentsContainer>
@@ -147,7 +178,7 @@ const SubmitButton = styled.button`
 `
 
 const Meta = styled.div`
-  font-size: 14px;
+  font-size: 0.9em;
   color: #666;
   white-space: nowrap;
 `

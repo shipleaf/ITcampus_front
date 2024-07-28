@@ -43,7 +43,7 @@ export default RecruitmentPost;
 
 const ButtonFrame = styled.button`
     display: flex;
-    width: ${(props) => props.width || '60%'};
+    width: ${(props) => props.width || '100%'};
     height: 250px;
     margin: 15px auto;
     align-items: center;

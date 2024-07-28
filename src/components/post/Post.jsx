@@ -11,6 +11,7 @@ function Post({ title, body, agency, pic1, scrapCount, startdate, enddate, width
         const day = date.getDate();
         return `${year}. ${month}. ${day}`;
     };
+    
     return (
         <ButtonFrame width={width}>
             <ContentContainer>
@@ -44,7 +45,7 @@ const Remain = styled.div`
 
 const ButtonFrame = styled.button`
     display: flex;
-    width: ${(props) => props.width || '60%'};
+    width: ${(props) => props.width || '100%'};
     height: 190px;
     margin: 15px auto;
     align-items: center;

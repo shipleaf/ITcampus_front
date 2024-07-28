@@ -116,6 +116,7 @@ function Recruitment() {
     return (
         <>
             <GuestHeader />
+            <Container>
             <Top title='채용 공고' />
             <DetailSearch onFilterChange={handleFilterChange} />
             <SortContainer>
@@ -175,6 +176,7 @@ function Recruitment() {
                     </PageNumber>
                 ))}
             </Pagination>
+            </Container>
         </>
     );
 }
@@ -183,10 +185,17 @@ export default Recruitment;
 
 const SortContainer = styled.div`
     display: flex;
-    width: 60%;
+    width: 100%;
     margin: 20px auto;
     margin-bottom: 40px;
     align-items: center;
+`
+
+const Container = styled.div`
+    display:flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 20px auto;
 `
 
 const Right = styled.div`

@@ -53,7 +53,7 @@ export default CompanyPost;
 
 const ButtonFrame = styled.div`
     display: flex;
-    width: ${(props) => props.width || '60%'};
+    width: ${(props) => props.width || '100%'};
     height: 100px;
     margin: 15px auto;
     margin-bottom: 35px;
@@ -65,7 +65,8 @@ const ButtonFrame = styled.div`
     justify-content: space-between;
 
     &:hover {
-        border: 3px solid #36bef1;
+        outline: 3px solid #36bef1;
+        border: 1px solid white;
     }
 `
 

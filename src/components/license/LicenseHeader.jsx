@@ -1,71 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Title = styled.div`
-
-`
-const Container = styled.div`
-    width: 600px;
-    padding: 20px;
-    border-radius: 10px;
-`
-const Content = styled.div`
-    margin-left: 15px;
-`
-const Header = styled.div`
-    font-size: 25px;
-    font-weight: bold;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 20px;
-`
-const ContentContainer = styled.div`
-    margin-top: 15px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-`
-const Toc = styled.div`
-    color: #999;
-    width: 120px;
-`
-
-const InstitutionInfoContainer = styled.div`
-    
-`
-
-const LogoContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-`
-const StyledLogo = styled.img`
-    width: 70%;
-    padding: 20px;
-    padding-top: 50px;
-`
-const BodyContainer = styled.div`
-    width: 300px;
-    border-left: 1px solid #79BFFF;
-
-`
-const InstitutionBody = styled.div`
-    padding: 20px;
-`
-const Head = styled.div`
-    font-weight: bold;
-`
-const Body = styled.div`
-    
-`
-const InstitutionContent = styled(Content)`
-    margin-left: 0;
-    font-weight: 600;
-`
-const InstitutionToc = styled(Toc)`
-    font-size: 15px;
-`
-
 function LicenseHeader({licenseDetails}) {
 
     if (!licenseDetails) {
@@ -75,9 +10,9 @@ function LicenseHeader({licenseDetails}) {
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const year = date.getFullYear();
-        const month = date.getMonth() + 1; // 월은 0부터 시작하므로 1을 더합니다.
+        const month = date.getMonth() + 1; 
         const day = date.getDate();
-        return `${year}년 ${month}월 ${day}일`;
+        return `${year}. ${month}. ${day}.`;
     };
 
     const formattedResultDate = formatDate(licenseDetails.resultdate);
@@ -86,13 +21,15 @@ function LicenseHeader({licenseDetails}) {
 
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <Frame>
             <Title>IT 자격증</Title>
+            <Divder />
             <div style={{ display: 'flex', flexDirection: 'row', borderRadius: '10px', border: '1px solid #79BFFF', backgroundColor: '#fff' }}>
                 <Container>
                     <Header>
-                        정보처리기사 1차(필기)
+                        {licenseDetails.title}
                     </Header>
+                    <LeftContainer>
                     <ContentContainer>
                         <Toc>응시 자격</Toc>
                         <Content>
@@ -129,6 +66,7 @@ function LicenseHeader({licenseDetails}) {
                             {licenseDetails.link}
                         </Content>
                     </ContentContainer>
+                    </LeftContainer>
                 </Container>
                 <BodyContainer>
                     <InstitutionInfoContainer>
@@ -157,8 +95,102 @@ function LicenseHeader({licenseDetails}) {
                     </InstitutionInfoContainer>
                 </BodyContainer>
             </div>
-        </div >
+        </Frame >
     )
 }
 
 export default LicenseHeader
+
+const Frame = styled.div`
+    width: 60%;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+`
+
+
+const Divder = styled.div`
+    margin: 10px auto;  
+    width: 99%;
+    height: 2px;
+    background-color: black;
+`
+
+const Title = styled.div`
+    font-size: 20px;
+    font-weight: 700;
+    width: 62%;
+    padding: 15px;
+    margin-left: 10px;
+`
+
+const LeftContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    justify-content: space-between;
+`
+
+const Container = styled.div`
+    width : 65%;
+    padding: 20px;
+    border-radius: 10px;
+`
+const Content = styled.div`
+    margin-left: 15px;
+`
+const Header = styled.div`
+    font-size: 25px;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 20px;
+`
+const ContentContainer = styled.div`
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`
+const Toc = styled.div`
+    color: #999;
+    width: 120px;
+`
+
+const InstitutionInfoContainer = styled.div`
+`
+
+const LogoContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
+const StyledLogo = styled.img`
+    max-width: 150px;
+    max-height: 150px;
+    padding: 10px;
+    padding-top: 20px;
+    object-fit: contain;
+`
+
+const BodyContainer = styled.div`
+    flex:1;
+    border-left: 1px solid #79BFFF;
+
+`
+const InstitutionBody = styled.div`
+    padding: 20px;
+`
+const Head = styled.div`
+    font-weight: bold;
+`
+const Body = styled.div`
+    
+`
+const InstitutionContent = styled(Content)`
+    margin-left: 0;
+    font-weight: 600;
+`
+const InstitutionToc = styled(Toc)`
+    width: 100px;
+    font-size: 15px;
+`

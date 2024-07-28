@@ -68,6 +68,7 @@ function StudyList() {
     return (
         <>
             <GuestHeader />
+            <Container>
             <Top title='스터디 게시판' />
             <WriteContainer>
                 <Write onClick={handleWriteClick}>글쓰기</Write>
@@ -103,11 +104,19 @@ function StudyList() {
             >
                 <LoginModal closeModal={closeModal} />
             </Modal>
+            </Container>
         </>
     );
 }
 
 export default StudyList;
+
+const Container = styled.div`
+    display : flex;
+    width: 60%;
+    flex-direction: column;
+    margin: 20px auto;
+`
 
 const Pagination = styled.div`
     display: flex;
@@ -117,7 +126,7 @@ const Pagination = styled.div`
 
 const WriteContainer = styled.div`
     display: flex;
-    width: 60%;
+    width: 100%;
     height: 40px;
     margin: 5px auto;
     justify-content: flex-end;

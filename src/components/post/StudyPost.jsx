@@ -2,7 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import commentImg from '../../assets/commentImg.png';
 
-function StudyPost({ title, body, id, pic1, date, commentNum, width }) {
+function StudyPost({ title, body, id, pic1, date, commentCount, width }) {
+
+    const formatDate = (dateString) => {
+        const date = new window.Date(dateString);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1; 
+        const day = date.getDate();
+        return `${year}. ${month}. ${day}`;
+    };
+    
     return (
         <>
             <ButtonFrame width = {width}>
@@ -11,10 +20,10 @@ function StudyPost({ title, body, id, pic1, date, commentNum, width }) {
                     <Content>{body}</Content>
                     <Footer>
                         <Writer>{id}</Writer>
-                        <Date>{date}</Date>
+                        <Date>{formatDate(date)}</Date>
                         <CommentContainer>
                             <CommentImg src={commentImg} />
-                            <CommentCount>{commentNum}</CommentCount>
+                            <CommentCount>{commentCount}</CommentCount>
                         </CommentContainer>
                     </Footer>
                 </ContentContainer>
@@ -33,7 +42,7 @@ export default StudyPost;
 
 const ButtonFrame = styled.button`
     display: flex;
-    width: ${(props) => props.width || '60%'};
+    width: ${(props) => props.width || '100%'};
     height: 150px;
     margin: 20px auto 15px auto;
     align-items: center;
@@ -136,7 +145,7 @@ const Thumbnail = styled.img`
 
 const Divider = styled.div`
     margin: 5px auto;  
-    width: 60%;
+    width: 100%;
     height: 1px;
     background-color: #ccc;
     display: ${(props) => (props.width === '100%' ? 'none' : 'block')};
