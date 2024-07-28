@@ -119,7 +119,7 @@ function SignInComponent({ toggleComponent, handleLogin, closeModal }) {
           <InputDiv className="loginId">
             <Input
               type="text"
-              maxLength="20"
+              maxLength="30"
               id="username"
               value={email}
               autoComplete="new-password"

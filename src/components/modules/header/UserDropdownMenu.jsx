@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import { IoHomeOutline } from "react-icons/io5";
 import { LuClipboardEdit } from "react-icons/lu";
@@ -17,10 +17,10 @@ const Container = styled.div`
     border: 1px solid #999;
     padding: 8px 0;
     position: absolute;
-    right: 0;
-    top: 50px; /* Adjust based on the header height */
+    right: 5px;
+    top: 65px;
     background-color: #fff;
-    z-index: 1000;
+    z-index: 30000;
 `;
 
 const DropdownContainer = styled.div`
@@ -58,7 +58,7 @@ const LogoutButton = styled.button`
     }
 `;
 
-function UserDropdownMenu() {
+const UserDropdownMenu = forwardRef((props, ref) => {
     const [, setIsLoggedIn] = useRecoilState(loginState);
 
     const handleLogout = () => {
@@ -66,7 +66,7 @@ function UserDropdownMenu() {
     };
 
     return (
-        <Container>
+        <Container ref={ref}>
             <DropdownContainer>
                 <div style={{ width: '24px' }}>
                     <IoHomeOutline style={{ color: '#5c667b' }} size={20} />
@@ -99,6 +99,6 @@ function UserDropdownMenu() {
             </LogoutButton>
         </Container>
     );
-}
+});
 
 export default UserDropdownMenu;

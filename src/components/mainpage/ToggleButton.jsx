@@ -35,6 +35,7 @@ const ToggleContainer = styled.div`
 `;
 
 export const Toggle = ({ isOn, toggleHandler }) => {
+
   return (
     <ToggleContainer onClick={toggleHandler}>
       <div className={`toggle-container ${isOn ? "toggle--checked" : ""}`} />

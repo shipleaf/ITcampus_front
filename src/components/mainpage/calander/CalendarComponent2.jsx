@@ -80,12 +80,8 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
         }, 0);
     };
 
-    useEffect(() => {
-        hideExtraWeeks();
-    }, []);
-
     const colorSchemes = useRef({
-        recruitmentNotice: ['#AE55B4', '#69306D', '#441F47'],
+        recruitmentNotice: ['#AE55B4', '#92C2F2', '#441F47'],
         qualification: ['#78A9F7', '#4285F4', '#09419A'],
         studentSupport: ['#70D7A7', '#33B679', '#1F6F4A']
     }).current;
@@ -113,7 +109,6 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
                         return null;
                     }
 
-                    // enddate에 하루를 더하는 부분
                     const endDate = new Date(event.enddate);
                     endDate.setDate(endDate.getDate() + 1);
 
@@ -123,12 +118,12 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
                         whatis: event.whatis,
                         start: event.startdate,
                         end: endDate.toISOString().split('T')[0],
-                        endtime:endDate, // enddate에 하루를 더한 값
+                        endtime: endDate,
                         backgroundColor: getColor(event.whatis)
                     };
                 }).filter(event => event !== null);
                 console.log("Formatted events:", formattedEvents);
-                setEvents(formattedEvents); // Recoil 상태로 설정
+                setEvents(formattedEvents);
             } catch (error) {
                 console.error(`이벤트 데이터를 가져오는 데 실패했습니다: ${error.message}`);
                 alert(`이벤트 데이터를 가져오는 데 실패했습니다: ${error.message}`);
@@ -156,6 +151,7 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
                 titleFormat={{ month: 'long' }}
                 dayCellContent={renderDayCellContent}
                 viewDidMount={hideExtraWeeks}
+                datesSet={hideExtraWeeks}
             />
         </div>
     );
