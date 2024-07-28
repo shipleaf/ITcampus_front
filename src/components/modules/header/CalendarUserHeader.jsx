@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import Logo from '../../header/Logo';
-import { IoIosArrowBack } from "react-icons/io";
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { HiSearch } from "react-icons/hi";
-import LoginModal from '../../login/LoginModal';
-import Modal from 'react-modal';
+import { FaRegUserCircle } from "react-icons/fa";
+import { VscTriangleDown } from "react-icons/vsc";
+import UserDropdownMenu from './UserDropdownMenu';
 
 const fadeIn = keyframes`
   from {
@@ -80,26 +80,28 @@ const CurrentDate = styled.div`
   justify-content: center;
 `;
 
+const SearchContainer = styled.div`
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+`;
+
 const UserButton = styled.div`
   display: flex;
   align-items: center;
-`
-const LoginButton = styled.button`
-  width: 90px;
-  height: 30px;
-  font-size: 15px;
-  border: 1px solid #999;
-  background-color: #fff;
-  border-radius: 1rem;
   margin-right: 10px;
-  &:hover{
-    cursor: pointer;
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  max-width: 100px;
+  position: relative;
+  &:hover {
     background-color: #f0f0f0;
   }
-  &:focus{
-    outline: none;
-  }
-`
+`;
+
 const SearchBar = styled.div`
   display: flex;
   flex-direction: row;
@@ -108,7 +110,8 @@ const SearchBar = styled.div`
   justify-content: space-between;
   margin-right: 10px;
   animation: ${({ visible }) => visible ? css`${fadeIn} 0.3s forwards` : css`${fadeOut} 0.3s forwards`};
-`
+`;
+
 const SearchButton = styled.button`
   border: none;
   background-color: #fff;
@@ -117,14 +120,16 @@ const SearchButton = styled.button`
   display: flex;
   align-items: center;
   cursor: pointer;
-`
+`;
+
 const Input = styled.input`
   width: 500px;
   border: none;
-  &:focus{
+  &:focus {
     outline: none;
   }
-`
+`;
+
 const Select = styled.select`
   width: 20%;
   height: 100%;
@@ -132,35 +137,26 @@ const Select = styled.select`
   border: none;
   font-size: 15px;
   font-family: "Noto Sans KR", sans-serif;
-  &:focus{
+  &:focus {
     outline: none;
   }
-  &:hover{
+  &:hover {
     background-color: #f0f0f0;
     cursor: pointer;
   }
-`
-const Option = styled.option`
-  
-`
-Modal.setAppElement('#root');
+`;
 
-function CalendarHeader({ onPrevMonth, onNextMonth, currentDate, toggleSidebar }) {
+const Option = styled.option``;
+
+function CalendarUserHeader({ onPrevMonth, onNextMonth, currentDate, toggleSidebar }) {
   const [searchType, setSearchType] = useState('채용공고');
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
 
-  const openModal = () => {
-    setModalIsOpen(true);
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-    document.body.style.overflow = 'unset';
-  };
   const searchBarRef = useRef(null);
+  const userButtonRef = useRef(null);
+  const dropdownRef = useRef(null);
 
   const handleSearchTypeChange = (e) => {
     setSearchType(e.target.value);
@@ -177,6 +173,9 @@ function CalendarHeader({ onPrevMonth, onNextMonth, currentDate, toggleSidebar }
   const handleClickOutside = (event) => {
     if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
       setIsSearchVisible(false);
+    }
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target) && !userButtonRef.current.contains(event.target)) {
+      setShowUserDropdown(false);
     }
   };
 
@@ -195,64 +194,44 @@ function CalendarHeader({ onPrevMonth, onNextMonth, currentDate, toggleSidebar }
           <NavButton onClick={onPrevMonth}>
             <IoIosArrowBack size={25} />
           </NavButton>
-          <CurrentDate>2024년 7월</CurrentDate>
+          <CurrentDate>{currentDate.getFullYear()}년 {currentDate.getMonth() + 1}월</CurrentDate>
           <NavButton onClick={onNextMonth}>
             <IoIosArrowForward size={25} />
           </NavButton>
         </NavigationButtons>
       </SidebarToggleContainer>
-      <UserButton>
-        {isSearchVisible ? (
-          <SearchBar visible={isSearchVisible} ref={searchBarRef}>
-            <HiSearch size={25} style={{ color: '#777' }} />
-            <Input
-              type='text'
-              value={searchTerm}
-              onChange={handleSearchTermChange}
-              placeholder='일정을 검색하세요'
-            />
-            <Select value={searchType} onChange={handleSearchTypeChange}>
-              <Option value='recruitmentNotice'>채용공고</Option>
-              <Option value='studentSupport'>지원프로그램</Option>
-              <Option value='qualification'>자격증일정</Option>
-            </Select>
-          </SearchBar>
-        ) : (
-          <SearchButton onClick={toggleSearchBar}>
-            <HiSearch size={28} />
-          </SearchButton>
-        )}
-        <LoginButton onClick={openModal}>
-          로그인
-        </LoginButton>
-      </UserButton>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        shouldCloseOnOverlayClick={true}
-        style={{
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            zIndex: 1001,
-          },
-          content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            width: '400px',
-            borderRadius: '10px',
-            padding: '10px',
-            border: '3px solid #00ACEE',
-          },
-        }}
-      >
-        <LoginModal closeModal={closeModal} />
-      </Modal>
+      <div style={{ display: 'flex' }}>
+        <SearchContainer>
+          {isSearchVisible ? (
+            <SearchBar visible={isSearchVisible} ref={searchBarRef}>
+              <HiSearch size={25} style={{ color: '#777' }} />
+              <Input
+                type='text'
+                value={searchTerm}
+                onChange={handleSearchTermChange}
+                placeholder='일정을 검색하세요'
+              />
+              <Select value={searchType} onChange={handleSearchTypeChange}>
+                <Option value='recruitmentNotice'>채용공고</Option>
+                <Option value='studentSupport'>지원프로그램</Option>
+                <Option value='qualification'>자격증일정</Option>
+              </Select>
+            </SearchBar>
+          ) : (
+            <SearchButton onClick={toggleSearchBar}>
+              <HiSearch size={28} />
+            </SearchButton>
+          )}
+        </SearchContainer>
+        <UserButton ref={userButtonRef} onClick={() => setShowUserDropdown(!showUserDropdown)}>
+          <FaRegUserCircle style={{ color: '#bbb' }} size={30} />
+          <div style={{ fontSize: '12px', marginLeft: '5px' }}>username</div>
+          <VscTriangleDown size={10} />
+          {showUserDropdown && <UserDropdownMenu ref={dropdownRef} />}
+        </UserButton>
+      </div>
     </Header>
   );
 }
 
-export default CalendarHeader;
+export default CalendarUserHeader;

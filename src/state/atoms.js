@@ -24,7 +24,17 @@ export const mainEventState = atom({
   default: [],
 })
 
+export const myEventState = atom({
+  key: 'myEventDataState',
+  default: [],
+})
+
 export const sidebarState = atom({
   key: 'sidebarState',
   default: true,
+});
+
+export const toggleState = atom({
+  key: 'toggleState',
+  default: false,
 });
