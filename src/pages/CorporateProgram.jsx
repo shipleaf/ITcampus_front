@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import GuestHeader from "../components/header/GuestHeader";
+import GuestHeader from "../components/modules/header/GuestHeader";
+import UserHeader from "../components/modules/header/UserHeader";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../state/atoms";
 import Top from "../components/post/Top";
 import Post from "../components/post/Post";
 import CustomSelect from "../components/filter/CustomSelect";
@@ -149,6 +152,7 @@ function CorporateProgram(){
     const [sortOption, setSortOption] = useState('scrap');
     const [sortOrder, setSortOrder] = useState('desc'); 
     const [isFilterActive, setIsFilterActive] = useState(false);
+    const isLoggedIn = useRecoilValue(loginState);
     const postsPerPage = 7; 
 
     const today = new Date();
@@ -204,7 +208,11 @@ function CorporateProgram(){
 
     return (
         <>
-            <GuestHeader/>
+            {isLoggedIn ? (
+                <UserHeader />
+            ) : (
+                <GuestHeader />
+            )}
             <Top title='기업 프로그램' />
             <SortContainer>
                 <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop = '진행중'/>

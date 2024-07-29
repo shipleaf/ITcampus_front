@@ -5,6 +5,7 @@ import Top from "../components/post/Top";
 import StudyPost from "../components/post/StudyPost";
 import { fetchStudyList } from "../APIs/studyAPI";
 import GuestHeader from "../components/modules/header/GuestHeader";
+import UserHeader from "../components/modules/header/UserHeader";
 import { useRecoilValue } from 'recoil';
 import { loginState } from "../state/atoms";
 import Modal from 'react-modal';
@@ -13,7 +14,7 @@ import LoginModal from "../components/login/LoginModal";
 function StudyList() {
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [isFilterActive, ] = useState(false);
+    const [isFilterActive,] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const postsPerPage = 7;
@@ -67,43 +68,47 @@ function StudyList() {
 
     return (
         <>
-            <GuestHeader />
+            {isLoggedIn ? (
+                <UserHeader />
+            ) : (
+                <GuestHeader />
+            )}
             <Container>
-            <Top title='스터디 게시판' />
-            <WriteContainer>
-                <Write onClick={handleWriteClick}>글쓰기</Write>
-            </WriteContainer>
-            {loading ? (
-                <p>Loading...</p>
-            ) : error ? (
-                <p>Error loading posts: {error.message}</p>
-            ) : currentPosts.map((post) => (
-                <StyledLink to={`/studydetails/${post.key}`} key={post.key}>
-                    <StudyPost
-                        key={post.key}
-                        {...post}
-                    />
-                </StyledLink>
-            ))}
-            <Pagination>
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <PageNumber
-                        key={index + 1}
-                        onClick={() => handlePageChange(index + 1)}
-                        active={index + 1 === currentPage}
-                    >
-                        {index + 1}
-                    </PageNumber>
+                <Top title='스터디 게시판' />
+                <WriteContainer>
+                    <Write onClick={handleWriteClick}>글쓰기</Write>
+                </WriteContainer>
+                {loading ? (
+                    <p>Loading...</p>
+                ) : error ? (
+                    <p>Error loading posts: {error.message}</p>
+                ) : currentPosts.map((post) => (
+                    <StyledLink to={`/studydetails/${post.key}`} key={post.key}>
+                        <StudyPost
+                            key={post.key}
+                            {...post}
+                        />
+                    </StyledLink>
                 ))}
-            </Pagination>
-            <Modal
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-                style={customStyles}
-                contentLabel="로그인 모달"
-            >
-                <LoginModal closeModal={closeModal} />
-            </Modal>
+                <Pagination>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <PageNumber
+                            key={index + 1}
+                            onClick={() => handlePageChange(index + 1)}
+                            active={index + 1 === currentPage}
+                        >
+                            {index + 1}
+                        </PageNumber>
+                    ))}
+                </Pagination>
+                <Modal
+                    isOpen={isModalOpen}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel="로그인 모달"
+                >
+                    <LoginModal closeModal={closeModal} />
+                </Modal>
             </Container>
         </>
     );

@@ -3,7 +3,7 @@ import { IoImageOutline } from "react-icons/io5";
 import styled from 'styled-components';
 import UserHeader from '../components/modules/header/UserHeader';
 import { loginState } from '../state/atoms';
-import GuestHeader from '../components/header/GuestHeader';
+import GuestHeader from '../components/modules/header/GuestHeader';
 import { useRecoilValue } from 'recoil';
 
 function CreateInfoPost() {
