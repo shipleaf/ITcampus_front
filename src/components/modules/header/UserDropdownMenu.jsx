@@ -6,7 +6,8 @@ import { CiStar } from "react-icons/ci";
 import { FiEdit } from "react-icons/fi";
 import { MdLogout } from "react-icons/md";
 import { useRecoilState } from 'recoil';
-import { loginState } from '../../../state/atoms'
+import { loginState } from '../../../state/atoms';
+import { logout } from '../../../APIs/loginAPI';
 
 const Container = styled.div`
     display: flex;
@@ -62,6 +63,7 @@ function UserDropdownMenu() {
     const [, setIsLoggedIn] = useRecoilState(loginState);
 
     const handleLogout = () => {
+        logout();  // 로그아웃 시 로컬스토리지에서 토큰 삭제
         setIsLoggedIn(false);
     };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import GuestHeader from "../components/header/GuestHeader";
+import Header from "../components/header/Header";
 import Top from "../components/post/Top";
 import StudyPost from "../components/post/StudyPost";
 import { fetchStudyList } from "../APIs/studyAPI";
@@ -67,7 +67,7 @@ function StudyList() {
 
     return (
         <>
-            <GuestHeader />
+            <Header />
             <Container>
             <Top title='스터디 게시판' />
             <WriteContainer>

@@ -4,6 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 const StudyPostContent = ({ title, id, date, body, tag}) => {
+
+  const formatDate = (dateString) => {
+    const date = new window.Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; 
+    const day = date.getDate();
+    return `${year}. ${month}. ${day}`;
+};
+
   return (
     <ContentContainer>
       <ArrowButtonLeft onClick={1+1}>
@@ -21,7 +30,7 @@ const StudyPostContent = ({ title, id, date, body, tag}) => {
         <Meta>
           작성자: {id}
           <br />
-          작성일: {date}
+          작성일: {formatDate(date)}
         </Meta>
         <Divider />
         <Content>

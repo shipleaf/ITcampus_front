@@ -19,7 +19,7 @@ const CustomSelect = ({ selectedOption, options, onOptionSelect }) => {
             <Select onClick={handleToggle}>
                 {options.find(option => option.value === selectedOption)?.label}
                 <IcoArrow>
-                    <ArrowImg src={selectArrow} isOpen={isOpen} />
+                    <ArrowImg src={selectArrow} alt="arrow" open={isOpen ? 1 : 0} />
                 </IcoArrow>
             </Select>
             {isOpen && (
@@ -89,5 +89,5 @@ const IcoArrow = styled.div`
 const ArrowImg = styled.img`
     width: 20px;
     transition: transform 0.3s;
-    transform: ${({ isOpen }) => (isOpen ? 'scaleX(-1) scaleY(-1)' : 'scaleX(1) scaleY(1)')};
+    transform: ${({ open }) => (open ? 'scaleX(-1) scaleY(-1)' : 'scaleX(1) scaleY(1)')};
 `
