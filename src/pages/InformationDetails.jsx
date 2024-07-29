@@ -4,7 +4,10 @@ import styled from 'styled-components';
 import InfoPostContent from '../components/infopostdetail/InfoPostContent';
 import InfoPostComments from '../components/infopostdetail/InfoPostComments';
 import { fetchInfoComments, fetchInfoPost } from '../APIs/infoAPI';
-import Header from '../components/header/Header';
+import GuestHeader from "../components/modules/header/GuestHeader";
+import UserHeader from "../components/modules/header/UserHeader";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../state/atoms";
 
 const InformationDetails = () => {
   const { key } = useParams();
@@ -12,6 +15,7 @@ const InformationDetails = () => {
   const [postComments, setPostComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const isLoggedIn = useRecoilValue(loginState);
 
   useEffect(() => {
     const getInfoPost = async () => {
@@ -19,7 +23,7 @@ const InformationDetails = () => {
         const postResponse = await fetchInfoPost(key);
         const commentsResponse = await fetchInfoComments(key);
         setPostData(postResponse.data);
-        setPostComments(commentsResponse.data); 
+        setPostComments(commentsResponse.data);
       } catch (error) {
         setError(error);
       } finally {
@@ -40,12 +44,16 @@ const InformationDetails = () => {
 
   return (
     <PageContainer>
-      <Header/>
+      {isLoggedIn ? (
+        <UserHeader />
+      ) : (
+        <GuestHeader />
+      )}
       <Container>
         {postData && <InfoPostContent InfoKey={key} {...postData} />}
         <Spacer />
         <CommentsContainer>
-          <InfoPostComments comments={postComments} InfoKey={key}/>
+          <InfoPostComments comments={postComments} InfoKey={key} />
         </CommentsContainer>
       </Container>
     </PageContainer>

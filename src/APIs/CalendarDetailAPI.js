@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 const API_URL = 'http://223.130.135.136:8080';
 
@@ -33,9 +34,8 @@ export const fetchEvents = async () => {
 export const fetchMyEvents = async () => {
     try {
         console.log("불러오는 중...")
-        const response = await axios.get(`${API_URL}/api/my`); 
+        const response = await axiosInstance.get(`${API_URL}/api/my`); 
         console.log(response)
-        
 
         if (response.status >= 200 && response.status < 300) {
             return response.data;

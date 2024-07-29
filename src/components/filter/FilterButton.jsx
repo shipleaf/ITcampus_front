@@ -18,8 +18,8 @@ const Button = styled.button`
     width: 120px;
     height: 39px;
     padding: 5px 10px;
-    border : 2.5px solid ${(props) => (props.isActive ? '#FF7F00' : 'black')};
-    color : ${(props) => (props.isActive ? '#FF7F00' : 'black')};
+    border : 1px solid ${(props) => (props.isActive ? '#FF7F00' : '#999')};
+    color : ${(props) => (props.isActive ? '#FF7F00' : '#999')};
     margin-right: 50px;
     background-color: white;
     

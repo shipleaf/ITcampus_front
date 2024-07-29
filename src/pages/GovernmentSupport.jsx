@@ -2,21 +2,25 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { fetchSupportList } from "../APIs/supportAPI";
 import { Link } from "react-router-dom";
-import GuestHeader from "../components/header/GuestHeader";
+import GuestHeader from "../components/modules/header/GuestHeader";
+import UserHeader from "../components/modules/header/UserHeader";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../state/atoms";
 import Top from "../components/post/Top";
 import Post from "../components/post/Post";
 import CustomSelect from "../components/filter/CustomSelect";
 import FilterButton from "../components/filter/FilterButton";
 
-function GovernmentSupport(){
+function GovernmentSupport() {
     const [posts, setPosts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1); 
+    const [currentPage, setCurrentPage] = useState(1);
     const [sortOption, setSortOption] = useState('scrapCount');
-    const [sortOrder, setSortOrder] = useState('desc'); 
+    const [sortOrder, setSortOrder] = useState('desc');
     const [isFilterActive, setIsFilterActive] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const postsPerPage = 7; 
+    const isLoggedIn = useRecoilValue(loginState);
+    const postsPerPage = 7;
 
     useEffect(() => {
         const getSupports = async () => {
@@ -88,60 +92,64 @@ function GovernmentSupport(){
 
     return (
         <>
-            <GuestHeader/>
+            {isLoggedIn ? (
+                <UserHeader />
+            ) : (
+                <GuestHeader />
+            )}
             <Container>
-            <Top title='정부 지원' />
-            <SortContainer>
-                <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='지원중' />
-                <Right>
-                    <CustomSelect
-                        selectedOption={sortOption}
-                        options={[
-                            { value: "startdate", label: "지원 시작일" },
-                            { value: "enddate", label: "지원 종료일" },
-                            { value: "scrapCount", label: "스크랩" }
-                        ]}
-                        onOptionSelect={handleSortChange}
-                    />
-                    <CustomSelect
-                        selectedOption={sortOrder}
-                        options={[
-                            { value: "desc", label: "내림차순" },
-                            { value: "asc", label: "오름차순" }
-                        ]}
-                        onOptionSelect={handleSortOrderChange}
-                    />
-                </Right>
-            </SortContainer>
-            {loading ? (
-                <p>Loading...</p>
-            ) : error ? (
-                <p>Error loading posts: {error.message}</p>
-            ) : currentPosts.map((post) => (
-                <StyledLink to={`/governmentsupportdetails/${post.key}`} key={post.key}>
-                    <Post
-                        key={post.key}
-                        title={post.title}
-                        body={post.body}
-                        agency={post.agency}
-                        startdate={post.startdate}
-                        enddate={post.enddate}
-                        pic1={post.pic1}
-                        scrapCount={post.scrapCount}
-                    />
-                </StyledLink>
-            ))}
-            <Pagination>
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <PageNumber
-                        key={index + 1}
-                        onClick={() => handlePageChange(index + 1)}
-                        active={index + 1 === currentPage}
-                    >
-                        {index + 1}
-                    </PageNumber>
+                <Top title='정부 지원' />
+                <SortContainer>
+                    <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='지원중' />
+                    <Right>
+                        <CustomSelect
+                            selectedOption={sortOption}
+                            options={[
+                                { value: "startdate", label: "지원 시작일" },
+                                { value: "enddate", label: "지원 종료일" },
+                                { value: "scrapCount", label: "스크랩" }
+                            ]}
+                            onOptionSelect={handleSortChange}
+                        />
+                        <CustomSelect
+                            selectedOption={sortOrder}
+                            options={[
+                                { value: "desc", label: "내림차순" },
+                                { value: "asc", label: "오름차순" }
+                            ]}
+                            onOptionSelect={handleSortOrderChange}
+                        />
+                    </Right>
+                </SortContainer>
+                {loading ? (
+                    <p>Loading...</p>
+                ) : error ? (
+                    <p>Error loading posts: {error.message}</p>
+                ) : currentPosts.map((post) => (
+                    <StyledLink to={`/governmentsupportdetails/${post.key}`} key={post.key}>
+                        <Post
+                            key={post.key}
+                            title={post.title}
+                            body={post.body}
+                            agency={post.agency}
+                            startdate={post.startdate}
+                            enddate={post.enddate}
+                            pic1={post.pic1}
+                            scrapCount={post.scrapCount}
+                        />
+                    </StyledLink>
                 ))}
-            </Pagination>
+                <Pagination>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <PageNumber
+                            key={index + 1}
+                            onClick={() => handlePageChange(index + 1)}
+                            active={index + 1 === currentPage}
+                        >
+                            {index + 1}
+                        </PageNumber>
+                    ))}
+                </Pagination>
             </Container>
         </>
     );

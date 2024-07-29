@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import GuestHeader from "../components/header/GuestHeader";
+import GuestHeader from "../components/modules/header/GuestHeader";
+import UserHeader from "../components/modules/header/UserHeader";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../state/atoms";
 import { Link } from "react-router-dom";
 import Top from "../components/post/Top";
 import Post from "../components/post/Post";
@@ -17,6 +20,7 @@ function ITLicense() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [, setSelectedLicense] = useState(null);
+    const isLoggedIn = useRecoilValue(loginState);
     const postsPerPage = 7;
 
     useEffect(() => {
@@ -98,7 +102,11 @@ function ITLicense() {
 
     return (
         <>
-            <GuestHeader />
+            {isLoggedIn ? (
+                <UserHeader />
+            ) : (
+                <GuestHeader />
+            )}
             <Container>
             <Top title='IT 자격증' />
             <SortContainer>

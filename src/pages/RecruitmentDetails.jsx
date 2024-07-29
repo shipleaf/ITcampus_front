@@ -1,6 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import GuestHeader from '../components/header/GuestHeader';
+import GuestHeader from "../components/modules/header/GuestHeader";
+import UserHeader from "../components/modules/header/UserHeader";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../state/atoms";
 import RecruitDetailHeader from '../components/modules/recruit/RecruitDetailHeader';
 import ScrapButtonDiv from '../components/modules/recruit/ScrapButtonDiv';
 import RecruitDetailBody from '../components/modules/recruit/RecruitDetailBody';
@@ -44,7 +47,7 @@ const ScrapContainer = styled.div`
 //         return <div>에러: {error.message}</div>;
 //     }
 function RecruitmentDetails() {
-
+    const isLoggedIn = useRecoilValue(loginState);
     const dummyData = [{
         key: 1,
         title: "우아한 형제들 하반기 채용[프론트엔드 개발자]",
@@ -83,7 +86,11 @@ function RecruitmentDetails() {
     
     return (
         <div style={{ backgroundColor: '#f9f9f9', display: 'flex', flexDirection: 'column' }}>
-            <GuestHeader />
+            {isLoggedIn ? (
+                <UserHeader />
+            ) : (
+                <GuestHeader />
+            )}
             <RecruitDetailHeader jobDetailData={jobDetailData} />
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                 <ScrapContainer>
