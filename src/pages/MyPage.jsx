@@ -1,6 +1,9 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
-import GuestHeader from "../components/header/GuestHeader";
+import GuestHeader from "../components/modules/header/GuestHeader";
+import UserHeader from "../components/modules/header/UserHeader";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../state/atoms";
 import Post from "../components/post/Post";
 import CompanyPost from "../components/post/CompanyPost";
 import RecruitmentPost from "../components/post/RecruitmentPost";
@@ -106,7 +109,7 @@ function MyPage() {
     const [selectedTab, setSelectedTab] = useState('기업');
     const [selectedWriteTab, setSelectedWriteTab] = useState('스터디게시판');
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const isLoggedIn = useRecoilValue(loginState);
     const scrapSectionRef = useRef(null);
     const writtenSectionRef = useRef(null);
 
@@ -201,7 +204,11 @@ function MyPage() {
 
     return (
         <Frame>
-            <GuestHeader />
+            {isLoggedIn ? (
+                <UserHeader />
+            ) : (
+                <GuestHeader />
+            )}
             <MainContainer>
                 <SidebarContainer>
                     <SidebarTitle>바로가기</SidebarTitle>

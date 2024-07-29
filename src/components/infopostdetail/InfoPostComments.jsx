@@ -25,6 +25,7 @@ const InfoPostComments = ({ comments = [], InfoKey }) => {
       const commentData = {
         comment: newComment
       };
+      console.log(commentData)
       await createInfoComment(InfoKey, commentData);
       alert('댓글이 추가되었습니다.');
       setNewComment('');

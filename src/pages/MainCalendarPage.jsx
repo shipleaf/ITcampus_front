@@ -1,12 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import CalendarComponent from '../components/mainpage/calander/CalendarComponent2';
+import MyCalendar from '../components/mainpage/calander/MyCalendar';
 import Sidebar from '../components/mainpage/Sidebar';
 import styled from 'styled-components';
 import CalendarHeader from '../components/modules/header/CalendarHeader';
+import CalendarUserHeader from '../components/modules/header/CalendarUserHeader';
 import CalendarDetail from '../components/mainpage/calander/CalendarDetail';
-import { useRecoilState } from 'recoil';
-import { sidebarState } from '../state/atoms';
+import MyCalendarDetail from '../components/mainpage/calander/MyCalendarDetail';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { sidebarState, loginState, toggleState, mainEventState, myEventState, smallSelectedDateState } from '../state/atoms';
 
 const SidebarContainer = styled.div`
   width: 264px;
@@ -33,8 +36,21 @@ function MainCalendarPage() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [detailPosition, setDetailPosition] = useState({ top: 0, left: 0 });
   const [showDetail, setShowDetail] = useState(false);
-  const [events, setEvents] = useState([]);
-  const [isSidebarVisible, setIsSidebarVisible] = useRecoilState(sidebarState); // 수정
+  const [, setEvents] = useState([]);
+  const [isSidebarVisible, setIsSidebarVisible] = useRecoilState(sidebarState);
+  const [isLoggedIn,] = useRecoilState(loginState);
+  const isOn = useRecoilValue(toggleState);
+  const mainEvents = useRecoilValue(mainEventState);
+  const myEvents = useRecoilValue(myEventState);
+  const [smallClickedDate, setSmallClickedDate] = useRecoilState(smallSelectedDateState);
+
+  useEffect(() => {
+    if (smallClickedDate) {
+      setSelectedDate(smallClickedDate);
+      setShowDetail(true);
+      setDetailPosition({ top: 100, left: 270 });
+    }
+  }, [smallClickedDate]);
 
   const handlePrevMonth = () => {
     if (calendarRef.current) {
@@ -66,41 +82,85 @@ function MainCalendarPage() {
     setIsSidebarVisible(!isSidebarVisible);
   };
 
+  const handleCloseDetail = () => {
+    setShowDetail(false);
+    setSmallClickedDate(null); // smallClickedDate 값을 null로 리셋
+  };
+
+  // 로그인 상태가 변경될 때 localStorage에 저장
+  useEffect(() => {
+    localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
+
   return (
     <div>
       <MainContainer>
-        <CalendarHeader 
-          onPrevMonth={handlePrevMonth} 
-          onNextMonth={handleNextMonth} 
-          currentDate={new Date()} 
-          toggleSidebar={toggleSidebar} 
-        />
+        {isLoggedIn ? (
+          <CalendarUserHeader
+            onPrevMonth={handlePrevMonth}
+            onNextMonth={handleNextMonth}
+            currentDate={new Date()}
+            toggleSidebar={toggleSidebar}
+          />
+        ) : (
+          <CalendarHeader
+            onPrevMonth={handlePrevMonth}
+            onNextMonth={handleNextMonth}
+            currentDate={new Date()}
+            toggleSidebar={toggleSidebar}
+          />
+        )}
         <MainContent>
           <SidebarContainer isVisible={isSidebarVisible}>
             <Sidebar />
           </SidebarContainer>
-          <CalendarComponent
-            ref={calendarRef}
-            onDateClick={handleDateClick}
-            onEventsLoad={handleEventsLoad}
-            style={{ flex: 1 }}
-          />
+          {isOn ? (
+            <MyCalendar
+              ref={calendarRef}
+              onDateClick={handleDateClick}
+              onEventsLoad={handleEventsLoad}
+              style={{ flex: 1 }}
+            />
+          ) : (
+            <CalendarComponent
+              ref={calendarRef}
+              onDateClick={handleDateClick}
+              onEventsLoad={handleEventsLoad}
+              style={{ flex: 1 }}
+            />
+          )}
         </MainContent>
       </MainContainer>
       {showDetail && selectedDate && ReactDOM.createPortal(
-        <CalendarDetail
-          key={selectedDate}
-          style={{
-            top: detailPosition.top,
-            left: detailPosition.left,
-            position: 'absolute',
-            zIndex: '12000',
-          }}
-          date={selectedDate}
-          animate={true}
-          events={events}
-          onClose={() => setShowDetail(false)}
-        />,
+        isOn ? (
+          <MyCalendarDetail
+            key={selectedDate}
+            style={{
+              top: detailPosition.top,
+              left: detailPosition.left,
+              position: 'absolute',
+              zIndex: '12000',
+            }}
+            date={selectedDate}
+            animate={true}
+            events={myEvents}
+            onClose={handleCloseDetail}
+          />
+        ) : (
+          <CalendarDetail
+            key={selectedDate}
+            style={{
+              top: detailPosition.top,
+              left: detailPosition.left,
+              position: 'absolute',
+              zIndex: '12000',
+            }}
+            date={selectedDate}
+            animate={true}
+            events={mainEvents}
+            onClose={handleCloseDetail}
+          />
+        ),
         document.body
       )}
     </div>

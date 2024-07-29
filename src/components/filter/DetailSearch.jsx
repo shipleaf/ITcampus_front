@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
 const DetailSearch = ({ onFilterChange }) => {
@@ -15,6 +15,8 @@ const DetailSearch = ({ onFilterChange }) => {
   const [experienceCheckboxes, setExperienceCheckboxes] = useState({});
   const [educationCheckboxes, setEducationCheckboxes] = useState({});
   const [employmentTypeCheckboxes, setEmploymentTypeCheckboxes] = useState({});
+
+  const dropdownRef = useRef(null);
 
   const handleFilterChange = useCallback((type, selectedItems) => {
     onFilterChange(type, selectedItems);
@@ -95,14 +97,35 @@ const DetailSearch = ({ onFilterChange }) => {
     }
   };
 
-  const renderSelectedItems = (category, checkboxes) => {
+  const renderSelectedItems = (category, checkboxes, setCheckboxes) => {
     return Object.keys(checkboxes).filter(key => checkboxes[key]).map(label => (
-      <SelectedItem key={`${category}/${label}`}>{`${category}/${label}`}</SelectedItem>
+      <SelectedItem key={`${category}/${label}`}>
+        {`${category}/${label}`}
+        <button onClick={() => setCheckboxes(prev => ({ ...prev, [label]: false }))}>X</button>
+      </SelectedItem>
     ));
   };
 
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setShowJob(false);
+      setShowTechStack(false);
+      setShowExperience(false);
+      setShowEducation(false);
+      setShowEmploymentType(false);
+      setActiveCategory('');
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <DetailedSearchContainer>
+    <DetailedSearchContainer ref={dropdownRef}>
       <Title>상세검색</Title>
       <Table>
         <thead>
@@ -185,11 +208,11 @@ const DetailSearch = ({ onFilterChange }) => {
         </tbody>
       </Table>
       <SelectedContainer>
-        {renderSelectedItems('직무', jobCheckboxes)}
-        {renderSelectedItems('기술스택', techStackCheckboxes)}
-        {renderSelectedItems('경력', experienceCheckboxes)}
-        {renderSelectedItems('학력', educationCheckboxes)}
-        {renderSelectedItems('고용형태', employmentTypeCheckboxes)}
+        {renderSelectedItems('직무', jobCheckboxes, setJobCheckboxes)}
+        {renderSelectedItems('기술스택', techStackCheckboxes, setTechStackCheckboxes)}
+        {renderSelectedItems('경력', experienceCheckboxes, setExperienceCheckboxes)}
+        {renderSelectedItems('학력', educationCheckboxes, setEducationCheckboxes)}
+        {renderSelectedItems('고용형태', employmentTypeCheckboxes, setEmploymentTypeCheckboxes)}
       </SelectedContainer>
     </DetailedSearchContainer>
   );
@@ -278,4 +301,17 @@ const SelectedItem = styled.div`
   padding: 5px 10px;
   border-radius: 20px;
   margin: 5px;
+  & span{
+    margin-left: 3px;
+  }
+
+  & button{
+    border: none;
+    background-color: inherit;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    margin-left: 3px;
+    cursor: pointer;
+  }
 `

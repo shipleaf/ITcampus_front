@@ -11,7 +11,7 @@ export const filterState = atom({
 
 export const loginState = atom({
   key: 'loginState',
-  default: false,
+  default: JSON.parse(localStorage.getItem('isLoggedIn')) || false,
 });
 
 export const sideState = atom({
@@ -24,7 +24,27 @@ export const mainEventState = atom({
   default: [],
 })
 
+export const myEventState = atom({
+  key: 'myEventDataState',
+  default: [],
+})
+
 export const sidebarState = atom({
   key: 'sidebarState',
   default: true,
+});
+
+export const toggleState = atom({
+  key: 'toggleState',
+  default: false,
+});
+
+export const currentDateState = atom({
+  key: 'currentDateState',
+  default: new Date(),
+});
+
+export const smallSelectedDateState = atom({
+  key: 'smallSelectedDateState',
+  default: '',
 });

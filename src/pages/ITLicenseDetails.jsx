@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchLicenseDetails } from '../APIs/licenseAPI';
 import LicenseHeader from '../components/license/LicenseHeader';
-import GuestHeader from '../components/header/GuestHeader';
+import GuestHeader from "../components/modules/header/GuestHeader";
+import UserHeader from "../components/modules/header/UserHeader";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../state/atoms";
 import ScrapButtonDiv from '../components/modules/recruit/ScrapButtonDiv';
 import styled from 'styled-components';
 import LicenseBody from '../components/license/LicenseBody';
@@ -17,6 +20,7 @@ function ITLicenseDetails() {
     const [licenseDetails, setLicenseDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const isLoggedIn = useRecoilValue(loginState);
 
     useEffect(() => {
         const getLicenseDetails = async () => {
@@ -47,7 +51,11 @@ function ITLicenseDetails() {
 
     return (
         <div style={{ backgroundColor: '#f1f4f7' }}>
-            <GuestHeader />
+            {isLoggedIn ? (
+                <UserHeader />
+            ) : (
+                <GuestHeader />
+            )}
             <LicenseHeader licenseDetails={licenseDetails} />
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <ScrapContainer>

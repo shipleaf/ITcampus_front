@@ -1,13 +1,13 @@
 import axios from 'axios';
-import axiosInstance, { getCookie } from './axiosInstance';
 
-//const API_BASE_URL = 'http://223.130.135.136:8080/';
-const API_BASE_URL = 'http://localhost:8080/';
+// const API_BASE_URL = 'http://localhost:8080';
 
-// 정보게시판 리스트 가져오기
+const API_URL = 'http://223.130.135.136:8080'; 
+
+
 export const fetchInfoList = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}api/freeboard`, {
+        const response = await axios.get(`${API_URL}/api/freeboard`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -22,7 +22,7 @@ export const fetchInfoList = async () => {
 // 정보게시판 포스터 가져오기
 export const fetchInfoPost = async (infoId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}api/freeboard/${infoId}`, {
+        const response = await axios.get(`${API_URL}/api/freeboard/${infoId}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -37,7 +37,7 @@ export const fetchInfoPost = async (infoId) => {
 // 정보게시판 댓글 가져오기
 export const fetchInfoComments = async (infoId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}api/freeboardComment/${infoId}`, {
+        const response = await axios.get(`${API_URL}/api/freeboardComment/${infoId}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -49,21 +49,17 @@ export const fetchInfoComments = async (infoId) => {
     }
 };
 
-// 정보게시판 댓글 추가
-export const createInfoComment = async (infoboardkey, commentData) => {
-    try {
-        const token = getCookie('token'); // 쿠키에서 토큰을 추출
-        if (!token) {
-            throw new Error('토큰이 존재하지 않습니다.');
-        }
 
-        const response = await axiosInstance.post(`api/freeboardComment/create/${infoboardkey}`, commentData, {
+export const createInfoComment = async (infoboardkey, commentData) => {
+    console.log(infoboardkey, commentData);
+    try {
+        const response = await axios.post(`${API_URL}/api/freeboardComment/create/${infoboardkey}`, commentData, {
             headers: {
-                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
             },
-            withCredentials: true,
+            withCredentials: true
         });
-        console.log(response.status);
+        console.log(response);
         return response;
     } catch (error) {
         if (error.response) {
@@ -78,15 +74,23 @@ export const createInfoComment = async (infoboardkey, commentData) => {
     }
 };
 
+// export const login = async (userData) => {
+//     try {
+//         const response = await axios.post(`${API_URL}/api/login`, userData);
+//         console.log(`${API_URL}/api/login`)
+//         console.log(response.status)
+//         return response;
+//     } catch (error) {
+//         console.error('로그인 실패사유:', error);
+//         throw error;
+//     }
+// };
+
+
 // 정보게시판 댓글 삭제
 export const deleteInfoComment = async (infoboardkey, commentkey) => {
     try {
-        const token = getCookie('token'); // 쿠키에서 토큰을 추출
-        if (!token) {
-            throw new Error('토큰이 존재하지 않습니다.');
-        }
-
-        const response = await axiosInstance.delete(`api/freeboardComment/delete/${infoboardkey}/${commentkey}`, {
+        const response = await axios.delete(`${API_URL}api/freeboardComment/delete/${infoboardkey}/${commentkey}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             },

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import GuestHeader from "../components/header/GuestHeader";
+import GuestHeader from "../components/modules/header/GuestHeader";
+import UserHeader from "../components/modules/header/UserHeader";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../state/atoms";
 import Top from "../components/post/Top";
 import StudyPost from "../components/post/StudyPost";
 import { fetchInfoList } from "../APIs/infoAPI";
@@ -12,6 +15,7 @@ function InformationList() {
     const [isFilterActive, ] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const isLoggedIn = useRecoilValue(loginState);
     const postsPerPage = 7;
 
     useEffect(() => {
@@ -49,7 +53,11 @@ function InformationList() {
 
     return (
         <>
-            <GuestHeader />
+            {isLoggedIn ? (
+                <UserHeader />
+            ) : (
+                <GuestHeader />
+            )}
             <Container>
             <Top title='정보 게시판' />
             <WriteContainer>

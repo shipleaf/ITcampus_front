@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { fetchCompanyList,fetchCompanyDetails } from "../APIs/companyAPI";
+import { fetchCompanyList, fetchCompanyDetails } from "../APIs/companyAPI";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import GuestHeader from "../components/header/GuestHeader";
+import GuestHeader from "../components/modules/header/GuestHeader";
+import UserHeader from "../components/modules/header/UserHeader";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../state/atoms";
 import Top from "../components/post/Top";
 import CompanyPost from "../components/post/CompanyPost";
 import CustomSelect from "../components/filter/CustomSelect";
@@ -15,17 +18,18 @@ function CompanyList() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [, setSelectedCompany] = useState(null);
+    const isLoggedIn = useRecoilValue(loginState);
     const postsPerPage = 7;
-    
+
     useEffect(() => {
         const getCompanies = async () => {
             try {
                 const response = await fetchCompanyList();
-                if(200<=response.status && response.status < 300){
+                if (200 <= response.status && response.status < 300) {
                     setPosts(response.data);
                     console.log('API response data:', response.data);
                 }
-                
+
             } catch (error) {
                 setError(error);
             } finally {
@@ -66,7 +70,7 @@ function CompanyList() {
         setSortOption(value);
         setCurrentPage(1);
     };
-    
+
 
     const handleSortOrderChange = (value) => {
         setSortOrder(value);
@@ -77,57 +81,61 @@ function CompanyList() {
 
     return (
         <>
-            <GuestHeader />
+            {isLoggedIn ? (
+                <UserHeader />
+            ) : (
+                <GuestHeader />
+            )}
             <Container>
                 <Top title='기업 소개' />
                 <SortContainer>
-                <Right>
-                    <CustomSelect
-                        selectedOption={sortOption}
-                        options={[
-                            { value: "scrap", label: "스크랩" },
-                            { value: "company", label: "가나다 순" }
-                        ]}
-                        onOptionSelect={handleSortChange}
-                    />
-                    <CustomSelect
-                        selectedOption={sortOrder}
-                        options={[
-                            { value: "desc", label: "내림차순" },
-                            { value: "asc", label: "오름차순" }
-                        ]}
-                        onOptionSelect={handleSortOrderChange}
-                    />
-                </Right>
+                    <Right>
+                        <CustomSelect
+                            selectedOption={sortOption}
+                            options={[
+                                { value: "scrap", label: "스크랩" },
+                                { value: "company", label: "가나다 순" }
+                            ]}
+                            onOptionSelect={handleSortChange}
+                        />
+                        <CustomSelect
+                            selectedOption={sortOrder}
+                            options={[
+                                { value: "desc", label: "내림차순" },
+                                { value: "asc", label: "오름차순" }
+                            ]}
+                            onOptionSelect={handleSortOrderChange}
+                        />
+                    </Right>
                 </SortContainer>
                 {loading ? (
-                  <p>Loading...</p>
-                 ) : error ? (
-                <p>회사 정보 불러오기 실패: {error.message}</p>
+                    <p>Loading...</p>
+                ) : error ? (
+                    <p>회사 정보 불러오기 실패: {error.message}</p>
                 ) : (
                     <>
                         {currentPosts.map((post) => (
                             <StyledLink to={`/companydetails/${post.companyID}`}>
-                            <CompanyPost 
-                        key={post.companyID}
-                         {...post}
-                         onClick={handleCompanyClick} >
-                            </CompanyPost >
+                                <CompanyPost
+                                    key={post.companyID}
+                                    {...post}
+                                    onClick={handleCompanyClick} >
+                                </CompanyPost >
                             </StyledLink>
-                    ))}
-                    <Pagination>
-                        {Array.from({ length: totalPages }, (_, index) => (
-                            <PageNumber
-                                key={index + 1}
-                                onClick={() => handlePageChange(index + 1)}
-                                active={index + 1 === currentPage}
-                            >
-                                {index + 1}
-                            </PageNumber>
                         ))}
-                    </Pagination>
-                </>
-            )}
+                        <Pagination>
+                            {Array.from({ length: totalPages }, (_, index) => (
+                                <PageNumber
+                                    key={index + 1}
+                                    onClick={() => handlePageChange(index + 1)}
+                                    active={index + 1 === currentPage}
+                                >
+                                    {index + 1}
+                                </PageNumber>
+                            ))}
+                        </Pagination>
+                    </>
+                )}
             </Container>
         </>
     );

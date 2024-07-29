@@ -29,15 +29,16 @@ const Frame = styled.div`
 const TitleContainer = styled.div`
   width : 70%;
   flex-direction : column;
-  border-bottom: 2px solid #000;
+  border-bottom: 1px solid #ddd;
 `
 
 const Title = styled.div`
   width : 100%;
-  padding : 10px 0;
-  font-size: 40px;
+  /* padding : 10px 0; */
+  font-size: 35px;
   margin-bottom : 30px;
-  font-weight: bold;
+  font-weight: 350;
+  font-family: "Noto Sans KR", sans-serif;
 `
 
 const SearchContainer = styled.div`
@@ -52,7 +53,7 @@ const Search = styled.input`
   width: 100%;
   height: 30px;
   padding: 0 10px 0 40px; 
-  border: 2px solid #7a7a7a;
+  border: 2px solid #aaa;
   //box-shadow: 0px 0px 1px #777777, -1px 1px 3px #777777;
   border-radius: 10px;
   outline: none;

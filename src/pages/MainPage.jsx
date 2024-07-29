@@ -8,8 +8,6 @@ import NearDeadlineJobs from '../components/mainpage/NearDeadlineJobs';
 import MyCalendar from '../components/mainpage/calander/MyCalendar';
 import { CSSTransition } from 'react-transition-group';
 import '../style/MainPage.css';
-import { loginState } from '../state/atoms';
-import { useRecoilValue } from 'recoil';
 
 const ContentsContainer = styled.div`
   display: grid;
@@ -85,7 +83,6 @@ function MainPage() {
   const [dateDetails, setDateDetails] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showSecondCalendar, setShowSecondCalendar] = useState(false);
-  const isLoggedIn = useRecoilValue(loginState);
 
   const allDetails = [
     {

@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import { IoImageOutline } from "react-icons/io5";
 import styled from 'styled-components';
 import UserHeader from '../components/modules/header/UserHeader';
+import { loginState } from '../state/atoms';
+import GuestHeader from '../components/modules/header/GuestHeader';
+import { useRecoilValue } from 'recoil';
 
 function CreateInfoPost() {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [imageBase64, setImageBase64] = useState('');
   const [imageBase642, setImageBase642] = useState('');
+  const isLoggedIn = useRecoilValue(loginState);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -66,7 +70,8 @@ function CreateInfoPost() {
         method: 'POST',
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          credentials: true,
         },
         body: JSON.stringify(postData),
       });
@@ -93,7 +98,13 @@ function CreateInfoPost() {
 
   return (
     <>
-      <UserHeader />
+      {isLoggedIn ? (
+        <UserHeader />
+      ) : (
+        <GuestHeader />
+      )
+    }
+      
       <Frame onSubmit={handleSubmit}>
         <IntroContainer>
           <Intro> 게시글 작성</Intro>

@@ -44,7 +44,7 @@ const SelectBox = styled.div`
     position: relative;
     width: 120px;
     height: 35px;
-    border: 2px solid black;
+    border: 1px solid #999;
     margin: 10px 10px 10px 0;
 `
 
@@ -57,19 +57,21 @@ const Select = styled.div`
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
+    font-family: "Noto Sans KR", sans-serif;
 `
 
 const Options = styled.div`
     position: absolute;
     top: 100%;
-    left: 0;
+    left: 1px   ;
     width: 100%;
     background: white;
     margin-left: -2px;
-    border: 2.5px solid black;
+    border: 1px solid #999;
     border-radius: 0 0 9px 9px;
     max-height: 200px;
     overflow-y: auto;
+    font-family: "Noto Sans KR", sans-serif;
 `
 
 const Option = styled.div`
