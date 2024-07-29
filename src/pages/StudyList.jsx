@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import GuestHeader from "../components/header/GuestHeader";
 import Top from "../components/post/Top";
 import StudyPost from "../components/post/StudyPost";
 import { fetchStudyList } from "../APIs/studyAPI";
+import GuestHeader from "../components/modules/header/GuestHeader";
 import { useRecoilValue } from 'recoil';
 import { loginState } from "../state/atoms";
 import Modal from 'react-modal';

@@ -2,12 +2,15 @@ import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { fetchRecruitmentList } from "../APIs/RecruitmentAPI";
 import { Link } from "react-router-dom";
-import GuestHeader from "../components/header/GuestHeader";
+import GuestHeader from "../components/modules/header/GuestHeader";
+import UserHeader from '../components/modules/header/UserHeader';
 import Top from "../components/post/Top";
 import RecruitmentPost from "../components/post/RecruitmentPost";
 import CustomSelect from "../components/filter/CustomSelect";
 import FilterButton from "../components/filter/FilterButton";
 import DetailSearch from "../components/filter/DetailSearch";
+import { loginState } from "../state/atoms";
+import { useRecoilValue } from "recoil";
 
 function Recruitment() {
     const [posts, setPosts] = useState([]);
@@ -17,6 +20,7 @@ function Recruitment() {
     const [isFilterActive, setIsFilterActive] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const isLoggedIn = useRecoilValue(loginState);
 
     const [selectedFilters, setSelectedFilters] = useState({
         job: [],
@@ -115,67 +119,71 @@ function Recruitment() {
 
     return (
         <>
-            <GuestHeader />
+            {isLoggedIn ? (
+                <UserHeader />
+            ) : (
+                <GuestHeader />
+            )}
             <Container>
-            <Top title='채용 공고' />
-            <DetailSearch onFilterChange={handleFilterChange} />
-            <SortContainer>
-                <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='지원 가능' />
-                <Right>
-                    <CustomSelect
-                        selectedOption={sortOption}
-                        options={[
-                            { value: "startdate", label: "채용 시작일" },
-                            { value: "enddate", label: "지원 종료일" },
-                            { value: "scrap", label: "스크랩" }
-                        ]}
-                        onOptionSelect={handleSortChange}
-                    />
-                    <CustomSelect
-                        selectedOption={sortOrder}
-                        options={[
-                            { value: "desc", label: "내림차순" },
-                            { value: "asc", label: "오름차순" }
-                        ]}
-                        onOptionSelect={handleSortOrderChange}
-                    />
-                </Right>
-            </SortContainer>
-            {loading ? (
-                <p>Loading...</p>
-            ) : error ? (
-                <p>Error loading posts: {error.message}</p>
-            ) : currentPosts.map((post) => (
-                <StyledLink to={`/recruitmentdetails/${post.key}`} key={post.key}>
-                    <RecruitmentPost
-                        key={post.key}
-                        title={post.title}
-                        body={post.body}
-                        companyname={post.companyname}
-                        pic1={post.pic1}
-                        scrap={post.scrap}
-                        startdate={post.startdate}
-                        enddate={post.enddate}
-                        recruit_part={post.recruit_part}
-                        stack={post.stack}
-                        experience={post.experience}
-                        education={post.education}
-                        work_type={post.work_type}
-                        width={post.width}
-                    />
-                </StyledLink>
-            ))}
-            <Pagination>
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <PageNumber
-                        key={index + 1}
-                        onClick={() => handlePageChange(index + 1)}
-                        active={index + 1 === currentPage}
-                    >
-                        {index + 1}
-                    </PageNumber>
+                <Top title='채용 공고' />
+                <DetailSearch onFilterChange={handleFilterChange} />
+                <SortContainer>
+                    <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='지원 가능' />
+                    <Right>
+                        <CustomSelect
+                            selectedOption={sortOption}
+                            options={[
+                                { value: "startdate", label: "채용 시작일" },
+                                { value: "enddate", label: "지원 종료일" },
+                                { value: "scrap", label: "스크랩" }
+                            ]}
+                            onOptionSelect={handleSortChange}
+                        />
+                        <CustomSelect
+                            selectedOption={sortOrder}
+                            options={[
+                                { value: "desc", label: "내림차순" },
+                                { value: "asc", label: "오름차순" }
+                            ]}
+                            onOptionSelect={handleSortOrderChange}
+                        />
+                    </Right>
+                </SortContainer>
+                {loading ? (
+                    <p>Loading...</p>
+                ) : error ? (
+                    <p>Error loading posts: {error.message}</p>
+                ) : currentPosts.map((post) => (
+                    <StyledLink to={`/recruitmentdetails/${post.key}`} key={post.key}>
+                        <RecruitmentPost
+                            key={post.key}
+                            title={post.title}
+                            body={post.body}
+                            companyname={post.companyname}
+                            pic1={post.pic1}
+                            scrap={post.scrap}
+                            startdate={post.startdate}
+                            enddate={post.enddate}
+                            recruit_part={post.recruit_part}
+                            stack={post.stack}
+                            experience={post.experience}
+                            education={post.education}
+                            work_type={post.work_type}
+                            width={post.width}
+                        />
+                    </StyledLink>
                 ))}
-            </Pagination>
+                <Pagination>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <PageNumber
+                            key={index + 1}
+                            onClick={() => handlePageChange(index + 1)}
+                            active={index + 1 === currentPage}
+                        >
+                            {index + 1}
+                        </PageNumber>
+                    ))}
+                </Pagination>
             </Container>
         </>
     );

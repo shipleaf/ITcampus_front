@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/';
+const API_URL = 'http://223.130.135.136:8080'; 
+// const API_BASE_URL = 'http://localhost:8080/';
 
 export const fetchCompanyDetails = async (companyId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}api/company/${companyId}`, {
+        const response = await axios.get(`${API_URL}api/company/${companyId}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -18,7 +19,7 @@ export const fetchCompanyDetails = async (companyId) => {
 
 export const fetchCompanyList = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}api/company`, {
+        const response = await axios.get(`${API_URL}api/company`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }

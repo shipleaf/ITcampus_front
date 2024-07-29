@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-// const API_URL = 'http://223.130.135.136:8080';  // 프로토콜 추가
+const API_URL = 'http://223.130.135.136:8080';  // 프로토콜 추가
 
-const API_URL = 'http://localhost:8080'
+// const API_URL = 'http://localhost:8080'
 
 export const login = async (userData) => {
     try {
@@ -25,3 +25,15 @@ export const regist = async (registData) => {
         throw error;
     }
 };
+
+
+export const logout = async () => {
+    try {
+        const response = await axios.post(`${API_URL}/api/logout`);
+        return response;
+    } catch (error) {
+        console.error('로그아웃 실패사유:', error);
+        throw error;
+    }
+};
+

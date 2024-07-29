@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Logo from '../../header/Logo'
+import Logo from '../../header/Logo';
 import { CiSearch } from "react-icons/ci";
-import DropdownMenu from '../../header/DropdownMenu'
+import DropdownMenu from '../../header/DropdownMenu';
 import { FaRegBell } from "react-icons/fa";
 import { FaRegUserCircle } from "react-icons/fa";
 import { VscTriangleDown } from "react-icons/vsc";
 import UserDropdownMenu from './UserDropdownMenu';
-
 
 const GuestHeaderComp = styled.div`
   display: flex;
@@ -22,9 +21,11 @@ const LogoContainer = styled.div`
 `;
 
 const MenuBar = styled.div`
+  width: 30%;
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -32,8 +33,21 @@ const MenuBar = styled.div`
   & div {
     margin-right: 10px;
     margin-left: 10px;
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 1vw; /* Use viewport width for responsive font size */
+    font-weight: 400;
+    font-family: "Noto Sans KR", sans-serif;
+
+    @media (max-width: 1350px) {
+      font-size: 1vw; /* Adjust font size for smaller screens */
+    }
+
+    @media (max-width: 768px) {
+      font-size: 1.5vw; /* Adjust font size for smaller screens */
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1%.5; /* Adjust font size for even smaller screens */
+    }
 
     & span:hover {
       border-bottom: 1px solid #000;
@@ -43,8 +57,8 @@ const MenuBar = styled.div`
 `;
 
 const HeaderRight = styled.div`
+  width: 20%;
   display: flex;
-  padding-right: 30px;
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -103,7 +117,7 @@ const UserButton = styled.button`
   cursor: pointer;
   border-radius: 1rem;
 
-  &:hover{
+  &:hover {
     background-color: #f5f5f5;
   }
 `;
@@ -118,9 +132,28 @@ const DropdownMenuContainer = styled.div`
   background-color: #fff;
 `;
 
-function GuestHeader() {
+function UserHeader() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+  const userDropdownRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (
+      dropdownRef.current && !dropdownRef.current.contains(event.target) &&
+      userDropdownRef.current && !userDropdownRef.current.contains(event.target)
+    ) {
+      setShowDropdown(false);
+      setShowUserDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div>
@@ -129,6 +162,7 @@ function GuestHeader() {
           <Logo />
         </LogoContainer>
         <MenuBar
+          ref={dropdownRef}
           onMouseEnter={() => setShowDropdown(true)}
           onMouseLeave={() => setShowDropdown(false)}
         >
@@ -160,12 +194,17 @@ function GuestHeader() {
             <FaRegUserCircle style={{ color: '#bbb' }} size={30} />
             <div style={{ fontSize: '12px', marginLeft: '5px' }}>김선엽</div>
             <VscTriangleDown size={10} />
-            {showUserDropdown && <UserDropdownMenu />}
+            {showUserDropdown && (
+              <div ref={userDropdownRef}>
+                <UserDropdownMenu />
+              </div>
+            )}
           </UserButton>
         </HeaderRight>
       </GuestHeaderComp>
       <DropdownMenuContainer
         show={showDropdown}
+        ref={dropdownRef}
         onMouseEnter={() => setShowDropdown(true)}
         onMouseLeave={() => setShowDropdown(false)}
       >
@@ -175,4 +214,4 @@ function GuestHeader() {
   );
 }
 
-export default GuestHeader;
+export default UserHeader;

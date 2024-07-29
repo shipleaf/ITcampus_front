@@ -2,17 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchCompanyDetails } from '../APIs/companyAPI';
 import styled from 'styled-components';
-import GuestHeader from '../components/header/GuestHeader';
+import GuestHeader from '../components/modules/header/GuestHeader';
+import UserHeader from '../components/modules/header/UserHeader';
 import CompanyHeader from '../components/modules/company/CompanyHeader';
 import ScrapButtonDiv from '../components/modules/recruit/ScrapButtonDiv';
 import CompanyPost from '../components/post/CompanyPost';
 import star from '../assets/scrap.png';
+import { loginState } from '../state/atoms';
+import { useRecoilValue } from 'recoil';
 
-function CompanyDetails () {
+function CompanyDetails() {
     const [companyDetailData, setCompanyDetailData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isExpanded, setIsExpanded] = useState(false);
+    const isLoggedIn = useRecoilValue(loginState);
 
     const { key } = useParams();
 
@@ -48,13 +52,18 @@ function CompanyDetails () {
         return <p>Loading...</p>;
     }
 
-    if (error|| !companyDetailData) {
+    if (error || !companyDetailData) {
         return <p>회사 정보 불러오기 실패: {error.message}</p>;
     }
 
     return (
         <>
-            <GuestHeader />
+            {isLoggedIn ? (
+                <UserHeader />
+            ) : (
+                <GuestHeader />
+            )
+            }
             <Container>
                 <Title>기업소개</Title>
                 <Divder />
@@ -89,18 +98,18 @@ function CompanyDetails () {
                     <SectionContent>
                     </SectionContent >
                 </Section>
-            <CompanyPost
-                company={OtherCompany.company}
-                detail={OtherCompany.detail}
-                img={OtherCompany.img}
-                scrap={OtherCompany.scrap}
-            />
-            <CompanyPost
-                company={OtherCompany.company}
-                detail={OtherCompany.detail}
-                img={OtherCompany.img}
-                scrap={OtherCompany.scrap}
-            />
+                <CompanyPost
+                    company={OtherCompany.company}
+                    detail={OtherCompany.detail}
+                    img={OtherCompany.img}
+                    scrap={OtherCompany.scrap}
+                />
+                <CompanyPost
+                    company={OtherCompany.company}
+                    detail={OtherCompany.detail}
+                    img={OtherCompany.img}
+                    scrap={OtherCompany.scrap}
+                />
             </Container>
         </>
     );

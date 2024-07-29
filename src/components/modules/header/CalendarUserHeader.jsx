@@ -6,6 +6,8 @@ import { HiSearch } from "react-icons/hi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { VscTriangleDown } from "react-icons/vsc";
 import UserDropdownMenu from './UserDropdownMenu';
+import { currentDateState } from '../../../state/atoms';
+import { useRecoilValue } from 'recoil';
 
 const fadeIn = keyframes`
   from {
@@ -148,11 +150,12 @@ const Select = styled.select`
 
 const Option = styled.option``;
 
-function CalendarUserHeader({ onPrevMonth, onNextMonth, currentDate, toggleSidebar }) {
+function CalendarUserHeader({ onPrevMonth, onNextMonth, toggleSidebar }) {
   const [searchType, setSearchType] = useState('채용공고');
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const currentDate = useRecoilValue(currentDateState);
 
   const searchBarRef = useRef(null);
   const userButtonRef = useRef(null);
