@@ -63,12 +63,9 @@ export const createInfoComment = async (infoboardkey, commentData) => {
         return response;
     } catch (error) {
         if (error.response) {
-            console.error('댓글 추가 실패:', error.response.data);
-            console.error('상태 코드:', error.response.status);
-        } else if (error.request) {
-            console.error('응답을 받지 못했습니다:', error.request);
+            console.error('댓글 추가 실패:', error.response.status, error.message);
         } else {
-            console.error('요청 설정 중 오류가 발생했습니다:', error.message);
+            console.error('댓글 추가 실패:', error.message);
         }
         throw error;
     }
@@ -92,9 +89,8 @@ export const deleteInfoComment = async (infoboardkey, commentkey) => {
     try {
         const response = await axios.delete(`${API_URL}api/freeboardComment/delete/${infoboardkey}/${commentkey}`, {
             headers: {
-                'Authorization': `Bearer ${token}`,
-            },
-            withCredentials: true,
+                'Cache-Control': 'no-cache'
+            }
         });
         return response;
     } catch (error) {
