@@ -82,6 +82,7 @@ function SignInComponent({ toggleComponent, handleLogin, closeModal }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    closeModal();
 
     const userData = {
       email,
@@ -96,13 +97,13 @@ function SignInComponent({ toggleComponent, handleLogin, closeModal }) {
 
       if (response.status >= 200 && response.status < 300) {
         alert("로그인 성공");
-        handleLogin();
-        closeModal();
+
       } else {
         throw new Error('로그인에 실패했습니다!');
       }
 
       console.log('로그인 성공', response);
+      handleLogin();  
 
     } catch (error) {
       console.error('로그인 실패: ', error);
@@ -135,7 +136,7 @@ function SignInComponent({ toggleComponent, handleLogin, closeModal }) {
               value={password}
               autoComplete="new-password"
               onChange={(event) => setPassword(event.target.value)}
-              placeholder='비밀번호'
+              placeholder='회원가입'
             />
           </InputDiv>
         </div>

@@ -1,22 +1,12 @@
 import React, { useState } from "react";
 import { IoImageOutline } from "react-icons/io5";
 import styled from "styled-components";
-import axios from "axios";
-import Header from "../components/header/Header";
-
-// 쿠키를 읽는 함수
-const getCookie = (name) => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-};
+import UserHeader from "../components/modules/header/UserHeader";
 
 function CreateStudyPost() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [pic1, setPic1] = useState(null);
-  const [pic2, setPic2] = useState(null);
-  const [error, setError] = useState("");
+  const [image, setImage] = useState(null);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -26,12 +16,8 @@ function CreateStudyPost() {
     setBody(event.target.value);
   };
 
-  const handlePic1Change = (event) => {
-    setPic1(event.target.files[0]);
-  };
-
-  const handlePic2Change = (event) => {
-    setPic2(event.target.files[0]);
+  const handleImageChange = (event) => {
+    setImage(event.target.files[0]);
   };
 
   const handleCancel = () => {
@@ -44,59 +30,39 @@ function CreateStudyPost() {
 
     console.log("Title:", title);
     console.log("Body:", body);
-    console.log("Pic1:", pic1);
-    console.log("Pic2:", pic2);
+    console.log("Image:", image);
 
     const formData = new FormData();
     formData.append("title", title);
     formData.append("body", body);
-    if (pic1) {
-      formData.append("pic1", pic1);
-    }
-    if (pic2) {
-      formData.append("pic2", pic2);
-    }
-
-    // FormData 내용 출력
-    for (const pair of formData.entries()) {
-      console.log(pair[0] + ': ' + pair[1]);
+    if (image) {
+      formData.append("image", image);
     }
 
     try {
-      const token = getCookie('authToken'); // 쿠키에서 토큰 가져오기
-      if (!token) {
-        throw new Error('No auth token found in cookies');
-      }
-      console.log('Using token from cookie:', token); // 토큰 확인
-
-      const response = await axios.post("http://223.130.135.136:8080/api/studyboard/create", formData, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
-        },
-        withCredentials: true
+      const response = await fetch("", {
+        method: "POST",
+        credentials: "include",
+        body: formData,
       });
 
-      if (response.status !== 200) {
-        console.error("Response Status:", response.status);
-        console.error("Response Data:", response.data);
+      if (!response.ok) {
         alert("글 작성 실패.");
         throw new Error("글 작성 실패.");
       }
-
-      console.log("글 작성 성공:", response.data);
-      window.location.href = "/studypostlist"; // 성공 시 리스트 페이지로 이동
+      const result = await response.json();
+      console.log("글 작성 성공:", result);
     } catch (error) {
-      console.error("에러 발생:", error.response ? error.response.data : error.message);
-      setError("글 작성에 실패했습니다. 다시 시도해주세요.");
+      console.error("에러 발생:", error);
     }
   };
 
   return (
     <>
-      <Header />
+      <UserHeader />
       <Frame
         onSubmit={handleSubmit}
+        action=""
         method="POST"
         encType="multipart/form-data"
       >
@@ -113,20 +79,11 @@ function CreateStudyPost() {
             />
             <StyledImgContainer>
               <StyledIoImageOutline />
-              <StyledImageWord>사진1</StyledImageWord>
+              <StyledImageWord>사진</StyledImageWord>
               <HiddenFileInput
                 type="file"
                 accept="image/*"
-                onChange={handlePic1Change}
-              />
-            </StyledImgContainer>
-            <StyledImgContainer>
-              <StyledIoImageOutline />
-              <StyledImageWord>사진2</StyledImageWord>
-              <HiddenFileInput
-                type="file"
-                accept="image/*"
-                onChange={handlePic2Change}
+                onChange={handleImageChange}
               />
             </StyledImgContainer>
           </TitleContainer>
@@ -139,12 +96,11 @@ function CreateStudyPost() {
             <CancelButton type="button" onClick={handleCancel}>
               취소
             </CancelButton>
-            <SaveButton type="submit">
+            <SaveButton type="button" onClick={handleSubmit}>
               저장
             </SaveButton>
           </ButtonContainer>
         </PostCreateFrame>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
       </Frame>
     </>
   );
@@ -195,7 +151,6 @@ const TitleContainer = styled.div`
 const StyledImgContainer = styled.label`
   display: flex;
   cursor: pointer;
-  margin-right: 10px; /* 두 번째 이미지 컨테이너와 간격을 두기 위해 추가 */
 `;
 
 const StyledIoImageOutline = styled(IoImageOutline)`
@@ -267,10 +222,4 @@ const SaveButton = styled.button`
   border: none;
   border-radius: 10px;
   cursor: pointer;
-`;
-
-const ErrorMessage = styled.p`
-  color: red;
-  font-size: 16px;
-  margin-top: 10px;
 `;
