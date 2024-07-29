@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import calendarImage from '../../assets/smallcalendar.png';
 import EventContainer from './calander/EventContainer';
 import MyEventContainer from './calander/MyEventContainer';
 import { Toggle } from './ToggleButton';
 import { useNavigate } from 'react-router-dom';
+import SmallCalendar from './calander/SmallCalendar';
 import Modal from 'react-modal';
 import LoginModal from '../login/LoginModal';
 import { useRecoilValue, useRecoilState } from 'recoil';
@@ -21,12 +21,6 @@ const ImageContainer = styled.div`
   align-items: center;
   overflow: hidden;
   margin-top: 20px;
-`;
-
-const CalendarImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
 `;
 
 const ToggleButtonContainer = styled.div`
@@ -56,11 +50,11 @@ const Button = styled.button`
   background-color: #fff;
   margin-top: 15px;
   cursor: pointer;
-  & span{
+  & span {
     margin-left: 5px;
     font-family: "Noto Sans KR", sans-serif;
   }
-  &:hover{
+  &:hover {
     background-color: #f0f0f0;
   }
 `;
@@ -87,7 +81,7 @@ const ListContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  & div{
+  & div {
     font-family: "Noto Sans KR", sans-serif;
   }
 `;
@@ -103,10 +97,10 @@ const GoToList = styled.div`
   align-items: center;
   cursor: pointer;
 
-  & div{
+  & div {
     margin-left: 5px;
   }
-  &:hover{
+  &:hover {
     background-color: #f0f0f0;
   }
 `;
@@ -150,7 +144,7 @@ function Sidebar() {
   return (
     <div style={{ height: '100%', width: '100%', borderTop: '1px solid #ddd' }}>
       <ImageContainer>
-        <CalendarImage src={calendarImage} alt='Calendar' />
+        <SmallCalendar />
       </ImageContainer>
       <ToggleButtonContainer>
         <ToggleLabel isOn={isOn}>마이 캘린더</ToggleLabel>

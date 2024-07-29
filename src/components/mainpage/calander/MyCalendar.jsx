@@ -5,26 +5,28 @@ import interactionPlugin from '@fullcalendar/interaction';
 import koLocale from '@fullcalendar/core/locales/ko';
 import '../../../style/customCalendar.css';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { filterState } from '../../../state/atoms'; // eventsState 추가
+import { currentDateState, filterState, myEventState } from '../../../state/atoms';
 import { fetchMyEvents } from '../../../APIs/CalendarDetailAPI';
-import { myEventState } from '../../../state/atoms';
 
 const MyCalendar = forwardRef(({ onDateClick }, ref) => {
     const calendarRef = useRef(null);
     const filters = useRecoilValue(filterState);
     const [myEvents, setMyEvents] = useRecoilState(myEventState);
+    const [, SetCurrentDate] = useRecoilState(currentDateState);
 
     useImperativeHandle(ref, () => ({
         next: () => {
             if (calendarRef.current) {
                 const calendarApi = calendarRef.current.getApi();
                 calendarApi.next();
+                SetCurrentDate(calendarApi.getDate())
             }
         },
         prev: () => {
             if (calendarRef.current) {
                 const calendarApi = calendarRef.current.getApi();
                 calendarApi.prev();
+                SetCurrentDate(calendarApi.getDate())
             }
         }
     }));
@@ -71,13 +73,18 @@ const MyCalendar = forwardRef(({ onDateClick }, ref) => {
 
     const hideExtraWeeks = () => {
         setTimeout(() => {
-            const calendarApi = document.querySelector('.fc-daygrid-body');
-            const weeks = calendarApi.querySelectorAll('table.fc-scrollgrid-sync-table tbody tr');
-            weeks.forEach((week, index) => {
-                if (index >= 5) {
-                    week.classList.add('hidden-week');
-                }
-            });
+            const calendarBody = document.querySelector('.fc-daygrid-body');
+            if (calendarBody) {
+                const weeks = calendarBody.querySelectorAll('table.fc-scrollgrid-sync-table tbody tr');
+                const weekCount = weeks.length;
+                weeks.forEach((week, index) => {
+                    if (index >= 5 && weekCount > 5) {
+                        week.classList.add('hidden-week');
+                    } else {
+                        week.classList.remove('hidden-week');
+                    }
+                });
+            }
         }, 0);
     };
 
@@ -112,7 +119,7 @@ const MyCalendar = forwardRef(({ onDateClick }, ref) => {
                     if (!event.key || !event.title || !event.whatis || !event.startdate || !event.enddate) {
                         console.error("Event object is missing required properties:", event);
                         return null;
-                    }   
+                    }
 
                     const endDate = new Date(event.enddate);
                     endDate.setDate(endDate.getDate() + 1);
@@ -123,7 +130,7 @@ const MyCalendar = forwardRef(({ onDateClick }, ref) => {
                         whatis: event.whatis,
                         start: event.startdate,
                         end: endDate.toISOString().split('T')[0],
-                        endtime:endDate, // enddate에 하루를 더한 값
+                        endtime: endDate, // enddate에 하루를 더한 값
                         backgroundColor: getColor(event.whatis)
                     };
                 }).filter(event => event !== null);
@@ -156,6 +163,7 @@ const MyCalendar = forwardRef(({ onDateClick }, ref) => {
                 titleFormat={{ month: 'long' }}
                 dayCellContent={renderDayCellContent}
                 viewDidMount={hideExtraWeeks}
+                datesSet={hideExtraWeeks} // 새롭게 추가된 부분
             />
         </div>
     );

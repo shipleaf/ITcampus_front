@@ -6,6 +6,8 @@ import { IoIosArrowForward } from "react-icons/io";
 import { HiSearch } from "react-icons/hi";
 import LoginModal from '../../login/LoginModal';
 import Modal from 'react-modal';
+import { useRecoilValue } from 'recoil';
+import { currentDateState } from '../../../state/atoms';
 
 const fadeIn = keyframes`
   from {
@@ -145,11 +147,12 @@ const Option = styled.option`
 `
 Modal.setAppElement('#root');
 
-function CalendarHeader({ onPrevMonth, onNextMonth, currentDate, toggleSidebar }) {
+function CalendarHeader({ onPrevMonth, onNextMonth, toggleSidebar }) {
   const [searchType, setSearchType] = useState('채용공고');
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const currentDate = useRecoilValue(currentDateState);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -195,7 +198,7 @@ function CalendarHeader({ onPrevMonth, onNextMonth, currentDate, toggleSidebar }
           <NavButton onClick={onPrevMonth}>
             <IoIosArrowBack size={25} />
           </NavButton>
-          <CurrentDate>2024년 7월</CurrentDate>
+          <CurrentDate>{currentDate.getFullYear()}년 {currentDate.getMonth() + 1}월</CurrentDate>
           <NavButton onClick={onNextMonth}>
             <IoIosArrowForward size={25} />
           </NavButton>

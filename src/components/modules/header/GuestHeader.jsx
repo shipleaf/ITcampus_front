@@ -19,18 +19,32 @@ const LogoContainer = styled.div`
 `;
 
 const MenuBar = styled.div`
+  width: 30%;
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+
   
   & div {
     margin-right: 10px;
     margin-left: 10px;
     font-size: 18px;
     font-weight: 500;
+    @media (max-width: 1590px) {
+      font-size: 1vw; /* Adjust font size for smaller screens */
+    }
+
+    @media (max-width: 1104px) {
+      font-size: 0.8vw; /* Adjust font size for smaller screens */
+    }
+
+    @media (max-width: 960px) {
+      font-size: 1.5vw; /* Adjust font size for smaller screens */
+    }
 
     & span:hover {
       border-bottom: 1px solid #000;
@@ -40,8 +54,8 @@ const MenuBar = styled.div`
 `;
 
 const HeaderRight = styled.div`
+  width: 20%;
   display: flex;
-  padding-right: 30px;
   flex-direction: row;
   align-items: center;
   justify-content: center;

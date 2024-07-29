@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import CalendarComponent from '../components/mainpage/calander/CalendarComponent2';
 import MyCalendar from '../components/mainpage/calander/MyCalendar';
@@ -9,7 +9,7 @@ import CalendarUserHeader from '../components/modules/header/CalendarUserHeader'
 import CalendarDetail from '../components/mainpage/calander/CalendarDetail';
 import MyCalendarDetail from '../components/mainpage/calander/MyCalendarDetail';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { sidebarState, loginState, toggleState, mainEventState, myEventState} from '../state/atoms';
+import { sidebarState, loginState, toggleState, mainEventState, myEventState, smallSelectedDateState } from '../state/atoms';
 
 const SidebarContainer = styled.div`
   width: 264px;
@@ -38,10 +38,19 @@ function MainCalendarPage() {
   const [showDetail, setShowDetail] = useState(false);
   const [, setEvents] = useState([]);
   const [isSidebarVisible, setIsSidebarVisible] = useRecoilState(sidebarState);
-  const isLoggedIn = useRecoilValue(loginState);
+  const [isLoggedIn,] = useRecoilState(loginState);
   const isOn = useRecoilValue(toggleState);
   const mainEvents = useRecoilValue(mainEventState);
   const myEvents = useRecoilValue(myEventState);
+  const [smallClickedDate, setSmallClickedDate] = useRecoilState(smallSelectedDateState);
+
+  useEffect(() => {
+    if (smallClickedDate) {
+      setSelectedDate(smallClickedDate);
+      setShowDetail(true);
+      setDetailPosition({ top: 100, left: 270 });
+    }
+  }, [smallClickedDate]);
 
   const handlePrevMonth = () => {
     if (calendarRef.current) {
@@ -72,6 +81,16 @@ function MainCalendarPage() {
   const toggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
   };
+
+  const handleCloseDetail = () => {
+    setShowDetail(false);
+    setSmallClickedDate(null); // smallClickedDate 값을 null로 리셋
+  };
+
+  // 로그인 상태가 변경될 때 localStorage에 저장
+  useEffect(() => {
+    localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
 
   return (
     <div>
@@ -125,7 +144,7 @@ function MainCalendarPage() {
             date={selectedDate}
             animate={true}
             events={myEvents}
-            onClose={() => setShowDetail(false)}
+            onClose={handleCloseDetail}
           />
         ) : (
           <CalendarDetail
@@ -139,7 +158,7 @@ function MainCalendarPage() {
             date={selectedDate}
             animate={true}
             events={mainEvents}
-            onClose={() => setShowDetail(false)}
+            onClose={handleCloseDetail}
           />
         ),
         document.body
