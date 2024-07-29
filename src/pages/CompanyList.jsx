@@ -156,7 +156,8 @@ const Container = styled.div`
     width: 60%;
     flex-direction: column;
     margin: 20px auto;
-    `
+`
+
 const Right = styled.div`
     display: flex;
     flex: 1;

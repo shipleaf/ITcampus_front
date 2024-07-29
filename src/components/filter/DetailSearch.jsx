@@ -130,16 +130,16 @@ const DetailSearch = ({ onFilterChange }) => {
       <Table>
         <thead>
           <tr>
-            <Th onClick={() => handleToggle('job')} active={activeCategory === 'job'}>직무</Th>
-            <Th onClick={() => handleToggle('techStack')} active={activeCategory === 'techStack'}>기술스택</Th>
-            <Th onClick={() => handleToggle('experience')} active={activeCategory === 'experience'}>경력</Th>
-            <Th onClick={() => handleToggle('education')} active={activeCategory === 'education'}>학력</Th>
-            <Th onClick={() => handleToggle('employmentType')} active={activeCategory === 'employmentType'}>고용형태</Th>
+            <Th onClick={() => handleToggle('job')} $active={activeCategory === 'job'}>직무</Th>
+            <Th onClick={() => handleToggle('techStack')} $active={activeCategory === 'techStack'}>기술스택</Th>
+            <Th onClick={() => handleToggle('experience')} $active={activeCategory === 'experience'}>경력</Th>
+            <Th onClick={() => handleToggle('education')} $active={activeCategory === 'education'}>학력</Th>
+            <Th onClick={() => handleToggle('employmentType')} $active={activeCategory === 'employmentType'}>고용형태</Th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <Td active={showJob}>
+            <Td $active={showJob}>
               {showJob && (
                 <Overlay>
                   <CheckboxContainer>
@@ -152,7 +152,7 @@ const DetailSearch = ({ onFilterChange }) => {
                 </Overlay>
               )}
             </Td>
-            <Td active={showTechStack}>
+            <Td $active={showTechStack}>
               {showTechStack && (
                 <Overlay>
                   <CheckboxContainer>
@@ -165,7 +165,7 @@ const DetailSearch = ({ onFilterChange }) => {
                 </Overlay>
               )}
             </Td>
-            <Td active={showExperience}>
+            <Td $active={showExperience}>
               {showExperience && (
                 <Overlay>
                   <CheckboxContainer>
@@ -178,7 +178,7 @@ const DetailSearch = ({ onFilterChange }) => {
                 </Overlay>
               )}
             </Td>
-            <Td active={showEducation}>
+            <Td $active={showEducation}>
               {showEducation && (
                 <Overlay>
                   <CheckboxContainer>
@@ -191,7 +191,7 @@ const DetailSearch = ({ onFilterChange }) => {
                 </Overlay>
               )}
             </Td>
-            <Td active={showEmploymentType}>
+            <Td $active={showEmploymentType}>
               {showEmploymentType && (
                 <Overlay>
                   <CheckboxContainer>
@@ -237,8 +237,8 @@ const Table = styled.table`
 `
 
 const Th = styled.th`
-  background-color: ${(props) => (props.active ? '#007FFF' : '#F3F9FF')};
-  color: ${(props) => (props.active ? 'white' : 'black')};
+  background-color: ${(props) => (props.$active ? '#007FFF' : '#F3F9FF')};
+  color: ${(props) => (props.$active ? 'white' : 'black')};
   padding: 10px;
   border: 1px solid #ddd;
   font-size: 15px;
@@ -246,8 +246,8 @@ const Th = styled.th`
   cursor: pointer;
 
   &:hover {
-    background-color: ${(props) => (props.active ? '#007FFF' : '#E0E0E0')};
-    color: ${(props) => (props.active ? 'white' : 'black')};
+    background-color: ${(props) => (props.$active ? '#007FFF' : '#E0E0E0')};
+    color: ${(props) => (props.$active ? 'white' : 'black')};
   }
 `
 
@@ -255,7 +255,7 @@ const Td = styled.td`
   padding: 10px;
   position: relative;
   vertical-align: top;
-  ${({ active }) => active && `
+  ${({ $active }) => $active && `
     background-color: white;
   `}
 `
