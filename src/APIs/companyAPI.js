@@ -10,7 +10,7 @@ const API_URL = 'https://mjcback.duckdns.org';
 
 export const fetchCompanyDetails = async (companyId) => {
     try {
-        const response = await axiosInstance.get(`${API_URL}api/company/${companyId}`, {
+        const response = await axiosInstance.get(`${API_URL}/api/company/${companyId}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -24,7 +24,7 @@ export const fetchCompanyDetails = async (companyId) => {
 
 export const fetchCompanyList = async () => {
     try {
-        const response = await axiosInstance.get(`${API_URL}api/company`, {
+        const response = await axiosInstance.get(`${API_URL}/api/company`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
