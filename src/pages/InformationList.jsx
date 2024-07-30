@@ -33,6 +33,7 @@ function InformationList() {
                 setPosts(response.data)
             } catch (error) {
                 setError(error);
+                console.log(`에러 이유는:' ${error}`)
             } finally {
                 setLoading(false);
             }
