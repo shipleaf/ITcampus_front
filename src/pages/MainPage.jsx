@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import CalendarComponent from '../components/mainpage/calander/CalendarComponent2'
-import DateInfo from '../components/mainpage/calander/DateInfo'
+import DateInfo from '../components/mainpage/calander/DateInfo';
+import GuestHeader from "../components/modules/header/GuestHeader";
+import UserHeader from "../components/modules/header/UserHeader";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../state/atoms";
 import Carousel from '../components/mainpage/Carousel';
 import StudyBoard from '../components/mainpage/StudyBoard';
 import NearDeadlineJobs from '../components/mainpage/NearDeadlineJobs';
@@ -83,6 +87,7 @@ function MainPage() {
   const [dateDetails, setDateDetails] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showSecondCalendar, setShowSecondCalendar] = useState(false);
+  const isLoggedIn = useRecoilValue(loginState);
 
   const allDetails = [
     {
@@ -154,6 +159,11 @@ function MainPage() {
 
   return (
     <div>
+      {isLoggedIn ? (
+        <UserHeader />
+      ) : (
+        <GuestHeader />
+      )}
       <ContentsContainer>
         <CarouselArea>
           <Carousel />

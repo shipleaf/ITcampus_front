@@ -1,12 +1,12 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 const API_URL = 'http://223.130.135.136:8080';  // 프로토콜 추가
 
-// const API_URL = 'http://localhost:8080'
+// const API_URL = 'http://localhost:8080';
 
 export const login = async (userData) => {
     try {
-        const response = await axios.post(`${API_URL}/api/login`, userData);
+        const response = await axiosInstance.post(`${API_URL}/api/login`, userData);
         console.log(`${API_URL}/api/login`)
         console.log(response.status)
         return response;
@@ -18,7 +18,7 @@ export const login = async (userData) => {
 
 export const regist = async (registData) => {
     try {
-        const response = await axios.post(`${API_URL}/api/register`, registData);
+        const response = await axiosInstance.post(`${API_URL}/api/register`, registData);
         return response;
     } catch (error) {
         console.error('회원가입 실패사유:', error);
@@ -29,7 +29,7 @@ export const regist = async (registData) => {
 
 export const logout = async () => {
     try {
-        const response = await axios.post(`${API_URL}/api/logout`);
+        const response = await axiosInstance.post(`${API_URL}/api/logout`);
         return response;
     } catch (error) {
         console.error('로그아웃 실패사유:', error);

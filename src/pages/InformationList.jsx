@@ -8,6 +8,7 @@ import { loginState } from "../state/atoms";
 import Top from "../components/post/Top";
 import StudyPost from "../components/post/StudyPost";
 import { fetchInfoList } from "../APIs/infoAPI";
+import { useNavigate } from "react-router-dom";
 
 function InformationList() {
     const [posts, setPosts] = useState([]);
@@ -17,6 +18,12 @@ function InformationList() {
     const [error, setError] = useState(null);
     const isLoggedIn = useRecoilValue(loginState);
     const postsPerPage = 7;
+
+    const navigate = useNavigate();
+
+    const goToPost = (link) => {
+        navigate(link)
+    }
 
     useEffect(() => {
         const getStudies = async () => {
@@ -61,7 +68,7 @@ function InformationList() {
             <Container>
             <Top title='정보 게시판' />
             <WriteContainer>
-                <Write> 글쓰기</Write>
+                <Write onClick={() => goToPost('/createInfopost')}> 글쓰기</Write>
             </WriteContainer>
             {loading ? (
                 <p>Loading...</p>

@@ -18,12 +18,14 @@ import MyPage from './pages/MyPage';
 import StudyDetails from './pages/StudyDetails';
 import CreateStudyPost from './pages/CreateStudyPost';
 import CreateInfoPost from './pages/CreateInfoPost';
+import MainPage from './pages/MainPage';
 
 const AppRouter = () => {
   return (
     <Router>
       <Routes>
         <Route path='/' element={<MainCalendarPage/>} />
+        <Route path='/mainpage' element={<MainPage/>} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/companylist' element={<CompanyList/>} />
         <Route path='/companydetails/:key' element={<CompanyDetails/>} />
