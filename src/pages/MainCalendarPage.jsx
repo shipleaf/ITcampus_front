@@ -13,9 +13,10 @@ import { sidebarState, loginState, toggleState, mainEventState, myEventState, sm
 
 const SidebarContainer = styled.div`
   width: 264px;
-  height: 100%;
+  height: calc(100vh - 20px); /* 기기 높이에 맞추어 패딩이나 마진을 고려한 높이 설정 */
   transform: ${({ isVisible }) => (isVisible ? 'translateX(0)' : 'translateX(-100%)')};
   transition: transform 0.4s ease-in-out;
+
 `;
 
 const MainContent = styled.div`
