@@ -8,7 +8,6 @@ import { MdLogout } from "react-icons/md";
 import { useRecoilState } from 'recoil';
 import { loginState } from '../../../state/atoms'
 import { logout } from '../../../APIs/loginAPI';
-import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
     display: flex;
