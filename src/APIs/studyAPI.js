@@ -19,7 +19,7 @@ export const fetchStudyList = async () => {
 };
 
 
-export const fetchStudyDetails = async (studyId) => {
+export const fetchStudyPost = async (studyId) => {
     try {
         const response = await axios.get(`${API_BASE_URL}api/studyboard/${studyId}`, {
             headers: {
@@ -28,7 +28,21 @@ export const fetchStudyDetails = async (studyId) => {
         });
         return response;
     } catch (error) {
-        console.error('스터디 정보 불러오기 실패:', error);
+        console.error('스터디게시판 정보 불러오기 실패:', error);
+        throw error;
+    }
+};
+
+export const fetchStudyComments = async (studyId) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}api/studyboardComment/${studyId}`, {
+            headers: {
+                'Cache-Control': 'no-cache'
+            }
+        });
+        return response;
+    } catch (error) {
+        console.error('스터디게시판댓글 정보 불러오기 실패:', error);
         throw error;
     }
 };
