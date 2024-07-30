@@ -122,7 +122,7 @@ export const deleteInfoComment = async (infoboardkey, commentkey) => {
 // 정보게시판 찾기
 export const searchInfo = async (query) => {
     try {
-        const response = await axios.post(`${API_URL}/api/freeboard/search`, { title: query }, {
+        const response = await axiosInstance.post(`${API_URL}/api/freeboard/search`, { title: query }, {
             headers: {
                 'Cache-Control': 'no-cache'
             }

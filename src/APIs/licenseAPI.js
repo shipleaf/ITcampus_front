@@ -1,7 +1,7 @@
 import axiosInstance from "./axiosInstance";
 
 
-const API_URL = 'http://localhost:8080/';
+// const API_URL = 'http://localhost:8080/';
 
 
 // const API_URL = 'http://223.130.135.136:8080'; 
@@ -34,7 +34,7 @@ export const fetchLicenseDetails = async (licenseId) => {
 
 export const searchLicense = async (query) => {
     try {
-        const response = await axios.post(`${API_URL}api/qualificationInfo/search`, { title: query }, {
+        const response = await axiosInstance.post(`${API_URL}api/qualificationInfo/search`, { title: query }, {
             headers: {
                 'Cache-Control': 'no-cache'
             }

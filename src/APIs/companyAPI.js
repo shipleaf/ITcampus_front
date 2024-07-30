@@ -38,7 +38,7 @@ export const fetchCompanyList = async () => {
 
 export const searchCompany = async (query) => {
     try {
-        const response = await axios.post(`${API_URL}api/company/search`, { title: query }, {
+        const response = await axiosInstance.post(`${API_URL}api/company/search`, { title: query }, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
