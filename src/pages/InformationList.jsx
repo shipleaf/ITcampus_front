@@ -29,9 +29,8 @@ function InformationList() {
         const getStudies = async () => {
             try {
                 const response = await fetchInfoList();
-                if (response.status >= 200 && response.status < 300) {
-                    setPosts(response.data);
-                }
+                console.log(response.data)
+                setPosts(response.data)
             } catch (error) {
                 setError(error);
             } finally {
