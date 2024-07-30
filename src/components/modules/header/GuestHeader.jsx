@@ -2,20 +2,18 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
 import Logo from '../../header/Logo';
-import { CiSearch } from "react-icons/ci";
 import DropdownMenu from '../../header/DropdownMenu';
 import LoginModal from '../../login/LoginModal';
 
 const GuestHeaderComp = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   position: relative;
   border-bottom: 1px solid #ddd;
 `;
 
 const LogoContainer = styled.div`
-  flex-shrink: 0;
 `;
 
 const MenuBar = styled.div`
@@ -58,27 +56,27 @@ const HeaderRight = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   position: relative;
 `;
 
-const SearchBar = styled.div`
-  height: 30px;
-  margin-right: 15px;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: center;
-  border-bottom: 1px solid #00ACEE;
+// const SearchBar = styled.div`
+//   height: 30px;
+//   margin-right: 15px;
+//   display: flex;
+//   align-items: center;
+//   flex-direction: row;
+//   justify-content: center;
+//   border-bottom: 1px solid #00ACEE;
 
-  & input {
-    border: none;
+//   & input {
+//     border: none;
 
-    &:focus {
-      outline: none;
-    }
-  }
-`;
+//     &:focus {
+//       outline: none;
+//     }
+//   }
+// `;
 
 const LoginButton = styled.button`
   width: 100px;
@@ -126,38 +124,40 @@ function GuestHeader() {
   return (
     <div>
       <GuestHeaderComp>
-        <LogoContainer>
-          <Logo />
-        </LogoContainer>
-        <MenuBar
-          onMouseEnter={() => setShowDropdown(true)}
-          onMouseLeave={() => setShowDropdown(false)}
-        >
-          <div>
-            <span>기업 소개</span>
-          </div>
-          <div>
-            <span>IT 자격증</span>
-          </div>
-          <div>
-            <span>지원 사업</span>
-          </div>
-          <div>
-            <span>채용 공고</span>
-          </div>
-          <div>
-            <span>커뮤니티</span>
-          </div>
-        </MenuBar>
-        <HeaderRight>
-          <SearchBar>
-            <CiSearch style={{ color: '#00ACEE' }} size={25} />
-            <input type='text' />
-          </SearchBar>
-          <LoginButton onClick={openModal}>
-            로그인
-          </LoginButton>
-        </HeaderRight>
+        <div style={{ width: '60%', display: 'flex', justifyContent: 'space-between' }}>
+          <LogoContainer>
+            <Logo />
+          </LogoContainer>
+          <MenuBar
+            onMouseEnter={() => setShowDropdown(true)}
+            onMouseLeave={() => setShowDropdown(false)}
+          >
+            <div>
+              <span>기업 소개</span>
+            </div>
+            <div>
+              <span>IT 자격증</span>
+            </div>
+            <div>
+              <span>지원 사업</span>
+            </div>
+            <div>
+              <span>채용 공고</span>
+            </div>
+            <div>
+              <span>커뮤니티</span>
+            </div>
+          </MenuBar>
+          <HeaderRight>
+            {/* <SearchBar>
+              <CiSearch style={{ color: '#00ACEE' }} size={25} />
+              <input type='text' />
+            </SearchBar> */}
+            <LoginButton onClick={openModal}>
+              로그인
+            </LoginButton>
+          </HeaderRight>
+        </div>
       </GuestHeaderComp>
       <DropdownMenuContainer
         show={showDropdown}

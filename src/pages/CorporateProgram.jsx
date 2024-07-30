@@ -11,7 +11,7 @@ import CustomSelect from "../components/filter/CustomSelect";
 import FilterButton from "../components/filter/FilterButton";
 import star from '../assets/scrap.png';
 
-function CorporateProgram(){
+function CorporateProgram() {
     const dummyPosts = [
         {
             title: "[공지] 12기 중앙 해커톤 안내",
@@ -102,7 +102,7 @@ function CorporateProgram(){
             scrap: 180,
             startDate: "2024. 8. 1",
             endDate: "2024. 8. 10"
-        },{
+        }, {
             title: "[공지] 18기 중앙 해커톤 안내",
             detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
             writer: "멋쟁이사자처럼 대학",
@@ -119,7 +119,7 @@ function CorporateProgram(){
             scrap: 180,
             startDate: "2024. 8. 1",
             endDate: "2024. 8. 10"
-        },{
+        }, {
             title: "[공지] 18기 중앙 해커톤 안내",
             detail: "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
             writer: "멋쟁이사자처럼 대학",
@@ -148,12 +148,12 @@ function CorporateProgram(){
         },
     ];
 
-    const [currentPage, setCurrentPage] = useState(1); 
+    const [currentPage, setCurrentPage] = useState(1);
     const [sortOption, setSortOption] = useState('scrap');
-    const [sortOrder, setSortOrder] = useState('desc'); 
+    const [sortOrder, setSortOrder] = useState('desc');
     const [isFilterActive, setIsFilterActive] = useState(false);
     const isLoggedIn = useRecoilValue(loginState);
-    const postsPerPage = 7; 
+    const postsPerPage = 7;
 
     const today = new Date();
 
@@ -213,48 +213,50 @@ function CorporateProgram(){
             ) : (
                 <GuestHeader />
             )}
-            <Top title='기업 프로그램' />
-            <SortContainer>
-                <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop = '진행중'/>
-                <Right>
-                <CustomSelect
-                    selectedOption={sortOption}
-                    options={[
-                        { value: "startdate", label: "모집 시작일" },
-                        { value: "enddate", label: "모집 마감일" },
-                        { value: "scrap", label: "스크랩" }
-                    ]}
-                    onOptionSelect={handleSortChange}
-                />
-                <CustomSelect
-                    selectedOption={sortOrder}
-                    options={[
-                        { value: "desc", label: "내림차순" },
-                        { value: "asc", label: "오름차순" }
-                    ]}
-                    onOptionSelect={handleSortOrderChange}
-                />
-                </Right>
-            </SortContainer>
-            {currentPosts.map((post, index) => (
-                <StyledLink to={`/corporatedetails/${post.key}`}>
-                <Post
-                    key={index}
-                    {...post}
-                />
-                </StyledLink>
-            ))}
-            <Pagination>
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <PageNumber
-                        key={index + 1}
-                        onClick={() => handlePageChange(index + 1)}
-                        active={index + 1 === currentPage}
-                    >
-                        {index + 1}
-                    </PageNumber>
+            <Container>
+                <Top title='기업 프로그램' />
+                <SortContainer>
+                    <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='진행중' />
+                    <Right>
+                        <CustomSelect
+                            selectedOption={sortOption}
+                            options={[
+                                { value: "startdate", label: "모집 시작일" },
+                                { value: "enddate", label: "모집 마감일" },
+                                { value: "scrap", label: "스크랩" }
+                            ]}
+                            onOptionSelect={handleSortChange}
+                        />
+                        <CustomSelect
+                            selectedOption={sortOrder}
+                            options={[
+                                { value: "desc", label: "내림차순" },
+                                { value: "asc", label: "오름차순" }
+                            ]}
+                            onOptionSelect={handleSortOrderChange}
+                        />
+                    </Right>
+                </SortContainer>
+                {currentPosts.map((post, index) => (
+                    <StyledLink to={`/corporatedetails/${post.key}`}>
+                        <Post
+                            key={index}
+                            {...post}
+                        />
+                    </StyledLink>
                 ))}
-            </Pagination>
+                <Pagination>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <PageNumber
+                            key={index + 1}
+                            onClick={() => handlePageChange(index + 1)}
+                            active={index + 1 === currentPage}
+                        >
+                            {index + 1}
+                        </PageNumber>
+                    ))}
+                </Pagination>
+            </Container>
         </>
     );
 }
@@ -263,7 +265,7 @@ export default CorporateProgram;
 
 const SortContainer = styled.div`
     display: flex;
-    width: 60%;
+    width: 100%;
     margin: 20px auto;
     margin-bottom: 40px;
     align-items: center;
@@ -280,6 +282,14 @@ const Pagination = styled.div`
     display: flex;
     justify-content: center;
     margin: 20px 0;
+
+`
+const Container = styled.div`
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
 `
 
 const PageNumber = styled.button`

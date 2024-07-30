@@ -70,7 +70,7 @@ function CreateInfoPost() {
     };
 
     try {
-      const response = await fetch('http://localhost:8080/api/freeboard/create', {
+      const response = await fetch('http://223.130.135.136:8080/api/freeboard/create', {
         method: 'POST',
         credentials: 'include',
         headers: {
