@@ -9,7 +9,7 @@ import UserHeader from "../components/modules/header/UserHeader";
 import { useRecoilValue } from "recoil";
 import { loginState } from "../state/atoms";
 
-const InformationDetails = () => {
+function InformationDetails (){
   const { key } = useParams();
   const [postData, setPostData] = useState(null);
   const [postComments, setPostComments] = useState([]);
