@@ -12,7 +12,7 @@ const API_URL = 'https://mjcback.duckdns.org';
 
 export const fetchInfoList = async () => {
     try {
-        const response = await axiosInstance.get(`${API_URL}/api/freeboard`)
+        const response = await axiosInstance.get(`${API_URL}/api/freeboard`);
         console.log(response.status)
 
         if (response.status >= 200 && response.status < 300) {
