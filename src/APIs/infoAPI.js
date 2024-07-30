@@ -1,5 +1,4 @@
-import axios from 'axios';
-
+import axiosInstance from "./axiosInstance";
 
 
 // const API_URL = 'http://223.130.135.136:8080'; 
@@ -13,7 +12,7 @@ const API_URL = 'https://mjcback.duckdns.org';
 
 export const fetchInfoList = async () => {
     try {
-        const response = await axios.get(`${API_URL}/api/freeboard`, {
+        const response = await axiosInstance.get(`${API_URL}/api/freeboard`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -28,7 +27,7 @@ export const fetchInfoList = async () => {
 // 정보게시판 포스터 가져오기
 export const fetchInfoPost = async (infoId) => {
     try {
-        const response = await axios.get(`${API_URL}/api/freeboard/${infoId}`, {
+        const response = await axiosInstance.get(`${API_URL}/api/freeboard/${infoId}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -43,7 +42,7 @@ export const fetchInfoPost = async (infoId) => {
 // 정보게시판 댓글 가져오기
 export const fetchInfoComments = async (infoId) => {
     try {
-        const response = await axios.get(`${API_URL}/api/freeboardComment/${infoId}`, {
+        const response = await axiosInstance.get(`${API_URL}/api/freeboardComment/${infoId}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -59,7 +58,7 @@ export const fetchInfoComments = async (infoId) => {
 export const createInfoComment = async (infoboardkey, commentData) => {
     console.log(infoboardkey, commentData);
     try {
-        const response = await axios.post(`${API_URL}/api/freeboardComment/create/${infoboardkey}`, commentData, {
+        const response = await axiosInstance.post(`${API_URL}/api/freeboardComment/create/${infoboardkey}`, commentData, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -93,7 +92,7 @@ export const createInfoComment = async (infoboardkey, commentData) => {
 // 정보게시판 댓글 삭제
 export const deleteInfoComment = async (infoboardkey, commentkey) => {
     try {
-        const response = await axios.delete(`${API_URL}api/freeboardComment/delete/${infoboardkey}/${commentkey}`, {
+        const response = await axiosInstance.delete(`${API_URL}api/freeboardComment/delete/${infoboardkey}/${commentkey}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
