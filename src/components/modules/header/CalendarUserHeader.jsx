@@ -8,6 +8,7 @@ import { VscTriangleDown } from "react-icons/vsc";
 import UserDropdownMenu from './UserDropdownMenu';
 import { currentDateState } from '../../../state/atoms';
 import { useRecoilValue } from 'recoil';
+import Cookies from 'js-cookie';
 
 const fadeIn = keyframes`
   from {
@@ -156,6 +157,9 @@ function CalendarUserHeader({ onPrevMonth, onNextMonth, toggleSidebar }) {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const currentDate = useRecoilValue(currentDateState);
+  const allCookies = Cookies.get();
+
+  console.log(allCookies);
 
   const searchBarRef = useRef(null);
   const userButtonRef = useRef(null);

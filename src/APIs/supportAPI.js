@@ -1,12 +1,18 @@
-import axios from 'axios';
+
+import axiosInstance from './axiosInstance';
+
 
 const API_URL = 'http://localhost:8080';
 
 // const API_URL = 'http://223.130.135.136:8080';
 
+// const API_URL = 'http://223.130.153.246:8080'; // 동근
+
+const API_URL = 'https://mjcback.duckdns.org';
+
 export const fetchSupportDetails = async (supportId) => {
     try {
-        const response = await axios.get(`${API_URL}/api/studentSupportInfo/${supportId}`, {
+        const response = await axiosInstance.get(`${API_URL}/api/studentSupportInfo/${supportId}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -20,7 +26,7 @@ export const fetchSupportDetails = async (supportId) => {
 
 export const fetchSupportList = async () => {
     try {
-        const response = await axios.get(`${API_URL}/api/studentSupportInfo`, {
+        const response = await axiosInstance.get(`${API_URL}/api/studentSupportInfo`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }

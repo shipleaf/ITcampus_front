@@ -1,8 +1,15 @@
 import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 const API_URL = 'http://localhost:8080';
 
+
 //const API_URL = 'http://223.130.135.136:8080';
+
+// const API_URL = 'http://223.130.135.136:8080';
+
+const API_URL = 'https://mjcback.duckdns.org';
+
 
 export const postCompanyDetails = async (companyDetails) => {
     try {
@@ -62,7 +69,7 @@ export const deleteSupportDetails = async (supportID) => {
 
 export const postLicenseDetails = async (licenseDetails) => {
     try {
-        const response = await axios.post(`${API_URL}/api/qualificationInfo/admin`, licenseDetails, {
+        const response = await axiosInstance.post(`${API_URL}/api/qualificationInfo/admin`, licenseDetails, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -76,7 +83,7 @@ export const postLicenseDetails = async (licenseDetails) => {
 
 export const deleteLicenseDetails = async (licenseID) => {
     try {
-        const response = await axios.delete(`${API_URL}/api/qualificationInfo/admin/delete/${licenseID}`, {
+        const response = await axiosInstance.delete(`${API_URL}/api/qualificationInfo/admin/delete/${licenseID}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
