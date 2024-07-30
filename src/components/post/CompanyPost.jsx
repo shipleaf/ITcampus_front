@@ -4,7 +4,7 @@ import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
 import axios from 'axios';
 
-function CompanyPost({ logo, companyName, scrapCount,  width }) {
+function CompanyPost({ logo, companyName, scrapCount, stack, track,  width, recruitmentNoticeCount }) {
     const [isScrapped, setIsScrapped] = useState(false);
 
     const handleScrap = async (e) => {
@@ -30,9 +30,11 @@ function CompanyPost({ logo, companyName, scrapCount,  width }) {
             </ThumbnailContainer>
             <CompanyContainer>
                 <Company>{companyName}</Company>
-                <CompanyRecruitment>현재 채용중 00건</CompanyRecruitment>
+                <CompanyRecruitment>현재 채용중 {recruitmentNoticeCount}건</CompanyRecruitment>
             </CompanyContainer>
-            <Detail></Detail>
+            <Detail>
+                #Track : {track}, #stack : {stack}
+            </Detail>
             <ShowScrap>
                 <FaStar size={30} style={{ color: '#ffff00' }} />
                 <ScrapCount>{scrapCount}</ScrapCount>
@@ -55,7 +57,7 @@ const ButtonFrame = styled.div`
     display: flex;
     width: ${(props) => props.width || '100%'};
     height: 100px;
-    margin: 15px auto;
+    margin: 10px auto;
     margin-bottom: 35px;
     align-items: center;
     background-color: #ffffff;
@@ -109,10 +111,11 @@ const CompanyRecruitment = styled.div`
 `
 
 const Detail = styled.div`
-    font-size: 12px;
+    font-size: 15px;
     color: #999;
     width: 40%;
     margin: 0 40px;
+    margin-left : 50px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

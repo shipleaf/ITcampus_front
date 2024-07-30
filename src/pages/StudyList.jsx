@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Top from "../components/post/Top";
 import StudyPost from "../components/post/StudyPost";
-import { fetchStudyList } from "../APIs/studyAPI";
+import { fetchStudyList, searchStudy } from "../APIs/studyAPI";
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from "../components/modules/header/UserHeader";
 import { useRecoilValue } from 'recoil';
@@ -22,20 +22,32 @@ function StudyList() {
 
     const isLoggedIn = useRecoilValue(loginState);
 
-    useEffect(() => {
-        const getStudies = async () => {
-            try {
-                const response = await fetchStudyList();
-                if (response.status >= 200 && response.status < 300) {
-                    setPosts(response.data);
-                }
-            } catch (error) {
-                setError(error);
-            } finally {
-                setLoading(false);
+    const getStudies = async (query = '') => {
+        try {
+            let response;
+            if (query) {
+                response = await searchStudy(query);
+            } else {
+                response = await fetchStudyList();
             }
-        };
 
+            if (response.status >= 200 && response.status < 300) {
+                setPosts(response.data);
+                setError(null); 
+            }
+        } catch (error) {
+            if (query && error.response && error.response.status === 404) {
+                setError('검색결과 없음');
+                setPosts([]);
+            } else {
+                setError('에러 내용: ' + (error.response ? error.response.statusText : error.message));
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
         getStudies();
     }, []);
 
@@ -64,6 +76,11 @@ function StudyList() {
         setIsModalOpen(false);
     };
 
+    const handleSearch = (query) => {
+        setLoading(true);
+        getStudies(query);
+    };
+
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
     return (
@@ -74,22 +91,26 @@ function StudyList() {
                 <GuestHeader />
             )}
             <Container>
-                <Top title='스터디 게시판' />
+                <Top title='스터디 게시판' onSearch={handleSearch} />
                 <WriteContainer>
                     <Write onClick={handleWriteClick}>글쓰기</Write>
                 </WriteContainer>
                 {loading ? (
                     <p>Loading...</p>
                 ) : error ? (
-                    <p>Error loading posts: {error.message}</p>
-                ) : currentPosts.map((post) => (
-                    <StyledLink to={`/studydetails/${post.key}`} key={post.key}>
-                        <StudyPost
-                            key={post.key}
-                            {...post}
-                        />
-                    </StyledLink>
-                ))}
+                    <p>{error}</p>
+                ) : currentPosts.length === 0 ? (
+                    <p>No posts available</p>
+                ) : (
+                    currentPosts.map((post) => (
+                        <StyledLink to={`/studydetails/${post.key}`} key={post.key}>
+                            <StudyPost
+                                key={post.key}
+                                {...post}
+                            />
+                        </StyledLink>
+                    ))
+                )}
                 <Pagination>
                     {Array.from({ length: totalPages }, (_, index) => (
                         <PageNumber

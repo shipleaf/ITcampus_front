@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from "../components/modules/header/UserHeader";
 import { useRecoilValue } from "recoil";
 import { loginState } from "../state/atoms";
 import Top from "../components/post/Top";
 import StudyPost from "../components/post/StudyPost";
-import { fetchInfoList } from "../APIs/infoAPI";
-import { useNavigate } from "react-router-dom";
+import { fetchInfoList, searchInfo } from "../APIs/infoAPI";
 
 function InformationList() {
     const [posts, setPosts] = useState([]);
@@ -22,29 +21,41 @@ function InformationList() {
     const navigate = useNavigate();
 
     const goToPost = (link) => {
-        navigate(link)
-    }
+        navigate(link);
+    };
+
+    const getInfos = async (query = '') => {
+        try {
+            let response;
+            if (query) {
+                response = await searchInfo(query);
+
+            } else {
+                response = await fetchInfoList();
+            }
+
+            if (response.status >= 200 && response.status < 300) {
+                setPosts(response.data);
+                setError(null);
+            }
+        } catch (error) {
+            if (query && error.response && error.response.status === 404) {
+                setError('검색 결과 없음');
+                setPosts([]);
+            } else {
+                setError('에러 내용: ' + (error.response ? error.response.statusText : error.message));
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const getStudies = async () => {
-            try {
-                const response = await fetchInfoList();
-                if (response.status >= 200 && response.status < 300) {
-                    setPosts(response.data);
-                }
-            } catch (error) {
-                setError(error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        getStudies();
+        getInfos();
     }, []);
 
     const filteredPosts = posts.filter((post) => {
         if (!isFilterActive) return true;
-        // 예시 조건: 포스트의 제목이 "example"을 포함하는 경우만 필터링
         return post.title.includes("example");
     });
 
@@ -54,6 +65,11 @@ function InformationList() {
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
+    };
+
+    const handleSearch = (query) => {
+        setLoading(true);
+        getInfos(query);
     };
 
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
@@ -66,33 +82,37 @@ function InformationList() {
                 <GuestHeader />
             )}
             <Container>
-            <Top title='정보 게시판' />
-            <WriteContainer>
-                <Write onClick={() => goToPost('/createInfopost')}> 글쓰기</Write>
-            </WriteContainer>
-            {loading ? (
-                <p>Loading...</p>
-            ) : error ? (
-                <p>Error loading posts: {error.message}</p>
-            ) : currentPosts.map((post) => (
-                <StyledLink to={`/informationdetails/${post.key}`} key={post.key}>
-                    <StudyPost
-                        key={post.key}
-                        {...post}
-                    />
-                </StyledLink>
-            ))}
-            <Pagination>
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <PageNumber
-                        key={index + 1}
-                        onClick={() => handlePageChange(index + 1)}
-                        active={index + 1 === currentPage}
-                    >
-                        {index + 1}
-                    </PageNumber>
-                ))}
-            </Pagination>
+                <Top title='정보 게시판' onSearch={handleSearch} />
+                <WriteContainer>
+                    <Write onClick={() => goToPost('/createInfopost')}> 글쓰기</Write>
+                </WriteContainer>
+                {loading ? (
+                    <p>Loading...</p>
+                ) : error ? (
+                    <p>{error}</p>
+                ) : currentPosts.length === 0 ? (
+                    <p>현재 정보게시판의 게시글이 없습니다</p>
+                ) : (
+                    currentPosts.map((post) => (
+                        <StyledLink to={`/informationdetails/${post.key}`} key={post.key}>
+                            <StudyPost
+                                key={post.key}
+                                {...post}
+                            />
+                        </StyledLink>
+                    ))
+                )}
+                <Pagination>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <PageNumber
+                            key={index + 1}
+                            onClick={() => handlePageChange(index + 1)}
+                            active={index + 1 === currentPage}
+                        >
+                            {index + 1}
+                        </PageNumber>
+                    ))}
+                </Pagination>
             </Container>
         </>
     );
@@ -107,7 +127,7 @@ const Pagination = styled.div`
 `
 
 const Container = styled.div`
-    display : flex;
+    display: flex;
     width: 60%;
     flex-direction: column;
     margin: 20px auto;

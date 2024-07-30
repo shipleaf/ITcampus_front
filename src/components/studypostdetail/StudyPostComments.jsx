@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StudyPostComments = ({ comments, currentUser }) => {
+const StudyPostComments = ({ comments, isSecret}) => {
   return (
     <CommentBackground>
       <CommentsContainer>
@@ -20,7 +20,7 @@ const StudyPostComments = ({ comments, currentUser }) => {
           </Comment>
         ))}
         <CommentInputContainer>
-          <UserName>{currentUser}</UserName>
+          <UserName>나</UserName>
           <CommentTextArea placeholder="댓글을 남겨보세요" />
           <OptionsWrapper>
             <SecretCheckbox>

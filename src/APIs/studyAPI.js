@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 
-// const API_URL = 'http://localhost:8080';
+const API_URL = 'http://localhost:8080';
 
-const API_URL = 'http://223.130.135.136:8080';
+//const API_URL = 'http://223.130.135.136:8080';
 
 
 export const fetchStudyList = async () => {
@@ -37,7 +37,7 @@ export const fetchStudyPost = async (studyId) => {
 
 export const fetchStudyComments = async (studyId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}api/studyboardComment/${studyId}`, {
+        const response = await axios.get(`${API_URL}/api/studyboardComment/${studyId}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -45,6 +45,20 @@ export const fetchStudyComments = async (studyId) => {
         return response;
     } catch (error) {
         console.error('스터디게시판댓글 정보 불러오기 실패:', error);
+        throw error;
+    }
+};
+
+export const searchStudy = async (query) => {
+    try {
+        const response = await axios.post(`${API_URL}/api/studyboard/search`, { title: query }, {
+            headers: {
+                'Cache-Control': 'no-cache'
+            }
+        });
+        return response;
+    } catch (error) {
+        console.error('스터디게시판 정보 불러오기 실패:', error);
         throw error;
     }
 };

@@ -9,7 +9,7 @@ import Top from "../components/post/Top";
 import Post from "../components/post/Post";
 import CustomSelect from "../components/filter/CustomSelect";
 import FilterButton from "../components/filter/FilterButton";
-import { fetchLicenseList, fetchLicenseDetails } from "../APIs/licenseAPI";
+import { fetchLicenseList, searchLicense, fetchLicenseDetails } from "../APIs/licenseAPI";
 
 function ITLicense() {
     const [posts, setPosts] = useState([]);
@@ -23,21 +23,33 @@ function ITLicense() {
     const isLoggedIn = useRecoilValue(loginState);
     const postsPerPage = 7;
 
-    useEffect(() => {
-        const getLicense = async () => {
-            try {
-                const response = await fetchLicenseList();
-                if (response.status >= 200 && response.status < 300) {
-                    setPosts(response.data);
-                }
-            } catch (error) {
-                setError(error);
-            } finally {
-                setLoading(false);
+    const getLicenses = async (query = '') => {
+        try {
+            let response;
+            if (query) {
+                response = await searchLicense(query);
+            } else {
+                response = await fetchLicenseList();
             }
-        };
 
-        getLicense();
+            if (response.status >= 200 && response.status < 300) {
+                setPosts(response.data);
+                setError(null);  
+            }
+        } catch (error) {
+            if (query && error.response && error.response.status === 404) {
+                setError('검색결과 없음');
+                setPosts([]);
+            } else {
+                setError('에러: ' + (error.response ? error.response.statusText : error.message));
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        getLicenses();
     }, []);
 
     const today = new Date();
@@ -98,6 +110,11 @@ function ITLicense() {
         }
     };
 
+    const handleSearch = (query) => {
+        setLoading(true);
+        getLicenses(query);
+    };
+
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
     return (
@@ -108,59 +125,63 @@ function ITLicense() {
                 <GuestHeader />
             )}
             <Container>
-            <Top title='IT 자격증' />
-            <SortContainer>
-                <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='응시가능' />
-                <Right>
-                    <CustomSelect
-                        selectedOption={sortOption}
-                        options={[
-                            { value: "startdate", label: "응시 시작일" },
-                            { value: "enddate", label: "응시 종료일" },
-                            { value: "scrap", label: "스크랩" }
-                        ]}
-                        onOptionSelect={handleSortChange}
-                    />
-                    <CustomSelect
-                        selectedOption={sortOrder}
-                        options={[
-                            { value: "desc", label: "내림차순" },
-                            { value: "asc", label: "오름차순" }
-                        ]}
-                        onOptionSelect={handleSortOrderChange}
-                    />
-                </Right>
-            </SortContainer>
-            {loading ? (
-                <p>Loading...</p>
-            ) : error ? (
-                <p>Error loading posts: {error.message}</p>
-            ) : currentPosts.map((post) => (
-                <StyledLink to={`/licensedetails/${post.key}`} key={post.key}>
-                    <Post
-                        key={post.key}
-                        title={post.title}
-                        body={post.body}
-                        agency={post.agency}
-                        pic1={post.pic1}
-                        scrapCount={post.scrapCount}
-                        startdate={new Date(post.startdate).toLocaleDateString('ko-KR')}
-                        enddate={new Date(post.enddate).toLocaleDateString('ko-KR')}    
-                        onClick={handleLicenseClick}
-                    />
-                </StyledLink>
-            ))}
-            <Pagination>
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <PageNumber
-                        key={index + 1}
-                        onClick={() => handlePageChange(index + 1)}
-                        active={index + 1 === currentPage}
-                    >
-                        {index + 1}
-                    </PageNumber>
-                ))}
-            </Pagination>
+                <Top title='IT 자격증' onSearch={handleSearch} />
+                <SortContainer>
+                    <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='응시가능' />
+                    <Right>
+                        <CustomSelect
+                            selectedOption={sortOption}
+                            options={[
+                                { value: "startdate", label: "응시 시작일" },
+                                { value: "enddate", label: "응시 종료일" },
+                                { value: "scrap", label: "스크랩" }
+                            ]}
+                            onOptionSelect={handleSortChange}
+                        />
+                        <CustomSelect
+                            selectedOption={sortOrder}
+                            options={[
+                                { value: "desc", label: "내림차순" },
+                                { value: "asc", label: "오름차순" }
+                            ]}
+                            onOptionSelect={handleSortOrderChange}
+                        />
+                    </Right>
+                </SortContainer>
+                {loading ? (
+                    <p>Loading...</p>
+                ) : error ? (
+                    <p>{error}</p>
+                ) : currentPosts.length === 0 ? (
+                    <p>자격증 정보 불러오기 실패</p>
+                ) : (
+                    currentPosts.map((post) => (
+                        <StyledLink to={`/licensedetails/${post.key}`} key={post.key}>
+                            <Post
+                                key={post.key}
+                                title={post.title}
+                                body={post.body}
+                                agency={post.agency}
+                                pic1={post.pic1}
+                                scrapCount={post.scrapCount}
+                                startdate={new Date(post.startdate).toLocaleDateString('ko-KR')}
+                                enddate={new Date(post.enddate).toLocaleDateString('ko-KR')}
+                                onClick={handleLicenseClick}
+                            />
+                        </StyledLink>
+                    ))
+                )}
+                <Pagination>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <PageNumber
+                            key={index + 1}
+                            onClick={() => handlePageChange(index + 1)}
+                            active={index + 1 === currentPage}
+                        >
+                            {index + 1}
+                        </PageNumber>
+                    ))}
+                </Pagination>
             </Container>
         </>
     );
@@ -194,7 +215,7 @@ const Pagination = styled.div`
     display: flex;
     justify-content: center;
     margin: 20px 0;
-`;
+`
 
 const PageNumber = styled.button`
     background: ${(props) => (props.active ? '#36bef1' : '#fff')};
