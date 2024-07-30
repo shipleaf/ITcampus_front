@@ -19,6 +19,13 @@ import StudyDetails from './pages/StudyDetails';
 import CreateStudyPost from './pages/CreateStudyPost';
 import CreateInfoPost from './pages/CreateInfoPost';
 import MainPage from './pages/MainPage';
+import AdminMainPage from './admin/AdminMainpage';
+import AdminCompanyDetail from './admin/AdminCompanyDetail';
+import AdminSupportDetail from './admin/AdminSupportDetail';
+import AdminLicenseDetail from './admin/AdminLicenseDetail';
+import AdminRecruitDetail from './admin/AdminRecruitDetail';
+import AdminInfoboard from './admin/AdminInfoboard';
+import AdminStudyboard from './admin/AdminStudyboard';
 
 const AppRouter = () => {
   return (
@@ -42,6 +49,14 @@ const AppRouter = () => {
         <Route path='/studydetails/:key' element={<StudyDetails />} />
         <Route path='/informationlist' element={<InformationList/>} />
         <Route path='/informationdetails/:key' element={<InformationDetails/>} />
+            <Route path='/admin' element={<AdminMainPage/>} />
+            <Route  path='/admincompanydetail' element={<AdminCompanyDetail/>} />
+            <Route  path='/adminsupportdetail' element={<AdminSupportDetail/>} />
+            <Route  path='/adminlicensedetail' element={<AdminLicenseDetail/>} />
+            <Route  path='/adminrecruitdetail' element={<AdminRecruitDetail/>} />
+            <Route  path='/admininfoboard' element={<AdminInfoboard/>} />
+            <Route  path='/adminstudyboard' element={<AdminStudyboard/>} />
+            
       </Routes>
     </Router> 
   );

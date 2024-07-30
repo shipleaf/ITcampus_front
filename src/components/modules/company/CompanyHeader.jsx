@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import companyLogo from "../../../assets/hyundai.png";
 
 const CompanyHeader = ({ data }) => {
 
@@ -52,7 +51,7 @@ const CompanyHeader = ({ data }) => {
                     </CompanyDetail>
                 </CompanyDetailsList>
             </CompanyInfo>
-            <CompanyLogo src={companyLogo} alt="Company Logo" />
+            <CompanyLogo src={data.logo} alt="Company Logo" />
         </Header>
     );
 }

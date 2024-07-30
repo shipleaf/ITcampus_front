@@ -98,4 +98,3 @@ export const deleteInfoComment = async (infoboardkey, commentkey) => {
         throw error;
     }
 };
-

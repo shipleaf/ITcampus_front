@@ -8,6 +8,14 @@ const InfoPostContent = ({ title, id, date, body, pic1, pic2, InfoKey}) => {
   const hasPictures = pic1 || pic2;
   pic1 = "https://url.kr/5jer3t"
 
+  const formatDate = (dateString) => {
+    const date = new window.Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; 
+    const day = date.getDate();
+    return `${year}. ${month}. ${day}`;
+};
+
   return (
     <ContentContainer>
       <StyledLink to={`/informationdetails/${Number(InfoKey) + 1}`}>
@@ -28,7 +36,7 @@ const InfoPostContent = ({ title, id, date, body, pic1, pic2, InfoKey}) => {
           <Meta>
             작성자: {id}
             <br />
-            작성일: {date}
+            작성일: {formatDate(date)}
           </Meta>
           <Divider />
         </>
