@@ -1,6 +1,6 @@
 import axiosInstance from './axiosInstance';
 
-const API_URL = 'http://localhost:8080';
+// const API_URL = 'http://localhost:8080';
 
 
 // const API_URL = 'http://223.130.135.136:8080';
@@ -54,7 +54,7 @@ export const fetchStudyComments = async (studyId) => {
 
 export const searchStudy = async (query) => {
     try {
-        const response = await axios.post(`${API_URL}/api/studyboard/search`, { title: query }, {
+        const response = await axiosInstance.post(`${API_URL}/api/studyboard/search`, { title: query }, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
