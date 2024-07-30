@@ -39,7 +39,7 @@ export const fetchStudyPost = async (studyId) => {
 
 export const fetchStudyComments = async (studyId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}api/studyboardComment/${studyId}`, {
+        const response = await axios.get(`${API_URL}api/studyboardComment/${studyId}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
