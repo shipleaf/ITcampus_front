@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 // const API_URL = 'http://localhost:8080';
 
@@ -10,7 +10,7 @@ const API_URL = 'https://mjcback.duckdns.org';
 
 export const fetchRecruitmentList = async () => {
     try {
-        const response = await axios.get(`${API_URL}/api/recruitmentNoticeInfo`, {
+        const response = await axiosInstance.get(`${API_URL}/api/recruitmentNoticeInfo`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }

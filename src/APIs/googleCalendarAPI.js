@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from "./axiosInstance";
 
 // const API_URL = 'http://localhost:8080';
 
@@ -10,7 +10,7 @@ const API_URL = 'https://mjcback.duckdns.org';
 
 export const googleLogin = async () => {
     try {
-        const response = await axios.get(`${API_URL}/api/auth`);
+        const response = await axiosInstance.get(`${API_URL}/api/auth`);
         if (response.status >= 200 && response.status < 300) {
             return response;
         } else {

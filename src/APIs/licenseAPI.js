@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axiosInstance from "./axiosInstance";
+
 
 // const API_URL = 'http://localhost:8080/';
 
@@ -10,7 +11,7 @@ const API_URL = 'https://mjcback.duckdns.org';
 
 export const fetchLicenseList = async () => {
     try {
-        const response = await axios.get(`${API_URL}api/qualificationInfo`);
+        const response = await axiosInstance.get(`${API_URL}api/qualificationInfo`);
         return response;
     } catch (error) {
         console.error('IT자격증리스트 정보 불러오기 실패:', error);
@@ -21,7 +22,7 @@ export const fetchLicenseList = async () => {
 
 export const fetchLicenseDetails = async (licenseId) => {
     try {
-        const response = await axios.get(`${API_URL}api/qualificationInfo/${licenseId}`);
+        const response = await axiosInstance.get(`${API_URL}api/qualificationInfo/${licenseId}`);
         return response.data;
     } catch (error) {
         console.error('IT자격증상세 정보 불러오기 실패:', error);
