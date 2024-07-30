@@ -1,61 +1,81 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import Modal from 'react-modal';
 
-const InfoPostContent = ({ title, id, date, body, pic1, pic2, InfoKey}) => {
+Modal.setAppElement('#root');
+
+function InfoPostContent({ title, id, date, body, pic1, pic2, InfoKey }) {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalImage, setModalImage] = useState(null);
+
   const hasPictures = pic1 || pic2;
-  pic1 = "https://url.kr/5jer3t"
+  pic1 = "https://search.pstatic.net/common/?src=http%3A%2F%2Fimage.nmv.naver.net%2Fblog_2024_05_14_3113%2F9rCEZCH89H_04.jpg&type=ofullfill340_600_png"
+  pic2 = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDA0MjBfNDQg%2FMDAxNzEzNTQ2NzY3OTc3.RPIoQSQRDbuBvhugJ5IOcLGNuSNsEgn5pvm_YCmGVIYg.4HUIzImFu2_FTKXANyaPXHJ0fn9Y2x7cNiEpYz5H51Ig.JPEG%2F%25B7%25A1%25B1%25D7%25B5%25B9_%25282%2529.jpg&type=a340";
+  pic2 = null;
 
   const formatDate = (dateString) => {
     const date = new window.Date(dateString);
     const year = date.getFullYear();
     const month = date.getMonth() + 1; 
     const day = date.getDate();
-    return `${year}. ${month}. ${day}`;
-};
+    const hour =date.getUTCHours();
+    const minute = date.getMinutes();
+    return `${year}. ${month}. ${day} / ${hour}:${minute}`;
+  };
+
+  const openModal = (image) => {
+    setModalImage(image);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setModalImage(null);
+  };
 
   return (
     <ContentContainer>
       <StyledLink to={`/informationdetails/${Number(InfoKey) + 1}`}>
-      <ArrowButtonLeft>
-        <FontAwesomeIcon style={{ height: "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding: "10px" }} icon={faArrowLeft} />
-      </ArrowButtonLeft>
+        <ArrowButtonLeft>
+          <FontAwesomeIcon style={{ height: "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding: "10px" }} icon={faArrowLeft} />
+        </ArrowButtonLeft>
       </StyledLink>
       <ContentWrapper>
-        <>
-          <Header>
-            <Tag>정보게시판</Tag>
-            <ActionButtons>
-              <ActionButton>수정</ActionButton>
-              <ActionButton>삭제</ActionButton>
-            </ActionButtons>
-          </Header>
-          <Title>{title}</Title>
-          <Meta>
-            작성자: {id}
-            <br />
-            작성일: {formatDate(date)}
-          </Meta>
-          <Divider />
-        </>
+        <Header>
+          <Tag>정보게시판</Tag>
+          <ActionButtons>
+            <ActionButton>수정</ActionButton>
+            <ActionButton>삭제</ActionButton>
+          </ActionButtons>
+        </Header>
+        <Title>{title}</Title>
+        <Meta>
+          작성자: {id}
+          <br />
+          작성일: {formatDate(date)}
+        </Meta>
+        <Divider />
         <ContentWithImages>
-          <Content>
-            {body}
-          </Content>
+          <Content>{body}</Content>
           {hasPictures && (
             <ImageWrapper>
-              {pic1 && <Image src={pic1}/>}
+              {pic1 && <Image src={pic1} onClick={() => openModal(pic1)} single={!(pic1 && pic2)} />}
+              {pic2 && <Image src={pic2} onClick={() => openModal(pic2)} />}
             </ImageWrapper>
           )}
         </ContentWithImages>
       </ContentWrapper>
-      <StyledLink to={`/informationdetails/${InfoKey-1}`}>
-      <ArrowButtonRight>
-        <FontAwesomeIcon style={{ height: "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding: "10px" }} icon={faArrowRight} />
-      </ArrowButtonRight>
+      <StyledLink to={`/informationdetails/${InfoKey - 1}`}>
+        <ArrowButtonRight>
+          <FontAwesomeIcon style={{ height: "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding: "10px" }} icon={faArrowRight} />
+        </ArrowButtonRight>
       </StyledLink>
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
+        <ModalImage src={modalImage} />
+      </Modal>
     </ContentContainer>
   );
 };
@@ -140,13 +160,15 @@ const ContentWithImages = styled.div`
 const ImageWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin-right: 30px;
   gap: 10px;
 `
 
 const Image = styled.img`
-  max-width: 300px;
-  max-height: 300px;
-  object-fit: cover;
+  width: ${props => props.single ? '300px' : '150px'};
+  height: ${props => props.single ? '300px' : '150px'};
+  object-fit: ${props => props.single ? 'contain' : 'cover'};
+  cursor: pointer;
 `
 
 const ArrowButton = styled.button`
@@ -172,10 +194,32 @@ const ArrowButtonLeft = styled(ArrowButton)`
 const ArrowButtonRight = styled(ArrowButton)`
   right: -60px;
 `
+
 const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  &:hover {
     text-decoration: none;
-    color: inherit;
-    &:hover {
-        text-decoration: none;
-    }
+  }
 `
+
+const ModalImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+`
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    maxWidth: '90%',
+    maxHeight: '90%',
+    padding: 0,
+    overflow: 'hidden',
+  },
+}

@@ -9,8 +9,7 @@ function AdminInfoboard(){
         const fetchPosts = async () => {
             try {
                 const response = await getAdminInfo();
-                if(response.status>= 200 && response < 300)
-                    setPosts(response.data);
+                setPosts(response.data);
             } catch (error) {
                 console.error('정보게시판 정보 불러오기 실패:', error);
             }

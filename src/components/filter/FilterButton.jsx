@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const FilterButton = ({ onClick, isActive, prop }) => {
     return (
-        <Button onClick={onClick} $isActive={isActive}>
+        <Button onClick={onClick} isActive={isActive}>
             <CheckIcon>&#128504;</CheckIcon>
             {prop}
         </Button>

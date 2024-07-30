@@ -4,6 +4,7 @@ const API_URL = 'http://223.130.135.136:8080';
 
 // const API_URL = 'http://localhost:8080/';
 
+
 export const fetchCompanyDetails = async (companyId) => {
     try {
         const response = await axios.get(`${API_URL}api/company/${companyId}`, {
