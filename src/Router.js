@@ -18,6 +18,7 @@ import MyPage from './pages/MyPage';
 import StudyDetails from './pages/StudyDetails';
 import CreateStudyPost from './pages/CreateStudyPost';
 import CreateInfoPost from './pages/CreateInfoPost';
+import MainPage from './pages/MainPage';
 import AdminMainPage from './admin/AdminMainpage';
 import AdminCompanyDetail from './admin/AdminCompanyDetail';
 import AdminSupportDetail from './admin/AdminSupportDetail';
@@ -26,12 +27,12 @@ import AdminRecruitDetail from './admin/AdminRecruitDetail';
 import AdminInfoboard from './admin/AdminInfoboard';
 import AdminStudyboard from './admin/AdminStudyboard';
 
-
 const AppRouter = () => {
   return (
     <Router>
       <Routes>
         <Route path='/' element={<MainCalendarPage/>} />
+        <Route path='/mainpage' element={<MainPage/>} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/companylist' element={<CompanyList/>} />
         <Route path='/companydetails/:key' element={<CompanyDetails/>} />
