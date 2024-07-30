@@ -12,17 +12,30 @@ const API_URL = 'https://mjcback.duckdns.org';
 
 export const fetchInfoList = async () => {
     try {
-        const response = await axiosInstance.get(`${API_URL}/api/freeboard`, {
-            headers: {
-                'Cache-Control': 'no-cache'
-            }
-        });
-        return response;
+        const response = await axiosInstance.get(`${API_URL}/api/freeboard`)
+
+        if (response.status >= 200 && response.status < 300) {
+            return response.data;
+        }
+
+        if (response.status >= 400 && response.status < 500) {
+            throw new Error('잘못된 요청입니다.');
+        }
+
+        if (response.status >= 500) {
+            throw new Error('서버에서 오류가 발생했습니다.');
+        }
     } catch (error) {
-        console.error('정보게시판 정보 불러오기 실패:', error);
-        throw error;
+        if (error.response) {
+            throw new Error(`Error: ${error.response.status}`);
+        } else if (error.request) {
+            throw new Error('서버가 응답하지 않습니다.');
+        } else {
+            throw new Error(`에러: ${error.message}`);
+        }
     }
 };
+
 
 // 정보게시판 포스터 가져오기
 export const fetchInfoPost = async (infoId) => {
