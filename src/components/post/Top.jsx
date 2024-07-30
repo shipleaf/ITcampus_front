@@ -1,17 +1,32 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import SearchIcon from '../../assets/searchicon.png';
 
-function Top({title, search, width}){
+function Top({ title, onSearch, width }) {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleInputChange = (event) => {
+      setSearchQuery(event.target.value);
+  };
+
+  const handleKeyPress = (event) => {
+      if (event.key === 'Enter') {
+          onSearch(searchQuery);
+      }
+  };
+
     return (
-        <Frame width = {width}>
-          <TitleContainer>
-            <Title >{title}</Title>
-          </TitleContainer>
-          <SearchContainer>
-            <SearchImage src={SearchIcon} />
-            <Search />
-          </SearchContainer>
+        <Frame width={width}>
+            <TitleContainer>
+                <Title>{title}</Title>
+            </TitleContainer>
+            <SearchContainer>
+                <SearchImage src={SearchIcon} />
+                <Search 
+                    value={searchQuery}
+                    onChange={handleInputChange}
+                    onKeyPress={handleKeyPress} />
+            </SearchContainer>
         </Frame>
     );
 }
@@ -34,7 +49,6 @@ const TitleContainer = styled.div`
 
 const Title = styled.div`
   width : 100%;
-  /* padding : 10px 0; */
   font-size: 35px;
   margin-bottom : 30px;
   font-weight: 350;
@@ -49,12 +63,12 @@ const SearchContainer = styled.div`
   margin-left : 10px;
   position: relative;
 `
+
 const Search = styled.input`
   width: 100%;
   height: 30px;
   padding: 0 10px 0 40px; 
   border: 2px solid #aaa;
-  //box-shadow: 0px 0px 1px #777777, -1px 1px 3px #777777;
   border-radius: 10px;
   outline: none;
 `

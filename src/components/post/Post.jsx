@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import star from '../../assets/scrap.png';
-// import Today from '../../assets/Today';
 
 function Post({ title, body, agency, pic1, scrapCount, startdate, enddate, width }) {
     const formatDate = (dateString) => {

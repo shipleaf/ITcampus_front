@@ -36,3 +36,16 @@ export const fetchCompanyList = async () => {
     }
 };
 
+export const searchCompany = async (query) => {
+    try {
+        const response = await axios.post(`${API_URL}api/company/search`, { title: query }, {
+            headers: {
+                'Cache-Control': 'no-cache'
+            }
+        });
+        return response;
+    } catch (error) {
+        console.error('기업 정보 불러오기 실패:', error);
+        throw error;
+    }
+};

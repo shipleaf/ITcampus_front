@@ -7,7 +7,6 @@ import UserHeader from '../components/modules/header/UserHeader';
 import CompanyHeader from '../components/modules/company/CompanyHeader';
 import ScrapButtonDiv from '../components/modules/recruit/ScrapButtonDiv';
 import CompanyPost from '../components/post/CompanyPost';
-import star from '../assets/scrap.png';
 import { loginState } from '../state/atoms';
 import { useRecoilValue } from 'recoil';
 
@@ -41,13 +40,6 @@ function CompanyDetails() {
         setIsExpanded(!isExpanded);
     };
 
-    const OtherCompany = {
-        company: "가",
-        detail: "#프리한 복장 가능 #정시출근 #편균 연령 40대이상 외 13가지",
-        img: star,
-        scrap: 215,
-    };
-
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -56,14 +48,17 @@ function CompanyDetails() {
         return <p>회사 정보 불러오기 실패: {error.message}</p>;
     }
 
+    const topCompanies = [...companyDetailData.otherCompanies]
+        .sort((a, b) => b.companyID - a.companyID)
+        .slice(0, 3);
+
     return (
         <>
             {isLoggedIn ? (
                 <UserHeader />
             ) : (
                 <GuestHeader />
-            )
-            }
+            )}
             <Container>
                 <Title>기업소개</Title>
                 <Divder />
@@ -95,21 +90,20 @@ function CompanyDetails() {
                 </Section>
                 <Section style={{ marginTop: '100px' }}>
                     <SectionTitle style={{ fontSize: '15px' }}>다른 기업들을 보고싶다면?</SectionTitle>
-                    <SectionContent>
-                    </SectionContent >
                 </Section>
-                <CompanyPost
-                    company={OtherCompany.company}
-                    detail={OtherCompany.detail}
-                    img={OtherCompany.img}
-                    scrap={OtherCompany.scrap}
-                />
-                <CompanyPost
-                    company={OtherCompany.company}
-                    detail={OtherCompany.detail}
-                    img={OtherCompany.img}
-                    scrap={OtherCompany.scrap}
-                />
+                <OtherCompany>
+                    {topCompanies.map((company) => (
+                        <CompanyPostContainer key={company.companyID}>
+                            <CompanyPost
+                                companyName={company.companyName}
+                                stack={company.stack}
+                                track={company.track}
+                                logo={company.logo}
+                                scrapCount={company.scrapCount}
+                            />
+                        </CompanyPostContainer>
+                    ))}
+                </OtherCompany>
             </Container>
         </>
     );
@@ -187,4 +181,13 @@ const GalleryImage = styled.img`
     width: 150px;
     height: 150px;
     object-fit: cover;
+`
+
+const OtherCompany = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
+const CompanyPostContainer = styled.div`
+    margin-bottom: -20px; 
 `

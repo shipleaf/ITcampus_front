@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { fetchCompanyList, fetchCompanyDetails } from "../APIs/companyAPI";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from "../components/modules/header/UserHeader";
 import { useRecoilValue } from "recoil";
@@ -9,6 +8,7 @@ import { loginState } from "../state/atoms";
 import Top from "../components/post/Top";
 import CompanyPost from "../components/post/CompanyPost";
 import CustomSelect from "../components/filter/CustomSelect";
+import { fetchCompanyList, fetchCompanyDetails, searchCompany } from "../APIs/companyAPI";
 
 function CompanyList() {
     const [posts, setPosts] = useState([]);
@@ -21,22 +21,32 @@ function CompanyList() {
     const isLoggedIn = useRecoilValue(loginState);
     const postsPerPage = 7;
 
-    useEffect(() => {
-        const getCompanies = async () => {
-            try {
-                const response = await fetchCompanyList();
-                if (200 <= response.status && response.status < 300) {
-                    setPosts(response.data);
-                    console.log('API response data:', response.data);
-                }
-
-            } catch (error) {
-                setError(error);
-            } finally {
-                setLoading(false);
+    const getCompanies = async (query = '') => {
+        try {
+            let response;
+            if (query) {
+                response = await searchCompany(query);
+            } else {
+                response = await fetchCompanyList();
             }
-        };
 
+            if (200 <= response.status && response.status < 300) {
+                setPosts(response.data);
+                setError(null); 
+            }
+        } catch (error) {
+            if (query && error.response && error.response.status === 404) {
+                setError('검색 결과 없음');
+                setPosts([]);
+            } else {
+                setError('에러 내용: ' + (error.response ? error.response.statusText : error.message));
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
         getCompanies();
     }, []);
 
@@ -71,10 +81,14 @@ function CompanyList() {
         setCurrentPage(1);
     };
 
-
     const handleSortOrderChange = (value) => {
         setSortOrder(value);
         setCurrentPage(1);
+    };
+
+    const handleSearch = (query) => {
+        setLoading(true);
+        getCompanies(query);
     };
 
     const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
@@ -87,7 +101,7 @@ function CompanyList() {
                 <GuestHeader />
             )}
             <Container>
-                <Top title='기업 소개' />
+                <Top title='기업 소개' onSearch={handleSearch} />
                 <SortContainer>
                     <Right>
                         <CustomSelect
@@ -111,15 +125,15 @@ function CompanyList() {
                 {loading ? (
                     <p>Loading...</p>
                 ) : error ? (
-                    <p>회사 정보 불러오기 실패: {error.message}</p>
+                    <p>회사 정보 불러오기 실패: {error}</p>
                 ) : (
                     <>
                         {currentPosts.map((post) => (
-                            <StyledLink to={`/companydetails/${post.companyID}`}>
+                            <StyledLink to={`/companydetails/${post.companyID}`} key={post.companyID}>
                                 <CompanyPost
                                     key={post.companyID}
                                     {...post}
-                                    onClick={handleCompanyClick} >
+                                    onClick={() => handleCompanyClick(post.companyID)} >
                                 </CompanyPost >
                             </StyledLink>
                         ))}
@@ -152,7 +166,7 @@ const SortContainer = styled.div`
 `
 
 const Container = styled.div`
-    display : flex;
+    display: flex;
     width: 60%;
     flex-direction: column;
     margin: 20px auto;

@@ -118,3 +118,18 @@ export const deleteInfoComment = async (infoboardkey, commentkey) => {
         throw error;
     }
 };
+
+// 정보게시판 찾기
+export const searchInfo = async (query) => {
+    try {
+        const response = await axios.post(`${API_URL}/api/freeboard/search`, { title: query }, {
+            headers: {
+                'Cache-Control': 'no-cache'
+            }
+        });
+        return response;
+    } catch (error) {
+        console.error('정보게시판 정보 불러오기 실패:', error);
+        throw error;
+    }
+};

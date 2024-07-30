@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { CiStar } from "react-icons/ci";
 
 const Date = styled.div`
     width: 50px;
@@ -13,21 +12,21 @@ const Date = styled.div`
     margin-left: 10px;
     border-radius: 3px;
     font-size: 12px;
-`
+`;
 
 const RecruitContainer = styled.div`
     width: 200px;
     border-radius: 10px;
     border: 1px solid #999;
-`
+    overflow: hidden;
+`;
 
 const StyledImage = styled.img`
     width: 100%;
-`
+`;
 
 const Header = styled.div`
-    
-`
+`;
 
 const Body = styled.div`
     display: -webkit-box;
@@ -35,48 +34,52 @@ const Body = styled.div`
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-`
+`;
 
 const BodyContainer = styled.div`
     width: 100%;
     padding: 10px;
-`
+    box-sizing: border-box;
+`;
+
 const FooterContainer = styled.div`
-`
+`;
+
 const Footer = styled.div`
     display: flex;
     margin-top: 20px;
-    flex-direction: row;
     align-items: center;
-`
+    justify-content: space-between;
+`;
 
-function OtherRecruitModule() {
+function OtherRecruitModule({ notice }) {
+    const remainingDays = (endDate) => {
+        const end = new window.Date(endDate);
+        const today = new window.Date();
+        const diffTime = end - today;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays >= 0 ? `D-${diffDays}` : "마감";
+    };
 
-    const othercompany = {
-        link: 'https://www.gspower.co.kr/pub/images/og_image.jpg',
-        companyname: 'GS칼텍스',
-        title: '[GSITM부트캠프5기모집]JAVA개발자/풀스택개발자/프론트엔드/백엔드',
-        date: 'D-5'
-    }
+
     return (
         <RecruitContainer>
             <Header>
-                <StyledImage src={othercompany.link} />
+                <StyledImage src={notice.pic1} />
             </Header>
             <BodyContainer>
                 <Body>
-                    {othercompany.title}
+                    {notice.title}
                 </Body>
                 <FooterContainer>
-                <Footer>
-                    <div style={{color: '#a4a4a4', fontSize: '12px'}}>{othercompany.companyname}</div>
-                    <Date>{othercompany.date}</Date>
-                    <div><CiStar style={{marginLeft: '30px'}}/></div>
-                </Footer>
-            </FooterContainer>
+                    <Footer>
+                        <div style={{ color: '#a4a4a4', fontSize: '12px' }}>{notice.companyname}</div>
+                        <Date>{remainingDays(notice.enddate)}</Date>
+                    </Footer>
+                </FooterContainer>
             </BodyContainer>
         </RecruitContainer>
-    )
+    );
 }
 
 export default OtherRecruitModule;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import { fetchRecruitmentList } from "../APIs/RecruitmentAPI";
+import { fetchRecruitmentList, searchRecruit } from "../APIs/RecruitmentAPI";
 import { Link } from "react-router-dom";
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from '../components/modules/header/UserHeader';
@@ -30,21 +30,33 @@ function Recruitment() {
         employmentType: []
     });
 
-    useEffect(() => {
-        const getCompanies = async () => {
-            try {
-                const response = await fetchRecruitmentList();
-                if (response.status >= 200 && response.status < 300) {
-                    setPosts(response.data);
-                }
-            } catch (error) {
-                setError(error);
-            } finally {
-                setLoading(false);
+    const getRecruitments = async (query = '') => {
+        try {
+            let response;
+            if (query) {
+                response = await searchRecruit(query);
+            } else {
+                response = await fetchRecruitmentList();
             }
-        };
 
-        getCompanies();
+            if (response.status >= 200 && response.status < 300) {
+                setPosts(response.data);
+                setError(null);  // Reset the error state
+            }
+        } catch (error) {
+            if (query && error.response && error.response.status === 404) {
+                setError('검색결과 없음');
+                setPosts([]);
+            } else {
+                setError('에러 내용: ' + (error.response ? error.response.statusText : error.message));
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        getRecruitments();
     }, []);
 
     const postsPerPage = 7;
@@ -58,11 +70,11 @@ function Recruitment() {
         } else if (sortOption === 'enddate') {
             return sortOrder === 'desc'
                 ? new Date(b.enddate) - new Date(a.enddate)
-                : new Date(a.enddate) - new Date(b.endDate);
+                : new Date(a.enddate) - new Date(b.enddate);
         } else if (sortOption === 'scrap') {
             return sortOrder === 'desc'
-                ? b.scrap - a.scrap
-                : a.scrap - b.scrap;
+                ? b.scrapCount - a.scrapCount
+                : a.scrapCount - b.scrapCount;
         }
         return 0;
     });
@@ -115,6 +127,11 @@ function Recruitment() {
         setCurrentPage(1);
     }, []);
 
+    const handleSearch = (query) => {
+        setLoading(true);
+        getRecruitments(query);
+    };
+
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
     return (
@@ -125,7 +142,7 @@ function Recruitment() {
                 <GuestHeader />
             )}
             <Container>
-                <Top title='채용 공고' />
+                <Top title='채용 공고' onSearch={handleSearch} />
                 <DetailSearch onFilterChange={handleFilterChange} />
                 <SortContainer>
                     <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='지원 가능' />
@@ -152,27 +169,30 @@ function Recruitment() {
                 {loading ? (
                     <p>Loading...</p>
                 ) : error ? (
-                    <p>Error loading posts: {error.message}</p>
-                ) : currentPosts.map((post) => (
-                    <StyledLink to={`/recruitmentdetails/${post.key}`} key={post.key}>
-                        <RecruitmentPost
-                            key={post.key}
-                            title={post.title}
-                            body={post.body}
-                            companyname={post.companyname}
-                            pic1={post.pic1}
-                            scrap={post.scrap}
-                            startdate={post.startdate}
-                            enddate={post.enddate}
-                            recruit_part={post.recruit_part}
-                            stack={post.stack}
-                            experience={post.experience}
-                            education={post.education}
-                            work_type={post.work_type}
-                            width={post.width}
-                        />
-                    </StyledLink>
-                ))}
+                    <p>{error}</p>
+                ) : currentPosts.length === 0 ? (
+                    <p>No posts available</p>
+                ) : (
+                    currentPosts.map((post) => (
+                        <StyledLink to={`/recruitmentdetails/${post.key}`} key={post.key}>
+                            <RecruitmentPost
+                                key={post.key}
+                                title={post.title}
+                                body={post.body}
+                                companyname={post.companyname}
+                                pic1={post.pic1}
+                                scrapCount={post.scrapCount}
+                                startdate={post.startdate}
+                                enddate={post.enddate}
+                                recruit_part={post.recruit_part}
+                                stack={post.stack}
+                                experience={post.experience}
+                                education={post.education}
+                                work_type={post.work_type}
+                            />
+                        </StyledLink>
+                    ))
+                )}
                 <Pagination>
                     {Array.from({ length: totalPages }, (_, index) => (
                         <PageNumber
@@ -200,7 +220,7 @@ const SortContainer = styled.div`
 `
 
 const Container = styled.div`
-    display:flex;
+    display: flex;
     flex-direction: column;
     width: 60%;
     margin: 20px auto;

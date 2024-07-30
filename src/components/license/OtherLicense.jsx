@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { fetchLicenseList } from "../../APIs/licenseAPI";
 import Post from "../post/Post";
 
 const Title = styled.div`
@@ -12,22 +13,45 @@ const Title = styled.div`
 `;
 
 const Container = styled.div`
-display: flex;
-flex-direction: column;
-width: 60%;
-`
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+`;
 
-function OtherLicense() {
-  const postDetails = {
-    title: "[공지] 12기 중앙 해커톤 안내",
-    detail:
-      "이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...이러쿵저러쿵... 해커톤에 대한 자세한 내용...",
-    writer: "멋쟁이사자처럼 대학",
-    img: "star",
-    scrap: 215,
-    startDate: "2024. 7. 5",
-    endDate: "2024. 7. 14",
-  };
+function OtherLicense({ currentKey }) {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const getLicense = async () => {
+      try {
+        const response = await fetchLicenseList();
+        if (response.status >= 200 && response.status < 300) {
+          setPosts(response.data);
+        }
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getLicense();
+  }, []);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+
+  const filteredPosts = posts
+    .filter(post => post.key !== currentKey) 
+    .sort((a, b) => b.key - a.key) 
+    .slice(0, 2); 
 
   return (
     <div
@@ -40,33 +64,19 @@ function OtherLicense() {
     >
       <Title>다른 IT자격증을 보고 싶다면?</Title>
       <Container>
-        <Post
-          title={postDetails.title}
-          detail={postDetails.detail}
-          writer={postDetails.writer}
-          img={postDetails.img}
-          scrap={postDetails.scrap}
-          startDate={postDetails.startDate}
-          endDate={postDetails.endDate}
-        />
-        <Post
-          title={postDetails.title}
-          detail={postDetails.detail}
-          writer={postDetails.writer}
-          img={postDetails.img}
-          scrap={postDetails.scrap}
-          startDate={postDetails.startDate}
-          endDate={postDetails.endDate}
-        />
-        <Post
-          title={postDetails.title}
-          detail={postDetails.detail}
-          writer={postDetails.writer}
-          img={postDetails.img}
-          scrap={postDetails.scrap}
-          startDate={postDetails.startDate}
-          endDate={postDetails.endDate}
-        />
+        {filteredPosts.map((post) => (
+          <Post
+            key={post.key}
+            title={post.title}
+            agency={post.agency}
+            body={post.body}
+            writer={post.writer}
+            pic1={post.pic1}
+            scrapCount={post.scrapCount}
+            startdate={post.startdate}
+            enddate={post.enddate}
+          />
+        ))}
       </Container>
     </div>
   );

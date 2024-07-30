@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { fetchSupportList } from "../APIs/supportAPI";
+import { fetchSupportList, searchSupport } from "../APIs/supportAPI";
 import { Link } from "react-router-dom";
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from "../components/modules/header/UserHeader";
@@ -22,20 +22,32 @@ function GovernmentSupport() {
     const isLoggedIn = useRecoilValue(loginState);
     const postsPerPage = 7;
 
-    useEffect(() => {
-        const getSupports = async () => {
-            try {
-                const response = await fetchSupportList();
-                if (response.status >= 200 && response.status < 300) {
-                    setPosts(response.data);
-                }
-            } catch (error) {
-                setError(error);
-            } finally {
-                setLoading(false);
+    const getSupports = async (query = '') => {
+        try {
+            let response;
+            if (query) {
+                response = await searchSupport(query);
+            } else {
+                response = await fetchSupportList();
             }
-        };
 
+            if (response.status >= 200 && response.status < 300) {
+                setPosts(response.data);
+                setError(null); 
+            }
+        } catch (error) {
+            if (query && error.response && error.response.status === 404) {
+                setError('검색결과 없음');
+                setPosts([]);
+            } else {
+                setError('에러 내용: ' + (error.response ? error.response.statusText : error.message));
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
         getSupports();
     }, []);
 
@@ -88,6 +100,11 @@ function GovernmentSupport() {
         setCurrentPage(1);
     };
 
+    const handleSearch = (query) => {
+        setLoading(true);
+        getSupports(query);
+    };
+
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
     return (
@@ -98,7 +115,7 @@ function GovernmentSupport() {
                 <GuestHeader />
             )}
             <Container>
-                <Top title='정부 지원' />
+                <Top title='정부 지원' onSearch={handleSearch} />
                 <SortContainer>
                     <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='지원중' />
                     <Right>
@@ -124,21 +141,25 @@ function GovernmentSupport() {
                 {loading ? (
                     <p>Loading...</p>
                 ) : error ? (
-                    <p>Error loading posts: {error.message}</p>
-                ) : currentPosts.map((post) => (
-                    <StyledLink to={`/governmentsupportdetails/${post.key}`} key={post.key}>
-                        <Post
-                            key={post.key}
-                            title={post.title}
-                            body={post.body}
-                            agency={post.agency}
-                            startdate={post.startdate}
-                            enddate={post.enddate}
-                            pic1={post.pic1}
-                            scrapCount={post.scrapCount}
-                        />
-                    </StyledLink>
-                ))}
+                    <p>{error}</p>
+                ) : currentPosts.length === 0 ? (
+                    <p>학생지원 정보 불러오기 실패</p>
+                ) : (
+                    currentPosts.map((post) => (
+                        <StyledLink to={`/governmentsupportdetails/${post.key}`} key={post.key}>
+                            <Post
+                                key={post.key}
+                                title={post.title}
+                                body={post.body}
+                                agency={post.agency}
+                                startdate={post.startdate}
+                                enddate={post.enddate}
+                                pic1={post.pic1}
+                                scrapCount={post.scrapCount}
+                            />
+                        </StyledLink>
+                    ))
+                )}
                 <Pagination>
                     {Array.from({ length: totalPages }, (_, index) => (
                         <PageNumber
