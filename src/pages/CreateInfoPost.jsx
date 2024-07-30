@@ -11,6 +11,8 @@ function CreateInfoPost() {
   const [body, setBody] = useState('');
   const [imageBase64, setImageBase64] = useState('');
   const [imageBase642, setImageBase642] = useState('');
+  const [fileName1, setFileName1] = useState('');
+  const [fileName2, setFileName2] = useState('');
   const isLoggedIn = useRecoilValue(loginState);
 
   const handleTitleChange = (event) => {
@@ -24,6 +26,7 @@ function CreateInfoPost() {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     console.log('Image 1 selected:', file);
+    setFileName1(file.name);
 
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -36,6 +39,7 @@ function CreateInfoPost() {
   const handleImageChange2 = (event) => {
     const file = event.target.files[0];
     console.log('Image 2 selected:', file);
+    setFileName2(file.name);
 
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -46,7 +50,7 @@ function CreateInfoPost() {
   };
 
   const handleCancel = () => {
-    window.location.href = '/studypostlist';
+    window.location.href = '/informationlist';
     console.log('Canceled');
   };
 
@@ -103,8 +107,7 @@ function CreateInfoPost() {
       ) : (
         <GuestHeader />
       )
-    }
-      
+      }
       <Frame onSubmit={handleSubmit}>
         <IntroContainer>
           <Intro> 게시글 작성</Intro>
@@ -117,34 +120,36 @@ function CreateInfoPost() {
               value={title}
               onChange={handleTitleChange}
             />
-            <StyledImgContainer>
-              <label htmlFor="imageUpload1">
-                <StyledIoImageOutline />
-                <StyledImageWord>사진</StyledImageWord>
-              </label>
-              <HiddenFileInput
-                id="imageUpload1"
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
-              <label htmlFor="imageUpload2">
-                <StyledIoImageOutline />
-                <StyledImageWord>사진</StyledImageWord>
-              </label>
-              <HiddenFileInput
-                id="imageUpload2"
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange2}
-              />
-            </StyledImgContainer>
           </TitleContainer>
           <Textarea
             placeholder="내용을 입력하세요."
             value={body}
             onChange={handleBodyChange}
           />
+          <StyledImgContainer>
+            <Label htmlFor="imageUpload1">
+              <StyledIoImageOutline />
+              <span>{fileName1 || '이미지 선택'}</span>
+            </Label>
+            <HiddenFileInput
+              id="imageUpload1"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+          </StyledImgContainer>
+          <StyledImgContainer>
+            <Label htmlFor="imageUpload2">
+              <StyledIoImageOutline />
+              <span>{fileName2 || '이미지 선택'}</span>
+            </Label>
+            <HiddenFileInput
+              id="imageUpload2"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange2}
+            />
+          </StyledImgContainer>
           <ButtonContainer>
             <CancelButton type="button" onClick={handleCancel}>취소</CancelButton>
             <SaveButton type="submit">저장</SaveButton>
@@ -157,38 +162,34 @@ function CreateInfoPost() {
 
 export default CreateInfoPost;
 
-
 const Frame = styled.div`
   display: flex;
   flex-direction: column;
-  width: 800px;
-  height: auto;
-  margin: 30px auto;
-  margin-top : 80px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 `
 
 const IntroContainer = styled.div`
   display: flex;
-  flex-direction: row;
   align-items: center;
-  width : 100%;
+  justify-content: center;
+  width : 40%;
   height: 100px;
-  margin: 10px auto;
-  padding-left: 10px;
 `
 
 const Intro = styled.div`
+  width: 100%;
   margin-left: 10px;
-  font-size: 35px;
-  font-weight: bold;
+  font-size: 30px;
+  font-family: "Noto Sans KR", sans-serif;
 `
 
 const PostCreateFrame = styled.form`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0 20px;
-  width: 800px;
+  width: 40%;
   margin: 10px auto;
 `
 
@@ -200,19 +201,27 @@ const TitleContainer = styled.div`
 
 const StyledImgContainer = styled.label`
   display : flex;
-  cursor: pointer;
+  flex-direction: row;
+  align-items: center;
+
 `
 
 const StyledIoImageOutline = styled(IoImageOutline)`
-  font-size: 50px; 
+  font-size: 30px;
   color: #ccc; 
-  margin-left: 10px;
 `
-
-const StyledImageWord = styled.div`
-  font-size: 38px; 
-  color: #ccc; 
-  margin-left: 10px;
+const Label = styled.label`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 10px;
+  & span{
+    font-family: "Noto Sans KR", sans-serif;
+  }
+  &:hover{
+    cursor: pointer;
+    background-color: #f0f0f0;
+  }
 `
 
 const HiddenFileInput = styled.input`
@@ -220,6 +229,7 @@ const HiddenFileInput = styled.input`
 `
 
 const TitleInput = styled.input`
+  width: 100%;
   flex: 1;
   padding: 10px;
   padding-top: 15px;
@@ -234,9 +244,8 @@ const Textarea = styled.textarea`
   align-self: center;
   width: 100%;
   height: 400px;
-  padding: 10px;
+  box-sizing: border-box;
   font-size: 18px;
-  margin-left: 15px;
   border-radius: 4px;
   border: 1px solid #ccc;
   resize: none;

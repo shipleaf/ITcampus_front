@@ -67,6 +67,7 @@ const LogoutButton = styled.button`
 const UserDropdownMenu = forwardRef((props, ref) => {
     const [, setIsLoggedIn] = useRecoilState(loginState);
 
+
     const handleLogoutState = () => {
         setIsLoggedIn(false);
     };

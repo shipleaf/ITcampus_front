@@ -1,10 +1,12 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/';
+// const API_URL = 'http://localhost:8080';
+
+const API_URL = 'http://223.130.135.136:8080'; 
 
 export const fetchRecruitmentList = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}api/recruitmentNoticeInfo`, {
+        const response = await axios.get(`${API_URL}/api/recruitmentNoticeInfo`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }

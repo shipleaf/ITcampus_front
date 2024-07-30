@@ -1,12 +1,14 @@
 import axios from 'axios';
 
-//const API_BASE_URL = 'http://223.130.135.136:8080/';
 
-const API_BASE_URL = 'http://localhost:8080/';
+// const API_URL = 'http://localhost:8080';
+
+const API_URL = 'http://223.130.135.136:8080';
+
 
 export const fetchStudyList = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}api/studyboard`, {
+        const response = await axios.get(`${API_URL}/api/studyboard`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -21,7 +23,7 @@ export const fetchStudyList = async () => {
 
 export const fetchStudyPost = async (studyId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}api/studyboard/${studyId}`, {
+        const response = await axios.get(`${API_URL}/api/studyboard/${studyId}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }

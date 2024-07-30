@@ -1,12 +1,13 @@
-import axios from "axios";
 import axiosInstance from "./axiosInstance";
 
 const API_URL = 'http://223.130.135.136:8080';
 
+// const API_URL = 'http://localhost:8080';
+
 export const fetchEvents = async () => {
     try {
         console.log("불러오는 중...")
-        const response = await axios.get(`${API_URL}/api/main`);
+        const response = await axiosInstance.get(`${API_URL}/api/main`);
         console.log(response)
 
         if (response.status >= 200 && response.status < 300) {
