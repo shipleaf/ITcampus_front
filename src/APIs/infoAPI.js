@@ -13,6 +13,7 @@ const API_URL = 'https://mjcback.duckdns.org';
 export const fetchInfoList = async () => {
     try {
         const response = await axiosInstance.get(`${API_URL}/api/freeboard`)
+        console.log(response.status)
 
         if (response.status >= 200 && response.status < 300) {
             return response.data;
@@ -26,6 +27,7 @@ export const fetchInfoList = async () => {
             throw new Error('서버에서 오류가 발생했습니다.');
         }
     } catch (error) {
+        console.log('에러 발생!')
         if (error.response) {
             throw new Error(`Error: ${error.response.status}`);
         } else if (error.request) {
