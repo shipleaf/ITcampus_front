@@ -59,7 +59,7 @@ function ITLicenseDetails() {
             <LicenseHeader licenseDetails={licenseDetails} />
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <ScrapContainer>
-                    <ScrapButtonDiv />
+                    <ScrapButtonDiv keyProp={key}/>
                 </ScrapContainer>
             </div>
             <LicenseBody licenseDetails={licenseDetails} />
