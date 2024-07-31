@@ -1,10 +1,9 @@
 import axiosInstance from './axiosInstance';
-import { API_URL } from './api_url';
 
 
 export const myPageAPI = async () => {
     try {
-        const response = await axios.get(`${API_URL}/api/profile`, {
+        const response = await axiosInstance.get(`/api/profile`, {
             headers: {
                 'Cache-Control': 'no-cache'
             },
@@ -19,7 +18,7 @@ export const myPageAPI = async () => {
 
 export const editProfileAPI = async (profileData) => {
     try {
-        const response = await axios.put(`${API_URL}/api/profile/edit`, profileData, {
+        const response = await axiosInstance.put(`/api/profile/edit`, profileData, {
             headers: {
                 'Content-Type': 'application/json',
             },
