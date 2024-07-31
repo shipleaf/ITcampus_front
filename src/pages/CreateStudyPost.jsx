@@ -3,11 +3,18 @@ import { IoImageOutline } from "react-icons/io5";
 import styled from "styled-components";
 import UserHeader from "../components/modules/header/UserHeader";
 import { postStudy } from "../APIs/studyAPI";
+import { useNavigate } from "react-router-dom";
 
 function CreateStudyPost() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [image, setImage] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handlePost = () => {
+    navigate('/studylist')
+  }
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -43,7 +50,7 @@ function CreateStudyPost() {
     try {
       const result = await postStudy(formData);
       console.log("글 작성 성공:", result);
-      window.location.href = "/studypostlist";
+      handlePost();
     } catch (error) {
       console.error("에러 발생:", error);
       alert("글 작성 중 오류가 발생했습니다. 다시 시도해주세요.");
