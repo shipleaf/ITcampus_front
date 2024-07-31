@@ -154,9 +154,13 @@ function Sidebar() {
       {isOn ? <MyEventContainer /> : <EventContainer />}
       <ListContainer>
         <Title>정보 모아보기</Title>
+        <GoToList onClick={() => goToAbout('companylist')}>
+          <IoIosCheckmark size={20} />
+          <div>기업 정보</div>
+        </GoToList>
         <GoToList onClick={() => goToAbout('recruitlist')}>
           <IoIosCheckmark size={20} />
-          <div>취업 공고</div>
+          <div>채용 공고</div>
         </GoToList>
         <GoToList onClick={() => goToAbout('governmentlist')}>
           <IoIosCheckmark size={20} />
