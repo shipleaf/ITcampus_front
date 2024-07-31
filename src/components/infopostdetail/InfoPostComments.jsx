@@ -5,6 +5,17 @@ import { deleteInfoComment, createInfoComment } from '../../APIs/infoAPI';
 const InfoPostComments = ({ comments = [], InfoKey, fetchComments }) => {
   const [newComment, setNewComment] = useState('');
 
+  const formatDate = (dateString) => {
+    const date = new window.Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; 
+    const day = date.getDate();
+    const hour =date.getUTCHours();
+    const minute = date.getMinutes();
+    return `${year}. ${month}. ${day} / ${hour}:${minute}`;
+  };
+
+
   const handleDelete = async (commentKey) => {
     try {
       await deleteInfoComment(InfoKey, commentKey);
@@ -51,7 +62,7 @@ const InfoPostComments = ({ comments = [], InfoKey, fetchComments }) => {
               <DeleteButton onClick={() => handleDelete(comment.commentKey)}>x</DeleteButton>
             </CommentHeader>
             <CommentText>{comment.comment}</CommentText>
-            <Meta style={{ marginLeft: '5px' }}>{comment.date}</Meta>
+            <Meta style={{ marginLeft: '5px' }}>{formatDate(comment.date)}</Meta>
           </Comment>
         ))}
         <CommentInputContainer>
