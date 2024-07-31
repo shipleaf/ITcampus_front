@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { editProfileAPI } from "../../../APIs/myPageAPI";
 
-function EditProfileModal({ isOpen, onClose }) {
-  const [email, setEmail] = useState('apple@naver.com');
-  const [name, setName] = useState('정준용');
+function EditProfileModal({ isOpen, onClose, user, setUserData }) {
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [gender, setGender] = useState('');
   const [birthdate, setBirthdate] = useState('');
-  const [job, setJob] = useState('학생');
+  const [job, setJob] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      setEmail(user.email);
+      setName(user.name);
+      setGender(user.gender);
+      setBirthdate(user.birth.split('T')[0]);
+      setJob(user.job);
+    }
+  }, [user]);
 
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handleNameChange = (e) => setName(e.target.value);
@@ -18,16 +29,41 @@ function EditProfileModal({ isOpen, onClose }) {
   const handleBirthdateChange = (e) => setBirthdate(e.target.value);
   const handleJobChange = (e) => setJob(e.target.value);
 
-  const handleSave = () => {
-    // const userProfile = {
-    //   email,
-    //   name,
-    //   password,
-    //   confirmPassword,
-    //   gender,
-    //   birthdate,
-    //   job
-    // };
+  const handleSave = async () => {
+    if (password !== confirmPassword) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    const profileData = {
+      email,
+      name,
+      password,
+      birth: birthdate,
+      gender,
+      job
+    };
+
+    try {
+      const response = await editProfileAPI(profileData);
+      console.log(response.data);
+      alert("프로필이 성공적으로 수정되었습니다.");
+      onClose(); 
+      setUserData(prevData => ({
+        ...prevData,
+        user: {
+          ...prevData.user,
+          email,
+          name,
+          birth: birthdate,
+          gender,
+          job
+        }
+      }));
+    } catch (error) {
+      console.error(error);
+      alert("프로필 수정에 실패했습니다.");
+    }
   };
 
   useEffect(() => {
@@ -40,7 +76,6 @@ function EditProfileModal({ isOpen, onClose }) {
       document.body.style.overflow = 'auto';
     };
   }, [isOpen]);
-
 
   if (!isOpen) {
     return null;

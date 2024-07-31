@@ -1,8 +1,5 @@
 import axiosInstance from './axiosInstance';
-
-const API_URL = 'http://223.130.135.136:8080';  // 프로토콜 추가
-
-// const API_URL = 'http://localhost:8080';
+import { API_URL } from './api_url';
 
 export const login = async (userData) => {
     try {

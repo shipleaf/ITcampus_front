@@ -1,8 +1,5 @@
 import axiosInstance from "./axiosInstance";
-
-const API_URL = 'http://223.130.135.136:8080';
-
-// const API_URL = 'http://localhost:8080';
+import { API_URL } from './api_url';
 
 export const fetchEvents = async () => {
     try {

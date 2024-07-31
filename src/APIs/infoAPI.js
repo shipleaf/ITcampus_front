@@ -1,11 +1,5 @@
 import axios from 'axios';
-
-
- const API_URL = 'http://localhost:8080';
-
-
-//const API_URL = 'http://223.130.135.136:8080'; 
-
+import { API_URL } from './api_url';
 
 export const fetchInfoList = async () => {
     try {
@@ -89,7 +83,7 @@ export const createInfoComment = async (infoboardkey, commentData) => {
 // 정보게시판 댓글 삭제
 export const deleteInfoComment = async (infoboardkey, commentkey) => {
     try {
-        const response = await axios.delete(`${API_URL}api/freeboardComment/delete/${infoboardkey}/${commentkey}`, {
+        const response = await axios.delete(`${API_URL}/api/freeboardComment/delete/${infoboardkey}/${commentkey}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }

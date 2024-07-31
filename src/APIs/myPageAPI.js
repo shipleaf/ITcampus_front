@@ -1,24 +1,32 @@
-import axios from "axios";
-import axiosInstance from "./axiosInstance";
+import axios from 'axios';
+import { API_URL } from './api_url';
 
-const API_URL = 'http://223.130.135.136:8080';  // 프로토콜 추가
-
-// const API_URL = 'http://localhost:8080';
-
-export const fetchProfile = async () => {
-
+export const myPageAPI = async () => {
     try {
-        const response = await fetch(`${API_URL}/api/profile`);
-
-        if (response.status >= 200 && response.status < 300) {
-            console.log(response)
-            return await response.json();
-
-        } else {
-            throw new Error('Failed to fetch profile');
-        }
+        const response = await axios.get(`${API_URL}/api/profile`, {
+            headers: {
+                'Cache-Control': 'no-cache'
+            },
+            withCredentials: true,
+        });
+        return response;
     } catch (error) {
-        console.error('내 정보 불러오기 실패:', error);
+        console.error('마이페이지 불러오기 실패:', error);
+        throw error;
+    }
+};
+
+export const editProfileAPI = async (profileData) => {
+    try {
+        const response = await axios.put(`${API_URL}/api/profile/edit`, profileData, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+        });
+        return response;
+    } catch (error) {
+        console.error('프로필 수정 실패:', error);
         throw error;
     }
 };
