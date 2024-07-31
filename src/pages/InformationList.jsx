@@ -27,6 +27,7 @@ function InformationList() {
     const getInfos = async () => {
         try {
             const response = await fetchInfoList();
+            console.log('값 받음');
             if (response.status >= 200 && response.status < 300) {
                 setPosts(response.data);
                 setError(null);
