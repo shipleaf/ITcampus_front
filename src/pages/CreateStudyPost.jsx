@@ -40,7 +40,7 @@ function CreateStudyPost() {
     }
 
     try {
-      const response = await fetch("", {
+      const response = await fetch("https://mjcback.duckdns.org/api/studyboard/create", {
         method: "POST",
         credentials: "include",
         body: formData,

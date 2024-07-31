@@ -56,3 +56,13 @@ export const searchStudy = async (query) => {
         throw error;
     }
 };
+
+export const postStudy = async (postData) => {
+    try {
+        const response = await axiosInstance.post(`/api/studyboard/create`, postData)
+        return response;
+    } catch (error) {
+        console.error('스터디글 작성 실패: ', error)
+        throw error;
+    }
+}

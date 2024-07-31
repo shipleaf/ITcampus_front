@@ -1,5 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
+// 정보게시글 리스트 불러오기
 export const fetchInfoList = async () => {
     try {
         const response = await axiosInstance.get(`/api/freeboard`);
@@ -18,7 +19,7 @@ export const fetchInfoList = async () => {
             throw new Error('서버에서 오류가 발생했습니다.');
         }
     } catch (error) {
-        console.log('에러 발생!')
+        console.log('에러 발생!')   
         if (error.response) {
             throw new Error(`Error: ${error.response.status}`);
         } else if (error.request) {
@@ -30,7 +31,7 @@ export const fetchInfoList = async () => {
 };
 
 
-// 정보게시판 포스터 가져오기
+// 정보게시판 상세 불러오기
 export const fetchInfoPost = async (infoId) => {
     try {
         const response = await axiosInstance.get(`/api/freeboard/${infoId}`, {
@@ -60,7 +61,7 @@ export const fetchInfoComments = async (infoId) => {
     }
 };
 
-
+// 정보게시글 댓글 생성
 export const createInfoComment = async (infoboardkey, commentData) => {
     console.log(infoboardkey, commentData);
     try {
@@ -81,19 +82,6 @@ export const createInfoComment = async (infoboardkey, commentData) => {
         throw error;
     }
 };
-
-// export const login = async (userData) => {
-//     try {
-//         const response = await axios.post(`${API_URL}/api/login`, userData);
-//         console.log(`${API_URL}/api/login`)
-//         console.log(response.status)
-//         return response;
-//     } catch (error) {
-//         console.error('로그인 실패사유:', error);
-//         throw error;
-//     }
-// };
-
 
 // 정보게시판 댓글 삭제
 export const deleteInfoComment = async (infoboardkey, commentkey) => {
