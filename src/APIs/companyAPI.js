@@ -1,12 +1,6 @@
 import axiosInstance from "./axiosInstance";
+import { API_URL } from './api_url';
 
-// const API_URL = 'http://223.130.135.136:8080'; 
-
-// const API_URL = 'http://localhost:8080';
-
-// const API_URL = 'http://223.130.153.246:8080';
-
-const API_URL = 'https://mjcback.duckdns.org';
 
 export const fetchCompanyDetails = async (companyId) => {
     try {

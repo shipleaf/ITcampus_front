@@ -1,19 +1,9 @@
-import axios from "axios";
 import axiosInstance from "./axiosInstance";
-
-// const API_URL = 'http://localhost:8080';
-
-
-//const API_URL = 'http://223.130.135.136:8080';
-
-// const API_URL = 'http://223.130.135.136:8080';
-
-const API_URL = 'https://mjcback.duckdns.org';
-
+import { API_URL } from './api_url';
 
 export const postCompanyDetails = async (companyDetails) => {
     try {
-        const response = await axios.post(`${API_URL}/api/company/admin`, companyDetails, {
+        const response = await axiosInstance.post(`${API_URL}/api/company/admin`, companyDetails, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -27,7 +17,7 @@ export const postCompanyDetails = async (companyDetails) => {
 
 export const deleteCompanyDetails = async (companyID) => {
     try {
-        const response = await axios.delete(`${API_URL}/api/company/admin/${companyID}`, {
+        const response = await axiosInstance.delete(`${API_URL}/api/company/admin/${companyID}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -41,7 +31,7 @@ export const deleteCompanyDetails = async (companyID) => {
 
 export const postSupportDetails = async (supportDetails) => {
     try {
-        const response = await axios.post(`${API_URL}/api/studentSupportInfo/admin`, supportDetails, {
+        const response = await axiosInstance.post(`${API_URL}/api/studentSupportInfo/admin`, supportDetails, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -55,7 +45,7 @@ export const postSupportDetails = async (supportDetails) => {
 
 export const deleteSupportDetails = async (supportID) => {
     try {
-        const response = await axios.delete(`${API_URL}/api/studentSupportInfo/admin/delete/${supportID}`, {
+        const response = await axiosInstance.delete(`${API_URL}/api/studentSupportInfo/admin/delete/${supportID}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -97,7 +87,7 @@ export const deleteLicenseDetails = async (licenseID) => {
 
 export const postRecruitDetails = async (recruitDetails) => {
     try {
-        const response = await axios.post(`${API_URL}/api/recruitmentNoticeInfo/admin`, recruitDetails, {
+        const response = await axiosInstance.post(`${API_URL}/api/recruitmentNoticeInfo/admin`, recruitDetails, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -112,7 +102,7 @@ export const postRecruitDetails = async (recruitDetails) => {
 
 export const deleteRecruitDetails = async (recruitID) => {
     try {
-        const response = await axios.delete(`${API_URL}/api/recruitmentNoticeInfo/admin/delete/${recruitID}`, {
+        const response = await axiosInstance.delete(`${API_URL}/api/recruitmentNoticeInfo/admin/delete/${recruitID}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -126,7 +116,7 @@ export const deleteRecruitDetails = async (recruitID) => {
 
 export const getAdminInfo = async () => {
     try {
-        const response = await axios.get(`${API_URL}/api/admin/freeboard`, {
+        const response = await axiosInstance.get(`${API_URL}/api/admin/freeboard`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -140,7 +130,7 @@ export const getAdminInfo = async () => {
 
 export const deleteInfoPost = async (postKey) => {
     try {
-        const response = await axios.delete(`${API_URL}/api/admin/freeboard/delete/${postKey}`, {
+        const response = await axiosInstance.delete(`${API_URL}/api/admin/freeboard/delete/${postKey}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -154,7 +144,7 @@ export const deleteInfoPost = async (postKey) => {
 
 export const deleteInfoComment = async (infoboardKey, commentKey) => {
     try {
-        const response = await axios.delete(`${API_URL}/api/admin/freeboard/delete/${infoboardKey}/${commentKey}`, {
+        const response = await axiosInstance.delete(`${API_URL}/api/admin/freeboard/delete/${infoboardKey}/${commentKey}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -168,7 +158,7 @@ export const deleteInfoComment = async (infoboardKey, commentKey) => {
 
 export const getAdminStudy = async () => {
     try {
-        const response = await axios.get(`${API_URL}/api/admin/studyboard`, {
+        const response = await axiosInstance.get(`${API_URL}/api/admin/studyboard`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -182,7 +172,7 @@ export const getAdminStudy = async () => {
 
 export const deleteStudyPost = async (postKey) => {
     try {
-        const response = await axios.delete(`${API_URL}/api/admin/studyboard/delete/${postKey}`, {
+        const response = await axiosInstance.delete(`${API_URL}/api/admin/studyboard/delete/${postKey}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -196,7 +186,7 @@ export const deleteStudyPost = async (postKey) => {
 
 export const deleteStudyComment = async (studyboardKey, commentKey) => {
     try {
-        const response = await axios.delete(`${API_URL}/api/admin/studyboard/delete/${studyboardKey}/${commentKey}`, {
+        const response = await axiosInstance.delete(`${API_URL}/api/admin/studyboard/delete/${studyboardKey}/${commentKey}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
