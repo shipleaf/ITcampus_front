@@ -145,7 +145,8 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
                         start: event.startdate,
                         end: endDate.toISOString().split('T')[0],
                         endtime: endDate,
-                        backgroundColor: getColor(event.whatis)
+                        backgroundColor: getColor(event.whatis),
+                        isScrapped: event.isScrapped
                     };
                 }).filter(event => event !== null);
                 console.log("Formatted events:", formattedEvents);

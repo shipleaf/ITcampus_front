@@ -8,6 +8,7 @@ import { MdLogout } from "react-icons/md";
 import { useRecoilState } from 'recoil';
 import { loginState } from '../../../state/atoms'
 import { logout } from '../../../APIs/loginAPI';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
     display: flex;
@@ -67,6 +68,12 @@ const LogoutButton = styled.button`
 const UserDropdownMenu = forwardRef((props, ref) => {
     const [, setIsLoggedIn] = useRecoilState(loginState);
 
+    const navigate = useNavigate();
+
+    const goTo = (path) => {
+        navigate(path);
+    }
+
 
     const handleLogoutState = () => {
         setIsLoggedIn(false);
@@ -99,32 +106,32 @@ const UserDropdownMenu = forwardRef((props, ref) => {
 
     return (
         <Container ref={ref}>
-            <DropdownContainer>
+            <DropdownContainer onClick={() => goTo('/mypage')}>
                 <div style={{ width: '24px' }}>
                     <IoHomeOutline style={{ color: '#5c667b' }} size={20} />
                 </div>
                 <div>마이페이지</div>
             </DropdownContainer>
-            <DropdownContainer>
+            <DropdownContainer onClick={() => goTo('/mypage')}>
                 <div style={{ width: '24px' }}>
                     <LuClipboardEdit style={{ color: '#5c667b' }} size={20} />
                 </div>
                 <div>개인정보 수정</div>
             </DropdownContainer>
-            <DropdownContainer>
+            <DropdownContainer onClick={() => goTo('/mypage')}>
                 <div style={{ width: '24px' }}>
                     <CiStar style={{ color: '#5c667b' }} size={24} />
                 </div>
                 <div style={{ marginLeft: '12px' }}>스크랩</div>
             </DropdownContainer>
-            <DropdownContainer>
+            <DropdownContainer onClick={() => goTo('/mypage')}>
                 <div style={{ width: '24px' }}>
                     <FiEdit style={{ color: '#5c667b' }} size={20} />
                 </div>
                 <div>작성한 게시글</div>
             </DropdownContainer>
             <LogoutButton onClick={handleLogOutPage}>
-                <div style={{ width: '24px'}}>
+                <div style={{ width: '24px' }}>
                     <MdLogout style={{ color: '#5c667b' }} size={20} />
                 </div>
                 <div id='logout'>로그아웃</div>

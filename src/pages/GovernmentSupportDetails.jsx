@@ -53,7 +53,7 @@ function GovernmentSupportDetails() {
       <Frame>
         <SupportHeader supportdata={supportDetailData} />
         <ScrapContainer>
-          <ScrapButtonDiv apiEndpoint={`api/studentSupportInfo/${key}/scrap`}/>
+          <ScrapButtonDiv apiEndpoint={`api/studentSupportInfo/${key}/scrap`} isScrapped={supportDetailData.isScrapped} type="support"/>
         </ScrapContainer>
         <SupportBody supportdata={supportDetailData} />
       </Frame>
