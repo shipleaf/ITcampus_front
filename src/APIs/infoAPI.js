@@ -40,7 +40,7 @@ export const fetchInfoComments = async (infoId) => {
     }
 };
 
-
+//정보게시판 댓글생성
 export const createInfoComment = async (infoboardkey, commentData) => {
     console.log(infoboardkey, commentData);
     try {
@@ -102,5 +102,20 @@ export const searchInfo = async (query) => {
     } catch (error) {
         console.error('정보게시판 정보 불러오기 실패:', error);
         throw error;
+    }
+};
+
+//정보게시판 수정
+export const editInfoPost = async (infoId, postData) => {
+    try {
+      const response = await axiosInstance.put(`/api/freeboard/update/${infoId}`, postData, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      return response;
+    } catch (error) {
+      console.error('게시판 수정 실패:', error);
+      throw error;
     }
 };
