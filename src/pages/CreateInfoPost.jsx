@@ -5,6 +5,7 @@ import UserHeader from '../components/modules/header/UserHeader';
 import { loginState } from '../state/atoms';
 import GuestHeader from '../components/modules/header/GuestHeader';
 import { useRecoilValue } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 
 function CreateInfoPost() {
   const [title, setTitle] = useState('');
@@ -14,6 +15,12 @@ function CreateInfoPost() {
   const [fileName1, setFileName1] = useState('');
   const [fileName2, setFileName2] = useState('');
   const isLoggedIn = useRecoilValue(loginState);
+
+  const navigate = useNavigate();
+
+  const handlePost = () => {
+    navigate('/informationlist');
+  }
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -70,7 +77,7 @@ function CreateInfoPost() {
     };
 
     try {
-      const response = await fetch('http://localhost:8080/api/freeboard/create', {
+      const response = await fetch('http://mjcback.duckdns.org/api/freeboard/create', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -96,7 +103,7 @@ function CreateInfoPost() {
       const result = await response.json();
       console.log('글 작성 성공:', result);
       alert('글 작성이 성공적으로 완료되었습니다.');
-      window.location.href = '/informationlist';
+      handlePost();
     } catch (error) {
       console.error('에러 발생:', error);
     }
