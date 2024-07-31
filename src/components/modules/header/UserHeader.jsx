@@ -6,6 +6,8 @@ import { FaRegBell } from "react-icons/fa";
 import { FaRegUserCircle } from "react-icons/fa";
 import { VscTriangleDown } from "react-icons/vsc";
 import UserDropdownMenu from './UserDropdownMenu';
+import { useRecoilValue } from 'recoil';
+import { username } from '../../../state/atoms';
 
 const GuestHeaderComp = styled.div`
   display: flex;
@@ -119,6 +121,7 @@ function UserHeader() {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const userDropdownRef = useRef(null);
+  const name = useRecoilValue(username);
 
   const handleClickOutside = (event) => {
     if (
@@ -175,7 +178,7 @@ function UserHeader() {
             </NoticeButton>
             <UserButton onClick={() => setShowUserDropdown(!showUserDropdown)}>
               <FaRegUserCircle style={{ color: '#bbb' }} size={30} />
-              <div style={{ fontSize: '12px', marginLeft: '5px', width: '50%'}}>김선엽</div>
+              <div style={{ fontSize: '12px', marginLeft: '5px', width: '50%'}}>{name}</div>
               <VscTriangleDown size={10} />
               {showUserDropdown && (
                 <div ref={userDropdownRef}>

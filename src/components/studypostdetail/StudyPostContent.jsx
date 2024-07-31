@@ -54,20 +54,22 @@ const StudyPostContent = ({ title, id, date, body, pic1, pic2, postKey }) => {
         <FontAwesomeIcon style={{ height: "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding: "10px" }} icon={faArrowLeft} />
       </ArrowButtonLeft>
       <ContentWrapper>
-        <Header>
-          <Tag>스터디게시판</Tag>
-          <ActionButtons>
-            <ActionButton>수정</ActionButton>
-            <ActionButton>삭제</ActionButton>
-          </ActionButtons>
-        </Header>
-        <Title>{title}</Title>
-        <Meta>
-          작성자: {id}
-          <br />
-          작성일: {formatDate(date)}
-        </Meta>
-        <Divider />
+        <>
+          <Header>
+            <Tag>스터디게시판</Tag>
+            <ActionButtons>
+              <ActionButton>수정</ActionButton>
+              <ActionButton>삭제</ActionButton>
+            </ActionButtons>
+          </Header>
+          <Title>{title}</Title>
+          <Meta>
+            작성자: {id}
+            <br />
+            작성일: {formatDate(date)}
+          </Meta>
+          <Divider />
+        </>
         <ContentWithImages>
           <Content>{body}</Content>
           {hasPictures && (
