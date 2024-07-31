@@ -97,31 +97,9 @@ const ScrapButtonCotainer = styled(Button)`
         border: none;
     }
 `
-function RecruitCompanyInfo({ jobDetailData }) {
+function RecruitCompanyInfo({ company }) {
 
-    const companyInfo = {
-        companyID: "1",
-        companyName: "Example Corp",
-        establish: "2000-01-01T00:00:00.000Z",
-        logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB-NyElWrGFtPvK8LzFthltftKgPRFM0v0qg&s",
-        pic1: "응용 소프트웨어 개발 및 공급업",
-        pic2: "김봉진",
-        pic3: "example_pic3.png",
-        pic4: "example_pic4.png",
-        pic5: "example_pic5.png",
-        body: "Example Corp is a leading company in the tech industry.",
-        track: "Software Development",
-        stack: "JavaScript, Node.js, React",
-        welfare: "Health insurance, Paid time off",
-        salary: "Competitive",
-        location: "San Francisco, CA",
-        employee: "500",
-        link: "https://www.woowahan.com/",
-        revenue: "$10M",
-        scrapCount: "1"
-    };
-
-    const establishDate = new Date(companyInfo.establish).toLocaleDateString();
+    const establishDate = new Date(company.establish).toLocaleDateString();
 
 
     return (
@@ -137,20 +115,20 @@ function RecruitCompanyInfo({ jobDetailData }) {
                     </CompanyRecruitAnchor>
                 </HeaderContainer>
                 <LogoContainer>
-                    <StyledImage src={companyInfo.logo} />
+                    <StyledImage src={company.logo} />
                 </LogoContainer>
                 <CompanyInfoBodyTitle>
-                    <div>{companyInfo.companyName}</div>
+                    <div>{company.companyName}</div>
                     <ScrapButtonCotainer>
                         <ScrapButton />
                     </ScrapButtonCotainer>
-                    <Button to={companyInfo.link}>기업 홈페이지<IoIosArrowForward /></Button>
+                    <Button to={company.link}>기업 홈페이지<IoIosArrowForward /></Button>
                 </CompanyInfoBodyTitle>
                 <CompanyInfoBody>
                     <InfoContainer>
                         <InfoItem>
                             <Toc>산업</Toc>
-                            <Contents>{companyInfo.pic1}</Contents>
+                            <Contents>{company.track}</Contents>
                         </InfoItem>
                         <InfoItem>
                             <Toc>설립</Toc>
@@ -158,17 +136,17 @@ function RecruitCompanyInfo({ jobDetailData }) {
                         </InfoItem>
                         <InfoItem>
                             <Toc>사원 수</Toc>
-                            <Contents>{companyInfo.employee}</Contents>
+                            <Contents>{company.employee}</Contents>
                         </InfoItem>
                     </InfoContainer>
                     <InfoContainer>
                         <InfoItem>
-                            <Toc>대표자명</Toc>
-                            <Contents>{companyInfo.pic2}</Contents>
+                            <Toc>스택</Toc>
+                            <Contents>{company.stack}</Contents>
                         </InfoItem>
                         <InfoItem>
                             <Toc>주소</Toc>
-                            <Contents>{companyInfo.location}</Contents>
+                            <Contents>{company.location}</Contents>
                         </InfoItem>
                     </InfoContainer>
                 </CompanyInfoBody>

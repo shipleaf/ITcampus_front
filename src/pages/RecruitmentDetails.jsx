@@ -30,6 +30,7 @@ function RecruitmentDetails() {
         const getJobDetails = async () => {
             try {
                 const data = await fetchRecruitmentDetails(key);
+                console.log("데이터 : ",data);
                 setJobDetailData(data);
             } catch (error) {
                 setError(error);
@@ -71,7 +72,7 @@ function RecruitmentDetails() {
                 </ScrapContainer>
             </div>
             <RecruitDetailBody jobDetailData={recruitmentNoticeInfo} />
-            <RecruitCompanyInfo jobDetailData={company} />
+            <RecruitCompanyInfo company={company} />
             <RecruitNotice jobDetailData={recruitmentNoticeInfo}/>
             <OtherAnnouncements otherJobData={topOtherNotices} />
             <RelatedRecruitments relatedNotices={relatedNotices} />
