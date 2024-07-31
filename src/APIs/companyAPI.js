@@ -2,12 +2,13 @@ import axiosInstance from "./axiosInstance";
 
 export const fetchCompanyDetails = async (companyId) => {
     try {
-        const response = await axiosInstance.get(`/api/company/${companyId}`, {
-            headers: {
-                'Cache-Control': 'no-cache'
-            }
-        });
-        return response;
+        const response = await axiosInstance.get(`/api/company/${companyId}`)
+        if (200 <= response.status && response.status < 300){
+            return response;
+        }else{
+            throw new Error('서버 연결 실패');
+        }
+
     } catch (error) {
         console.error('회사 정보 불러오기 실패:', error);
         throw error;
