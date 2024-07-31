@@ -71,3 +71,37 @@ export const postStudy = async (postData) => {
         throw error;
     }
 };
+
+export const createStudyComment = async (studyboardkey, commentData) => {
+    console.log(studyboardkey, commentData);
+    try {
+        const response = await axiosInstance.post(`/api/studyboardComment/create/${studyboardkey}`, commentData);
+        if (response.status >= 200 && response.status < 300) {
+            console.log(response);
+            return response;
+        } else {
+            throw new Error("댓글 생성 불가");
+        }
+    } catch (error) {
+        if (error.response) {
+            console.error('댓글 추가 실패:', error.response.status, error.message);
+        } else {
+            console.error('댓글 추가 실패:', error.message);
+        }
+        throw error;
+    }
+};
+
+export const deleteStudyComment = async (studyboardkey, commentkey) => {
+    try {
+        const response = await axiosInstance.delete(`/api/studyboardComment/delete/${studyboardkey}/${commentkey}`)
+        if (response.status >= 200 && response.status < 300) {
+            return response;
+        } else {
+            throw new Error("댓글 삭제 불가");
+        }
+    } catch (error) {
+        console.error('댓글 삭제 실패:', error);
+        throw error;
+    }
+};
