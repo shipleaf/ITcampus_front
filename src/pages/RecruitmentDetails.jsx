@@ -69,7 +69,7 @@ function RecruitmentDetails() {
             <RecruitDetailHeader jobDetailData={recruitmentNoticeInfo} />
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <ScrapContainer>
-                    <ScrapButtonDiv apiEndpoint={`/api/recruitmentNoticeInfo/${key}/scrap`} />
+                    <ScrapButtonDiv apiEndpoint={`/api/recruitmentNoticeInfo/${key}/scrap`} isScrapped={jobDetailData.isScrapped} type="recruit"/>
                 </ScrapContainer>
             </div>
             <RecruitDetailBody jobDetailData={recruitmentNoticeInfo} />

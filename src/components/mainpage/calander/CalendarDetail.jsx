@@ -207,12 +207,12 @@ const CalendarDetail = ({ style, date, animate, onClose }) => {
                         <Content key={event.key}>
                             <Title color={event.backgroundColor}>
                                 <FaSquare size={6} style={{ color: '#777' }} />
-                                <div style={{ margin: '10px' }} onClick={() => goToAbout(`recruitmentdetails/${event.key}`)}>{event.title}</div><span><FaStar style={{ color: '#F5F500' }} /></span>
-                                {/* {event.isscrap ? (
-                            <span>
-                                <FaStar />
-                            </span>
-                        ) : ""} */}
+                                <div style={{ margin: '10px' }} onClick={() => goToAbout(`recruitmentdetails/${event.key}`)}>{event.title}</div>
+                                {event.isscrap ? (
+                                    <span>
+                                        <FaStar style={{ color: '#F5F500' }} />
+                                    </span>
+                                ) : ""}
                             </Title>
                             <Schedule>지원 시작일: {formatDateTime(event.start)}</Schedule>
                             <Schedule>지원 마감일: {formatDateTime(event.endtime)}</Schedule>
@@ -229,11 +229,11 @@ const CalendarDetail = ({ style, date, animate, onClose }) => {
                             <Title color={event.backgroundColor}>
                                 <FaSquare size={6} style={{ color: '#777' }} />
                                 <div style={{ margin: '10px' }} onClick={() => goToAbout(`governmentsupportdetails/${event.key}`)}>{event.title}</div>
-                                {/* {event.isscrap ? (
-                            <span>
-                                <FaStar />
-                            </span>
-                        ) : ""} */}
+                                {event.isscrap ? (
+                                    <span>
+                                        <FaStar style={{ color: '#F5F500' }} />
+                                    </span>
+                                ) : ""}
                             </Title>
                             <Schedule>신청 시작일: {formatDateTime(event.start)}</Schedule>
                             <Schedule>신청 마감일: {formatDateTime(event.endtime)}</Schedule>
@@ -250,11 +250,11 @@ const CalendarDetail = ({ style, date, animate, onClose }) => {
                             <Title color={event.backgroundColor}>
                                 <FaSquare size={6} style={{ color: '#777' }} />
                                 <div style={{ margin: '10px' }} onClick={() => goToAbout(`licensedetails/${event.key}`)}>{event.title}</div>
-                                {/* {event.isscrap ? (
-                                <span>
-                                    <FaStar />
-                                </span>
-                            ) : ""} */}
+                                {event.isscrap ? (
+                                    <span>
+                                        <FaStar style={{ color: '#F5F500' }} />
+                                    </span>
+                                ) : ""}
                             </Title>
                             <Schedule>신청 시작일: {formatDateTime(event.start)}</Schedule>
                             <Schedule>신청 마감일: {formatDateTime(event.endtime)}</Schedule>

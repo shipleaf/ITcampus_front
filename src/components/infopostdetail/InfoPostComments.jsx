@@ -23,7 +23,7 @@ const InfoPostComments = ({ comments = [], InfoKey, fetchComments }) => {
       fetchComments(); 
     } catch (error) {
       console.error('댓글 삭제 실패:', error);
-      alert('댓글 삭제에 실패했습니다.');
+      alert('댓글을 삭제할 수 없습니다.');
     }
   };
 
@@ -44,6 +44,7 @@ const InfoPostComments = ({ comments = [], InfoKey, fetchComments }) => {
     } catch (error) {
       console.error('댓글 추가 실패:', error);
       console.error('에러내용', error.response ? error.response.data : error.message);
+      alert('댓글을 작성할 수 없습니다.')
     }
   };
 
