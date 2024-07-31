@@ -12,7 +12,7 @@ import { fetchInfoList, searchInfo } from "../APIs/infoAPI";
 function InformationList() {
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [isFilterActive, ] = useState(false);
+    const [isFilterActive,] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const isLoggedIn = useRecoilValue(loginState);
