@@ -55,10 +55,10 @@ function StudyList() {
         if (!isFilterActive) return true;
         return post.title.includes("example");
     });
-
+    const sortedPosts = filteredPosts.sort((a, b) => b.key - a.key);
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+    const currentPosts = sortedPosts.slice(indexOfFirstPost, indexOfLastPost);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);

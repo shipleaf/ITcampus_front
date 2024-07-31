@@ -63,7 +63,9 @@ function InfoPostContent({ title, id, date, body, pic1, pic2, InfoKey }) {
             <StyledLink to={`/editInfopost/${InfoKey}`}>
               <ActionButton>수정</ActionButton>
             </StyledLink>
+            <StyledLink>
             <ActionButton>삭제</ActionButton>
+            </StyledLink>
           </ActionButtons>
         </Header>
         <Title>{title}</Title>
