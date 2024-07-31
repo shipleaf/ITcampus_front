@@ -39,7 +39,6 @@ const Toc = styled.div`
     width: 100px;
 `;
 
-
 const Contents = styled.div`
     margin-left: 10px;
 `;
@@ -50,15 +49,16 @@ const InfoItem = styled.div`
 `;
 
 const RecruitTerm = styled.div`
-`
+`;
+
 const TermItem = styled.div`
     display: flex;
     margin-bottom: 10px;
-    
-`
+`;
+
 const ButtonContainer = styled.div`
     margin-top: 30px;
-`
+`;
 
 const RecruitButton = styled.button`
     width: 200px;
@@ -69,7 +69,7 @@ const RecruitButton = styled.button`
     height: 90px;
     color: #fff;
     font-size: 12px;
-`
+`;
 
 function RecruitNotice({ jobDetailData }) {
     if (!jobDetailData) {
@@ -78,6 +78,10 @@ function RecruitNotice({ jobDetailData }) {
     const recruitStart = new Date(jobDetailData.startdate).toLocaleDateString();
     const recruitEnd = new Date(jobDetailData.enddate).toLocaleDateString();
     const recruitResult = new Date(jobDetailData.resultdate).toLocaleDateString();
+
+    const handleButtonClick = () => {
+        window.open(`${jobDetailData.link}`);
+    };
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -114,7 +118,9 @@ function RecruitNotice({ jobDetailData }) {
                     </InfoContainer>
                 </CompanyInfoBody>
                 <ButtonContainer>
-                    <RecruitButton>취업플랫폼에서 지원하기</RecruitButton>
+                    <RecruitButton onClick={handleButtonClick}>
+                        취업플랫폼에서 지원하기
+                    </RecruitButton>
                 </ButtonContainer>
             </CompanyInfo>
         </div>
