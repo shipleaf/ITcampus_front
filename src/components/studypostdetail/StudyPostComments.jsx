@@ -66,7 +66,7 @@ const StudyPostComments = ({ comments = [], studyboardkey, fetchComments }) => {
               <CommentAuthor>{comment.id}</CommentAuthor>
               <DeleteButton onClick={() => handleDelete(comment.commentKey)}>x</DeleteButton>
             </CommentHeader>
-            <CommentText>{comment.text}</CommentText>
+            <CommentText>{comment.comment}</CommentText>
             <Meta style={{ marginLeft: '5px' }}>{formatDate(comment.date)}</Meta>
           </Comment>
         ))}
