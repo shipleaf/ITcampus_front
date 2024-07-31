@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { API_URL } from './api_url';
+
+const API_URL = 'https://mjcback.duckdns.org';
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
