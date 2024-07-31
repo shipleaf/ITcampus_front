@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { IoImageOutline } from "react-icons/io5";
 import styled from "styled-components";
 import UserHeader from "../components/modules/header/UserHeader";
+import { postStudy } from "../APIs/studyAPI";
 
 function CreateStudyPost() {
   const [title, setTitle] = useState("");
@@ -40,20 +41,12 @@ function CreateStudyPost() {
     }
 
     try {
-      const response = await fetch("https://mjcback.duckdns.org/api/studyboard/create", {
-        method: "POST",
-        credentials: "include",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        alert("글 작성 실패.");
-        throw new Error("글 작성 실패.");
-      }
-      const result = await response.json();
+      const result = await postStudy(formData);
       console.log("글 작성 성공:", result);
+      window.location.href = "/studypostlist";
     } catch (error) {
       console.error("에러 발생:", error);
+      alert("글 작성 중 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };
 
