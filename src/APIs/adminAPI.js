@@ -1,7 +1,6 @@
 import axiosInstance from "./axiosInstance";
 import { API_URL } from './api_url';
 
-
 export const postCompanyDetails = async (companyDetails) => {
     try {
         const response = await axiosInstance.post(`${API_URL}/api/company/admin`, companyDetails, {

@@ -1,6 +1,7 @@
 import axiosInstance from './axiosInstance';
 import { API_URL } from './api_url';
 
+
 export const fetchSupportDetails = async (supportId) => {
     try {
         const response = await axiosInstance.get(`${API_URL}/api/studentSupportInfo/${supportId}`, {

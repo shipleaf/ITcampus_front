@@ -14,4 +14,5 @@ export const googleLogin = async () => {
         console.error('구글 로그인 실패사유:', error);
         throw error;
     }
-};
+}
+
