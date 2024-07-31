@@ -1,5 +1,4 @@
 import axiosInstance from "./axiosInstance";
-import { API_URL } from './api_url';
 
 export const fetchEvents = async () => {
     try {

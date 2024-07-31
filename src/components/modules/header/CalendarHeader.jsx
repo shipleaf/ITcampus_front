@@ -71,6 +71,7 @@ const NavButton = styled.button`
   &:hover {
     background-color: #f7f7f7;
   }
+
 `;
 
 const CurrentDate = styled.div`
@@ -80,6 +81,18 @@ const CurrentDate = styled.div`
   font-family: "Noto Sans KR", sans-serif;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 980px){
+    font-size: 18px;
+  }
+
+  @media (max-width: 954px){
+    font-size: 16px;
+  }
+
+  @media (max-width: 930px){
+    font-size: 14px;
+  }
 `;
 
 const UserButton = styled.div`

@@ -1,10 +1,10 @@
-import axios from 'axios';
+import axiosInstance from "./axiosInstance";
 import { API_URL } from './api_url';
 
 
 export const fetchCompanyDetails = async (companyId) => {
     try {
-        const response = await axios.get(`${API_URL}/api/company/${companyId}`, {
+        const response = await axiosInstance.get(`${API_URL}/api/company/${companyId}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -18,7 +18,7 @@ export const fetchCompanyDetails = async (companyId) => {
 
 export const fetchCompanyList = async () => {
     try {
-        const response = await axios.get(`${API_URL}/api/company`, {
+        const response = await axiosInstance.get(`${API_URL}/api/company`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -32,7 +32,7 @@ export const fetchCompanyList = async () => {
 
 export const searchCompany = async (query) => {
     try {
-        const response = await axios.post(`${API_URL}/api/company/search`, { title: query }, {
+        const response = await axiosInstance.post(`${API_URL}/api/company/search`, { title: query }, {
             headers: {
                 'Cache-Control': 'no-cache'
             }

@@ -24,14 +24,17 @@ function InformationList() {
         navigate(link);
     };
 
-    const getInfos = async (query = '') => {
-        try {
-            let response;
-            if (query) {
-                response = await searchInfo(query);
-
-            } else {
-                response = await fetchInfoList();
+    useEffect(() => {
+        const getStudies = async () => {
+            try {
+                const response = await fetchInfoList();
+                console.log(response.data)
+                setPosts(response.data)
+            } catch (error) {
+                setError(error);
+                console.log(`에러 이유는:' ${error}`)
+            } finally {
+                setLoading(false);
             }
 
             if (response.status >= 200 && response.status < 300) {

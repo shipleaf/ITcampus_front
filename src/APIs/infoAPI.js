@@ -1,24 +1,40 @@
-import axios from 'axios';
+import axiosInstance from "./axiosInstance";
 import { API_URL } from './api_url';
+
 
 export const fetchInfoList = async () => {
     try {
-        const response = await axios.get(`${API_URL}/api/freeboard`, {
-            headers: {
-                'Cache-Control': 'no-cache'
-            }
-        });
-        return response;
+        const response = await axiosInstance.get(`${API_URL}/api/freeboard`);
+        console.log(response.status)
+
+        if (response.status >= 200 && response.status < 300) {
+            return response.data;
+        }
+
+        if (response.status >= 400 && response.status < 500) {
+            throw new Error('잘못된 요청입니다.');
+        }
+
+        if (response.status >= 500) {
+            throw new Error('서버에서 오류가 발생했습니다.');
+        }
     } catch (error) {
-        console.error('정보게시판 정보 불러오기 실패:', error);
-        throw error;
+        console.log('에러 발생!')
+        if (error.response) {
+            throw new Error(`Error: ${error.response.status}`);
+        } else if (error.request) {
+            throw new Error('서버가 응답하지 않습니다.');
+        } else {
+            throw new Error(`에러: ${error.message}`);
+        }
     }
 };
+
 
 // 정보게시판 포스터 가져오기
 export const fetchInfoPost = async (infoId) => {
     try {
-        const response = await axios.get(`${API_URL}/api/freeboard/${infoId}`, {
+        const response = await axiosInstance.get(`${API_URL}/api/freeboard/${infoId}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -33,7 +49,7 @@ export const fetchInfoPost = async (infoId) => {
 // 정보게시판 댓글 가져오기
 export const fetchInfoComments = async (infoId) => {
     try {
-        const response = await axios.get(`${API_URL}/api/freeboardComment/${infoId}`, {
+        const response = await axiosInstance.get(`${API_URL}/api/freeboardComment/${infoId}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -49,7 +65,7 @@ export const fetchInfoComments = async (infoId) => {
 export const createInfoComment = async (infoboardkey, commentData) => {
     console.log(infoboardkey, commentData);
     try {
-        const response = await axios.post(`${API_URL}/api/freeboardComment/create/${infoboardkey}`, commentData, {
+        const response = await axiosInstance.post(`${API_URL}/api/freeboardComment/create/${infoboardkey}`, commentData, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -83,7 +99,7 @@ export const createInfoComment = async (infoboardkey, commentData) => {
 // 정보게시판 댓글 삭제
 export const deleteInfoComment = async (infoboardkey, commentkey) => {
     try {
-        const response = await axios.delete(`${API_URL}/api/freeboardComment/delete/${infoboardkey}/${commentkey}`, {
+        const response = await axiosInstance.delete(`${API_URL}api/freeboardComment/delete/${infoboardkey}/${commentkey}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -98,7 +114,7 @@ export const deleteInfoComment = async (infoboardkey, commentkey) => {
 // 정보게시판 찾기
 export const searchInfo = async (query) => {
     try {
-        const response = await axios.post(`${API_URL}/api/freeboard/search`, { title: query }, {
+        const response = await axiosInstance.post(`${API_URL}/api/freeboard/search`, { title: query }, {
             headers: {
                 'Cache-Control': 'no-cache'
             }

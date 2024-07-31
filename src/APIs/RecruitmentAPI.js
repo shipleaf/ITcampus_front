@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 import { API_URL } from './api_url';
 
 export const fetchRecruitmentList = async () => {
     try {
-        const response = await axios.get(`${API_URL}/api/recruitmentNoticeInfo`, {
+        const response = await axiosInstance.get(`${API_URL}/api/recruitmentNoticeInfo`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -17,7 +17,7 @@ export const fetchRecruitmentList = async () => {
 
 export const fetchRecruitmentDetails = async (recruitId) => {
     try {
-        const response = await axios.get(`${API_URL}/api/recruitmentNoticeInfo/${recruitId}`);
+        const response = await axiosInstance.get(`${API_URL}/api/recruitmentNoticeInfo/${recruitId}`);
         return response.data;
     } catch (error) {
         console.error('채용공고 상세 정보 불러오기 실패:', error);
@@ -27,7 +27,7 @@ export const fetchRecruitmentDetails = async (recruitId) => {
 
 export const searchRecruit = async (query) => {
     try {
-        const response = await axios.post(`${API_URL}/api/recruitmentNoticeInfo/search`, { title: query }, {
+        const response = await axiosInstance.post(`${API_URL}/api/recruitmentNoticeInfo/search`, { title: query }, {
             headers: {
                 'Cache-Control': 'no-cache'
             }

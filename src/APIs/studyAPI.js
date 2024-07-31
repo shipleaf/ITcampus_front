@@ -1,10 +1,10 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 import { API_URL } from './api_url';
 
 
 export const fetchStudyList = async () => {
     try {
-        const response = await axios.get(`${API_URL}/api/studyboard`, {
+        const response = await axiosInstance.get(`${API_URL}/api/studyboard`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -19,7 +19,7 @@ export const fetchStudyList = async () => {
 
 export const fetchStudyPost = async (studyId) => {
     try {
-        const response = await axios.get(`${API_URL}/api/studyboard/${studyId}`, {
+        const response = await axiosInstance.get(`${API_URL}/api/studyboard/${studyId}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -33,7 +33,7 @@ export const fetchStudyPost = async (studyId) => {
 
 export const fetchStudyComments = async (studyId) => {
     try {
-        const response = await axios.get(`${API_URL}/api/studyboardComment/${studyId}`, {
+        const response = await axiosInstance.get(`${API_URL}api/studyboardComment/${studyId}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -47,7 +47,7 @@ export const fetchStudyComments = async (studyId) => {
 
 export const searchStudy = async (query) => {
     try {
-        const response = await axios.post(`${API_URL}/api/studyboard/search`, { title: query }, {
+        const response = await axiosInstance.post(`${API_URL}/api/studyboard/search`, { title: query }, {
             headers: {
                 'Cache-Control': 'no-cache'
             }

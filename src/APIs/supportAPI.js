@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 import { API_URL } from './api_url';
 
 export const fetchSupportDetails = async (supportId) => {
     try {
-        const response = await axios.get(`${API_URL}/api/studentSupportInfo/${supportId}`, {
+        const response = await axiosInstance.get(`${API_URL}/api/studentSupportInfo/${supportId}`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -17,7 +17,7 @@ export const fetchSupportDetails = async (supportId) => {
 
 export const fetchSupportList = async () => {
     try {
-        const response = await axios.get(`${API_URL}/api/studentSupportInfo`, {
+        const response = await axiosInstance.get(`${API_URL}/api/studentSupportInfo`, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
@@ -31,7 +31,7 @@ export const fetchSupportList = async () => {
 
 export const searchSupport = async (query) => {
     try {
-        const response = await axios.post(`${API_URL}/api/studentSupportInfo/search`, { title: query }, {
+        const response = await axiosInstance.post(`${API_URL}/api/studentSupportInfo/search`, { title: query }, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
