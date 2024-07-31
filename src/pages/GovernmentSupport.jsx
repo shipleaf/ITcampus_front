@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { fetchSupportList, searchSupport } from "../APIs/supportAPI";
-import { Link } from "react-router-dom";
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from "../components/modules/header/UserHeader";
 import { useRecoilValue } from "recoil";
@@ -146,9 +145,9 @@ function GovernmentSupport() {
                     <p>학생지원 정보 불러오기 실패</p>
                 ) : (
                     currentPosts.map((post) => (
-                        <StyledLink to={`/governmentsupportdetails/${post.key}`} key={post.key}>
                             <Post
                                 key={post.key}
+                                supKey={post.key}
                                 title={post.title}
                                 body={post.body}
                                 agency={post.agency}
@@ -157,7 +156,6 @@ function GovernmentSupport() {
                                 pic1={post.pic1}
                                 scrapCount={post.scrapCount}
                             />
-                        </StyledLink>
                     ))
                 )}
                 <Pagination>
@@ -216,13 +214,5 @@ const PageNumber = styled.button`
     &:hover {
         background: #36bef1;
         color: #fff;
-    }
-`
-
-const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: inherit;
-    &:hover {
-        text-decoration: none;
     }
 `

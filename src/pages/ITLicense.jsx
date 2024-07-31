@@ -4,7 +4,6 @@ import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from "../components/modules/header/UserHeader";
 import { useRecoilValue } from "recoil";
 import { loginState } from "../state/atoms";
-import { Link } from "react-router-dom";
 import Top from "../components/post/Top";
 import Post from "../components/post/Post";
 import CustomSelect from "../components/filter/CustomSelect";
@@ -156,9 +155,9 @@ function ITLicense() {
                     <p>자격증 정보 불러오기 실패</p>
                 ) : (
                     currentPosts.map((post) => (
-                        <StyledLink to={`/licensedetails/${post.key}`} key={post.key}>
                             <Post
                                 key={post.key}
+                                itKey={post.key}
                                 title={post.title}
                                 body={post.body}
                                 agency={post.agency}
@@ -168,7 +167,6 @@ function ITLicense() {
                                 enddate={new Date(post.enddate).toLocaleDateString('ko-KR')}
                                 onClick={handleLicenseClick}
                             />
-                        </StyledLink>
                     ))
                 )}
                 <Pagination>
@@ -227,13 +225,5 @@ const PageNumber = styled.button`
     &:hover {
         background: #36bef1;
         color: #fff;
-    }
-`
-
-const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: inherit;
-    &:hover {
-        text-decoration: none;
     }
 `

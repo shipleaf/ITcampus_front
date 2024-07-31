@@ -27,10 +27,11 @@ function RecruitmentDetails() {
     const { key } = useParams();
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         const getJobDetails = async () => {
             try {
                 const data = await fetchRecruitmentDetails(key);
-                console.log("데이터 : ",data);
+                console.log("데이터 : ", data);
                 setJobDetailData(data);
             } catch (error) {
                 setError(error);
@@ -66,18 +67,18 @@ function RecruitmentDetails() {
                 <GuestHeader />
             )}
             <RecruitDetailHeader jobDetailData={recruitmentNoticeInfo} />
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <ScrapContainer>
-                    <ScrapButtonDiv apiEndpoint={`/api/recruitmentNoticeInfo/${key}/scrap`}/>
+                    <ScrapButtonDiv apiEndpoint={`/api/recruitmentNoticeInfo/${key}/scrap`} />
                 </ScrapContainer>
             </div>
             <RecruitDetailBody jobDetailData={recruitmentNoticeInfo} />
             <RecruitCompanyInfo company={company} />
-            <RecruitNotice jobDetailData={recruitmentNoticeInfo}/>
+            <RecruitNotice jobDetailData={recruitmentNoticeInfo} />
             <OtherAnnouncements otherJobData={topOtherNotices} />
             <RelatedRecruitments relatedNotices={relatedNotices} />
         </div>
-    )
+    );
 }
 
 export default RecruitmentDetails;
