@@ -9,7 +9,7 @@ import UserHeader from "../components/modules/header/UserHeader";
 import { useRecoilValue } from "recoil";
 import { loginState } from "../state/atoms";
 
-function InformationDetails (){
+function InformationDetails() {
   const { key } = useParams();
   const [postData, setPostData] = useState(null);
   const [postComments, setPostComments] = useState([]);
@@ -17,13 +17,22 @@ function InformationDetails (){
   const [error, setError] = useState(null);
   const isLoggedIn = useRecoilValue(loginState);
 
+  const fetchComments = async () => {
+    try {
+      const commentsResponse = await fetchInfoComments(key);
+      setPostComments(Array.isArray(commentsResponse.data) ? commentsResponse.data : []);
+    } catch (error) {
+      console.error('댓글 불러오기 실패:', error);
+    }
+  };
+
   useEffect(() => {
     const getInfoPost = async () => {
       try {
         const postResponse = await fetchInfoPost(key);
         const commentsResponse = await fetchInfoComments(key);
         setPostData(postResponse.data);
-        setPostComments(commentsResponse.data);
+        setPostComments(Array.isArray(commentsResponse.data) ? commentsResponse.data : []);
       } catch (error) {
         setError(error);
       } finally {
@@ -53,7 +62,7 @@ function InformationDetails (){
         {postData && <InfoPostContent InfoKey={key} {...postData} />}
         <Spacer />
         <CommentsContainer>
-          <InfoPostComments comments={postComments} InfoKey={key} />
+          <InfoPostComments comments={postComments} InfoKey={key} fetchComments={fetchComments} />
         </CommentsContainer>
       </Container>
     </PageContainer>
@@ -61,6 +70,7 @@ function InformationDetails (){
 };
 
 export default InformationDetails;
+
 
 const PageContainer = styled.div`
   display: flex;
