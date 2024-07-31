@@ -16,7 +16,11 @@ export const fetchRecruitmentList = async () => {
 
 export const fetchRecruitmentDetails = async (recruitId) => {
     try {
-        const response = await axiosInstance.get(`/api/recruitmentNoticeInfo/${recruitId}`);
+        const response = await axiosInstance.get(`/api/recruitmentNoticeInfo/${recruitId}`,{
+            headers: {
+                'Cache-Control': 'no-cache'
+            }
+        });
         return response.data;
     } catch (error) {
         console.error('채용공고 상세 정보 불러오기 실패:', error);
