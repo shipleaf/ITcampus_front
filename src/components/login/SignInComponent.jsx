@@ -136,7 +136,7 @@ function SignInComponent({ toggleComponent, handleLogin, closeModal }) {
               value={password}
               autoComplete="new-password"
               onChange={(event) => setPassword(event.target.value)}
-              placeholder='회원가입'
+              placeholder='비밀번호'
             />
           </InputDiv>
         </div>

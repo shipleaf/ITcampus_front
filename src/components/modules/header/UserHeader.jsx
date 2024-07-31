@@ -13,6 +13,7 @@ const GuestHeaderComp = styled.div`
   justify-content: center;
   position: relative;
   border-bottom: 1px solid #ddd;
+  background-color: #fff;
 `;
 
 const LogoContainer = styled.div`
@@ -139,7 +140,7 @@ function UserHeader() {
   return (
     <div>
       <GuestHeaderComp>
-        <div style={{width: '60%', display: 'flex', justifyContent: 'space-between'}}>
+        <div style={{width: '60%', display: 'flex', justifyContent: 'space-between', backgroundColor: '#fff'}}>
           <LogoContainer>
             <Logo />
           </LogoContainer>
@@ -174,7 +175,7 @@ function UserHeader() {
             </NoticeButton>
             <UserButton onClick={() => setShowUserDropdown(!showUserDropdown)}>
               <FaRegUserCircle style={{ color: '#bbb' }} size={30} />
-              <div style={{ fontSize: '12px', marginLeft: '5px' }}>김선엽</div>
+              <div style={{ fontSize: '12px', marginLeft: '5px', width: '50%'}}>김선엽</div>
               <VscTriangleDown size={10} />
               {showUserDropdown && (
                 <div ref={userDropdownRef}>

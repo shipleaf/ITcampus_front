@@ -5,9 +5,9 @@ import UserHeader from "../components/modules/header/UserHeader";
 import { myPageAPI } from "../APIs/myPageAPI";
 import { useRecoilValue } from "recoil";
 import { loginState } from "../state/atoms";
-import Post from "../components/post/Post";
-import CompanyPost from "../components/post/CompanyPost";
-import RecruitmentPost from "../components/post/RecruitmentPost";
+// import Post from "../components/post/Post";
+// import CompanyPost from "../components/post/CompanyPost";
+// import RecruitmentPost from "../components/post/RecruitmentPost";
 import StudyPost from "../components/post/StudyPost";
 import EditProfileModal from "../components/modules/mypage/EditProfileModal";
 

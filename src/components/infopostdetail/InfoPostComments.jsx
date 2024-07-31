@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { deleteInfoComment, createInfoComment } from '../../APIs/infoAPI';
 
-const InfoPostComments = ({ comments = [], InfoKey }) => {
+const InfoPostComments = ({ comments = [], InfoKey, fetchComments }) => {
   const [newComment, setNewComment] = useState('');
 
   const formatDate = (dateString) => {
@@ -20,6 +20,7 @@ const InfoPostComments = ({ comments = [], InfoKey }) => {
     try {
       await deleteInfoComment(InfoKey, commentKey);
       alert('댓글이 삭제되었습니다.');
+      fetchComments(); 
     } catch (error) {
       console.error('댓글 삭제 실패:', error);
       alert('댓글 삭제에 실패했습니다.');
@@ -39,12 +40,13 @@ const InfoPostComments = ({ comments = [], InfoKey }) => {
       await createInfoComment(InfoKey, commentData);
       alert('댓글이 추가되었습니다.');
       setNewComment('');
-      // 댓글 목록을 갱신하는 로직 필요
+      fetchComments();
     } catch (error) {
       console.error('댓글 추가 실패:', error);
       console.error('에러내용', error.response ? error.response.data : error.message);
     }
   };
+
 
   return (
     <CommentBackground>

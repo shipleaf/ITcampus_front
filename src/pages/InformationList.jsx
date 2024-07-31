@@ -12,7 +12,7 @@ import { fetchInfoList, searchInfo } from "../APIs/infoAPI";
 function InformationList() {
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [isFilterActive, ] = useState(false);
+    const [isFilterActive,] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const isLoggedIn = useRecoilValue(loginState);
@@ -24,29 +24,25 @@ function InformationList() {
         navigate(link);
     };
 
-    useEffect(() => {
-        const getStudies = async () => {
-            try {
-                const response = await fetchInfoList();
-                console.log(response.data)
-                setPosts(response.data)
-            } catch (error) {
-                setError(error);
-                console.log(`에러 이유는:' ${error}`)
-            } finally {
-                setLoading(false);
+    const getInfos = async (query = '') => {
+        try {
+            let response;
+            if (query) {
+                response = await searchInfo(query);
+            } else {
+                response = await fetchInfoList();
             }
 
             if (response.status >= 200 && response.status < 300) {
                 setPosts(response.data);
-                setError(null);
+                setError(null);  
             }
         } catch (error) {
             if (query && error.response && error.response.status === 404) {
-                setError('검색 결과 없음');
+                setError('검색결과 없음');
                 setPosts([]);
             } else {
-                setError('에러 내용: ' + (error.response ? error.response.statusText : error.message));
+                setError('에러: ' + (error.response ? error.response.statusText : error.message));
             }
         } finally {
             setLoading(false);
