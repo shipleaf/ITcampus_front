@@ -12,7 +12,7 @@ import { fetchInfoList } from "../APIs/infoAPI";
 function InformationList() {
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [isFilterActive, ] = useState(false);
+    const [isFilterActive,] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const isLoggedIn = useRecoilValue(loginState);
@@ -27,21 +27,12 @@ function InformationList() {
     const getInfos = async () => {
         try {
             const response = await fetchInfoList();
-            console.log('값 받음');
-            if (response.status >= 200 && response.status < 300) {
-                setPosts(response.data);
-                setError(null);
-            } else {
-                setError(`에러 내용: ${response.statusText}`);
-                setPosts([]);
-            }
-        } catch (error) {
-            if (error.response && error.response.status === 404) {
-                setError('검색 결과 없음');
-                setPosts([]);
-            } else {
-                setError(`에러 내용: ${error.response ? error.response.statusText : error.message}`);
-            }
+            setPosts(response);
+            setError(null);
+        }
+        catch (error) {
+            setError(`에러 내용: ${error.message}`);
+            setPosts([]);
         } finally {
             setLoading(false);
         }
