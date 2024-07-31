@@ -14,7 +14,7 @@ import EditProfileModal from "../components/modules/mypage/EditProfileModal";
 function MyPage() {
     const [userData, setUserData] = useState(null);
     const [selectedTab, setSelectedTab] = useState('기업');
-    const [selectedWriteTab, setSelectedWriteTab] = useState('스터디게시판');
+    const [selectedWriteTab, setSelectedWriteTab] = useState('정보게시판');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const isLoggedIn = useRecoilValue(loginState);
     const scrapSectionRef = useRef(null);
@@ -55,6 +55,7 @@ function MyPage() {
                         {userData.studyboardPosts && userData.studyboardPosts.map((study, index) => (
                             <StudyPost
                                 key={index}
+                                studyKey={study.key}
                                 width="100%"
                                 {...study}
                             />
@@ -64,16 +65,17 @@ function MyPage() {
             case '정보게시판':
                 return (
                     <ContentList>
-                        {userData.freeboardPosts && userData.freeboardPosts.map((post, index) => (
+                        {userData.freeboardPosts && userData.freeboardPosts.map((info, index) => (
                             <StudyPost
                                 key={index}
+                                infoKey={info.key}
                                 width="100%"
-                                title = {post.title}
-                                body={post.body}
-                                date={post.date}
-                                id={post.id}
-                                pic1={post.pic1}
-                                commentCount={post.commentCount}
+                                title = {info.title}
+                                body={info.body}
+                                date={info.date}
+                                id={info.id}
+                                pic1={info.pic1}
+                                commentCount={info.commentCount}
                             />
                         ))}
                     </ContentList>

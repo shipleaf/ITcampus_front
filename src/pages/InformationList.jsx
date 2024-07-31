@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from "../components/modules/header/UserHeader";
 import { useRecoilValue } from "recoil";
@@ -95,13 +95,12 @@ function InformationList() {
                     <p>현재 정보게시판의 게시글이 없습니다</p>
                 ) : (
                     currentPosts.map((post) => (
-                        <StyledLink to={`/informationdetails/${post.key}`} key={post.key}>
                             <StudyPost
                                 key={post.key}
+                                infoKey={post.key}
                                 postKey={post.key}
                                 {...post}
                             />
-                        </StyledLink>
                     ))
                 )}
                 <Pagination>
@@ -168,13 +167,5 @@ const PageNumber = styled.button`
     &:hover {
         background: #36bef1;
         color: #fff;
-    }
-`
-
-const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: inherit;
-    &:hover {
-        text-decoration: none;
     }
 `

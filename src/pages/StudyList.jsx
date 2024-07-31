@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import Top from "../components/post/Top";
 import StudyPost from "../components/post/StudyPost";
 import { fetchStudyList, searchStudy } from "../APIs/studyAPI";
@@ -103,12 +102,11 @@ function StudyList() {
                     <p>No posts available</p>
                 ) : (
                     currentPosts.map((post) => (
-                        <StyledLink to={`/studydetails/${post.key}`} key={post.key}>
                             <StudyPost
                                 key={post.key}
+                                studyKey={post.key}
                                 {...post}
                             />
-                        </StyledLink>
                     ))
                 )}
                 <Pagination>
@@ -185,15 +183,6 @@ const PageNumber = styled.button`
         color: #fff;
     }
 `
-
-const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: inherit;
-    &:hover {
-        text-decoration: none;
-    }
-`
-
 const customStyles = {
     content: {
         top: '50%',

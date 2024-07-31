@@ -1,9 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import commentImg from '../../assets/commentImg.png';
 
-function StudyPost({ title, body, id, pic1, date, commentCount, width }) {
+function StudyPost({studyKey, infoKey, title, body, id, pic1, date, commentCount, width }) {
+    const navigate = useNavigate();
 
+    const handleClick =() =>{
+        console.log("Clicked", studyKey, infoKey);
+        if(studyKey){
+            navigate(`/studydetails/${studyKey}`);
+        }
+        else if(infoKey){
+            navigate(`/informationdetails/${infoKey}`);
+        }
+    }
     const formatDate = (dateString) => {
         const date = new window.Date(dateString);
         const year = date.getFullYear();
@@ -11,10 +22,9 @@ function StudyPost({ title, body, id, pic1, date, commentCount, width }) {
         const day = date.getDate();
         return `${year}. ${month}. ${day}`;
     };
-    
     return (
         <>
-            <ButtonFrame width = {width}>
+            <ButtonFrame width = {width} onClick={handleClick}>
                 <ContentContainer>
                     <Title>{title}</Title>
                     <Content>{body}</Content>
