@@ -5,11 +5,21 @@ import { deleteInfoComment, createInfoComment } from '../../APIs/infoAPI';
 const InfoPostComments = ({ comments = [], InfoKey }) => {
   const [newComment, setNewComment] = useState('');
 
+  const formatDate = (dateString) => {
+    const date = new window.Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; 
+    const day = date.getDate();
+    const hour =date.getUTCHours();
+    const minute = date.getMinutes();
+    return `${year}. ${month}. ${day} / ${hour}:${minute}`;
+  };
+
+
   const handleDelete = async (commentKey) => {
     try {
       await deleteInfoComment(InfoKey, commentKey);
       alert('댓글이 삭제되었습니다.');
-      // 댓글 목록을 갱신하거나 삭제된 댓글을 화면에서 제거하는 추가 로직 필요
     } catch (error) {
       console.error('댓글 삭제 실패:', error);
       alert('댓글 삭제에 실패했습니다.');
@@ -50,7 +60,7 @@ const InfoPostComments = ({ comments = [], InfoKey }) => {
               <DeleteButton onClick={() => handleDelete(comment.commentKey)}>x</DeleteButton>
             </CommentHeader>
             <CommentText>{comment.comment}</CommentText>
-            <Meta style={{ marginLeft: '5px' }}>{comment.date}</Meta>
+            <Meta style={{ marginLeft: '5px' }}>{formatDate(comment.date)}</Meta>
           </Comment>
         ))}
         <CommentInputContainer>
