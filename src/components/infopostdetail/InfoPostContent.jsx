@@ -12,9 +12,6 @@ function InfoPostContent({ title, id, date, body, pic1, pic2, InfoKey }) {
   const [modalImage, setModalImage] = useState(null);
 
   const hasPictures = pic1 || pic2;
-  pic1 = "https://search.pstatic.net/common/?src=http%3A%2F%2Fimage.nmv.naver.net%2Fblog_2024_05_14_3113%2F9rCEZCH89H_04.jpg&type=ofullfill340_600_png"
-  pic2 = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDA0MjBfNDQg%2FMDAxNzEzNTQ2NzY3OTc3.RPIoQSQRDbuBvhugJ5IOcLGNuSNsEgn5pvm_YCmGVIYg.4HUIzImFu2_FTKXANyaPXHJ0fn9Y2x7cNiEpYz5H51Ig.JPEG%2F%25B7%25A1%25B1%25D7%25B5%25B9_%25282%2529.jpg&type=a340";
-  pic2 = null;
 
   const formatDate = (dateString) => {
     const date = new window.Date(dateString);

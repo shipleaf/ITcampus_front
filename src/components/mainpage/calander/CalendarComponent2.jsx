@@ -9,7 +9,20 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { filterState, mainEventState, currentDateState } from '../../../state/atoms'; // currentDateState 추가
 import { fetchEvents } from '../../../APIs/CalendarDetailAPI';
 
-const MoreButton = styled.button``;
+const MoreButton = styled.button`
+    border: none;
+    background-color: #fff;
+    font-size: 12px;
+    font-family: "Noto Sans KR", sans-serif;
+
+    &:focus{
+        outline: none;
+    }
+
+    &:hover{
+        background-color: #f0f0f0 !important;
+    }
+`;
 
 const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
     const calendarRef = useRef(null);
@@ -183,7 +196,7 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
                 moreLinkContent={(arg) => (
                     <div style={{width: '100%'}}>
                         <MoreButton type="button" className="fc-more-button">
-                            ... {arg.num} more
+                            {arg.num}개 더보기
                         </MoreButton>
                     </div>
                 )}
