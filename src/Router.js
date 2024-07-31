@@ -6,6 +6,7 @@ import CorporateProgram from './pages/CorporateProgram';
 import GovernmentSupport from './pages/GovernmentSupport';
 import InformationList from './pages/InformationList';
 import InformationDetails from './pages/InformationDetails';
+import EditInfoPost from './pages/EditInfoPost';
 import ITLicense from './pages/ITLicense';
 import ITLicenseDetails from './pages/ITLicenseDetails'
 import StudyList from './pages/StudyList';
@@ -49,6 +50,8 @@ const AppRouter = () => {
         <Route path='/studydetails/:key' element={<StudyDetails />} />
         <Route path='/informationlist' element={<InformationList/>} />
         <Route path='/informationdetails/:key' element={<InformationDetails/>} />
+        <Route path='/editInfoPost/:key' element={<EditInfoPost/>} />
+        
             <Route path='/admin' element={<AdminMainPage/>} />
             <Route  path='/admincompanydetail' element={<AdminCompanyDetail/>} />
             <Route  path='/adminsupportdetail' element={<AdminSupportDetail/>} />
