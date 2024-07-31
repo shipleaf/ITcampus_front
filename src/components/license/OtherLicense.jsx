@@ -67,6 +67,7 @@ function OtherLicense({ currentKey }) {
         {filteredPosts.map((post) => (
           <Post
             key={post.key}
+            itKey={post.key}
             title={post.title}
             agency={post.agency}
             body={post.body}

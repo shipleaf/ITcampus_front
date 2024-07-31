@@ -1,5 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Date = styled.div`
     width: 50px;
@@ -19,14 +20,14 @@ const RecruitContainer = styled.div`
     border-radius: 10px;
     border: 1px solid #999;
     overflow: hidden;
+    cursor: pointer;
 `;
 
 const StyledImage = styled.img`
     width: 100%;
 `;
 
-const Header = styled.div`
-`;
+const Header = styled.div``;
 
 const Body = styled.div`
     display: -webkit-box;
@@ -42,8 +43,7 @@ const BodyContainer = styled.div`
     box-sizing: border-box;
 `;
 
-const FooterContainer = styled.div`
-`;
+const FooterContainer = styled.div``;
 
 const Footer = styled.div`
     display: flex;
@@ -53,6 +53,7 @@ const Footer = styled.div`
 `;
 
 function OtherRecruitModule({ notice }) {
+    const navigate = useNavigate();
     const remainingDays = (endDate) => {
         const end = new window.Date(endDate);
         const today = new window.Date();
@@ -60,17 +61,17 @@ function OtherRecruitModule({ notice }) {
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         return diffDays >= 0 ? `D-${diffDays}` : "마감";
     };
-
+    const handleClick = () => {
+        navigate(`/recruitmentdetails/${notice.key}`);
+    };
 
     return (
-        <RecruitContainer>
+        <RecruitContainer onClick={handleClick}>
             <Header>
                 <StyledImage src={notice.pic1} />
             </Header>
             <BodyContainer>
-                <Body>
-                    {notice.title}
-                </Body>
+                <Body>{notice.title}</Body>
                 <FooterContainer>
                     <Footer>
                         <div style={{ color: '#a4a4a4', fontSize: '12px' }}>{notice.companyname}</div>

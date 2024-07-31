@@ -1,8 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import star from '../../assets/scrap.png';
 
-function Post({ title, body, agency, pic1, scrapCount, startdate, enddate, width }) {
+function Post({itKey, supKey, title, body, agency, pic1, scrapCount, startdate, enddate, width }) {
+    const navigate = useNavigate();
     const formatDate = (dateString) => {
         const date = new window.Date(dateString);
         const year = date.getFullYear();
@@ -11,8 +13,16 @@ function Post({ title, body, agency, pic1, scrapCount, startdate, enddate, width
         return `${year}. ${month}. ${day}`;
     };
     
+    const handleClick =  () => {
+        if(itKey){
+            navigate(`/licensedetails/${itKey}`)
+        }
+        else if(supKey){
+            navigate(`/governmentsupportdetails/${supKey}`)
+        }
+    }
     return (
-        <ButtonFrame width={width}>
+        <ButtonFrame width={width} onClick={handleClick}>
             <ContentContainer>
                 <Title>{title}</Title>
                 <Content>{body}</Content>
