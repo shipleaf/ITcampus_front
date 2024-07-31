@@ -7,7 +7,7 @@ import { useRecoilValue } from "recoil";
 import { loginState } from "../state/atoms";
 import Top from "../components/post/Top";
 import StudyPost from "../components/post/StudyPost";
-import { fetchInfoList } from "../APIs/infoAPI";
+import { fetchInfoList, searchInfo } from "../APIs/infoAPI";
 
 function InformationList() {
     const [posts, setPosts] = useState([]);
@@ -24,23 +24,25 @@ function InformationList() {
         navigate(link);
     };
 
-    const getInfos = async () => {
+    const getInfos = async (query = '') => {
         try {
-            const response = await fetchInfoList();
-            console.log('값 받음');
+            let response;
+            if (query) {
+                response = await searchInfo(query);
+            } else {
+                response = await fetchInfoList();
+            }
+
             if (response.status >= 200 && response.status < 300) {
                 setPosts(response.data);
-                setError(null);
-            } else {
-                setError(`에러 내용: ${response.statusText}`);
-                setPosts([]);
+                setError(null);  
             }
         } catch (error) {
-            if (error.response && error.response.status === 404) {
-                setError('검색 결과 없음');
+            if (query && error.response && error.response.status === 404) {
+                setError('검색결과 없음');
                 setPosts([]);
             } else {
-                setError(`에러 내용: ${error.response ? error.response.statusText : error.message}`);
+                setError('에러: ' + (error.response ? error.response.statusText : error.message));
             }
         } finally {
             setLoading(false);
