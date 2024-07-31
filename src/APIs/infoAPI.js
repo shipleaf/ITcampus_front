@@ -4,6 +4,7 @@ export const fetchInfoList = async () => {
     try {
         const response = await axiosInstance.get(`/api/freeboard`);
         console.log(response.status)
+        console.log(response.data)
 
         if (response.status >= 200 && response.status < 300) {
             return response.data;
