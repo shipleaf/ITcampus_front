@@ -64,7 +64,7 @@ function CompanyDetails() {
                 <Divder />
                 <CompanyHeader data={companyDetailData} />
                 <ScrapContainer>
-                    <ScrapButtonDiv />
+                    <ScrapButtonDiv apiEndpoint={`/api/company/${key}/scrap `}/>
                 </ScrapContainer>
                 <Section>
                     <SectionTitle>회사 소개</SectionTitle>

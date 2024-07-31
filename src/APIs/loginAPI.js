@@ -1,10 +1,8 @@
 import axiosInstance from './axiosInstance';
-import { API_URL } from './api_url';
 
 export const login = async (userData) => {
     try {
-        const response = await axiosInstance.post(`${API_URL}/api/login`, userData);
-        console.log(`${API_URL}/api/login`)
+        const response = await axiosInstance.post(`/api/login`, userData);
         console.log(response.status)
         return response;
     } catch (error) {
@@ -15,7 +13,7 @@ export const login = async (userData) => {
 
 export const regist = async (registData) => {
     try {
-        const response = await axiosInstance.post(`${API_URL}/api/register`, registData);
+        const response = await axiosInstance.post(`/api/register`, registData);
         return response;
     } catch (error) {
         console.error('회원가입 실패사유:', error);
@@ -26,7 +24,7 @@ export const regist = async (registData) => {
 
 export const logout = async () => {
     try {
-        const response = await axiosInstance.post(`${API_URL}/api/logout`);
+        const response = await axiosInstance.post(`/api/logout`);
         return response;
     } catch (error) {
         console.error('로그아웃 실패사유:', error);

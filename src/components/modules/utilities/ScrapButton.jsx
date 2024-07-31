@@ -15,19 +15,17 @@ const ScrapButtonContainer = styled.div`
     background-color: #fff;
 `;
 
-function ScrapButton({ keyProp }) {
+function ScrapButton({ apiEndpoint }) {
     const [isScrapped, setIsScrapped] = useState(false);
 
     const handleScrap = async () => {
         try {
             const action = isScrapped ? 'remove' : 'add';
-            const response = await licenseScrap(keyProp, action);
-            
+            const response = await licenseScrap(apiEndpoint, action);
             if (response.status >= 200 && response.status < 300) {
-                setIsScrapped((prev) => !prev);
+                setIsScrapped(prev => !prev);
                 alert(isScrapped ? '스크랩이 취소되었습니다.' : '스크랩 되었습니다!');
             } else {
-                // 성공하지 않은 경우의 처리
                 alert('스크랩 요청에 실패했습니다. 다시 시도해주세요.');
             }
         } catch (error) {
