@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { fetchStudyPost } from '../../APIs/studyAPI';
 import Modal from 'react-modal';
 
-const StudyPostContent = ({ title, id, date, body, pic1, pic2, key}) => {
+Modal.setAppElement('#root');
+
+const StudyPostContent = ({ title, id, date, body, pic1, pic2, postKey }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalImage, setModalImage] = useState(null);
   const hasPictures = pic1 || pic2;
+  const navigate = useNavigate();
 
   const formatDate = (dateString) => {
-    const date = new window.Date(dateString);
+    const date = new Date(dateString);
     const year = date.getFullYear();
-    const month = date.getMonth() + 1; 
+    const month = date.getMonth() + 1;
     const day = date.getDate();
-    const hour =date.getUTCHours();
+    const hour = date.getUTCHours();
     const minute = date.getMinutes();
     return `${year}. ${month}. ${day} / ${hour}:${minute}`;
   };
@@ -29,13 +33,26 @@ const StudyPostContent = ({ title, id, date, body, pic1, pic2, key}) => {
     setModalIsOpen(false);
     setModalImage(null);
   };
+
+  const handleNavigation = async (key) => {
+    try {
+      const response = await fetchStudyPost(key);
+
+      if (response && response.data) {
+        navigate(`/studydetails/${key}`);
+      } else {
+        alert('게시글이 없습니다.');
+      }
+    } catch (error) {
+      alert('게시글이 없습니다.');
+    }
+  };
+
   return (
     <ContentContainer>
-      <StyledLink to={`/studydetails/${Number(key) + 1}`}>
-      <ArrowButtonLeft>
+      <ArrowButtonLeft onClick={() => handleNavigation(postKey - 1)}>
         <FontAwesomeIcon style={{ height: "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding: "10px" }} icon={faArrowLeft} />
       </ArrowButtonLeft>
-      </StyledLink>
       <ContentWrapper>
         <>
           <Header>
@@ -54,9 +71,7 @@ const StudyPostContent = ({ title, id, date, body, pic1, pic2, key}) => {
           <Divider />
         </>
         <ContentWithImages>
-          <Content>
-            {body}
-          </Content>
+          <Content>{body}</Content>
           {hasPictures && (
             <ImageWrapper>
               {pic1 && <Image src={pic1} onClick={() => openModal(pic1)} single={!(pic1 && pic2)} />}
@@ -65,11 +80,9 @@ const StudyPostContent = ({ title, id, date, body, pic1, pic2, key}) => {
           )}
         </ContentWithImages>
       </ContentWrapper>
-      <StyledLink to={`/informationdetails/${key-1}`}>
-      <ArrowButtonRight>
+      <ArrowButtonRight onClick={() => handleNavigation(Number(postKey) + 1)}>
         <FontAwesomeIcon style={{ height: "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding: "10px" }} icon={faArrowRight} />
-        </ArrowButtonRight>
-      </StyledLink>
+      </ArrowButtonRight>
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
         <ModalImage src={modalImage} />
       </Modal>
