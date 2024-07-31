@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from "../components/modules/header/UserHeader";
 import { useRecoilValue } from "recoil";
@@ -129,13 +128,12 @@ function CompanyList() {
                 ) : (
                     <>
                         {currentPosts.map((post) => (
-                            <StyledLink to={`/companydetails/${post.companyID}`} key={post.companyID}>
                                 <CompanyPost
                                     key={post.companyID}
+                                    postKey={post.companyID}
                                     {...post}
                                     onClick={() => handleCompanyClick(post.companyID)} >
                                 </CompanyPost >
-                            </StyledLink>
                         ))}
                         <Pagination>
                             {Array.from({ length: totalPages }, (_, index) => (
@@ -198,10 +196,3 @@ const PageNumber = styled.button`
     }
 `
 
-const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: inherit;
-    &:hover {
-        text-decoration: none;
-    }
-`

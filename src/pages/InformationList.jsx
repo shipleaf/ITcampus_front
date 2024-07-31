@@ -96,6 +96,7 @@ function InformationList() {
                         <StyledLink to={`/informationdetails/${post.key}`} key={post.key}>
                             <StudyPost
                                 key={post.key}
+                                postKey={post.key}
                                 {...post}
                             />
                         </StyledLink>

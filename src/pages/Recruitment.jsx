@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { fetchRecruitmentList, searchRecruit } from "../APIs/RecruitmentAPI";
-import { Link } from "react-router-dom";
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from '../components/modules/header/UserHeader';
 import Top from "../components/post/Top";
@@ -174,9 +173,9 @@ function Recruitment() {
                     <p>No posts available</p>
                 ) : (
                     currentPosts.map((post) => (
-                        <StyledLink to={`/recruitmentdetails/${post.key}`} key={post.key}>
                             <RecruitmentPost
                                 key={post.key}
+                                postKey={post.key}
                                 title={post.title}
                                 body={post.body}
                                 companyname={post.companyname}
@@ -190,7 +189,6 @@ function Recruitment() {
                                 education={post.education}
                                 work_type={post.work_type}
                             />
-                        </StyledLink>
                     ))
                 )}
                 <Pagination>
@@ -249,13 +247,5 @@ const PageNumber = styled.button`
     &:hover {
         background: #36bef1;
         color: #fff;
-    }
-`
-
-const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: inherit;
-    &:hover {
-        text-decoration: none;
     }
 `

@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
 import axios from 'axios';
 
-function CompanyPost({ logo, companyName, scrapCount, stack, track,  width, recruitmentNoticeCount }) {
+function CompanyPost({postKey, logo, companyName, scrapCount, stack, track,  width, recruitmentNoticeCount }) {
     const [isScrapped, setIsScrapped] = useState(false);
+    const navigate = useNavigate();
+
+    const handleClick =() =>{
+        navigate(`/companydetails/${postKey}`)
+    }
 
     const handleScrap = async (e) => {
         e.stopPropagation();
@@ -24,7 +30,7 @@ function CompanyPost({ logo, companyName, scrapCount, stack, track,  width, recr
     };
 
     return (
-        <ButtonFrame width={width}>
+        <ButtonFrame width={width} onClick={handleClick}>
             <ThumbnailContainer>
                 <Thumbnail src={logo} />
             </ThumbnailContainer>

@@ -47,6 +47,7 @@ function OtherAnnouncements({ otherJobData = [] }) {
                     otherJobData.map((post) => (
                         <RecruitmentPost
                             key={post.key}
+                            postKey={post.key}
                             title={post.title}
                             body={post.body}
                             companyname={post.companyname}

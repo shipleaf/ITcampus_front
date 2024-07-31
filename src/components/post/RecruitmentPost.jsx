@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import star from '../../assets/scrap.png';
+import { useNavigate } from 'react-router-dom';
 
-function RecruitmentPost({ title, body, companyname, pic1, scrapCount, startdate, enddate, recruit_part, stack, experience, education, work_type, width }) {
+function RecruitmentPost({ postKey ,title, body, companyname, pic1, scrapCount, startdate, enddate, recruit_part, stack, experience, education, work_type, width }) {
+    const navigate = useNavigate();
     const formatDate = (dateString) => {
         const date = new window.Date(dateString);
         const year = date.getFullYear();
@@ -11,8 +13,12 @@ function RecruitmentPost({ title, body, companyname, pic1, scrapCount, startdate
         return `${year}. ${month}. ${day}`;
     };
 
+    const handleClick = () => {
+        navigate(`/recruitmentdetails/${postKey}`);
+    };
+
     return (
-        <ButtonFrame width={width} >
+        <ButtonFrame width={width} onClick={handleClick} >
             <ContentContainer>
                 <Title>{title}</Title>
                 <Content>{body}</Content>

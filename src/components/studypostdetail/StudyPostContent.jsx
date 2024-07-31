@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { fetchStudyPost } from '../../APIs/studyAPI';
@@ -203,14 +203,6 @@ const ArrowButtonLeft = styled(ArrowButton)`
 
 const ArrowButtonRight = styled(ArrowButton)`
   right: -60px;
-`
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-  &:hover {
-    text-decoration: none;
-  }
 `
 
 const ModalImage = styled.img`

@@ -20,6 +20,7 @@ function CompanyDetails() {
     const { key } = useParams();
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         const getCompanyDetails = async () => {
             try {
                 const response = await fetchCompanyDetails(key);
@@ -95,6 +96,7 @@ function CompanyDetails() {
                     {topCompanies.map((company) => (
                         <CompanyPostContainer key={company.companyID}>
                             <CompanyPost
+                                postKey = {company.companyID}
                                 companyName={company.companyName}
                                 stack={company.stack}
                                 track={company.track}
