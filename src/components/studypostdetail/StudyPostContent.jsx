@@ -39,7 +39,7 @@ const StudyPostContent = ({ title, id, date, body, pic1, pic2, key}) => {
       <ContentWrapper>
         <>
           <Header>
-            <Tag>정보게시판</Tag>
+            <Tag>스터디게시판</Tag>
             <ActionButtons>
               <ActionButton>수정</ActionButton>
               <ActionButton>삭제</ActionButton>

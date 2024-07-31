@@ -48,3 +48,8 @@ export const smallSelectedDateState = atom({
   key: 'smallSelectedDateState',
   default: '',
 });
+
+export const username = atom({
+  key: 'username',
+  default: '',
+})

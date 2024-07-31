@@ -9,6 +9,9 @@ import UserDropdownMenu from './UserDropdownMenu';
 import { currentDateState } from '../../../state/atoms';
 import { useRecoilValue } from 'recoil';
 import Cookies from 'js-cookie';
+import { username } from '../../../state/atoms';
+import { useRecoilState } from 'recoil';
+import { getUsername } from '../../../APIs/loginAPI';
 
 const fadeIn = keyframes`
   from {
@@ -158,6 +161,7 @@ function CalendarUserHeader({ onPrevMonth, onNextMonth, toggleSidebar }) {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const currentDate = useRecoilValue(currentDateState);
   const allCookies = Cookies.get();
+  const [name, setName] = useRecoilState(username);
 
   console.log(allCookies);
 
@@ -185,6 +189,21 @@ function CalendarUserHeader({ onPrevMonth, onNextMonth, toggleSidebar }) {
       setShowUserDropdown(false);
     }
   };
+
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        const response = await getUsername();
+        console.log(response.data)
+        setName(response.data.name);
+      } catch (error) {
+        console.error("Username 불러오기 실패:", error);
+      }
+    };
+
+    fetchUsername();
+  }, [setName]);
+
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -232,7 +251,7 @@ function CalendarUserHeader({ onPrevMonth, onNextMonth, toggleSidebar }) {
         </SearchContainer>
         <UserButton ref={userButtonRef} onClick={() => setShowUserDropdown(!showUserDropdown)}>
           <FaRegUserCircle style={{ color: '#bbb' }} size={30} />
-          <div style={{ fontSize: '12px', marginLeft: '5px' }}>username</div>
+          <div style={{ fontSize: '12px', marginLeft: '5px' }}>{name}</div>
           <VscTriangleDown size={10} />
           {showUserDropdown && <UserDropdownMenu ref={dropdownRef} />}
         </UserButton>
