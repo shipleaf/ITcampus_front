@@ -1,27 +1,29 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-modal';
+import { fetchInfoPost } from '../../APIs/infoAPI';
 
 Modal.setAppElement('#root');
 
 function InfoPostContent({ title, id, date, body, pic1, pic2, InfoKey }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalImage, setModalImage] = useState(null);
-
+  const navigate = useNavigate();
+  
   const hasPictures = pic1 || pic2;
   pic1 = "https://search.pstatic.net/common/?src=http%3A%2F%2Fimage.nmv.naver.net%2Fblog_2024_05_14_3113%2F9rCEZCH89H_04.jpg&type=ofullfill340_600_png"
-  pic2 = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDA0MjBfNDQg%2FMDAxNzEzNTQ2NzY3OTc3.RPIoQSQRDbuBvhugJ5IOcLGNuSNsEgn5pvm_YCmGVIYg.4HUIzImFu2_FTKXANyaPXHJ0fn9Y2x7cNiEpYz5H51Ig.JPEG%2F%25B7%25A1%25B1%25D7%25B5%25B9_%25282%2529.jpg&type=a340";
-  pic2 = null;
+
+  console.log("사진 : ", pic1);
 
   const formatDate = (dateString) => {
     const date = new window.Date(dateString);
     const year = date.getFullYear();
     const month = date.getMonth() + 1; 
     const day = date.getDate();
-    const hour =date.getUTCHours();
+    const hour = date.getUTCHours();
     const minute = date.getMinutes();
     return `${year}. ${month}. ${day} / ${hour}:${minute}`;
   };
@@ -36,19 +38,30 @@ function InfoPostContent({ title, id, date, body, pic1, pic2, InfoKey }) {
     setModalImage(null);
   };
 
+  const handleNavigation = async(Key) => {
+    try{
+      const response = await fetchInfoPost(Key);
+      if (response && response.data) {
+        navigate(`/informationdetails/${Key}`);
+      } else {
+        alert('게시글이 없습니다.');
+      }
+    } catch(error){
+      alert('게시글이 없습니다.');
+    }
+  };
+
   return (
     <ContentContainer>
-      <StyledLink to={`/informationdetails/${Number(InfoKey) + 1}`}>
-        <ArrowButtonLeft>
-          <FontAwesomeIcon style={{ height: "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding: "10px" }} icon={faArrowLeft} />
-        </ArrowButtonLeft>
-      </StyledLink>
+      <ArrowButtonLeft onClick={() => handleNavigation(InfoKey - 1)}>
+        <FontAwesomeIcon style={{ height: "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding: "10px" }} icon={faArrowLeft} />
+      </ArrowButtonLeft>
       <ContentWrapper>
         <Header>
           <Tag>정보게시판</Tag>
           <ActionButtons>
-          <StyledLink to={`/editInfopost/${InfoKey}`}>
-            <ActionButton>수정</ActionButton>
+            <StyledLink to={`/editInfopost/${InfoKey}`}>
+              <ActionButton>수정</ActionButton>
             </StyledLink>
             <ActionButton>삭제</ActionButton>
           </ActionButtons>
@@ -70,11 +83,9 @@ function InfoPostContent({ title, id, date, body, pic1, pic2, InfoKey }) {
           )}
         </ContentWithImages>
       </ContentWrapper>
-      <StyledLink to={`/informationdetails/${InfoKey - 1}`}>
-        <ArrowButtonRight>
-          <FontAwesomeIcon style={{ height: "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding: "10px" }} icon={faArrowRight} />
-        </ArrowButtonRight>
-      </StyledLink>
+      <ArrowButtonRight onClick={() => handleNavigation(Number(InfoKey) + 1)}>
+        <FontAwesomeIcon style={{ height: "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding: "10px" }} icon={faArrowRight} />
+      </ArrowButtonRight>
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
         <ModalImage src={modalImage} />
       </Modal>
