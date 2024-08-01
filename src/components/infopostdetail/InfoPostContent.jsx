@@ -57,7 +57,7 @@ function InfoPostContent({ title, id, date, body, pic1, pic2, InfoKey }) {
     try {
       const response = await editInfoPost(InfoKey, postData);
       if (response.status >= 200 && response.status <300) {
-        navigate(`/editInfopost//${InfoKey}`);
+        navigate(`/editInfopost/${InfoKey}`);
       }
     } catch (error) {
       alert('권한이 없습니다.');

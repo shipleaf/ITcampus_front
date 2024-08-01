@@ -12,6 +12,7 @@ import Cookies from 'js-cookie';
 import { username } from '../../../state/atoms';
 import { useRecoilState } from 'recoil';
 import { getUsername } from '../../../APIs/loginAPI';
+import { useNavigate } from 'react-router-dom';
 
 const fadeIn = keyframes`
   from {
@@ -162,8 +163,10 @@ function CalendarUserHeader({ onPrevMonth, onNextMonth, toggleSidebar }) {
   const currentDate = useRecoilValue(currentDateState);
   const allCookies = Cookies.get();
   const [name, setName] = useRecoilState(username);
-
+  
   console.log(allCookies);
+  
+  const navigate = useNavigate();
 
   const searchBarRef = useRef(null);
   const userButtonRef = useRef(null);
@@ -187,6 +190,21 @@ function CalendarUserHeader({ onPrevMonth, onNextMonth, toggleSidebar }) {
     }
     if (dropdownRef.current && !dropdownRef.current.contains(event.target) && !userButtonRef.current.contains(event.target)) {
       setShowUserDropdown(false);
+    }
+  };
+
+  const handleSearch = () => {
+    if (searchType === 'studentSupport') { 
+      navigate(`/governmentlist?query=${searchTerm}`);
+    }
+    else if(searchType === 'qualification'){
+      navigate(`/licenselist?query=${searchTerm}`);
+    }
+    else if(searchType === 'company'){
+      navigate(`/companylist?query=${searchTerm}`);
+    }
+    else{
+      navigate(`/recruitlist?query=${searchTerm}`);
     }
   };
 
@@ -236,9 +254,11 @@ function CalendarUserHeader({ onPrevMonth, onNextMonth, toggleSidebar }) {
                 value={searchTerm}
                 onChange={handleSearchTermChange}
                 placeholder='일정을 검색하세요'
+                onKeyPress={(e) => e.key === 'Enter' && handleSearch()} 
               />
               <Select value={searchType} onChange={handleSearchTypeChange}>
                 <Option value='recruitmentNotice'>채용공고</Option>
+                <Option value='company'>기업정보</Option>
                 <Option value='studentSupport'>지원프로그램</Option>
                 <Option value='qualification'>자격증일정</Option>
               </Select>

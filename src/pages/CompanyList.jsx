@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useNavigate, useLocation } from "react-router-dom"; 
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from "../components/modules/header/UserHeader";
 import { useRecoilValue } from "recoil";
@@ -19,6 +20,10 @@ function CompanyList() {
     const [, setSelectedCompany] = useState(null);
     const isLoggedIn = useRecoilValue(loginState);
     const postsPerPage = 7;
+
+    const navigate = useNavigate();
+    const location = useLocation();  
+    const [searchTerm, setSearchTerm] = useState('');  
 
     const getCompanies = async (query = '') => {
         try {
@@ -46,8 +51,10 @@ function CompanyList() {
     };
 
     useEffect(() => {
-        getCompanies();
-    }, []);
+        const query = new URLSearchParams(location.search).get('query');
+        setSearchTerm(query || '');
+        getCompanies(query);
+    }, [location.search]);
 
     const handleCompanyClick = async (companyId) => {
         try {
@@ -86,8 +93,7 @@ function CompanyList() {
     };
 
     const handleSearch = (query) => {
-        setLoading(true);
-        getCompanies(query);
+        navigate(`/companylist?query=${query}`);
     };
 
     const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
@@ -100,7 +106,7 @@ function CompanyList() {
                 <GuestHeader />
             )}
             <Container>
-                <Top title='기업 소개' onSearch={handleSearch} />
+                <Top title='기업 소개' onSearch={handleSearch} searchQuery={searchTerm} /> 
                 <SortContainer>
                     <Right>
                         <CustomSelect
@@ -195,4 +201,3 @@ const PageNumber = styled.button`
         color: #fff;
     }
 `
-

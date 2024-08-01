@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import Logo from '../../header/Logo';
-import { IoIosArrowBack } from "react-icons/io";
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { HiSearch } from "react-icons/hi";
 import LoginModal from '../../login/LoginModal';
 import Modal from 'react-modal';
 import { useRecoilValue } from 'recoil';
 import { currentDateState } from '../../../state/atoms';
+import { useNavigate } from 'react-router-dom'; 
 
 const fadeIn = keyframes`
   from {
@@ -71,7 +71,6 @@ const NavButton = styled.button`
   &:hover {
     background-color: #f7f7f7;
   }
-
 `;
 
 const CurrentDate = styled.div`
@@ -98,7 +97,8 @@ const CurrentDate = styled.div`
 const UserButton = styled.div`
   display: flex;
   align-items: center;
-`
+`;
+
 const LoginButton = styled.button`
   width: 90px;
   height: 30px;
@@ -114,7 +114,8 @@ const LoginButton = styled.button`
   &:focus{
     outline: none;
   }
-`
+`;
+
 const SearchBar = styled.div`
   display: flex;
   flex-direction: row;
@@ -123,7 +124,8 @@ const SearchBar = styled.div`
   justify-content: space-between;
   margin-right: 10px;
   animation: ${({ visible }) => visible ? css`${fadeIn} 0.3s forwards` : css`${fadeOut} 0.3s forwards`};
-`
+`;
+
 const SearchButton = styled.button`
   border: none;
   background-color: #fff;
@@ -132,14 +134,16 @@ const SearchButton = styled.button`
   display: flex;
   align-items: center;
   cursor: pointer;
-`
+`;
+
 const Input = styled.input`
   width: 500px;
   border: none;
   &:focus{
     outline: none;
   }
-`
+`;
+
 const Select = styled.select`
   width: 20%;
   height: 100%;
@@ -154,10 +158,11 @@ const Select = styled.select`
     background-color: #f0f0f0;
     cursor: pointer;
   }
-`
+`;
+
 const Option = styled.option`
-  
-`
+`;
+
 Modal.setAppElement('#root');
 
 function CalendarHeader({ onPrevMonth, onNextMonth, toggleSidebar }) {
@@ -166,6 +171,7 @@ function CalendarHeader({ onPrevMonth, onNextMonth, toggleSidebar }) {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const currentDate = useRecoilValue(currentDateState);
+  const navigate = useNavigate(); 
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -176,6 +182,7 @@ function CalendarHeader({ onPrevMonth, onNextMonth, toggleSidebar }) {
     setModalIsOpen(false);
     document.body.style.overflow = 'unset';
   };
+
   const searchBarRef = useRef(null);
 
   const handleSearchTypeChange = (e) => {
@@ -193,6 +200,21 @@ function CalendarHeader({ onPrevMonth, onNextMonth, toggleSidebar }) {
   const handleClickOutside = (event) => {
     if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
       setIsSearchVisible(false);
+    }
+  };
+
+  const handleSearch = () => {
+    if (searchType === 'studentSupport') { 
+      navigate(`/governmentlist?query=${searchTerm}`);
+    }
+    else if(searchType === 'qualification'){
+      navigate(`/licenselist?query=${searchTerm}`);
+    }
+    else if(searchType === 'company'){
+      navigate(`/companylist?query=${searchTerm}`);
+    }
+    else{
+      navigate(`/recruitlist?query=${searchTerm}`);
     }
   };
 
@@ -226,9 +248,11 @@ function CalendarHeader({ onPrevMonth, onNextMonth, toggleSidebar }) {
               value={searchTerm}
               onChange={handleSearchTermChange}
               placeholder='일정을 검색하세요'
+              onKeyPress={(e) => e.key === 'Enter' && handleSearch()} 
             />
             <Select value={searchType} onChange={handleSearchTypeChange}>
               <Option value='recruitmentNotice'>채용공고</Option>
+              <Option value='company'>기업정보</Option>
               <Option value='studentSupport'>지원프로그램</Option>
               <Option value='qualification'>자격증일정</Option>
             </Select>

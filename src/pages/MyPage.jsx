@@ -10,6 +10,7 @@ import CompanyPost from "../components/post/CompanyPost";
 import RecruitmentPost from "../components/post/RecruitmentPost";
 import StudyPost from "../components/post/StudyPost";
 import EditProfileModal from "../components/modules/mypage/EditProfileModal";
+import { FaPen } from "react-icons/fa";
 
 function MyPage() {
     const [userData, setUserData] = useState(null);
@@ -239,7 +240,7 @@ function MyPage() {
                         <WelcomeMessage>
                             <UserName>{userData.user.name}님 환영합니다!</UserName>
                             <UserStatus> {userData.user.job}</UserStatus>
-                            <UserEdit onClick={() => setIsModalOpen(true)}>개인정보 수정</UserEdit>
+                            <UserEdit onClick={() => setIsModalOpen(true)}><FaPen style={{ fontSize: "15px", marginRight: "5px"}} />개인정보 수정</UserEdit>
                         </WelcomeMessage>
                     </Header>
                     <ContentFrame ref={scrapSectionRef}>
