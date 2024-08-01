@@ -22,6 +22,9 @@ function StudyPost({studyKey, infoKey, title, body, id, pic1, date, commentCount
         const day = date.getDate();
         return `${year}. ${month}. ${day}`;
     };
+
+    console.log("Thumbnail URL:", pic1);    
+    
     return (
         <>
             <ButtonFrame width = {width} onClick={handleClick}>
