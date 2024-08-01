@@ -32,11 +32,13 @@ export const fetchCompanyList = async () => {
 export const searchCompany = async (query) => {
     try {
         console.log('함수 들어옴')
+        console.log(query);
         const response = await axiosInstance.post(`/api/company/search`, { companyName: query }, {
             headers: {
                 'Cache-Control': 'no-cache'
             }
         });
+        console.log(response);
         console.log('요청 처리됨')
         return response;
     } catch (error) {
