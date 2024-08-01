@@ -114,7 +114,7 @@ function GovernmentSupport() {
                 <GuestHeader />
             )}
             <Container>
-                <Top title='정부 지원' onSearch={handleSearch} />
+                <Top title='지원 프로그램' onSearch={handleSearch} />
                 <SortContainer>
                     <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='지원중' />
                     <Right>
@@ -142,7 +142,7 @@ function GovernmentSupport() {
                 ) : error ? (
                     <p>{error}</p>
                 ) : currentPosts.length === 0 ? (
-                    <p>학생지원 정보 불러오기 실패</p>
+                    <p>지원 정보 불러오기 실패</p>
                 ) : (
                     currentPosts.map((post) => (
                             <Post

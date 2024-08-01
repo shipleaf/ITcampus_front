@@ -64,7 +64,7 @@ function ScrapButton({ apiEndpoint, isScrapped, type }) {
             <ScrapButtonContainer onClick={handleScrap}>
                 {isScrappedFront ? (
                     <>
-                        <FaStar size={30} style={{ color: '#ffff00' }} />
+                        <FaStar size={30} style={{ color: '#F5F500' }} />
                         <div style={{ color: '#999', marginLeft: '5px' }}>스크랩 취소</div>
                     </>
                 ) : (

@@ -208,7 +208,7 @@ const CalendarDetail = ({ style, date, animate, onClose }) => {
                             <Title color={event.backgroundColor}>
                                 <FaSquare size={6} style={{ color: '#777' }} />
                                 <div style={{ margin: '10px' }} onClick={() => goToAbout(`recruitmentdetails/${event.key}`)}>{event.title}</div>
-                                {event.isscrap ? (
+                                {event.isScrapped ? (
                                     <span>
                                         <FaStar style={{ color: '#F5F500' }} />
                                     </span>
@@ -229,7 +229,7 @@ const CalendarDetail = ({ style, date, animate, onClose }) => {
                             <Title color={event.backgroundColor}>
                                 <FaSquare size={6} style={{ color: '#777' }} />
                                 <div style={{ margin: '10px' }} onClick={() => goToAbout(`governmentsupportdetails/${event.key}`)}>{event.title}</div>
-                                {event.isscrap ? (
+                                {event.isScrapped ? (
                                     <span>
                                         <FaStar style={{ color: '#F5F500' }} />
                                     </span>
@@ -250,7 +250,7 @@ const CalendarDetail = ({ style, date, animate, onClose }) => {
                             <Title color={event.backgroundColor}>
                                 <FaSquare size={6} style={{ color: '#777' }} />
                                 <div style={{ margin: '10px' }} onClick={() => goToAbout(`licensedetails/${event.key}`)}>{event.title}</div>
-                                {event.isscrap ? (
+                                {event.isScrapped ? (
                                     <span>
                                         <FaStar style={{ color: '#F5F500' }} />
                                     </span>
