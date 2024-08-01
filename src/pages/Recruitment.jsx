@@ -18,7 +18,7 @@ function Recruitment() {
     const [sortOption, setSortOption] = useState('scrap');
     const [sortOrder, setSortOrder] = useState('desc');
     const [isFilterActive, setIsFilterActive] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const isLoggedIn = useRecoilValue(loginState);
 
@@ -62,7 +62,7 @@ function Recruitment() {
     useEffect(() => {
         const query = new URLSearchParams(location.search).get('query');
         setSearchTerm(query || '');
-        getRecruitments(query);
+        getRecruitments(query);  // 주석 처리하여 더미 데이터만 사용
     }, [location.search]);
 
     const postsPerPage = 7;
@@ -147,7 +147,7 @@ function Recruitment() {
                 <GuestHeader />
             )}
             <Container>
-                <Top title='채용 공고' onSearch={handleSearch} searchQuery={searchTerm} /> 
+                <Top title='채용 공고' onSearch={handleSearch} searchQuery={searchTerm} />
                 <DetailSearch onFilterChange={handleFilterChange} />
                 <SortContainer>
                     <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='지원 가능' />
@@ -179,22 +179,22 @@ function Recruitment() {
                     <p>No posts available</p>
                 ) : (
                     currentPosts.map((post) => (
-                            <RecruitmentPost
-                                key={post.key}
-                                postKey={post.key}
-                                title={post.title}
-                                body={post.body}
-                                companyname={post.companyname}
-                                pic1={post.pic1}
-                                scrapCount={post.scrapCount}
-                                startdate={post.startdate}
-                                enddate={post.enddate}
-                                recruit_part={post.recruit_part}
-                                stack={post.stack}
-                                experience={post.experience}
-                                education={post.education}
-                                work_type={post.work_type}
-                            />
+                        <RecruitmentPost
+                            key={post.key}
+                            postKey={post.key}
+                            title={post.title}
+                            body={post.body}
+                            companyname={post.companyname}
+                            pic1={post.pic1}
+                            scrapCount={post.scrapCount}
+                            startdate={post.startdate}
+                            enddate={post.enddate}
+                            recruit_part={post.recruit_part}
+                            stack={post.stack}
+                            experience={post.experience}
+                            education={post.education}
+                            work_type={post.work_type}
+                        />
                     ))
                 )}
                 <Pagination>

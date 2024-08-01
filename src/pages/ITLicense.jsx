@@ -167,7 +167,7 @@ function ITLicense() {
                             title={post.title}
                             body={post.body}
                             agency={post.agency}
-                            pic1={post.pic1}
+                            logo={post.logo}
                             scrapCount={post.scrapCount}
                             startdate={new Date(post.startdate).toLocaleDateString('ko-KR')}
                             enddate={new Date(post.enddate).toLocaleDateString('ko-KR')}
