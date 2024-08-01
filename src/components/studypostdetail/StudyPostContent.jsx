@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { fetchStudyPost } from '../../APIs/studyAPI';
+import { fetchStudyPost, editStudyPost } from '../../APIs/studyAPI';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
-const StudyPostContent = ({ title, id, date, body, pic1, pic2, postKey }) => {
+const StudyPostContent = ({ title, id, date, body, pic1, pic2, studyKey }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalImage, setModalImage] = useState(null);
   const hasPictures = pic1 || pic2;
@@ -48,9 +48,23 @@ const StudyPostContent = ({ title, id, date, body, pic1, pic2, postKey }) => {
     }
   };
 
+  const handleEditClick = async() =>{
+    const postData = {};
+    navigate(`/editStudypost/${studyKey}`);
+
+    try {
+      const response = await editStudyPost(studyKey, postData);
+      if (response.status >= 200 && response.status <300) {
+      }
+    } catch (error) {
+      //alert('권한이 없습니다.');
+    }
+  };
+
+
   return (
     <ContentContainer>
-      <ArrowButtonLeft onClick={() => handleNavigation(postKey - 1)}>
+      <ArrowButtonLeft onClick={() => handleNavigation(studyKey - 1)}>
         <FontAwesomeIcon style={{ height: "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding: "10px" }} icon={faArrowLeft} />
       </ArrowButtonLeft>
       <ContentWrapper>
@@ -58,7 +72,7 @@ const StudyPostContent = ({ title, id, date, body, pic1, pic2, postKey }) => {
           <Header>
             <Tag>스터디게시판</Tag>
             <ActionButtons>
-              <ActionButton>수정</ActionButton>
+              <ActionButton onClick={handleEditClick}>수정</ActionButton>
               <ActionButton>삭제</ActionButton>
             </ActionButtons>
           </Header>
@@ -80,7 +94,7 @@ const StudyPostContent = ({ title, id, date, body, pic1, pic2, postKey }) => {
           )}
         </ContentWithImages>
       </ContentWrapper>
-      <ArrowButtonRight onClick={() => handleNavigation(Number(postKey) + 1)}>
+      <ArrowButtonRight onClick={() => handleNavigation(Number(studyKey) + 1)}>
         <FontAwesomeIcon style={{ height: "20px", border: "2px solid #79BFFF", borderRadius: "50%", padding: "10px" }} icon={faArrowRight} />
       </ArrowButtonRight>
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>

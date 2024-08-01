@@ -43,7 +43,7 @@ function StudyDetails(){
     <>
     <Header/>
     <Container>
-      {postData && <StudyPostContent postKey={key} {...postData} />}
+      {postData && <StudyPostContent studyKey={key} {...postData} />}
       <StudyPostComments comments={postComments} key={key} />
     </Container>
     </>

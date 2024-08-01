@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-modal';
-import { fetchInfoPost } from '../../APIs/infoAPI';
+import { fetchInfoPost, editInfoPost } from '../../APIs/infoAPI';
 
 Modal.setAppElement('#root');
 
@@ -51,6 +51,20 @@ function InfoPostContent({ title, id, date, body, pic1, pic2, InfoKey }) {
     }
   };
 
+  const handleEditClick = async() =>{
+    const postData = {};
+
+    try {
+      const response = await editInfoPost(InfoKey, postData);
+      if (response.status >= 200 && response.status <300) {
+        navigate(`/editInfopost/${InfoKey}`);
+      }
+    } catch (error) {
+      alert('권한이 없습니다.');
+    }
+  };
+
+
   return (
     <ContentContainer>
       <ArrowButtonLeft onClick={() => handleNavigation(InfoKey - 1)}>
@@ -60,9 +74,7 @@ function InfoPostContent({ title, id, date, body, pic1, pic2, InfoKey }) {
         <Header>
           <Tag>정보게시판</Tag>
           <ActionButtons>
-            <StyledLink to={`/editInfopost/${InfoKey}`}>
-              <ActionButton>수정</ActionButton>
-            </StyledLink>
+              <ActionButton onClick={handleEditClick}>수정</ActionButton>
             <StyledLink>
             <ActionButton>삭제</ActionButton>
             </StyledLink>
