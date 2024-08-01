@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { createStudyComment, deleteStudyComment } from '../../APIs/studyAPI';
+import { useParams } from 'react-router-dom';
 
 const StudyPostComments = ({ comments = [], studyboardkey, fetchStudyComments }) => {
   const [newComment, setNewComment] = useState('');
   const [isSecret, setIsSecret] = useState(false);
+  const { key } = useParams();
 
   const formatDate = (dateString) => {
     const date = new window.Date(dateString);
@@ -46,7 +48,7 @@ const StudyPostComments = ({ comments = [], studyboardkey, fetchStudyComments })
       alert('댓글이 추가되었습니다.');
       setNewComment('');
       setIsSecret(false);
-      fetchStudyComments();
+      fetchStudyComments(key);
     } catch (error) {
       console.error('댓글 추가 실패:', error);
       console.error('에러내용', error.response ? error.response.data : error.message);
