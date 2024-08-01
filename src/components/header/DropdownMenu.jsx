@@ -50,12 +50,7 @@ function DropdownMenu() {
                 <Title>지원사업</Title>
                 <Content>
                     <Link to="/governmentlist" style={{ textDecoration: 'none', color: '#777' }}>
-                        정부 지원 프로그램
-                    </Link>
-                </Content>
-                <Content>
-                    <Link to="/corporatelist" style={{ textDecoration: 'none', color: '#777' }}>
-                        기업 지원 프로그램
+                        지원 프로그램
                     </Link>
                 </Content>
             </SmallMenu>
@@ -63,22 +58,7 @@ function DropdownMenu() {
                 <Title>채용 공고</Title>
                 <Content>
                     <Link to="/recruitlist" style={{ textDecoration: 'none', color: '#777' }}>
-                        프론트엔드
-                    </Link>
-                </Content>
-                <Content>
-                    <Link to="/recruitlist" style={{ textDecoration: 'none', color: '#777' }}>
-                        백엔드/서버
-                    </Link>
-                </Content>
-                <Content>
-                    <Link to="/recruitlist" style={{ textDecoration: 'none', color: '#777' }}>
-                        데이터
-                    </Link>
-                </Content>
-                <Content>
-                    <Link to="/recruitlist" style={{ textDecoration: 'none', color: '#777' }}>
-                        앱(iOS/안드로이드)
+                        채용 공고
                     </Link>
                 </Content>
             </SmallMenu>
@@ -91,7 +71,7 @@ function DropdownMenu() {
                 </Content>
                 <Content>
                     <Link to="/studylist" style={{ textDecoration: 'none', color: '#777' }}>
-                        스터디 모집
+                        스터디 게시판
                     </Link>
                 </Content>
             </SmallMenu>

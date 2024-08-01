@@ -7,7 +7,6 @@ import { PiCertificateDuotone } from "react-icons/pi";
 import { FaSquare } from "react-icons/fa";
 import { useRecoilValue } from 'recoil';
 import { myEventState } from '../../../state/atoms'
-import { FaStar } from "react-icons/fa";
 
 const CalendarDetailDiv = styled.div`
     position: absolute;
@@ -207,12 +206,7 @@ const MyCalendarDetail = ({ style, date, animate, onClose }) => {
                         <Content key={event.key}>
                             <Title color={event.backgroundColor}>
                                 <FaSquare size={6} style={{ color: '#777' }} />
-                                <div style={{ margin: '10px' }} onClick={() => goToAbout(`recruitmentdetails/${event.key}`)}>{event.title}</div><span><FaStar style={{ color: '#F5F500' }} /></span>
-                                {/* {event.isscrap ? (
-                            <span>
-                                <FaStar />
-                            </span>
-                        ) : ""} */}
+                                <div style={{ margin: '10px' }} onClick={() => goToAbout(`recruitmentdetails/${event.key}`)}>{event.title}</div>
                             </Title>
                             <Schedule>지원 시작일: {formatDateTime(event.start)}</Schedule>
                             <Schedule>지원 마감일: {formatDateTime(event.endtime)}</Schedule>
@@ -229,11 +223,6 @@ const MyCalendarDetail = ({ style, date, animate, onClose }) => {
                             <Title color={event.backgroundColor}>
                                 <FaSquare size={6} style={{ color: '#777' }} />
                                 <div style={{ margin: '10px' }} onClick={() => goToAbout(`governmentsupportdetails/${event.key}`)}>{event.title}</div>
-                                {/* {event.isscrap ? (
-                            <span>
-                                <FaStar />
-                            </span>
-                        ) : ""} */}
                             </Title>
                             <Schedule>신청 시작일: {formatDateTime(event.start)}</Schedule>
                             <Schedule>신청 마감일: {formatDateTime(event.endtime)}</Schedule>
@@ -250,11 +239,6 @@ const MyCalendarDetail = ({ style, date, animate, onClose }) => {
                             <Title color={event.backgroundColor}>
                                 <FaSquare size={6} style={{ color: '#777' }} />
                                 <div style={{ margin: '10px' }} onClick={() => goToAbout(`licensedetails/${event.key}`)}>{event.title}</div>
-                                {/* {event.isscrap ? (
-                                <span>
-                                    <FaStar />
-                                </span>
-                            ) : ""} */}
                             </Title>
                             <Schedule>신청 시작일: {formatDateTime(event.start)}</Schedule>
                             <Schedule>신청 마감일: {formatDateTime(event.endtime)}</Schedule>

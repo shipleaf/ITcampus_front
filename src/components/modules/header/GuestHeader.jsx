@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import Logo from '../../header/Logo';
 import DropdownMenu from '../../header/DropdownMenu';
 import LoginModal from '../../login/LoginModal';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const GuestHeaderComp = styled.div`
   display: flex;
@@ -26,7 +27,6 @@ const MenuBar = styled.div`
   left: 50%;
   transform: translateX(-50%);
 
-  
   & div {
     margin-right: 10px;
     margin-left: 10px;
@@ -44,10 +44,19 @@ const MenuBar = styled.div`
       font-size: 1.5vw; /* Adjust font size for smaller screens */
     }
 
-    & span:hover {
-      border-bottom: 1px solid #000;
+    & span {
       cursor: pointer;
     }
+
+    & span:hover {
+      border-bottom: 1px solid #000;
+    }
+  }
+`;
+
+const MenuItem = styled.div`
+  span {
+    border-bottom: ${(props) => (props.active ? '1px solid #000' : 'none')};
   }
 `;
 
@@ -59,24 +68,6 @@ const HeaderRight = styled.div`
   justify-content: flex-end;
   position: relative;
 `;
-
-// const SearchBar = styled.div`
-//   height: 30px;
-//   margin-right: 15px;
-//   display: flex;
-//   align-items: center;
-//   flex-direction: row;
-//   justify-content: center;
-//   border-bottom: 1px solid #00ACEE;
-
-//   & input {
-//     border: none;
-
-//     &:focus {
-//       outline: none;
-//     }
-//   }
-// `;
 
 const LoginButton = styled.button`
   width: 100px;
@@ -110,6 +101,8 @@ Modal.setAppElement('#root'); // 모달을 렌더링하는 앱 요소 설정
 function GuestHeader() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -119,6 +112,10 @@ function GuestHeader() {
   const closeModal = () => {
     setModalIsOpen(false);
     document.body.style.overflow = 'unset'; // Enable scroll when modal is closed
+  };
+
+  const handleMenuClick = (path) => {
+    navigate(path);
   };
 
   return (
@@ -132,27 +129,23 @@ function GuestHeader() {
             onMouseEnter={() => setShowDropdown(true)}
             onMouseLeave={() => setShowDropdown(false)}
           >
-            <div>
+            <MenuItem active={location.pathname === '/companylist'} onClick={() => handleMenuClick('/companylist')}>
               <span>기업 소개</span>
-            </div>
-            <div>
+            </MenuItem>
+            <MenuItem active={location.pathname === '/licenselist'} onClick={() => handleMenuClick('/licenselist')}>
               <span>IT 자격증</span>
-            </div>
-            <div>
+            </MenuItem>
+            <MenuItem active={location.pathname === '/governmentlist'} onClick={() => handleMenuClick('/governmentlist')}>
               <span>지원 사업</span>
-            </div>
-            <div>
+              </MenuItem>
+            <MenuItem active={location.pathname === '/recruitlist'} onClick={() => handleMenuClick('/recruitlist')}>
               <span>채용 공고</span>
-            </div>
-            <div>
+            </MenuItem>
+            <MenuItem active={location.pathname === '/informationlist'} onClick={() => handleMenuClick('/informationlist')}>
               <span>커뮤니티</span>
-            </div>
+            </MenuItem>
           </MenuBar>
           <HeaderRight>
-            {/* <SearchBar>
-              <CiSearch style={{ color: '#00ACEE' }} size={25} />
-              <input type='text' />
-            </SearchBar> */}
             <LoginButton onClick={openModal}>
               로그인
             </LoginButton>
