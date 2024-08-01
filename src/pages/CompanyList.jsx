@@ -23,7 +23,7 @@ function CompanyList() {
 
     const navigate = useNavigate();
     const location = useLocation();  
-    const [searchTerm, setSearchTerm] = useState('');  
+    const [searchTerm, setSearchTerm] = useState(new URLSearchParams(location.search).get('query') || '');  
 
     const getCompanies = async (query = '') => {
         try {
@@ -55,6 +55,14 @@ function CompanyList() {
         setSearchTerm(query || '');
         getCompanies(query);
     }, [location.search]);
+
+    useEffect(() => {
+        if (searchTerm) {
+            navigate(`/companylist?query=${searchTerm}`);
+        } else {
+            navigate(`/companylist`);
+        }
+    }, [searchTerm, navigate]);
 
     const handleCompanyClick = async (companyId) => {
         try {
@@ -93,7 +101,7 @@ function CompanyList() {
     };
 
     const handleSearch = (query) => {
-        navigate(`/companylist?query=${query}`);
+        setSearchTerm(query);
     };
 
     const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
@@ -134,12 +142,12 @@ function CompanyList() {
                 ) : (
                     <>
                         {currentPosts.map((post) => (
-                                <CompanyPost
-                                    key={post.companyID}
-                                    postKey={post.companyID}
-                                    {...post}
-                                    onClick={() => handleCompanyClick(post.companyID)} >
-                                </CompanyPost >
+                            <CompanyPost
+                                key={post.companyID}
+                                postKey={post.companyID}
+                                {...post}
+                                onClick={() => handleCompanyClick(post.companyID)}
+                            />
                         ))}
                         <Pagination>
                             {Array.from({ length: totalPages }, (_, index) => (

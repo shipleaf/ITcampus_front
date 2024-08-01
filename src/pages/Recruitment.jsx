@@ -39,6 +39,7 @@ function Recruitment() {
             let response;
             if (query) {
                 response = await searchRecruit(query);
+                console.log(response.data)
             } else {
                 response = await fetchRecruitmentList();
             }
@@ -62,7 +63,7 @@ function Recruitment() {
     useEffect(() => {
         const query = new URLSearchParams(location.search).get('query');
         setSearchTerm(query || '');
-        getRecruitments(query);  // 주석 처리하여 더미 데이터만 사용
+        getRecruitments(query);
     }, [location.search]);
 
     const postsPerPage = 7;

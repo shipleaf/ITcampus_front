@@ -1,5 +1,6 @@
 import axiosInstance from './axiosInstance';
 
+// 리스트 불러오기
 export const fetchRecruitmentList = async () => {
     try {
         const response = await axiosInstance.get(`/api/recruitmentNoticeInfo`, {
@@ -14,6 +15,7 @@ export const fetchRecruitmentList = async () => {
     }
 };
 
+// 공고 상세 불러오기
 export const fetchRecruitmentDetails = async (recruitId) => {
     try {
         const response = await axiosInstance.get(`/api/recruitmentNoticeInfo/${recruitId}`,{
@@ -28,6 +30,7 @@ export const fetchRecruitmentDetails = async (recruitId) => {
     }
 };
 
+// 공고 검색
 export const searchRecruit = async (query) => {
     try {
         const response = await axiosInstance.post(`/api/recruitmentNoticeInfo/search`, { title: query }, {

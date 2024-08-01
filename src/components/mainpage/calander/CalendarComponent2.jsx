@@ -194,9 +194,10 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
                     hideExtraWeeks();
                 }}
                 dayMaxEventRows={5}
+                moreLinkClick="popover" // 클릭 시 팝업 창 안 열리도록 설정
                 moreLinkContent={(arg) => (
-                    <div style={{width: '100%'}}>
-                        <MoreButton type="button" className="fc-more-button">
+                    <div style={{ width: '100%', pointerEvents: 'none' }}>
+                        <MoreButton type="button" className="fc-more-button" style={{ pointerEvents: 'none' }}>
                             {arg.num}개 더보기
                         </MoreButton>
                     </div>
