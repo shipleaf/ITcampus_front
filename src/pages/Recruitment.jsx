@@ -23,11 +23,11 @@ function Recruitment() {
     const isLoggedIn = useRecoilValue(loginState);
 
     const [selectedFilters, setSelectedFilters] = useState({
-        job: [],
+        recruit_part: [],
         stack: [],
         experience: [],
         education: [],
-        employmentType: []
+        work_type: []
     });
 
     const navigate = useNavigate();
@@ -88,8 +88,22 @@ function Recruitment() {
     const filteredPosts = sortedPosts.filter(post => {
         const filterKeys = Object.keys(selectedFilters);
         for (let key of filterKeys) {
-            if (selectedFilters[key].length > 0 && !selectedFilters[key].includes(post[key])) {
-                return false;
+            if (selectedFilters[key].length > 0) {
+                if (key === 'stack') {
+                    if (!selectedFilters[key].some(item => post[key].includes(item))) {
+                        return false;
+                    }
+                } else if (key === 'work_type') {
+                    if (!selectedFilters[key].some(item => post[key].split(',').map(x => x.trim()).includes(item))) {
+                        return false;
+                    }
+                } else if (key === 'recruit_part') {
+                    if (!selectedFilters[key].some(item => post[key].split(',').map(x => x.trim()).includes(item))) {
+                        return false;
+                    }
+                } else if (!selectedFilters[key].includes(post[key])) {
+                    return false;
+                }
             }
         }
 
@@ -139,6 +153,28 @@ function Recruitment() {
 
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
+    const extractFilterOptions = (posts, key) => {
+        const optionsSet = new Set();
+        posts.forEach(post => {
+            if (Array.isArray(post[key])) {
+                post[key].forEach(item => optionsSet.add(item));
+            } else if (typeof post[key] === 'string') {
+                post[key].split(',').map(item => item.trim()).forEach(item => optionsSet.add(item));
+            } else {
+                optionsSet.add(post[key]);
+            }
+        });
+        return Array.from(optionsSet);
+    };
+
+    const filterOptions = {
+        recruit_part: extractFilterOptions(posts, 'recruit_part'),
+        stack: extractFilterOptions(posts, 'stack'),
+        experience: extractFilterOptions(posts, 'experience'),
+        education: extractFilterOptions(posts, 'education'),
+        work_type: extractFilterOptions(posts, 'work_type')
+    };
+
     return (
         <>
             {isLoggedIn ? (
@@ -147,8 +183,8 @@ function Recruitment() {
                 <GuestHeader />
             )}
             <Container>
-                <Top title='채용 공고' onSearch={handleSearch} searchQuery={searchTerm} />
-                <DetailSearch onFilterChange={handleFilterChange} />
+                <Top title='채용 공고' onSearch={handleSearch} searchQuery={searchTerm} /> 
+                <DetailSearch filterOptions={filterOptions} onFilterChange={handleFilterChange} />
                 <SortContainer>
                     <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='지원 가능' />
                     <Right>

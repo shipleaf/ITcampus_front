@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
-const DetailSearch = ({ onFilterChange }) => {
+const DetailSearch = ({ filterOptions, onFilterChange }) => {
   const [showJob, setShowJob] = useState(false);
   const [showTechStack, setShowTechStack] = useState(false);
   const [showExperience, setShowExperience] = useState(false);
@@ -23,7 +23,7 @@ const DetailSearch = ({ onFilterChange }) => {
   }, [onFilterChange]);
 
   useEffect(() => {
-    handleFilterChange('job', Object.keys(jobCheckboxes).filter(key => jobCheckboxes[key]));
+    handleFilterChange('recruit_part', Object.keys(jobCheckboxes).filter(key => jobCheckboxes[key]));
   }, [jobCheckboxes, handleFilterChange]);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const DetailSearch = ({ onFilterChange }) => {
   }, [educationCheckboxes, handleFilterChange]);
 
   useEffect(() => {
-    handleFilterChange('employmentType', Object.keys(employmentTypeCheckboxes).filter(key => employmentTypeCheckboxes[key]));
+    handleFilterChange('work_type', Object.keys(employmentTypeCheckboxes).filter(key => employmentTypeCheckboxes[key]));
   }, [employmentTypeCheckboxes, handleFilterChange]);
 
   const handleToggle = (type) => {
@@ -52,11 +52,11 @@ const DetailSearch = ({ onFilterChange }) => {
       setShowEmploymentType(false);
     } else {
       setActiveCategory(type);
-      setShowJob(type === 'job');
-      setShowTechStack(type === 'techStack');
+      setShowJob(type === 'recruit_part');
+      setShowTechStack(type === 'stack');
       setShowExperience(type === 'experience');
       setShowEducation(type === 'education');
-      setShowEmploymentType(type === 'employmentType');
+      setShowEmploymentType(type === 'work_type');
     }
   };
 
@@ -77,10 +77,10 @@ const DetailSearch = ({ onFilterChange }) => {
     };
 
     switch (category) {
-      case 'job':
+      case 'recruit_part':
         updateCheckboxes(jobCheckboxes, setJobCheckboxes);
         break;
-      case 'techStack':
+      case 'stack':
         updateCheckboxes(techStackCheckboxes, setTechStackCheckboxes);
         break;
       case 'experience':
@@ -89,7 +89,7 @@ const DetailSearch = ({ onFilterChange }) => {
       case 'education':
         updateCheckboxes(educationCheckboxes, setEducationCheckboxes);
         break;
-      case 'employmentType':
+      case 'work_type':
         updateCheckboxes(employmentTypeCheckboxes, setEmploymentTypeCheckboxes);
         break;
       default:
@@ -130,11 +130,11 @@ const DetailSearch = ({ onFilterChange }) => {
       <Table>
         <thead>
           <tr>
-            <Th onClick={() => handleToggle('job')} $active={activeCategory === 'job'}>직무</Th>
-            <Th onClick={() => handleToggle('techStack')} $active={activeCategory === 'techStack'}>기술스택</Th>
+            <Th onClick={() => handleToggle('recruit_part')} $active={activeCategory === 'recruit_part'}>직무</Th>
+            <Th onClick={() => handleToggle('stack')} $active={activeCategory === 'stack'}>기술스택</Th>
             <Th onClick={() => handleToggle('experience')} $active={activeCategory === 'experience'}>경력</Th>
             <Th onClick={() => handleToggle('education')} $active={activeCategory === 'education'}>학력</Th>
-            <Th onClick={() => handleToggle('employmentType')} $active={activeCategory === 'employmentType'}>고용형태</Th>
+            <Th onClick={() => handleToggle('work_type')} $active={activeCategory === 'work_type'}>고용형태</Th>
           </tr>
         </thead>
         <tbody>
@@ -143,9 +143,9 @@ const DetailSearch = ({ onFilterChange }) => {
               {showJob && (
                 <Overlay>
                   <CheckboxContainer>
-                    {['프론트엔드', '백엔드/서버', '앱개발', '개발PM', '게임개발', '웹개발', '정보보안', '데이터 분석', 'QA/테스터', 'BI엔지니어', '퍼블리셔', 'SQA', '네트워크'].map(label => (
+                    {filterOptions.recruit_part.map(label => (
                       <label key={label}>
-                        <input type="checkbox" checked={jobCheckboxes[label] || false} onChange={() => handleCheckboxChange('job', label)} /> {label}
+                        <input type="checkbox" checked={jobCheckboxes[label] || false} onChange={() => handleCheckboxChange('recruit_part', label)} /> {label}
                       </label>
                     ))}
                   </CheckboxContainer>
@@ -156,9 +156,9 @@ const DetailSearch = ({ onFilterChange }) => {
               {showTechStack && (
                 <Overlay>
                   <CheckboxContainer>
-                    {['풀스택', 'JS', 'JAVA', 'C언어', 'C++', 'C#', 'ASP', 'Android', 'Django', 'Docker', 'CSS', '.Net'].map(label => (
+                    {filterOptions.stack.map(label => (
                       <label key={label}>
-                        <input type="checkbox" checked={techStackCheckboxes[label] || false} onChange={() => handleCheckboxChange('techStack', label)} /> {label}
+                        <input type="checkbox" checked={techStackCheckboxes[label] || false} onChange={() => handleCheckboxChange('stack', label)} /> {label}
                       </label>
                     ))}
                   </CheckboxContainer>
@@ -169,7 +169,7 @@ const DetailSearch = ({ onFilterChange }) => {
               {showExperience && (
                 <Overlay>
                   <CheckboxContainer>
-                    {['신입 가능', '1~3년', '4~6년', '데이터베이스'].map(label => (
+                    {filterOptions.experience.map(label => (
                       <label key={label}>
                         <input type="checkbox" checked={experienceCheckboxes[label] || false} onChange={() => handleCheckboxChange('experience', label)} /> {label}
                       </label>
@@ -182,7 +182,7 @@ const DetailSearch = ({ onFilterChange }) => {
               {showEducation && (
                 <Overlay>
                   <CheckboxContainer>
-                    {['대학교졸업(2,3년)', '대학교졸업(4년)', '대학교재학', '학력무관'].map(label => (
+                    {filterOptions.education.map(label => (
                       <label key={label}>
                         <input type="checkbox" checked={educationCheckboxes[label] || false} onChange={() => handleCheckboxChange('education', label)} /> {label}
                       </label>
@@ -195,9 +195,9 @@ const DetailSearch = ({ onFilterChange }) => {
               {showEmploymentType && (
                 <Overlay>
                   <CheckboxContainer>
-                    {['정규직', '계약직', '인턴', '파견직'].map(label => (
+                    {filterOptions.work_type.map(label => (
                       <label key={label}>
-                        <input type="checkbox" checked={employmentTypeCheckboxes[label] || false} onChange={() => handleCheckboxChange('employmentType', label)} /> {label}
+                        <input type="checkbox" checked={employmentTypeCheckboxes[label] || false} onChange={() => handleCheckboxChange('work_type', label)} /> {label}
                       </label>
                     ))}
                   </CheckboxContainer>
