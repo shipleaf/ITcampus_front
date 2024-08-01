@@ -37,7 +37,7 @@ const ButtonFrame = styled.div`
     display: flex;
     width: ${(props) => props.width || '100%'};
     height: 100px;
-    margin: 10px auto;
+    margin: 5px auto;
     margin-bottom: 35px;
     align-items: center;
     background-color: #ffffff;
@@ -105,7 +105,7 @@ const ShowScrap = styled.div`
     display: flex;
     height: 100%;
     width: 10%;
-    margin-left: 50px;
+    margin-left: 30px;
     align-items: center;
 `
 
@@ -115,3 +115,4 @@ const ScrapCount = styled.div`
     color: #999;
     margin-left: 7px;
 `
+

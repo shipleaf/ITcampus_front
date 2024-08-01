@@ -114,3 +114,18 @@ export const editInfoPost = async (infoId, postData) => {
       throw error;
     }
 };
+
+//게시판 삭제
+export const deleteInfoPost = async (infoboardkey) => {
+    try {
+        const response = await axiosInstance.delete(`/api/freeboard/delete/${infoboardkey}`, {
+            headers: {
+                'Cache-Control': 'no-cache'
+            }
+        });
+        return response;
+    } catch (error) {
+        console.error('게시글 삭제 실패:', error);
+        throw error;
+    }
+};

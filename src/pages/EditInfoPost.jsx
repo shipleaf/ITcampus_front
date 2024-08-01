@@ -94,7 +94,7 @@ function EditInfoPost() {
       }
       console.log('글 수정 성공:', response.data);
       alert('글 수정이 성공적으로 완료되었습니다.');
-      navigate('/informationlist');
+      navigate(`/informationdetails/${key}`);
     } catch (error) {
       console.error('에러 발생:', error);
     }

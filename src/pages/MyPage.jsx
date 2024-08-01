@@ -5,9 +5,9 @@ import UserHeader from "../components/modules/header/UserHeader";
 import { myPageAPI } from "../APIs/myPageAPI";
 import { useRecoilValue } from "recoil";
 import { loginState } from "../state/atoms";
-// import Post from "../components/post/Post";
-// import CompanyPost from "../components/post/CompanyPost";
-// import RecruitmentPost from "../components/post/RecruitmentPost";
+import Post from "../components/post/Post";
+import CompanyPost from "../components/post/CompanyPost";
+import RecruitmentPost from "../components/post/RecruitmentPost";
 import StudyPost from "../components/post/StudyPost";
 import EditProfileModal from "../components/modules/mypage/EditProfileModal";
 
@@ -16,6 +16,7 @@ function MyPage() {
     const [selectedTab, setSelectedTab] = useState('기업');
     const [selectedWriteTab, setSelectedWriteTab] = useState('정보게시판');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showAll, setShowAll] = useState(false);
     const isLoggedIn = useRecoilValue(loginState);
     const scrapSectionRef = useRef(null);
     const writtenSectionRef = useRef(null);
@@ -25,7 +26,7 @@ function MyPage() {
             try {
                 const response = await myPageAPI();
                 const data = response.data;
-                console.log("프로필",data);
+                console.log("프로필", data);
                 setUserData(data);
             } catch (error) {
                 console.error('데이터 불러오기 실패:', error);
@@ -48,36 +49,48 @@ function MyPage() {
     const renderWriterContent = () => {
         if (!userData) return null;
 
+        const renderScrapItems = (items) => {
+            const displayItems = showAll ? items : items.slice(0, 4);
+            return (
+                <>
+                    {displayItems}
+                    {!showAll && items.length > 3 && (
+                        <ShowMoreButton onClick={() => setShowAll(true)}>더보기</ShowMoreButton>
+                    )}
+                </>
+            );
+        };
+
         switch (selectedWriteTab) {
             case '스터디게시판':
                 return (
                     <ContentList>
-                        {userData.studyboardPosts && userData.studyboardPosts.map((study, index) => (
+                        {renderScrapItems(userData.studyboardPosts && userData.studyboardPosts.map((study, index) => (
                             <StudyPost
                                 key={index}
                                 studyKey={study.key}
                                 width="100%"
                                 {...study}
                             />
-                        ))}
+                        )))}
                     </ContentList>
                 );
             case '정보게시판':
                 return (
                     <ContentList>
-                        {userData.freeboardPosts && userData.freeboardPosts.map((info, index) => (
+                        {renderScrapItems(userData.freeboardPosts && userData.freeboardPosts.map((info, index) => (
                             <StudyPost
                                 key={index}
                                 infoKey={info.key}
                                 width="100%"
-                                title = {info.title}
+                                title={info.title}
                                 body={info.body}
                                 date={info.date}
                                 id={info.id}
                                 pic1={info.pic1}
                                 commentCount={info.commentCount}
                             />
-                        ))}
+                        )))}
                     </ContentList>
                 );
             default:
@@ -88,23 +101,100 @@ function MyPage() {
     const renderContent = () => {
         if (!userData || !userData.user) return null;
 
+        const renderScrapItems = (items) => {
+            const displayItems = showAll ? items : items.slice(0, 4);
+            return (
+                <>
+                    {displayItems}
+                    {!showAll && items.length > 4 && (
+                        <ShowMoreButton onClick={() => setShowAll(true)}>더보기</ShowMoreButton>
+                    )}
+                </>
+            );
+        };
+
         switch (selectedTab) {
             case '기업':
                 return (
-                    <ScaledWrapper>
-                        <ContentList>
-                        </ContentList>
-                    </ScaledWrapper>
+                    <ContentList >
+                        {renderScrapItems(userData.user.Scraps && userData.user.Scraps
+                            .filter(scrap => scrap.companyID)
+                            .map((scrap, index) => (
+                                <CompanyPost
+                                    key={index}
+                                    postKey={scrap.companyID}
+                                    companyName={scrap.Company.companyName}
+                                    scrapCount={scrap.scrapCount}
+                                    stack={scrap.Company.stack}
+                                    track={scrap.Company.track}
+                                    logo={scrap.Company.logo}
+                                />
+                            )))}
+                    </ContentList>
                 );
             case '자격증':
                 return (
                     <ContentList>
-                        {}
+                        {renderScrapItems(userData.user.Scraps && userData.user.Scraps
+                            .filter(scrap => scrap.qualificationInfoKey)
+                            .map((scrap, index) => (
+                                <Post
+                                    key={index}
+                                    itKey={scrap.qualificationInfoKey}
+                                    title={scrap.QualificationInfoModel.title}
+                                    body={scrap.QualificationInfoModel.body}
+                                    agency={scrap.QualificationInfoModel.agency}
+                                    startdate={scrap.QualificationInfoModel.startdate}
+                                    enddate={scrap.QualificationInfoModel.enddate}
+                                    pic1={scrap.QualificationInfoModel.pic1}
+                                    scrapCount={scrap.QualificationInfoModel.scrapCount}//없음
+                                />
+                            )))}
+                    </ContentList>
+                );
+                case '학생지원':
+                return (
+                    <ContentList>
+                        {renderScrapItems(userData.user.Scraps && userData.user.Scraps
+                            .filter(scrap => scrap.studentSupportInfoKey)
+                            .map((scrap, index) => (
+                                <Post
+                                key={index}
+                                supKey={scrap.studentSupportInfoKey}
+                                title={scrap.StudentSupportInfoModel.title}
+                                body={scrap.StudentSupportInfoModel.body}
+                                agency={scrap.StudentSupportInfoModel.agency}
+                                startdate={scrap.StudentSupportInfoModel.startdate}
+                                enddate={scrap.StudentSupportInfoModel.enddate}
+                                pic1={scrap.StudentSupportInfoModel.pic1}
+                                scrapCount={scrap.StudentSupportInfoModel.scrapCount}//없음
+                                />
+                            )))}
                     </ContentList>
                 );
             case '취업공고':
                 return (
                     <ContentList>
+                        {renderScrapItems(userData.user.Scraps && userData.user.Scraps
+                            .filter(scrap => scrap.recruitmentNoticeInfoKey)
+                            .map((scrap, index) => (
+                                <RecruitmentPost  // //recruit_part,// width }scrapCount, 
+                                    key={index}
+                                    postKey={scrap.recruitmentNoticeInfoKey}//
+                                    title={scrap.RecruitmentNoticeInfoModel.title}//
+                                    body={scrap.RecruitmentNoticeInfoModel.body}//
+                                    experience={scrap.RecruitmentNoticeInfoModel.experience}//
+                                    education={scrap.RecruitmentNoticeInfoModel.education}//
+                                    stack={scrap.RecruitmentNoticeInfoModel.stack}//
+                                    work_type={scrap.RecruitmentNoticeInfoModel.work_type}//
+                                    companyname={scrap.RecruitmentNoticeInfoModel.companyname}//
+                                    startdate={scrap.RecruitmentNoticeInfoModel.startdate}//
+                                    enddate={scrap.RecruitmentNoticeInfoModel.enddate}//
+                                    pic1={scrap.RecruitmentNoticeInfoModel.pic1}//
+                                    recruit_part={scrap.RecruitmentNoticeInfoModel.recruit_part}
+                                    scrapCount={scrap.RecruitmentNoticeInfoModel.scrapCount}
+                                />
+                            )))}
                     </ContentList>
                 );
             default:
@@ -131,6 +221,7 @@ function MyPage() {
                         <SidebarItemContainer>
                             <SidebarItem onClick={() => handleSidebarClick('기업')}>기업 스크랩</SidebarItem>
                             <SidebarItem onClick={() => handleSidebarClick('자격증')}>자격증 스크랩</SidebarItem>
+                            <SidebarItem onClick={() => handleSidebarClick('학생지원')}>학생지원 스크랩</SidebarItem>
                             <SidebarItem onClick={() => handleSidebarClick('취업공고')}>취업공고 스크랩</SidebarItem>
                         </SidebarItemContainer>
                     </SidebarTitle>
@@ -157,6 +248,7 @@ function MyPage() {
                             <Section>
                                 <SectionTitle active={selectedTab === '기업'} onClick={() => setSelectedTab('기업')}>기업</SectionTitle>
                                 <SectionTitle active={selectedTab === '자격증'} onClick={() => setSelectedTab('자격증')}>자격증</SectionTitle>
+                                <SectionTitle active={selectedTab === '학생지원'} onClick={() => setSelectedTab('학생지원')}>학생지원</SectionTitle>
                                 <SectionTitle active={selectedTab === '취업공고'} onClick={() => setSelectedTab('취업공고')}>취업공고</SectionTitle>
                             </Section>
                             {renderContent()}
@@ -303,11 +395,6 @@ const ContentList = styled.div`
   margin: 0 auto;
 `
 
-const ScaledWrapper = styled.div`
-  transform: scale(0.8); 
-  margin-left: -190px;
-`
-
 const SidebarContainer = styled.div`
   display: flex;
   margin-top : 50px;
@@ -342,4 +429,19 @@ const SidebarItem = styled.div`
     color: #999;
     font-size: 15px;
     cursor: pointer;
+`
+
+const ShowMoreButton = styled.button`
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #8fd0e0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #577074;
+  }
 `
