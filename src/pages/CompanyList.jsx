@@ -199,6 +199,7 @@ const Pagination = styled.div`
 
 const PageNumber = styled.button`
     background: ${(props) => (props.active ? '#36bef1' : '#fff')};
+    color: ${(props) => (props.active ? '#fff' : '#000')};
     border: 1px solid #ddd;
     padding: 10px 20px;
     margin: 0 5px;

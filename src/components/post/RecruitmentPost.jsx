@@ -136,8 +136,8 @@ const Requirement = styled.div`
     border-radius: 20px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    max-width: 150px;
+    justify-content: flex-start;
+    max-width: 220px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

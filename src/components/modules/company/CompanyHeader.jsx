@@ -23,7 +23,7 @@ const CompanyHeader = ({ data }) => {
                     </CompanyDetail>
                     <CompanyDetail>
                         <DetailLabel>직원수</DetailLabel> 
-                        <DetailValue>{data.employee}명</DetailValue>
+                        <DetailValue>{data.employee}</DetailValue>
                     </CompanyDetail>
                     <CompanyDetail>
                         <DetailLabel>회사위치</DetailLabel> 

@@ -13,6 +13,7 @@ import RecruitNotice from '../components/modules/recruit/RecruitNotice';
 import OtherAnnouncements from '../components/modules/recruit/OtherAnnouncements';
 import RelatedRecruitments from '../components/modules/recruit/RelatedRecruitments';
 import { fetchRecruitmentDetails } from '../APIs/RecruitmentAPI';
+import { Element } from 'react-scroll';
 
 const ScrapContainer = styled.div`
     width: 8%;
@@ -73,8 +74,12 @@ function RecruitmentDetails() {
                 </ScrapContainer>
             </div>
             <RecruitDetailBody jobDetailData={recruitmentNoticeInfo} />
-            <RecruitCompanyInfo company={company} />
-            <RecruitNotice jobDetailData={recruitmentNoticeInfo} />
+            <Element name="company">
+                <RecruitCompanyInfo company={company} />
+            </Element>
+            <Element name="period">
+                <RecruitNotice jobDetailData={recruitmentNoticeInfo} />
+            </Element>
             <OtherAnnouncements otherJobData={topOtherNotices} />
             <RelatedRecruitments relatedNotices={relatedNotices} />
         </div>

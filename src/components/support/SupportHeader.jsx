@@ -78,26 +78,7 @@ const Body = styled.div`
 `;
 
 function SupportHeader({ supportdata }) {
-  // const supportdataaaa = {
-  //   key: 1,
-  //   title: "2024 학생지원 프로그램",
-  //   startdate: "2024-08-01T00:00:00.000Z",
-  //   enddate: "2024-12-31T23:59:59.000Z",
-  //   resultdate: "2025-01-15T00:00:00.000Z",
-  //   logo: "logo.png",
-  //   pic1: "pic1.jpg",
-  //   pic2: "pic2.jpg",
-  //   pic3: "pic3.jpg",
-  //   pic4: "pic4.jpg",
-  //   pic5: "pic5.jpg",
-  //   body: "이 프로그램은 학생들의 다양한 활동을 지원하기 위해 마련되었습니다.이 프로그램은 학생들의 다양한 활동을 지원하기 위해 마련되었습니다.이 프로그램은 학생들의 다양한 활동을 지원하기 위해 마련되었습니다.이 프로그램은 학생들의 다양한 활동을 지원하기 위해 마련되었습니다.이 프로그램은 학생들의 다양한 활동을 지원하기 위해 마련되었습니다.",
-  //   support_target: "모든 학부생",
-  //   application_method: "온라인 신청",
-  //   qualification: "재학생",
-  //   support_detail: "장학금, 생활비 지원",
-  //   link: "https://example.com/apply",
-  //   agency: "교육부",
-  // };
+
   return (
       <TitleContainer>
           <Header>
@@ -111,7 +92,7 @@ function SupportHeader({ supportdata }) {
                       <BodyTitle style={{ color: '#007FFF', fontWeight: '900' }}>
                           {supportdata.title}
                       </BodyTitle>
-                      <span style={{ fontWeight: '700' }}> 란?</span>
+                      <span style={{ fontWeight: '700' }}>  이란?</span>
                   </BodyContainer>
                   <Body>{supportdata.body}</Body>
               </HeaderContents>
