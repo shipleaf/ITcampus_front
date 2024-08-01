@@ -12,11 +12,13 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { sidebarState, loginState, toggleState, mainEventState, myEventState, smallSelectedDateState } from '../state/atoms';
 
 const SidebarContainer = styled.div`
-  width: 264px;
-  height: calc(100vh - 20px); /* 기기 높이에 맞추어 패딩이나 마진을 고려한 높이 설정 */
-  transform: ${({ isVisible }) => (isVisible ? 'translateX(0)' : 'translateX(-100%)')};
-  transition: transform 0.4s ease-in-out;
-
+  width: 13.75%;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-sizing: border-box;
 `;
 
 const MainContent = styled.div`
