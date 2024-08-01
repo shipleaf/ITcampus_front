@@ -15,6 +15,7 @@ function StudyPost({studyKey, infoKey, title, body, id, pic1, date, commentCount
             navigate(`/informationdetails/${infoKey}`);
         }
     }
+    
     const formatDate = (dateString) => {
         const date = new window.Date(dateString);
         const year = date.getFullYear();

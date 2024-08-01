@@ -32,7 +32,7 @@ export const fetchStudyPost = async (studyId) => {
 export const fetchStudyComments = async (studyId) => {
     try {
         const response = await axiosInstance.get(`/api/studyboardComment/${studyId}`, {
-            headers: {
+            headers: {      
                 'Cache-Control': 'no-cache'
             }
         });
