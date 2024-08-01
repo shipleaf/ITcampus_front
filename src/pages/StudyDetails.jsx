@@ -41,11 +41,11 @@ function StudyDetails() {
 
   return (
     <>
-      <Header />
-      <Container>
-        {postData && <StudyPostContent postKey={key} {...postData} />}
-        <StudyPostComments comments={postComments} studyboardkey={key} fetchStudyComments={fetchStudyComments} />
-      </Container>
+    <Header/>
+    <Container>
+      {postData && <StudyPostContent studyKey={key} {...postData} />}
+      <StudyPostComments comments={postComments} studyboardkey={key} fetchStudyComments={fetchStudyComments} />
+    </Container>
     </>
   );
 };

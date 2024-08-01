@@ -105,3 +105,17 @@ export const deleteStudyComment = async (studyboardkey, commentkey) => {
         throw error;
     }
 };
+
+export const editStudyPost = async (studyId, postData) => {
+    try {
+      const response = await axiosInstance.put(`/api/studyboard/update/${studyId}`, postData, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      return response;
+    } catch (error) {
+      console.error('게시판 수정 실패:', error);
+      throw error;
+    }
+};
