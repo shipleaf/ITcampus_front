@@ -30,11 +30,11 @@ function ITLicense() {
             } else {
                 response = await fetchLicenseList();
             }
-
             if (response.status >= 200 && response.status < 300) {
                 setPosts(response.data);
                 setError(null);  
             }
+            setError(null);
         } catch (error) {
             if (query && error.response && error.response.status === 404) {
                 setError('검색결과 없음');
@@ -155,18 +155,18 @@ function ITLicense() {
                     <p>자격증 정보 불러오기 실패</p>
                 ) : (
                     currentPosts.map((post) => (
-                            <Post
-                                key={post.key}
-                                itKey={post.key}
-                                title={post.title}
-                                body={post.body}
-                                agency={post.agency}
-                                pic1={post.pic1}
-                                scrapCount={post.scrapCount}
-                                startdate={new Date(post.startdate).toLocaleDateString('ko-KR')}
-                                enddate={new Date(post.enddate).toLocaleDateString('ko-KR')}
-                                onClick={handleLicenseClick}
-                            />
+                        <Post
+                            key={post.key}
+                            itKey={post.key}
+                            title={post.title}
+                            body={post.body}
+                            agency={post.agency}
+                            pic1={post.pic1}
+                            scrapCount={post.scrapCount}
+                            startdate={new Date(post.startdate).toLocaleDateString('ko-KR')}
+                            enddate={new Date(post.enddate).toLocaleDateString('ko-KR')}
+                            onClick={handleLicenseClick}
+                        />
                     ))
                 )}
                 <Pagination>

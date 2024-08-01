@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-function LicenseHeader({licenseDetails}) {
+function LicenseHeader({ licenseDetails }) {
 
     if (!licenseDetails) {
         return null;
@@ -10,7 +10,7 @@ function LicenseHeader({licenseDetails}) {
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const year = date.getFullYear();
-        const month = date.getMonth() + 1; 
+        const month = date.getMonth() + 1;
         const day = date.getDate();
         return `${year}. ${month}. ${day}.`;
     };
@@ -30,42 +30,43 @@ function LicenseHeader({licenseDetails}) {
                         {licenseDetails.title}
                     </Header>
                     <LeftContainer>
-                    <ContentContainer>
-                        <Toc>응시 자격</Toc>
-                        <Content>
-                            {licenseDetails.qualification}
-                        </Content>
-                    </ContentContainer>
-                    <ContentContainer>
-                        <Toc>응시 수수료</Toc>
-                        <Content>
-                            {licenseDetails.fee}
-                        </Content>
-                    </ContentContainer>
-                    <ContentContainer>
-                        <Toc>응시 일정</Toc>
-                        <Content>
-                            {formattedExamStartDate} ~ {formattedExamEndDate}
-                        </Content>
-                    </ContentContainer>
-                    <ContentContainer>
-                        <Toc>합격 발표일</Toc>
-                        <Content>
-                            {formattedResultDate}
-                        </Content>
-                    </ContentContainer>
-                    <ContentContainer>
-                        <Toc>합격 기준</Toc>
-                        <Content>
-                            {licenseDetails.pass_standard}
-                        </Content>
-                    </ContentContainer>
-                    <ContentContainer>
-                        <Toc>접수 홈페이지</Toc>
-                        <Content>
-                            {licenseDetails.link}
-                        </Content>
-                    </ContentContainer>
+                        <ContentContainer>
+                            <Toc>응시 자격</Toc>
+                            <Content dangerouslySetInnerHTML={{ __html: licenseDetails.qualification }}>
+                            </Content>
+                        </ContentContainer>
+                        <ContentContainer>
+                            <Toc>응시 수수료</Toc>
+                            <Content>
+                                {licenseDetails.fee}
+                            </Content>
+                        </ContentContainer>
+                        <ContentContainer>
+                            <Toc>응시 일정</Toc>
+                            <Content>
+                                {formattedExamStartDate} ~ {formattedExamEndDate}
+                            </Content>
+                        </ContentContainer>
+                        <ContentContainer>
+                            <Toc>합격 발표일</Toc>
+                            <Content>
+                                {formattedResultDate}
+                            </Content>
+                        </ContentContainer>
+                        <ContentContainer>
+                            <Toc>합격 기준</Toc>
+                            <Content>
+                                {licenseDetails.pass_standard}
+                            </Content>
+                        </ContentContainer>
+                        <ContentContainer>
+                            <Toc>접수 홈페이지</Toc>
+                            <Content>
+                                <a href={licenseDetails.link} target="_blank" rel="noopener noreferrer">
+                                    {licenseDetails.link}
+                                </a>
+                            </Content>
+                        </ContentContainer>
                     </LeftContainer>
                 </Container>
                 <BodyContainer>
@@ -121,6 +122,7 @@ const Title = styled.div`
     width: 62%;
     padding: 15px;
     margin-left: 10px;
+    font-family: "Noto Sans KR", sans-serif;
 `
 
 const LeftContainer = styled.div`
@@ -137,8 +139,10 @@ const Container = styled.div`
 `
 const Content = styled.div`
     margin-left: 15px;
+    font-family: "Noto Sans KR", sans-serif;
 `
 const Header = styled.div`
+font-family: "Noto Sans KR", sans-serif;
     font-size: 25px;
     font-weight: bold;
     border-bottom: 1px solid #ccc;
@@ -153,6 +157,7 @@ const ContentContainer = styled.div`
 const Toc = styled.div`
     color: #999;
     width: 120px;
+    font-family: "Noto Sans KR", sans-serif;
 `
 
 const InstitutionInfoContainer = styled.div`
@@ -182,6 +187,7 @@ const InstitutionBody = styled.div`
 `
 const Head = styled.div`
     font-weight: bold;
+    font-family: "Noto Sans KR", sans-serif;
 `
 const Body = styled.div`
     
@@ -189,8 +195,10 @@ const Body = styled.div`
 const InstitutionContent = styled(Content)`
     margin-left: 0;
     font-weight: 600;
+    font-family: "Noto Sans KR", sans-serif;
 `
 const InstitutionToc = styled(Toc)`
     width: 100px;
     font-size: 15px;
+    font-family: "Noto Sans KR", sans-serif;
 `

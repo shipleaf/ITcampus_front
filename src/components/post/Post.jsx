@@ -3,21 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import star from '../../assets/scrap.png';
 
-function Post({itKey, supKey, title, body, agency, pic1, scrapCount, startdate, enddate, width }) {
+function Post({ itKey, supKey, title, body, agency, pic1, scrapCount, startdate, enddate, width }) {
     const navigate = useNavigate();
     const formatDate = (dateString) => {
         const date = new window.Date(dateString);
         const year = date.getFullYear();
-        const month = date.getMonth() + 1; 
+        const month = date.getMonth() + 1;
         const day = date.getDate();
         return `${year}. ${month}. ${day}`;
     };
-    
-    const handleClick =  () => {
-        if(itKey){
+
+    const handleClick = () => {
+        if (itKey) {
             navigate(`/licensedetails/${itKey}`)
         }
-        else if(supKey){
+        else if (supKey) {
             navigate(`/governmentsupportdetails/${supKey}`)
         }
     }
@@ -27,14 +27,14 @@ function Post({itKey, supKey, title, body, agency, pic1, scrapCount, startdate, 
                 <Title>{title}</Title>
                 <Content>{body}</Content>
                 <Remain>
-                <Footer>
-                    <Writer>{agency}</Writer>
-                    <Date>{`${formatDate(startdate)} ~ ${formatDate(enddate)}`}</Date>
-                    <ScrapContainer>
-                        <ScrapImg src={star} />
-                        <ScrapCount>{scrapCount}</ScrapCount>
-                    </ScrapContainer>
-                </Footer>
+                    <Footer>
+                        <Writer>{agency}</Writer>
+                        <Date>{`${formatDate(startdate)} ~ ${formatDate(enddate)}`}</Date>
+                        <ScrapContainer>
+                            <ScrapImg src={star} />
+                            <ScrapCount>{scrapCount}</ScrapCount>
+                        </ScrapContainer>
+                    </Footer>
                 </Remain>
             </ContentContainer>
             <ThumbnailContainer>
@@ -50,6 +50,7 @@ const Remain = styled.div`
     display: flex;
     flex: 1;
     align-items: flex-end;
+    height: 100%;
 `
 
 const ButtonFrame = styled.button`
@@ -60,12 +61,12 @@ const ButtonFrame = styled.button`
     align-items: center;
     justify-content: space-between;
     background-color: #ffffff;
-    border: 3px solid #fff;
+    border: 2px solid #fff;
     border-radius: 5px;
     cursor: pointer;
 
     &:hover {
-    border: 3px solid #36bef1;
+    border: 2px solid #36bef1;
   }
 `
 
@@ -79,16 +80,19 @@ const ContentContainer = styled.div`
     overflow: hidden;
 `
 const Title = styled.div`
-    font-size: 25px;
+    font-size: 20px;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: bold;
     margin: 3px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    box-sizing: border-box;
+    padding: 10px;
 `
 const Content = styled.div`
-  font-size: 18px;
-  color: #666;
+  font-size: 12px;
+  color: #999;
   text-align: left;
   height: auto;
   margin: 10px 0;
@@ -97,31 +101,41 @@ const Content = styled.div`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  box-sizing: border-box;
+  padding-left: 10px;
 `
 
 const Footer = styled.div`
     display : flex;
+    flex-direction: row;
     align-items: center;
-    margin : 15px 0px;
-    height: 10%;
+    height: 100%;
+    width: 100%;
 `
 const Writer = styled.div`
+    display: block;
+    height: auto;
     font-size: 16px;
     font-weight: bold;
     width: 200px;
     color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    box-sizing: border-box;
+    padding-left: 10px;
 `
 
 const Date = styled.div`
     font-size: 14px;
     color: #999;
-    margin : auto 10px;
 `
 
 const ScrapContainer = styled.div`
     display: flex;
     justify-content: center;
-    margin-left: 30px;
+    margin-left: 40px;
 `
 
 const ScrapImg = styled.img`
@@ -133,8 +147,8 @@ const ScrapCount = styled.div`
     font-size: 18px;
     font-weight: bold;
     color: #999;
-    margin-left : 7px;
-    margin-top : 2.4px;
+    margin-left: 7px;
+    margin-top: 2.4px;
 `
 
 const ThumbnailContainer = styled.div`

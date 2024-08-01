@@ -16,7 +16,7 @@ const GuestHeaderComp = styled.div`
   justify-content: center;
   position: relative;
   border-bottom: 1px solid #ddd;
-  background-color: #fff;
+  background-color: #fff !important;
 `;
 
 const LogoContainer = styled.div`
