@@ -99,7 +99,7 @@ const StudyPostContent = ({ title, id, date, body, pic1, pic2, studyKey }) => {
           <Divider />
         </>
         <ContentWithImages>
-          <Content>{body}</Content>
+          <Content>{body}</Content> 
           {hasPictures && (
             <ImageWrapper>
               {pic1 && <Image src={pic1} onClick={() => openModal(pic1)} single={!(pic1 && pic2)} />}

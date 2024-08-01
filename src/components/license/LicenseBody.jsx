@@ -4,6 +4,8 @@ import styled from 'styled-components';
 function LicenseBody({ licenseDetails }) {
     const [selectedTab, setSelectedTab] = useState('출제경향');
 
+    console.log({licenseDetails});
+
     if (!licenseDetails) {
         return null;
     }

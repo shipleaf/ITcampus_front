@@ -13,10 +13,13 @@ import { sidebarState, loginState, toggleState, mainEventState, myEventState, sm
 
 const SidebarContainer = styled.div`
   width: 264px;
-  height: calc(100vh - 20px); /* 기기 높이에 맞추어 패딩이나 마진을 고려한 높이 설정 */
-  transform: ${({ isVisible }) => (isVisible ? 'translateX(0)' : 'translateX(-100%)')};
-  transition: transform 0.4s ease-in-out;
-
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-sizing: border-box;
+  flex-shrink: 0;
 `;
 
 const MainContent = styled.div`

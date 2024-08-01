@@ -1,33 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
-import axios from 'axios';
 
-function CompanyPost({postKey, logo, companyName, scrapCount, stack, track,  width, recruitmentNoticeCount }) {
-    const [isScrapped, setIsScrapped] = useState(false);
+function CompanyPost({ key, postKey, logo, companyName, scrapCount, stack, track, width, recruitmentNoticeCount, isScrapped }) {
     const navigate = useNavigate();
 
-    const handleClick =() =>{
+    const handleClick = () => {
         navigate(`/companydetails/${postKey}`)
     }
 
-    const handleScrap = async (e) => {
-        e.stopPropagation();
-        try {
-            setIsScrapped((prev) => !prev);
-            if (!isScrapped) {
-                await axios.post('/api/scrap', { action: 'add' });
-                alert('스크랩 되었습니다!');
-            } else {
-                await axios.post('/api/scrap', { action: 'remove' });
-                alert('스크랩이 취소되었습니다.');
-            }
-        } catch (error) {
-            console.error('스크랩 요청 중 오류 발생:', error);
-        }
-    };
 
     return (
         <ButtonFrame width={width} onClick={handleClick}>
@@ -42,17 +24,9 @@ function CompanyPost({postKey, logo, companyName, scrapCount, stack, track,  wid
                 #Track : {track}, #stack : {stack}
             </Detail>
             <ShowScrap>
-                <FaStar size={30} style={{ color: '#ffff00' }} />
+                <FaStar size={30} style={{ color: '#F5F500' }} />
                 <ScrapCount>{scrapCount}</ScrapCount>
             </ShowScrap>
-            <ScrapButtonContainer onClick={handleScrap}>
-                <ScrapButtonText >스크랩</ScrapButtonText>
-                {isScrapped ? (
-                    <FaStar size={30} style={{ color: '#ffff00' }} />
-                ) : (
-                    <CiStar size={30} style={{ color: '#A8A8A8' }} />
-                )}
-            </ScrapButtonContainer>
         </ButtonFrame>
     );
 }
@@ -142,31 +116,3 @@ const ScrapCount = styled.div`
     margin-left: 7px;
 `
 
-const ScrapButtonContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    width: 100px;
-    height: 40px;
-    cursor: pointer;
-    background-color: #fff;
-    margin-right: 20px;
-    pointer-events: auto;
-    
-    &:hover {
-        border: 3px solid black;
-    }
-`
-
-const ScrapButtonText = styled.div`
-    color: #999;
-    margin-left: 5px;
-    margin-right: 8px;
-    font-size : 15px;
-    pointer-events: none;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-`

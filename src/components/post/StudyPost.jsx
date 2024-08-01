@@ -15,6 +15,7 @@ function StudyPost({studyKey, infoKey, title, body, id, pic1, date, commentCount
             navigate(`/informationdetails/${infoKey}`);
         }
     }
+    
     const formatDate = (dateString) => {
         const date = new window.Date(dateString);
         const year = date.getFullYear();
@@ -22,6 +23,9 @@ function StudyPost({studyKey, infoKey, title, body, id, pic1, date, commentCount
         const day = date.getDate();
         return `${year}. ${month}. ${day}`;
     };
+
+    console.log("Thumbnail URL:", pic1);    
+    
     return (
         <>
             <ButtonFrame width = {width} onClick={handleClick}>

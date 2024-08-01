@@ -135,7 +135,7 @@ function Sidebar() {
   };
 
   return (
-    <div style={{ height: '100%', width: '100%', borderTop: '1px solid #ddd' }}>
+    <div style={{ height: '100%', width: '100%', borderTop: '1px solid #ddd', overflow: 'auto' }}>
       <ImageContainer>
         <SmallCalendar />
       </ImageContainer>
