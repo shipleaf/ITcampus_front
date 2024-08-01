@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { useNavigate, useLocation } from 'react-router-dom'; // useNavigate 훅을 import
 import Logo from '../../header/Logo';
 import DropdownMenu from '../../header/DropdownMenu';
 import { FaRegBell } from "react-icons/fa";
@@ -90,6 +91,12 @@ const NoticeButton = styled.div`
   }
 `;
 
+const MenuItem = styled.div`
+  span {
+    border-bottom: ${(props) => (props.active ? '1px solid #000' : 'none')};
+  }
+`;
+
 const UserButton = styled.button`
   width: 45%;
   display: flex;
@@ -122,6 +129,8 @@ function UserHeader() {
   const dropdownRef = useRef(null);
   const userDropdownRef = useRef(null);
   const name = useRecoilValue(username);
+  const navigate = useNavigate(); // useNavigate 훅 사용
+  const location = useLocation();
 
   const handleClickOutside = (event) => {
     if (
@@ -140,33 +149,36 @@ function UserHeader() {
     };
   }, []);
 
+  const handleMenuClick = (path) => {
+    navigate(path); // 경로로 이동
+  };
+
   return (
     <div>
       <GuestHeaderComp>
-        <div style={{width: '60%', display: 'flex', justifyContent: 'space-between', backgroundColor: '#fff'}}>
+        <div style={{ width: '60%', display: 'flex', justifyContent: 'space-between', backgroundColor: '#fff' }}>
           <LogoContainer>
             <Logo />
           </LogoContainer>
           <MenuBar
-            ref={dropdownRef}
             onMouseEnter={() => setShowDropdown(true)}
             onMouseLeave={() => setShowDropdown(false)}
           >
-            <div>
+            <MenuItem active={location.pathname === '/companylist'} onClick={() => handleMenuClick('/companylist')}>
               <span>기업 소개</span>
-            </div>
-            <div>
+            </MenuItem>
+            <MenuItem active={location.pathname === '/licenselist'} onClick={() => handleMenuClick('/licenselist')}>
               <span>IT 자격증</span>
-            </div>
-            <div>
+            </MenuItem>
+            <MenuItem active={location.pathname === '/governmentlist'} onClick={() => handleMenuClick('/governmentlist')}>
               <span>지원 사업</span>
-            </div>
-            <div>
+            </MenuItem>
+            <MenuItem active={location.pathname === '/recruitlist'} onClick={() => handleMenuClick('/recruitlist')}>
               <span>채용 공고</span>
-            </div>
-            <div>
+            </MenuItem>
+            <MenuItem active={location.pathname === '/informationlist'} onClick={() => handleMenuClick('/informationlist')}>
               <span>커뮤니티</span>
-            </div>
+            </MenuItem>
           </MenuBar>
           <HeaderRight>
             {/* <SearchBar>
@@ -178,7 +190,7 @@ function UserHeader() {
             </NoticeButton>
             <UserButton onClick={() => setShowUserDropdown(!showUserDropdown)}>
               <FaRegUserCircle style={{ color: '#bbb' }} size={30} />
-              <div style={{ fontSize: '12px', marginLeft: '5px', width: '50%'}}>{name}</div>
+              <div style={{ fontSize: '12px', marginLeft: '5px', width: '50%' }}>{name}</div>
               <VscTriangleDown size={10} />
               {showUserDropdown && (
                 <div ref={userDropdownRef}>
