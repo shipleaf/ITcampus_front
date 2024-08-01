@@ -6,8 +6,8 @@ import interactionPlugin from '@fullcalendar/interaction';
 import koLocale from '@fullcalendar/core/locales/ko';
 import '../../../style/customCalendar.css';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { filterState, mainEventState, currentDateState } from '../../../state/atoms'; // currentDateState 추가
-import { fetchEvents } from '../../../APIs/CalendarDetailAPI';
+import { filterState, mainEventState, currentDateState, mainShowEventState } from '../../../state/atoms'; // currentDateState, mainShowEventState 추가
+import { fetchEvents, fetchShowEvents } from '../../../APIs/CalendarDetailAPI';
 
 const MoreButton = styled.button`
     border: none;
@@ -27,7 +27,8 @@ const MoreButton = styled.button`
 const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
     const calendarRef = useRef(null);
     const filters = useRecoilValue(filterState);
-    const [events, setEvents] = useRecoilState(mainEventState);
+    const [, setEvents] = useRecoilState(mainEventState);
+    const [showEvents, setShowEvents] = useRecoilState(mainShowEventState);
     const [currentDate, setCurrentDate] = useRecoilState(currentDateState);
 
     useImperativeHandle(ref, () => ({
@@ -62,7 +63,7 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
         const left = cellRect.left - detailWidth - gap < 0 ? cellRect.right + gap : cellRect.left - detailWidth - gap;
         const top = 186;
 
-        const clickedDateEvents = events.filter(event => event.start === info.dateStr);
+        const clickedDateEvents = showEvents.filter(event => event.start === info.dateStr);
 
         onDateClick(info.dateStr, { top, left }, clickedDateEvents);
     };
@@ -162,8 +163,46 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
             }
         };
 
+        const loadShowEvents = async () => {
+            try {
+                const showData = await fetchShowEvents();
+                console.log("Fetched show data:", showData);
+                const formattedShowEvents = showData.map(event => {
+                    if (!event.key || !event.title || !event.whatis || !event.startdate || !event.enddate) {
+                        console.error("Event object is missing required properties:", event);
+                        return null;
+                    }
+
+                    const endDate = new Date(event.enddate);
+                    endDate.setDate(endDate.getDate() + 1);
+
+                    return {
+                        key: event.key,
+                        title: event.title,
+                        whatis: event.whatis,
+                        start: event.startdate,
+                        end: endDate.toISOString().split('T')[0],
+                        endtime: endDate,
+                        backgroundColor: getColor(event.whatis),
+                        isScrapped: event.isScrapped
+                    };
+                }).filter(event => event !== null);
+                console.log("Formatted show events:", formattedShowEvents);
+                setShowEvents(formattedShowEvents);
+                if (calendarRef.current) {
+                    const calendarApi = calendarRef.current.getApi();
+                    setCurrentDate(calendarApi.getDate());
+                    hideExtraWeeks();
+                }
+            } catch (error) {
+                console.error(`이벤트 데이터를 가져오는 데 실패했습니다: ${error.message}`);
+                alert(`이벤트 데이터를 가져오는 데 실패했습니다: ${error.message}`);
+            }
+        };
+
         loadEvents();
-    }, [getColor, setEvents, setCurrentDate]);
+        loadShowEvents();
+    }, [getColor, setEvents, setShowEvents, setCurrentDate]);
 
     return (
         <div className="container large-calendar">
@@ -174,7 +213,7 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
                 headerToolbar={false}
                 height="85vh"
                 dateClick={handleDateClick}
-                events={events}
+                events={showEvents}
                 eventOrder="start,-duration,allDay,title"
                 displayEventTime={false}
                 eventContent={renderEventContent}
@@ -194,7 +233,7 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
                     hideExtraWeeks();
                 }}
                 dayMaxEventRows={5}
-                moreLinkClick="popover" // 클릭 시 팝업 창 안 열리도록 설정
+                moreLinkClick="popover"
                 moreLinkContent={(arg) => (
                     <div style={{ width: '100%', pointerEvents: 'none' }}>
                         <MoreButton type="button" className="fc-more-button" style={{ pointerEvents: 'none' }}>
