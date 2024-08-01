@@ -24,6 +24,11 @@ export const mainEventState = atom({
   default: [],
 })
 
+export const mainShowEventState = atom({
+  key: 'showEventDataState',
+  default: [],
+})
+
 export const myEventState = atom({
   key: 'myEventDataState',
   default: [],
