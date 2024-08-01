@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { FaBuilding } from "react-icons/fa";
 
 const Date = styled.div`
     width: 50px;
@@ -23,11 +24,25 @@ const RecruitContainer = styled.div`
     cursor: pointer;
 `;
 
-const StyledImage = styled.img`
-    width: 100%;
+const Header = styled.div`
+    height: 57%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 `;
 
-const Header = styled.div``;
+const StyledImage = styled.img`
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+`;
+
+const BodyContainer = styled.div`
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+`;
 
 const Body = styled.div`
     display: -webkit-box;
@@ -35,12 +50,6 @@ const Body = styled.div`
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-`;
-
-const BodyContainer = styled.div`
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
 `;
 
 const FooterContainer = styled.div``;
@@ -68,7 +77,11 @@ function OtherRecruitModule({ notice }) {
     return (
         <RecruitContainer onClick={handleClick}>
             <Header>
-                <StyledImage src={notice.pic1} />
+                {notice.pic1 ? (
+                    <StyledImage src={notice.pic1} />
+                ) : (
+                    <FaBuilding />
+                )}
             </Header>
             <BodyContainer>
                 <Body>{notice.title}</Body>

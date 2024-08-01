@@ -14,7 +14,7 @@ function CompanyDetails() {
     const [companyDetailData, setCompanyDetailData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [isExpanded, ] = useState(false);
     const isLoggedIn = useRecoilValue(loginState);
 
     const { key } = useParams();
@@ -37,9 +37,9 @@ function CompanyDetails() {
         getCompanyDetails();
     }, [key]);
 
-    const handleExpandClick = () => {
-        setIsExpanded(!isExpanded);
-    };
+    // const handleExpandClick = () => {
+    //     setIsExpanded(!isExpanded);
+    // };
 
     if (loading) {
         return <p>Loading...</p>;
@@ -52,6 +52,14 @@ function CompanyDetails() {
     const topCompanies = [...companyDetailData.otherCompanies]
         .sort((a, b) => b.companyID - a.companyID)
         .slice(0, 3);
+
+    const imageSources = [
+        companyDetailData.pic1,
+        companyDetailData.pic2,
+        companyDetailData.pic3,
+        companyDetailData.pic4,
+        companyDetailData.pic5,
+    ].filter(pic => pic); // 값이 있는 pic만 필터링
 
     return (
         <>
@@ -74,14 +82,14 @@ function CompanyDetails() {
                             <p key={index}>{line}</p>
                         ))}
                     </SectionContent>
-                    <ExpandButton onClick={handleExpandClick}>
+                    {/* <ExpandButton onClick={handleExpandClick}>
                         {isExpanded ? '접기 ▲' : '펼치기 ▼'}
-                    </ExpandButton>
+                    </ExpandButton> */}
                 </Section>
                 <ImageGallery>
-                    <GalleryImage src={companyDetailData.pic1} alt="이미지1" />
-                    <GalleryImage src={companyDetailData.pic2} alt="이미지2" />
-                    <GalleryImage src={companyDetailData.pic3} alt="이미지3" />
+                    {imageSources.map((src, index) => (
+                        <GalleryImage key={index} src={src} alt={`이미지${index + 1}`} />
+                    ))}
                 </ImageGallery>
                 <Section>
                     <SectionTitle>복지 및 혜택</SectionTitle>
@@ -158,24 +166,25 @@ const SectionContent = styled.div`
     overflow: hidden;
 `
 
-const ExpandButton = styled.button`
-    display: block;
-    width: 100%;
-    height: 50px;
-    margin: 10px auto;
-    padding: 5px 10px;
-    background-color: white;
-    font-size: 20px;
-    font-weight: bold;
-    color: black;
-    border: 1px solid #999;
-    border-radius: 5px;
-    cursor: pointer;
-`
+// const ExpandButton = styled.button`
+//     display: block;
+//     width: 100%;
+//     height: 50px;
+//     margin: 10px auto;
+//     padding: 5px 10px;
+//     background-color: white;
+//     font-size: 20px;
+//     font-weight: bold;
+//     color: black;
+//     border: 1px solid #999;
+//     border-radius: 5px;
+//     cursor: pointer;
+// `
 
 const ImageGallery = styled.div`
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
     margin: 20px 0;
 `
 
@@ -183,6 +192,7 @@ const GalleryImage = styled.img`
     width: 150px;
     height: 150px;
     object-fit: cover;
+    margin: 0 10px;
 `
 
 const OtherCompany = styled.div`

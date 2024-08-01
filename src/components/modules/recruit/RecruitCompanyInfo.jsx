@@ -98,9 +98,8 @@ const ScrapButtonCotainer = styled(Button)`
     }
 `
 function RecruitCompanyInfo({ company }) {
-
     const establishDate = new Date(company.establish).toLocaleDateString();
-
+    const stackString = company.stack.map(stack => stack.trim()).join(', '); // 각 요소 사이에만 쉼표 추가
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -120,7 +119,7 @@ function RecruitCompanyInfo({ company }) {
                 <CompanyInfoBodyTitle>
                     <div>{company.companyName}</div>
                     <ScrapButtonCotainer>
-                        <ScrapButton />
+                        <ScrapButton apiEndpoint={`/api/company/${company.companyID}/scrap`} isScrapped={company.isScrapped} type="company"/>
                     </ScrapButtonCotainer>
                     <Button to={company.link}>기업 홈페이지<IoIosArrowForward /></Button>
                 </CompanyInfoBodyTitle>
@@ -142,7 +141,7 @@ function RecruitCompanyInfo({ company }) {
                     <InfoContainer>
                         <InfoItem>
                             <Toc>스택</Toc>
-                            <Contents>{company.stack}</Contents>
+                            <Contents>{stackString}</Contents> {/* 쉼표로 구분된 문자열 사용 */}
                         </InfoItem>
                         <InfoItem>
                             <Toc>주소</Toc>
@@ -154,5 +153,6 @@ function RecruitCompanyInfo({ company }) {
         </div>
     );
 }
+
 
 export default RecruitCompanyInfo;

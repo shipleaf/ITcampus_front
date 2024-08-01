@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link, Element } from 'react-scroll';
 
 const RecruitBodyContainer = styled.div`
     width: 62%;
@@ -24,8 +25,13 @@ const Anchor = styled.div`
     display: flex;
     align-items: center;
     padding: 10px;
+    cursor: pointer;
     &:not(:first-child) {
         margin-left: 4%;
+        color: #777;
+        &:hover{
+            color: #000;
+        }
     }
 `;
 
@@ -36,13 +42,19 @@ const RecruitImageContainer = styled.div`
 `;
 
 const StyledImage = styled.img`
-    max-width: 750px;
-    max-height: 840px;
     width: auto;
+    max-width: 100%;
     height: auto;
+    min-width: 700px;
+    max-height: 840px;
     object-fit: contain;
     margin-top: 30px;
     margin-bottom: 30px;
+`;
+
+const Body = styled.div`
+    width: 100%;
+    padding: 20px;
 `;
 
 function RecruitDetailBody({ jobDetailData }) {
@@ -55,20 +67,30 @@ function RecruitDetailBody({ jobDetailData }) {
         <div style={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
             <RecruitBodyContainer>
                 <AnchorContainer>
-                    <Anchor>상세 정보</Anchor>
-                    <Anchor>기업 정보</Anchor>
-                    <Anchor>접수 기간/방법</Anchor>
+                    <Link to="details" smooth={true} duration={500}>
+                        <Anchor>상세 정보</Anchor>
+                    </Link>
+                    <Link to="company" smooth={true} duration={500}>
+                        <Anchor>기업 정보</Anchor>
+                    </Link>
+                    <Link to="period" smooth={true} duration={500}>
+                        <Anchor>접수 기간/방법</Anchor>
+                    </Link>
                 </AnchorContainer>
-                {images.map((pic, index) => (
-                    pic && (
-                        <RecruitImageContainer key={index}>
-                            <StyledImage src={pic} alt={`Recruit Image ${index + 1}`} />
-                        </RecruitImageContainer>
-                    )
-                ))}
+                <Element name="details">
+                    {images.map((pic, index) => (
+                        pic && (
+                            <RecruitImageContainer key={index}>
+                                <StyledImage src={pic} alt={`Recruit Image ${index + 1}`} />
+                            </RecruitImageContainer>
+                        )
+                    ))}
+                </Element>
+                <Body dangerouslySetInnerHTML={{ __html: jobDetailData.body }} />
             </RecruitBodyContainer>
         </div>
     );
 }
 
 export default RecruitDetailBody;
+    

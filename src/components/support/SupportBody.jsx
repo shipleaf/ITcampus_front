@@ -37,7 +37,7 @@ function SupportBody({ supportdata }) {
           <SectionTitle>문의</SectionTitle>
           <ul>
           <Content>
-            홈페이지 : <a href={supportdata.link}>세종특별자치시 바로가기</a>
+            홈페이지 : <a href={supportdata.link}>{supportdata.link}</a>
           </Content>
           </ul>
         </Section>

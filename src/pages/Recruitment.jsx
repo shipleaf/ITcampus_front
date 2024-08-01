@@ -39,6 +39,8 @@ function Recruitment() {
             let response;
             if (query) {
                 response = await searchRecruit(query);
+                setCurrentPage(1);
+                window.scrollTo(0, 0);
                 console.log(response.data)
             } else {
                 response = await fetchRecruitmentList();
@@ -65,6 +67,10 @@ function Recruitment() {
         setSearchTerm(query || '');
         getRecruitments(query);
     }, [location.search]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0); // 페이지 변경 후 스크롤 맨 위로
+    }, [currentPage]);
 
     const postsPerPage = 7;
     const today = new Date();
@@ -282,6 +288,7 @@ const Pagination = styled.div`
 
 const PageNumber = styled.button`
     background: ${(props) => (props.active ? '#36bef1' : '#fff')};
+    color: ${(props) => (props.active ? '#fff' : '#000')};
     border: 1px solid #ddd;
     padding: 10px 20px;
     margin: 0 5px;

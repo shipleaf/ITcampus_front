@@ -60,6 +60,7 @@ function OtherLicense({ currentKey }) {
         flexDirection: "column",
         alignItems: "center",
         marginTop: "50px",
+        paddingBottom: '100px'
       }}
     >
       <Title>다른 IT자격증을 보고 싶다면?</Title>
