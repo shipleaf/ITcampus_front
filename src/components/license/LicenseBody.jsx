@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 function LicenseBody({ licenseDetails }) {
-    const [selectedTab, setSelectedTab] = useState('시험정보');
+    const [selectedTab, setSelectedTab] = useState('기본정보');
 
     console.log({licenseDetails});
 

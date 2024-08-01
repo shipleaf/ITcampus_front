@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import star from '../../assets/scrap.png';
 
-function Post({ itKey, supKey, title, body, agency, pic1, scrapCount, startdate, enddate, width }) {
+function Post({ itKey, supKey, title, body, agency, logo, scrapCount, startdate, enddate, width }) {
     const navigate = useNavigate();
     const formatDate = (dateString) => {
         const date = new window.Date(dateString);
@@ -38,7 +38,7 @@ function Post({ itKey, supKey, title, body, agency, pic1, scrapCount, startdate,
                 </Remain>
             </ContentContainer>
             <ThumbnailContainer>
-                <Thumbnail src={pic1} />
+                <Thumbnail src={logo} />
             </ThumbnailContainer>
         </ButtonFrame>
     );
