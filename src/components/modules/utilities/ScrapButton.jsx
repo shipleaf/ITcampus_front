@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
-import { licenseScrap } from '../../../APIs/ScrapAPI';
+import { licenseScrap, licenseUnScrap, companyScrap, companyUnScrap, supportScrap, supportUnScrap, recruitScrap, recruitUnScrap } from '../../../APIs/ScrapAPI';
 
 const ScrapButtonContainer = styled.div`
     display: flex;
@@ -15,16 +15,41 @@ const ScrapButtonContainer = styled.div`
     background-color: #fff;
 `;
 
-function ScrapButton({ apiEndpoint }) {
-    const [isScrapped, setIsScrapped] = useState(false);
+function ScrapButton({ apiEndpoint, isScrapped, type }) {
+    const [isScrappedFront, setIsScrappedFront] = useState(isScrapped);
+
+    useEffect(() => {
+        setIsScrappedFront(isScrapped);
+    }, [isScrapped]);
 
     const handleScrap = async () => {
         try {
-            const action = isScrapped ? 'remove' : 'add';
-            const response = await licenseScrap(apiEndpoint, action);
+            let response;
+            if (isScrappedFront) {
+                if (type === 'license') {
+                    response = await licenseUnScrap(apiEndpoint);
+                } else if (type === 'company') {
+                    response = await companyUnScrap(apiEndpoint);
+                } else if (type === 'support') {
+                    response = await supportUnScrap(apiEndpoint);
+                } else if (type === 'recruit') {
+                    response = await recruitUnScrap(apiEndpoint);
+                }
+            } else {
+                if (type === 'license') {
+                    response = await licenseScrap(apiEndpoint);
+                } else if (type === 'company') {
+                    response = await companyScrap(apiEndpoint);
+                } else if (type === 'support') {
+                    response = await supportScrap(apiEndpoint);
+                } else if (type === 'recruit') {
+                    response = await recruitScrap(apiEndpoint);
+                }
+            }
+
             if (response.status >= 200 && response.status < 300) {
-                setIsScrapped(prev => !prev);
-                alert(isScrapped ? '스크랩이 취소되었습니다.' : '스크랩 되었습니다!');
+                setIsScrappedFront(prev => !prev);
+                alert(isScrappedFront ? '스크랩이 취소되었습니다.' : '스크랩 되었습니다!');
             } else {
                 alert('스크랩 요청에 실패했습니다. 다시 시도해주세요.');
             }
@@ -35,14 +60,19 @@ function ScrapButton({ apiEndpoint }) {
     };
 
     return (
-        <div style={{width: '100%'}}>
+        <div style={{ width: '100%' }}>
             <ScrapButtonContainer onClick={handleScrap}>
-                {isScrapped ? (
-                    <FaStar size={30} style={{ color: '#ffff00' }} />
+                {isScrappedFront ? (
+                    <>
+                        <FaStar size={30} style={{ color: '#ffff00' }} />
+                        <div style={{ color: '#999', marginLeft: '5px' }}>스크랩 취소</div>
+                    </>
                 ) : (
-                    <CiStar size={30} style={{ color: '#A8A8A8' }} />
+                    <>
+                        <CiStar size={30} style={{ color: '#A8A8A8' }} />
+                        <div style={{ color: '#999', marginLeft: '5px' }}>스크랩</div>
+                    </>
                 )}
-                <div style={{ color: '#999', marginLeft: '5px' }}>스크랩</div>
             </ScrapButtonContainer>
         </div>
     );

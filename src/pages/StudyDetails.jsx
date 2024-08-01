@@ -7,7 +7,7 @@ import StudyPostContent from '../components/studypostdetail/StudyPostContent';
 import Header from '../components/header/Header';
 
 
-function StudyDetails(){
+function StudyDetails() {
   const { key } = useParams();
   const [postData, setPostData] = useState(null);
   const [postComments, setPostComments] = useState([]);
@@ -44,7 +44,7 @@ function StudyDetails(){
     <Header/>
     <Container>
       {postData && <StudyPostContent studyKey={key} {...postData} />}
-      <StudyPostComments comments={postComments} key={key} />
+      <StudyPostComments comments={postComments} studyboardkey={key} fetchStudyComments={fetchStudyComments} />
     </Container>
     </>
   );

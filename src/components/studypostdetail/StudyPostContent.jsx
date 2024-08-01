@@ -50,14 +50,14 @@ const StudyPostContent = ({ title, id, date, body, pic1, pic2, studyKey }) => {
 
   const handleEditClick = async() =>{
     const postData = {};
-    navigate(`/editStudypost/${studyKey}`);
-
+    
     try {
       const response = await editStudyPost(studyKey, postData);
       if (response.status >= 200 && response.status <300) {
+        navigate(`/editStudypost/${studyKey}`);
       }
     } catch (error) {
-      //alert('권한이 없습니다.');
+      alert('권한이 없습니다.');
     }
   };
 

@@ -61,7 +61,7 @@ function ITLicenseDetails() {
             <LicenseHeader licenseDetails={licenseDetails} />
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <ScrapContainer>
-                    <ScrapButtonDiv apiEndpoint={`/api/qualificationInfo/${key}/scrap`}/>
+                    <ScrapButtonDiv apiEndpoint={`/api/qualificationInfo/${key}/scrap`} isScrapped={licenseDetails.isScrapped} type="license"/>
                 </ScrapContainer>
             </div>
             <LicenseBody licenseDetails={licenseDetails} />

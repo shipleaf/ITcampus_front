@@ -1,7 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { createStudyComment, deleteStudyComment } from '../../APIs/studyAPI';
 
-const StudyPostComments = ({ comments, isSecret}) => {
+const StudyPostComments = ({ comments = [], studyboardkey, fetchComments }) => {
+  const [newComment, setNewComment] = useState('');
+  const [isSecret, setIsSecret] = useState(false);
+
+  const formatDate = (dateString) => {
+    const date = new window.Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hour = date.getUTCHours();
+    const minute = date.getMinutes();
+    return `${year}. ${month}. ${day} / ${hour}:${minute}`;
+  };
+
+  const handleDelete = async (commentKey) => {
+    try {
+      await deleteStudyComment(studyboardkey, commentKey);
+      alert('댓글이 삭제되었습니다.');
+      fetchComments();
+    } catch (error) {
+      console.error('댓글 삭제 실패:', error);
+      alert('댓글 삭제에 실패했습니다.');
+    }
+  };
+
+  const handleCommentChange = (event) => {
+    setNewComment(event.target.value);
+  };
+
+  const handleSecretChange = (event) => {
+    setIsSecret(event.target.checked);
+  };
+
+  const handleCommentSubmit = async () => {
+    try {
+      const commentData = {
+        comment: newComment,
+        isSecret: isSecret,
+      };
+      console.log(commentData);
+      await createStudyComment(studyboardkey, commentData);
+      alert('댓글이 추가되었습니다.');
+      setNewComment('');
+      setIsSecret(false);
+      fetchComments();
+    } catch (error) {
+      console.error('댓글 추가 실패:', error);
+      console.error('에러내용', error.response ? error.response.data : error.message);
+    }
+  };
+
   return (
     <CommentBackground>
       <CommentsContainer>
@@ -13,21 +64,29 @@ const StudyPostComments = ({ comments, isSecret}) => {
           <Comment key={index}>
             <CommentHeader>
               <CommentAuthor>{comment.id}</CommentAuthor>
-              <DeleteButton onClick={11}>x</DeleteButton>
+              <DeleteButton onClick={() => handleDelete(comment.commentKey)}>x</DeleteButton>
             </CommentHeader>
-            <CommentText>{comment.text}</CommentText>
-            <Meta style={{ marginLeft: '5px' }}>{comment.date}</Meta>
+            <CommentText>{comment.comment}</CommentText>
+            <Meta style={{ marginLeft: '5px' }}>{formatDate(comment.date)}</Meta>
           </Comment>
         ))}
         <CommentInputContainer>
           <UserName>나</UserName>
-          <CommentTextArea placeholder="댓글을 남겨보세요" />
+          <CommentTextArea
+            placeholder="댓글을 남겨보세요"
+            value={newComment}
+            onChange={handleCommentChange}
+          />
           <OptionsWrapper>
             <SecretCheckbox>
-              <SecretCheckboxInput type="checkbox" />
+              <SecretCheckboxInput
+                type="checkbox"
+                checked={isSecret}
+                onChange={handleSecretChange}
+              />
               비밀글
             </SecretCheckbox>
-            <SubmitButton>등록</SubmitButton>
+            <SubmitButton onClick={handleCommentSubmit}>등록</SubmitButton>
           </OptionsWrapper>
         </CommentInputContainer>
       </CommentsContainer>
