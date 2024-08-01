@@ -12,13 +12,14 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { sidebarState, loginState, toggleState, mainEventState, myEventState, smallSelectedDateState } from '../state/atoms';
 
 const SidebarContainer = styled.div`
-  width: 13.75%;
-  height: 100vh;
+  width: 264px;
+  height: calc(100vh - 64px);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   background-color: #fff;
   box-sizing: border-box;
+  flex-shrink: 0;
 `;
 
 const MainContent = styled.div`

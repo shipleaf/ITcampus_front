@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { deleteInfoComment, createInfoComment } from '../../APIs/infoAPI';
+import { useParams } from 'react-router-dom';
 
 const InfoPostComments = ({ comments = [], InfoKey, fetchComments }) => {
   const [newComment, setNewComment] = useState('');
+  const { key } = useParams();
 
   const formatDate = (dateString) => {
     const date = new window.Date(dateString);
@@ -40,7 +42,7 @@ const InfoPostComments = ({ comments = [], InfoKey, fetchComments }) => {
       await createInfoComment(InfoKey, commentData);
       alert('댓글이 추가되었습니다.');
       setNewComment('');
-      fetchComments();
+      fetchComments(key);
     } catch (error) {
       console.error('댓글 추가 실패:', error);
       console.error('에러내용', error.response ? error.response.data : error.message);
