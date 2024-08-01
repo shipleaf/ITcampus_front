@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import Logo from '../../header/Logo';
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
 import { HiSearch } from "react-icons/hi";
 import LoginModal from '../../login/LoginModal';
 import Modal from 'react-modal';
