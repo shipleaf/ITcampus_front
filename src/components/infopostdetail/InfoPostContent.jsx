@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-modal';
-import { fetchInfoPost, editInfoPost } from '../../APIs/infoAPI';
+import { fetchInfoPost, editInfoPost, deleteInfoPost } from '../../APIs/infoAPI';
 
 Modal.setAppElement('#root');
 
@@ -57,13 +57,27 @@ function InfoPostContent({ title, id, date, body, pic1, pic2, InfoKey }) {
     try {
       const response = await editInfoPost(InfoKey, postData);
       if (response.status >= 200 && response.status <300) {
-        navigate(`/editInfopost/${InfoKey}`);
+        navigate(`/editInfopost//${InfoKey}`);
       }
     } catch (error) {
       alert('권한이 없습니다.');
     }
   };
 
+  const handleDeleteClick = async () => {
+    const confirmDelete = window.confirm('정말로 이 게시글을 삭제하시겠습니까?');
+    if(!confirmDelete) return;
+    try {
+      const response = await deleteInfoPost(InfoKey);
+      console.log("내용: ", response.status);
+      if (response.status >= 200 && response.status < 300) {
+        alert('게시글이 성공적으로 삭제되었습니다.');
+        navigate('/informationlist');
+      }
+    } catch (error) {
+      alert('권한이 없습니다.');
+    }
+  };
 
   return (
     <ContentContainer>
@@ -75,9 +89,7 @@ function InfoPostContent({ title, id, date, body, pic1, pic2, InfoKey }) {
           <Tag>정보게시판</Tag>
           <ActionButtons>
               <ActionButton onClick={handleEditClick}>수정</ActionButton>
-            <StyledLink>
-            <ActionButton>삭제</ActionButton>
-            </StyledLink>
+            <ActionButton onClick={handleDeleteClick}>삭제</ActionButton>
           </ActionButtons>
         </Header>
         <Title>{title}</Title>
@@ -220,14 +232,6 @@ const ArrowButtonLeft = styled(ArrowButton)`
 
 const ArrowButtonRight = styled(ArrowButton)`
   right: -60px;
-`
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-  &:hover {
-    text-decoration: none;
-  }
 `
 
 const ModalImage = styled.img`

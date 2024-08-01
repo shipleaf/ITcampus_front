@@ -119,3 +119,17 @@ export const editStudyPost = async (studyId, postData) => {
       throw error;
     }
 };
+
+export const deleteStudyPost = async (studyboardkey) => {
+    try {
+        const response = await axiosInstance.delete(`/api/studyboard/delete/${studyboardkey}`, {
+            headers: {
+                'Cache-Control': 'no-cache'
+            }
+        });
+        return response;
+    } catch (error) {
+        console.error('게시글 삭제 실패:', error);
+        throw error;
+    }
+};

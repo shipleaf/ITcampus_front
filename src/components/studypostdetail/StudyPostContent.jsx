@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { fetchStudyPost, editStudyPost } from '../../APIs/studyAPI';
+import { fetchStudyPost, editStudyPost, deleteStudyPost } from '../../APIs/studyAPI';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
@@ -61,6 +61,20 @@ const StudyPostContent = ({ title, id, date, body, pic1, pic2, studyKey }) => {
     }
   };
 
+  const handleDeleteClick = async () => {
+    const confirmDelete = window.confirm('정말로 이 게시글을 삭제하시겠습니까?');
+    if(!confirmDelete) return;
+    try {
+      const response = await deleteStudyPost(studyKey);
+      console.log("내용: ", response.status);
+      if (response.status >= 200 && response.status < 300) {
+        alert('게시글이 성공적으로 삭제되었습니다.');
+        navigate('/studylist');
+      }
+    } catch (error) {
+      alert('권한이 없습니다.');
+    }
+  };
 
   return (
     <ContentContainer>
@@ -73,7 +87,7 @@ const StudyPostContent = ({ title, id, date, body, pic1, pic2, studyKey }) => {
             <Tag>스터디게시판</Tag>
             <ActionButtons>
               <ActionButton onClick={handleEditClick}>수정</ActionButton>
-              <ActionButton>삭제</ActionButton>
+              <ActionButton onClick={handleDeleteClick}>삭제</ActionButton>
             </ActionButtons>
           </Header>
           <Title>{title}</Title>

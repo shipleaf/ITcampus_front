@@ -63,7 +63,7 @@ const ButtonFrame = styled.div`
     display: flex;
     width: ${(props) => props.width || '100%'};
     height: 100px;
-    margin: 10px auto;
+    margin: 5px auto;
     margin-bottom: 35px;
     align-items: center;
     background-color: #ffffff;
@@ -131,7 +131,7 @@ const ShowScrap = styled.div`
     display: flex;
     height: 100%;
     width: 10%;
-    margin-left: 50px;
+    margin-left: 30px;
     align-items: center;
 `
 
@@ -148,7 +148,7 @@ const ScrapButtonContainer = styled.div`
     justify-content: center;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
-    width: 10%;
+    width: 100px;
     height: 40px;
     cursor: pointer;
     background-color: #fff;
