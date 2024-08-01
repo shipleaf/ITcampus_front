@@ -65,7 +65,7 @@ function CompanyDetails() {
                 <Divder />
                 <CompanyHeader data={companyDetailData} />
                 <ScrapContainer>
-                    <ScrapButtonDiv apiEndpoint={`/api/company/${key}/scrap `}/>
+                    <ScrapButtonDiv apiEndpoint={`/api/company/${key}/scrap `} isScrapped={companyDetailData.isScrapped} type="company"/>
                 </ScrapContainer>
                 <Section>
                     <SectionTitle>회사 소개</SectionTitle>

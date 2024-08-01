@@ -10,10 +10,10 @@ const Button = styled.div`
   width: 100%;
 `
 
-function ScrapButtonDiv({apiEndpoint}) {
+function ScrapButtonDiv({apiEndpoint, isScrapped, type}) {
   return (
       <Button>
-        <ScrapButton apiEndpoint={apiEndpoint}/>
+        <ScrapButton apiEndpoint={apiEndpoint} isScrapped={isScrapped} type={type}/>
       </Button>
   )
 }
