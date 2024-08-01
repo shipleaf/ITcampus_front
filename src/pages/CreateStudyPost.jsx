@@ -1,19 +1,27 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { IoImageOutline } from "react-icons/io5";
-import styled from "styled-components";
-import UserHeader from "../components/modules/header/UserHeader";
-import { postStudy } from "../APIs/studyAPI";
-import { useNavigate } from "react-router-dom";
+import styled from 'styled-components';
+import UserHeader from '../components/modules/header/UserHeader';
+import { loginState } from '../state/atoms';
+import GuestHeader from '../components/modules/header/GuestHeader';
+import { useRecoilValue } from 'recoil';
+import { useNavigate } from 'react-router-dom';
+import { postStudy } from '../APIs/studyAPI';
+
 
 function CreateStudyPost() {
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [image, setImage] = useState(null);
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  const [imageBase64, setImageBase64] = useState('');
+  const [imageBase642, setImageBase642] = useState('');
+  const [fileName1, setFileName1] = useState('');
+  const [fileName2, setFileName2] = useState('');
+  const isLoggedIn = useRecoilValue(loginState);
 
   const navigate = useNavigate();
 
   const handlePost = () => {
-    navigate('/studylist')
+    navigate('/studylist');
   }
 
   const handleTitleChange = (event) => {
@@ -25,30 +33,53 @@ function CreateStudyPost() {
   };
 
   const handleImageChange = (event) => {
-    setImage(event.target.files[0]);
+    const file = event.target.files[0];
+    console.log('Image 1 selected:', file);
+    setFileName1(file.name);
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageBase64(reader.result);
+      console.log('Image 1 Base64:', reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleImageChange2 = (event) => {
+    const file = event.target.files[0];
+    console.log('Image 2 selected:', file);
+    setFileName2(file.name);
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageBase642(reader.result);
+      console.log('Image 2 Base64:', reader.result);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleCancel = () => {
-    window.location.href = "/studypostlist";
-    console.log("Canceled");
+    navigate('/studylist')
+    console.log('Canceled');
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("Title:", title);
-    console.log("Body:", body);
-    console.log("Image:", image);
+    console.log('Title:', title);
+    console.log('Body:', body);
+    console.log('Image:', imageBase64);
+    console.log('Image2:', imageBase642);
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("body", body);
-    if (image) {
-      formData.append("image", image);
-    }
+    const postData = {
+      title: title,
+      body: body,
+      pic1: imageBase64,
+      pic2: imageBase642,
+    };
 
     try {
-      const result = await postStudy(formData);
+      const result = await postStudy(postData);
       console.log("글 작성 성공:", result);
       handlePost();
     } catch (error) {
@@ -59,13 +90,13 @@ function CreateStudyPost() {
 
   return (
     <>
-      <UserHeader />
-      <Frame
-        onSubmit={handleSubmit}
-        action=""
-        method="POST"
-        encType="multipart/form-data"
-      >
+      {isLoggedIn ? (
+        <UserHeader />
+      ) : (
+        <GuestHeader />
+      )
+      }
+      <Frame onSubmit={handleSubmit}>
         <IntroContainer>
           <Intro> 게시글 작성</Intro>
         </IntroContainer>
@@ -77,28 +108,39 @@ function CreateStudyPost() {
               value={title}
               onChange={handleTitleChange}
             />
-            <StyledImgContainer>
-              <StyledIoImageOutline />
-              <StyledImageWord>사진</StyledImageWord>
-              <HiddenFileInput
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
-            </StyledImgContainer>
           </TitleContainer>
           <Textarea
             placeholder="내용을 입력하세요."
             value={body}
             onChange={handleBodyChange}
           />
+          <StyledImgContainer>
+            <Label htmlFor="imageUpload1">
+              <StyledIoImageOutline />
+              <span>{fileName1 || '이미지 선택'}</span>
+            </Label>
+            <HiddenFileInput
+              id="imageUpload1"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+          </StyledImgContainer>
+          <StyledImgContainer>
+            <Label htmlFor="imageUpload2">
+              <StyledIoImageOutline />
+              <span>{fileName2 || '이미지 선택'}</span>
+            </Label>
+            <HiddenFileInput
+              id="imageUpload2"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange2}
+            />
+          </StyledImgContainer>
           <ButtonContainer>
-            <CancelButton type="button" onClick={handleCancel}>
-              취소
-            </CancelButton>
-            <SaveButton type="button" onClick={handleSubmit}>
-              저장
-            </SaveButton>
+            <CancelButton type="button" onClick={handleCancel}>취소</CancelButton>
+            <SaveButton type="submit">저장</SaveButton>
           </ButtonContainer>
         </PostCreateFrame>
       </Frame>
@@ -116,6 +158,19 @@ const Frame = styled.div`
   margin: 30px auto;
   margin-top: 80px;
 `;
+const Label = styled.label`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 10px;
+  & span{
+    font-family: "Noto Sans KR", sans-serif;
+  }
+  &:hover{
+    cursor: pointer;
+    background-color: #f0f0f0;
+  }
+`
 
 const IntroContainer = styled.div`
   display: flex;
@@ -155,12 +210,6 @@ const StyledImgContainer = styled.label`
 
 const StyledIoImageOutline = styled(IoImageOutline)`
   font-size: 50px;
-  color: #ccc;
-  margin-left: 10px;
-`;
-
-const StyledImageWord = styled.div`
-  font-size: 38px;
   color: #ccc;
   margin-left: 10px;
 `;

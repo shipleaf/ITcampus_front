@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { FaStar } from "react-icons/fa";
-import ScrapButtonDiv from '../modules/recruit/ScrapButtonDiv';
 
 function CompanyPost({ key, postKey, logo, companyName, scrapCount, stack, track, width, recruitmentNoticeCount, isScrapped }) {
     const navigate = useNavigate();
@@ -28,7 +27,6 @@ function CompanyPost({ key, postKey, logo, companyName, scrapCount, stack, track
                 <FaStar size={30} style={{ color: '#F5F500' }} />
                 <ScrapCount>{scrapCount}</ScrapCount>
             </ShowScrap>
-            <ScrapButtonDiv apiEndpoint={`/api/company/${key}/scrap `} isScrapped={isScrapped} type='company'/>
         </ButtonFrame>
     );
 }

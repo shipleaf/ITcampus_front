@@ -23,7 +23,7 @@ function StudyPost({studyKey, infoKey, title, body, id, pic1, date, commentCount
         return `${year}. ${month}. ${day}`;
     };
 
-    console.log("Thumbnail URL:", pic1);
+    console.log("Thumbnail URL:", pic1);    
     
     return (
         <>

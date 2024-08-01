@@ -14,7 +14,6 @@ function InfoPostContent({ title, id, date, body, pic1, pic2, InfoKey }) {
   const navigate = useNavigate();
   
   const hasPictures = pic1 || pic2;
-  //pic1 = "https://search.pstatic.net/common/?src=http%3A%2F%2Fimage.nmv.naver.net%2Fblog_2024_05_14_3113%2F9rCEZCH89H_04.jpg&type=ofullfill340_600_png"
 
   console.log("사진 : ", pic1);
 
