@@ -20,7 +20,7 @@ const StudyPostComments = ({ comments = [], studyboardkey, fetchStudyComments })
     try {
       await deleteStudyComment(studyboardkey, commentKey);
       alert('댓글이 삭제되었습니다.');
-      fetchStudyComments();
+      window.location.reload();
     } catch (error) {
       console.error('댓글 삭제 실패:', error);
       alert('댓글 삭제에 실패했습니다.');
@@ -46,7 +46,7 @@ const StudyPostComments = ({ comments = [], studyboardkey, fetchStudyComments })
       alert('댓글이 추가되었습니다.');
       setNewComment('');
       setIsSecret(false);
-      fetchStudyComments(studyboardkey);
+      window.location.reload();
     } catch (error) {
       console.error('댓글 추가 실패:', error);
       console.error('에러내용', error.response ? error.response.data : error.message);
