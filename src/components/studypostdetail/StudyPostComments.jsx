@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { createStudyComment, deleteStudyComment } from '../../APIs/studyAPI';
 
-const StudyPostComments = ({ comments = [], studyboardkey, fetchComments }) => {
+const StudyPostComments = ({ comments = [], studyboardkey, fetchStudyComments }) => {
   const [newComment, setNewComment] = useState('');
   const [isSecret, setIsSecret] = useState(false);
 
@@ -20,7 +20,7 @@ const StudyPostComments = ({ comments = [], studyboardkey, fetchComments }) => {
     try {
       await deleteStudyComment(studyboardkey, commentKey);
       alert('댓글이 삭제되었습니다.');
-      fetchComments();
+      fetchStudyComments();
     } catch (error) {
       console.error('댓글 삭제 실패:', error);
       alert('댓글 삭제에 실패했습니다.');
@@ -46,7 +46,7 @@ const StudyPostComments = ({ comments = [], studyboardkey, fetchComments }) => {
       alert('댓글이 추가되었습니다.');
       setNewComment('');
       setIsSecret(false);
-      fetchComments();
+      fetchStudyComments();
     } catch (error) {
       console.error('댓글 추가 실패:', error);
       console.error('에러내용', error.response ? error.response.data : error.message);
