@@ -16,6 +16,7 @@ function StudyDetails() {
 
   useEffect(() => {
     const getStudyPost = async () => {
+      console.log(key)
       try {
         const postResponse = await fetchStudyPost(key);
         const commentsResponse = await fetchStudyComments(key);
@@ -41,11 +42,11 @@ function StudyDetails() {
 
   return (
     <>
-    <Header/>
-    <Container>
-      {postData && <StudyPostContent studyKey={key} {...postData} />}
-      <StudyPostComments comments={postComments} studyboardkey={key} fetchStudyComments={fetchStudyComments} />
-    </Container>
+      <Header />
+      <Container>
+        {postData && <StudyPostContent studyKey={key} {...postData} />}
+        <StudyPostComments comments={postComments} studyboardkey={key} fetchStudyComments={fetchStudyComments} />
+      </Container>
     </>
   );
 };
