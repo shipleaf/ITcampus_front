@@ -37,7 +37,6 @@ function ITLicenseDetails() {
         getLicenseDetails();
     }, [key]);
 
-    
     if (loading) {
         return <div>로딩중...</div>;
     }
@@ -49,7 +48,6 @@ function ITLicenseDetails() {
     if (!licenseDetails) {
         return <div>데이터를 불러오지 못했습니다.</div>;
     }
-
 
     return (
         <div style={{ backgroundColor: '#f1f4f7' }}>

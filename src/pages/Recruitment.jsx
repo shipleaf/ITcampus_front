@@ -18,7 +18,7 @@ function Recruitment() {
     const [sortOption, setSortOption] = useState('scrap');
     const [sortOrder, setSortOrder] = useState('desc');
     const [isFilterActive, setIsFilterActive] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const isLoggedIn = useRecoilValue(loginState);
 
@@ -62,7 +62,7 @@ function Recruitment() {
     useEffect(() => {
         const query = new URLSearchParams(location.search).get('query');
         setSearchTerm(query || '');
-        getRecruitments(query);
+        getRecruitments(query);  // 주석 처리하여 더미 데이터만 사용
     }, [location.search]);
 
     const postsPerPage = 7;

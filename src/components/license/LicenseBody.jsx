@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 function LicenseBody({ licenseDetails }) {
-    const [selectedTab, setSelectedTab] = useState('출제경향');
+    const [selectedTab, setSelectedTab] = useState('기본정보');
 
     console.log({licenseDetails});
 
@@ -12,22 +12,19 @@ function LicenseBody({ licenseDetails }) {
 
     const renderBodyContent = () => {
         switch (selectedTab) {
-            case '출제경향':
+            case '기본정보':
                 return (
-                    <div>   
-                        {licenseDetails.testinfo}
+                    <div dangerouslySetInnerHTML={{ __html: licenseDetails.body }}>   
+                    </div>
+                );
+            case '시험정보':
+                return (
+                    <div dangerouslySetInnerHTML={{ __html: licenseDetails.testinfo }}>
                     </div>
                 );
             case '취득이점':
                 return (
-                    <div>
-                        {licenseDetails.workview}
-                    </div>
-                );
-            case '기출문제':
-                return (
-                    <div>
-                        <a href={licenseDetails.problems} >기출문제 링크</a>
+                    <div dangerouslySetInnerHTML={{ __html: licenseDetails.workview }}>
                     </div>
                 );
             default:
@@ -39,9 +36,9 @@ function LicenseBody({ licenseDetails }) {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Container>
                 <Header>
-                    <TabButton onClick={() => setSelectedTab('출제경향')} active={selectedTab === '출제경향'}>출제경향</TabButton>
+                    <TabButton onClick={() => setSelectedTab('기본정보')} active={selectedTab === '기본정보'}>기본정보</TabButton>
+                    <TabButton onClick={() => setSelectedTab('시험정보')} active={selectedTab === '시험정보'}>시험정보</TabButton>
                     <TabButton onClick={() => setSelectedTab('취득이점')} active={selectedTab === '취득이점'}>취득이점</TabButton>
-                    <TabButton onClick={() => setSelectedTab('기출문제')} active={selectedTab === '기출문제'}>기출문제</TabButton>
                 </Header>
                 <Body>
                     {renderBodyContent()}
@@ -62,6 +59,7 @@ const Body = styled.div`
     padding: 20px;
     background-color: #fff;
     padding-bottom: 50px;
+    height: 450px;
 `
 
 const TabButton = styled.button`
