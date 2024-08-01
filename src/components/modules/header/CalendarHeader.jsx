@@ -247,7 +247,7 @@ function CalendarHeader({ onPrevMonth, onNextMonth, toggleSidebar }) {
               type='text'
               value={searchTerm}
               onChange={handleSearchTermChange}
-              placeholder='일정을 검색하세요'
+              placeholder='원하시는 정보를 검색하세요'
               onKeyPress={(e) => e.key === 'Enter' && handleSearch()} 
             />
             <Select value={searchType} onChange={handleSearchTypeChange}>
