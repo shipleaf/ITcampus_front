@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from "../components/modules/header/UserHeader";
 import { useRecoilValue } from "recoil";
@@ -8,6 +7,8 @@ import { loginState } from "../state/atoms";
 import Top from "../components/post/Top";
 import StudyPost from "../components/post/StudyPost";
 import { fetchInfoList, searchInfo } from "../APIs/infoAPI";
+import Modal from 'react-modal';
+import LoginModal from "../components/login/LoginModal";
 
 function InformationList() {
     const [posts, setPosts] = useState([]);
@@ -17,12 +18,7 @@ function InformationList() {
     const [error, setError] = useState(null);
     const isLoggedIn = useRecoilValue(loginState);
     const postsPerPage = 7;
-
-    const navigate = useNavigate();
-
-    const goToPost = (link) => {
-        navigate(link);
-    };
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const getInfos = async (query = '') => {
         try {
@@ -68,6 +64,18 @@ function InformationList() {
         setCurrentPage(pageNumber);
     };
 
+    const handleWriteClick = () => {
+        if (isLoggedIn) {
+            window.location.href = '/createinfopost';
+        } else {
+            setIsModalOpen(true);
+        }
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
     const handleSearch = (query) => {
         setLoading(true);
         getInfos(query);
@@ -85,7 +93,7 @@ function InformationList() {
             <Container>
                 <Top title='정보 게시판' onSearch={handleSearch} />
                 <WriteContainer>
-                    <Write onClick={() => goToPost('/createInfopost')}> 글쓰기</Write>
+                    <Write onClick={handleWriteClick}>글쓰기</Write>
                 </WriteContainer>
                 {loading ? (
                     <p>Loading...</p>
@@ -114,6 +122,14 @@ function InformationList() {
                         </PageNumber>
                     ))}
                 </Pagination>
+                <Modal
+                    isOpen={isModalOpen}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel="로그인 모달"
+                >
+                    <LoginModal closeModal={closeModal} />
+                </Modal>
             </Container>
         </>
     );
@@ -169,3 +185,13 @@ const PageNumber = styled.button`
         color: #fff;
     }
 `
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+    },
+};

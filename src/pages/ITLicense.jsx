@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useNavigate, useLocation } from "react-router-dom";
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from "../components/modules/header/UserHeader";
 import { useRecoilValue } from "recoil";
@@ -21,6 +22,10 @@ function ITLicense() {
     const [, setSelectedLicense] = useState(null);
     const isLoggedIn = useRecoilValue(loginState);
     const postsPerPage = 7;
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [searchTerm, setSearchTerm] = useState('');
 
     const getLicenses = async (query = '') => {
         try {
@@ -48,8 +53,14 @@ function ITLicense() {
     };
 
     useEffect(() => {
-        getLicenses();
-    }, []);
+        const query = new URLSearchParams(location.search).get('query');
+        setSearchTerm(query || '');
+        getLicenses(query);
+    }, [location.search]);
+
+    const handleSearch = (query) => {
+        navigate(`/licenselist?query=${query}`);
+    };
 
     const today = new Date();
 
@@ -109,11 +120,6 @@ function ITLicense() {
         }
     };
 
-    const handleSearch = (query) => {
-        setLoading(true);
-        getLicenses(query);
-    };
-
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
     return (
@@ -124,7 +130,7 @@ function ITLicense() {
                 <GuestHeader />
             )}
             <Container>
-                <Top title='IT 자격증' onSearch={handleSearch} />
+                <Top title='IT 자격증' onSearch={handleSearch} searchQuery={searchTerm} /> {/* 검색어 전달 */}
                 <SortContainer>
                     <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='응시가능' />
                     <Right>

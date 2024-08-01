@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
+import { useNavigate, useLocation } from "react-router-dom";
 import { fetchRecruitmentList, searchRecruit } from "../APIs/RecruitmentAPI";
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from '../components/modules/header/UserHeader';
@@ -29,6 +30,10 @@ function Recruitment() {
         employmentType: []
     });
 
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [searchTerm, setSearchTerm] = useState('');
+
     const getRecruitments = async (query = '') => {
         try {
             let response;
@@ -40,7 +45,7 @@ function Recruitment() {
 
             if (response.status >= 200 && response.status < 300) {
                 setPosts(response.data);
-                setError(null);  // Reset the error state
+                setError(null);  
             }
         } catch (error) {
             if (query && error.response && error.response.status === 404) {
@@ -55,8 +60,10 @@ function Recruitment() {
     };
 
     useEffect(() => {
-        getRecruitments();
-    }, []);
+        const query = new URLSearchParams(location.search).get('query');
+        setSearchTerm(query || '');
+        getRecruitments(query);
+    }, [location.search]);
 
     const postsPerPage = 7;
     const today = new Date();
@@ -127,8 +134,7 @@ function Recruitment() {
     }, []);
 
     const handleSearch = (query) => {
-        setLoading(true);
-        getRecruitments(query);
+        navigate(`/recruitlist?query=${query}`);
     };
 
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
@@ -141,7 +147,7 @@ function Recruitment() {
                 <GuestHeader />
             )}
             <Container>
-                <Top title='채용 공고' onSearch={handleSearch} />
+                <Top title='채용 공고' onSearch={handleSearch} searchQuery={searchTerm} /> 
                 <DetailSearch onFilterChange={handleFilterChange} />
                 <SortContainer>
                     <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='지원 가능' />
