@@ -19,9 +19,11 @@ const StudyPostContent = ({ title, id, date, body, pic1, pic2, studyKey }) => {
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
-    const hour = date.getUTCHours();
+    const hour = date.getUTCHours() + 9; // 9시간 더하기
     const minute = date.getMinutes();
-    return `${year}. ${month}. ${day} / ${hour}:${minute}`;
+    const formattedHour = hour >= 24 ? hour - 24 : hour; // 24시간 형식 맞추기
+    const nextDay = hour >= 24 ? day + 1 : day; // 다음 날로 넘기기
+    return `${year}. ${month}. ${nextDay} / ${formattedHour}:${minute}`;
   };
 
   const openModal = (image) => {
