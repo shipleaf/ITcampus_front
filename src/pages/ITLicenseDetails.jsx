@@ -37,6 +37,10 @@ function ITLicenseDetails() {
         getLicenseDetails();
     }, [key]);
 
+    useEffect(() => {
+        localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+      }, [isLoggedIn]);
+
     if (loading) {
         return <div>로딩중...</div>;
     }

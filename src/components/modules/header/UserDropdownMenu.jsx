@@ -1,9 +1,6 @@
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import { IoHomeOutline } from "react-icons/io5";
-import { LuClipboardEdit } from "react-icons/lu";
-import { CiStar } from "react-icons/ci";
-import { FiEdit } from "react-icons/fi";
 import { MdLogout } from "react-icons/md";
 import { useRecoilState } from 'recoil';
 import { loginState } from '../../../state/atoms'
@@ -41,7 +38,7 @@ const DropdownContainer = styled.div`
 `;
 
 const LogoutButton = styled.button`
-    border-top: 1px solid #999 !important;
+    border: none !important;
     padding-top: 15px;
     width: 90%;
     display: flex;
@@ -111,24 +108,6 @@ const UserDropdownMenu = forwardRef((props, ref) => {
                     <IoHomeOutline style={{ color: '#5c667b' }} size={20} />
                 </div>
                 <div>마이페이지</div>
-            </DropdownContainer>
-            <DropdownContainer onClick={() => goTo('/mypage')}>
-                <div style={{ width: '24px' }}>
-                    <LuClipboardEdit style={{ color: '#5c667b' }} size={20} />
-                </div>
-                <div>개인정보 수정</div>
-            </DropdownContainer>
-            <DropdownContainer onClick={() => goTo('/mypage')}>
-                <div style={{ width: '24px' }}>
-                    <CiStar style={{ color: '#5c667b' }} size={24} />
-                </div>
-                <div style={{ marginLeft: '12px' }}>스크랩</div>
-            </DropdownContainer>
-            <DropdownContainer onClick={() => goTo('/mypage')}>
-                <div style={{ width: '24px' }}>
-                    <FiEdit style={{ color: '#5c667b' }} size={20} />
-                </div>
-                <div>작성한 게시글</div>
             </DropdownContainer>
             <LogoutButton onClick={handleLogOutPage}>
                 <div style={{ width: '24px' }}>

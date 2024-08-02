@@ -68,6 +68,10 @@ function MyPage() {
         }
     };
 
+    useEffect(() => {
+        localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+      }, [isLoggedIn]);
+
     const renderWriterContent = () => {
         if (!userData) return null;
 

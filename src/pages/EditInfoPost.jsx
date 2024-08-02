@@ -68,6 +68,10 @@ function EditInfoPost() {
   const handleCancel = () => {
     navigate('/informationlist');
   };
+  
+  useEffect(() => {
+    localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

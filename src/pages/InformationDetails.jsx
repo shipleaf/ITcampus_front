@@ -27,6 +27,10 @@ function InformationDetails() {
   };
 
   useEffect(() => {
+    localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
+
+  useEffect(() => {
     const getInfoPost = async () => {
       try {
         const postResponse = await fetchInfoPost(key);

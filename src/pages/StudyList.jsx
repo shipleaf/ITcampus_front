@@ -32,7 +32,7 @@ function StudyList() {
 
             if (response.status >= 200 && response.status < 300) {
                 setPosts(response.data);
-                setError(null); 
+                setError(null);
             }
         } catch (error) {
             if (query && error.response && error.response.status === 404) {
@@ -49,6 +49,10 @@ function StudyList() {
     useEffect(() => {
         getStudies();
     }, []);
+
+    useEffect(() => {
+        localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+    }, [isLoggedIn]);
 
     useEffect(() => {
         window.scrollTo(0, 0); // 페이지 변경 후 스크롤 맨 위로
@@ -107,11 +111,11 @@ function StudyList() {
                     <p>No posts available</p>
                 ) : (
                     currentPosts.map((post) => (
-                            <StudyPost
-                                key={post.key}
-                                studyKey={post.key}
-                                {...post}
-                            />
+                        <StudyPost
+                            key={post.key}
+                            studyKey={post.key}
+                            {...post}
+                        />
                     ))
                 )}
                 <Pagination>

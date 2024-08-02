@@ -51,6 +51,10 @@ function GovernmentSupport() {
   };
 
   useEffect(() => {
+    localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
+
+  useEffect(() => {
     const query = new URLSearchParams(location.search).get('query');
     setSearchTerm(query || ''); 
     getSupports(query);

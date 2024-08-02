@@ -11,7 +11,6 @@ import { loginState } from '../state/atoms';
 import { useRecoilValue } from 'recoil';
 import Modal from 'react-modal';
 
-
 function CompanyDetails() {
     const [companyDetailData, setCompanyDetailData] = useState(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -21,15 +20,20 @@ function CompanyDetails() {
     const [isExpanded] = useState(false);
     const isLoggedIn = useRecoilValue(loginState);
 
+
+    useEffect(() => {
+        localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+    }, [isLoggedIn]);
+
     const openModal = (image) => {
         setModalImage(image);
         setModalIsOpen(true);
-      };
-    
-      const closeModal = () => {
+    };
+
+    const closeModal = () => {
         setModalIsOpen(false);
         setModalImage(null);
-      };
+    };
 
     const { key } = useParams();
 
@@ -70,6 +74,7 @@ function CompanyDetails() {
         companyDetailData.pic4,
         companyDetailData.pic5,
     ].filter(pic => pic); // 값이 있는 pic만 필터링
+
 
     return (
         <>
@@ -208,16 +213,15 @@ const CompanyPostContainer = styled.div`
 `
 const customStyles = {
     content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-      maxWidth: '1000px',
-      maxHeight: '600px',
-      padding: 0,
-      overflow: 'hidden',
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        maxWidth: '1000px',
+        maxHeight: '600px',
+        padding: 0,
+        overflow: 'hidden',
     },
-  }
-  
+}
