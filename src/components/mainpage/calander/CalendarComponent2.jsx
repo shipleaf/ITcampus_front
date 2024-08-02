@@ -149,7 +149,7 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
                         backgroundColor: getColor(event.whatis),
                         isScrapped: event.isScrapped
                     };
-                    
+
                 }).filter(event => event !== null);
                 console.log("Formatted events:", formattedEvents);
                 setEvents(formattedEvents);
@@ -174,7 +174,11 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
                         return null;
                     }
 
+                    const startDate = new Date(event.startdate);
+                    startDate.setHours(startDate.getHours() + 9);
+
                     const endDate = new Date(event.enddate);
+                    endDate.setHours(endDate.getHours() + 9);
                     endDate.setDate(endDate.getDate() + 1);
 
                     return {
@@ -208,41 +212,45 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
     return (
         <div className="container large-calendar">
             <FullCalendar
-                ref={calendarRef}
-                plugins={[dayGridPlugin, interactionPlugin]}
-                initialView="dayGridMonth"
-                headerToolbar={false}
-                height="85vh"
-                dateClick={handleDateClick}
-                events={showEvents}
-                eventOrder="start,-duration,allDay,title"
-                displayEventTime={false}
-                eventContent={renderEventContent}
-                locales={[koLocale]}
-                locale="ko"
-                titleFormat={{ month: 'long' }}
-                dayCellContent={renderDayCellContent}
-                viewDidMount={hideExtraWeeks}
-                datesSet={() => {
-                    if (calendarRef.current) {
-                        const calendarApi = calendarRef.current.getApi();
-                        const newDate = calendarApi.getDate();
-                        if (newDate.getTime() !== currentDate.getTime()) {
-                            setCurrentDate(newDate);
-                        }
-                    }
-                    hideExtraWeeks();
-                }}
-                dayMaxEventRows={5}
-                moreLinkClick="popover"
-                moreLinkContent={(arg) => (
-                    <div style={{ width: '100%', pointerEvents: 'none' }}>
-                        <div style={{ pointerEvents: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            {arg.num}개 더보기
-                        </div>
-                    </div>
-                )}
-            />
+    ref={calendarRef}
+    plugins={[dayGridPlugin, interactionPlugin]}
+    initialView="dayGridMonth"
+    headerToolbar={false}
+    height="85vh"
+    dateClick={handleDateClick}
+    events={showEvents}
+    eventOrder="start,-duration,allDay,title"
+    displayEventTime={false}
+    eventContent={renderEventContent}
+    locales={[koLocale]}
+    locale="ko"
+    titleFormat={{ month: 'long' }}
+    dayCellContent={renderDayCellContent}
+    viewDidMount={hideExtraWeeks}
+    datesSet={() => {
+        if (calendarRef.current) {
+            const calendarApi = calendarRef.current.getApi();
+            const newDate = calendarApi.getDate();
+            if (newDate.getTime() !== currentDate.getTime()) {
+                setCurrentDate(newDate);
+            }
+        }
+        hideExtraWeeks();
+    }}
+    dayMaxEventRows={5}
+    moreLinkClick={(arg) => {
+        // Prevent default popover
+        arg.jsEvent.preventDefault();
+    }}
+    moreLinkContent={(arg) => (
+        <div style={{ width: '100%', cursor: 'pointer', color: 'blue' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                {arg.num}개 더보기
+            </div>
+        </div>
+    )}
+/>
+
 
         </div>
     );
