@@ -194,7 +194,7 @@ function MyPage() {
                             )))}
                     </ContentList>
                 );
-            case '취업공고':
+            case '채용공고':
                 return (
                     <ContentList>
                         {renderScrapItems(userData.user.Scraps && userData.user.Scraps
@@ -244,7 +244,7 @@ function MyPage() {
                             <SidebarItem onClick={() => handleSidebarClick('기업')}>기업 스크랩</SidebarItem>
                             <SidebarItem onClick={() => handleSidebarClick('자격증')}>자격증 스크랩</SidebarItem>
                             <SidebarItem onClick={() => handleSidebarClick('학생지원')}>학생지원 스크랩</SidebarItem>
-                            <SidebarItem onClick={() => handleSidebarClick('취업공고')}>취업공고 스크랩</SidebarItem>
+                            <SidebarItem onClick={() => handleSidebarClick('채용공고')}>채용공고 스크랩</SidebarItem>
                         </SidebarItemContainer>
                     </SidebarTitle>
                     <SidebarTitle>작성한 글
@@ -271,7 +271,7 @@ function MyPage() {
                                 <SectionTitle active={selectedTab === '기업'} onClick={() => setSelectedTab('기업')}>기업</SectionTitle>
                                 <SectionTitle active={selectedTab === '자격증'} onClick={() => setSelectedTab('자격증')}>자격증</SectionTitle>
                                 <SectionTitle active={selectedTab === '학생지원'} onClick={() => setSelectedTab('학생지원')}>학생지원</SectionTitle>
-                                <SectionTitle active={selectedTab === '취업공고'} onClick={() => setSelectedTab('취업공고')}>취업공고</SectionTitle>
+                                <SectionTitle active={selectedTab === '채용공고'} onClick={() => setSelectedTab('채용공고')}>채용공고</SectionTitle>
                             </Section>
                             {renderContent()}
                         </Content>
