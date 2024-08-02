@@ -276,6 +276,8 @@ const CheckboxContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px;
+  max-height: 200px;
+  overflow-y: auto; 
 
   label {
     margin-bottom: 10px; 
