@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil";
 import { loginState } from "../state/atoms";
 import Post from "../components/post/Post";
 import CompanyPost from "../components/post/CompanyPost";
-import RecruitmentPost from "../components/post/RecruitmentPost";
+import RecruitmentPost from "../components/post/MyPageRecruitPost";
 import StudyPost from "../components/post/StudyPost";
 import EditProfileModal from "../components/modules/mypage/EditProfileModal";
 import { FaPen } from "react-icons/fa";
