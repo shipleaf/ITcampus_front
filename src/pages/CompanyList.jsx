@@ -211,6 +211,7 @@ const PageNumber = styled.button`
     color: ${(props) => (props.active ? '#fff' : '#000')};
     border: 1px solid #ddd;
     padding: 10px 20px;
+    margin-bottom : 30px;
     margin: 0 5px;
     cursor: pointer;
     border-radius: 5px;

@@ -77,11 +77,11 @@ const ButtonFrame = styled.button`
     border-radius: 5px;
     cursor: pointer;
     box-sizing: border-box;
-    padding: 2px;
+    border: 2px solid #ccc;
+    
 
     &:hover {
         border: 2px solid #36bef1;
-        padding: 0;
     }
 `
 
