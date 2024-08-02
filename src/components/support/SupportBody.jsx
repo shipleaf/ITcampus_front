@@ -149,7 +149,9 @@ const Img = styled.img`
 `
 const ModalImage = styled.img`
   width: 100%;
+  max-width: 1000px;
   height: 100%;
+  max-height: 600px;
   object-fit: contain;
 `
 
@@ -161,8 +163,8 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    maxWidth: '90%',
-    maxHeight: '90%',
+    maxWidth: "1000px",
+    maxHeight: "600px",
     padding: 0,
     overflow: 'hidden',
   },
