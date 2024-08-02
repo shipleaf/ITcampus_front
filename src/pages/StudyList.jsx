@@ -46,6 +46,15 @@ function StudyList() {
         }
     };
 
+    const handlePostClick = (postKey) => {
+        if (!isLoggedIn) {
+            setIsModalOpen(true);
+        } else {
+            window.location.href = `/studydetails/${postKey}`;
+        }
+    };
+
+    
     useEffect(() => {
         getStudies();
     }, []);
@@ -114,6 +123,7 @@ function StudyList() {
                         <StudyPost
                             key={post.key}
                             studyKey={post.key}
+                            onClick={() => handlePostClick(post.key)}
                             {...post}
                         />
                     ))

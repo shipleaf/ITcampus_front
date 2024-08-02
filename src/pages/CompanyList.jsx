@@ -147,7 +147,7 @@ function CompanyList() {
                 {loading ? (
                     <p>Loading...</p>
                 ) : error ? (
-                    <p>회사 정보 불러오기 실패: {error}</p>
+                    <p> {error}</p>
                 ) : (
                     <>
                         {currentPosts.map((post) => (
