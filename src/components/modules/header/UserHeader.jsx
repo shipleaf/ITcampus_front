@@ -7,8 +7,9 @@ import { FaRegBell } from "react-icons/fa";
 import { FaRegUserCircle } from "react-icons/fa";
 import { VscTriangleDown } from "react-icons/vsc";
 import UserDropdownMenu from './UserDropdownMenu';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { username } from '../../../state/atoms';
+import { getUsername } from '../../../APIs/loginAPI';
 
 const GuestHeaderComp = styled.div`
   display: flex;
@@ -128,7 +129,7 @@ function UserHeader() {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const userDropdownRef = useRef(null);
-  const name = useRecoilValue(username);
+  const [name, setName] = useRecoilState(username);
   const navigate = useNavigate(); // useNavigate 훅 사용
   const location = useLocation();
 
@@ -141,6 +142,20 @@ function UserHeader() {
       setShowUserDropdown(false);
     }
   };
+
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        const response = await getUsername();
+        console.log(response.data)
+        setName(response.data.name);
+      } catch (error) {
+        console.error("Username 불러오기 실패:", error);
+      }
+    };
+
+    fetchUsername();
+  }, [setName]);
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
