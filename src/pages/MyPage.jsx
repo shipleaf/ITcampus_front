@@ -141,7 +141,7 @@ function MyPage() {
                                     key={index}
                                     postKey={scrap.companyID}
                                     companyName={scrap.Company.companyName}
-                                    scrapCount={scrap.scrapCount}
+                                    scrapCount={scrap.companyScrapCount}
                                     stack={scrap.Company.stack}
                                     track={scrap.Company.track}
                                     logo={scrap.Company.logo}
@@ -164,7 +164,7 @@ function MyPage() {
                                     startdate={scrap.QualificationInfoModel.startdate}
                                     enddate={scrap.QualificationInfoModel.enddate}
                                     pic1={scrap.QualificationInfoModel.pic1}
-                                    scrapCount={scrap.QualificationInfoModel.scrapCount}//없음
+                                    scrapCount={scrap.qualificationScrapCount}//없음
                                 />
                             )))}
                     </ContentList>
@@ -184,7 +184,7 @@ function MyPage() {
                                 startdate={scrap.StudentSupportInfoModel.startdate}
                                 enddate={scrap.StudentSupportInfoModel.enddate}
                                 pic1={scrap.StudentSupportInfoModel.pic1}
-                                scrapCount={scrap.StudentSupportInfoModel.scrapCount}//없음
+                                scrapCount={scrap.studentSupportScrapCount}//없음
                                 />
                             )))}
                     </ContentList>
@@ -209,7 +209,7 @@ function MyPage() {
                                     enddate={scrap.RecruitmentNoticeInfoModel.enddate}//
                                     pic1={scrap.RecruitmentNoticeInfoModel.pic1}//
                                     recruit_part={scrap.RecruitmentNoticeInfoModel.recruit_part}
-                                    scrapCount={scrap.RecruitmentNoticeInfoModel.scrapCount}
+                                    scrapCount={scrap.recruitmentNoticeScrapCount}
                                 />
                             )))}
                     </ContentList>
