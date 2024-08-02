@@ -19,6 +19,8 @@ const ScrapContainer = styled.div`
     width: 8%;
 `;
 
+
+
 function RecruitmentDetails() {
     const [jobDetailData, setJobDetailData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -26,6 +28,11 @@ function RecruitmentDetails() {
     const isLoggedIn = useRecoilValue(loginState);
 
     const { key } = useParams();
+
+
+    useEffect(() => {
+        localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+    }, [isLoggedIn]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -70,7 +77,7 @@ function RecruitmentDetails() {
             <RecruitDetailHeader jobDetailData={recruitmentNoticeInfo} />
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <ScrapContainer>
-                    <ScrapButtonDiv apiEndpoint={`/api/recruitmentNoticeInfo/${key}/scrap`} isScrapped={jobDetailData.isScrapped} type="recruit"/>
+                    <ScrapButtonDiv apiEndpoint={`/api/recruitmentNoticeInfo/${key}/scrap`} isScrapped={jobDetailData.isScrapped} type="recruit" />
                 </ScrapContainer>
             </div>
             <RecruitDetailBody jobDetailData={recruitmentNoticeInfo} />

@@ -5,6 +5,8 @@ import { fetchStudyComments, fetchStudyPost } from '../APIs/studyAPI';
 import StudyPostComments from '../components/studypostdetail/StudyPostComments';
 import StudyPostContent from '../components/studypostdetail/StudyPostContent';
 import Header from '../components/header/Header';
+import { loginState } from '../state/atoms';
+import { useRecoilValue } from 'recoil';
 
 
 function StudyDetails() {
@@ -13,6 +15,11 @@ function StudyDetails() {
   const [postComments, setPostComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const isLoggedIn = useRecoilValue(loginState)
+
+  useEffect(() => {
+    localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const getStudyPost = async () => {

@@ -20,6 +20,10 @@ function EditStudyPost() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
+
+  useEffect(() => {
     const fetchPostData = async () => {
       try {
         const response = await fetchStudyPost(key);

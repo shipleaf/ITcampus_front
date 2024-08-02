@@ -86,6 +86,10 @@ function InformationList() {
         setCurrentPage(1);
     };
 
+    useEffect(() => {
+        localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+      }, [isLoggedIn]);
+
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
     return (

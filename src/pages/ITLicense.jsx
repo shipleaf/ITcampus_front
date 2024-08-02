@@ -67,6 +67,9 @@ function ITLicense() {
         navigate(`/licenselist?query=${query}`);
         setCurrentPage(1);
     };
+    useEffect(() => {
+        localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+      }, [isLoggedIn]);
 
     const today = new Date();
 

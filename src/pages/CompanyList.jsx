@@ -21,6 +21,10 @@ function CompanyList() {
     const isLoggedIn = useRecoilValue(loginState);
     const postsPerPage = 7;
 
+    useEffect(() => {
+        localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+    }, [isLoggedIn]);
+
     const navigate = useNavigate();
     const location = useLocation();
     const [searchTerm, setSearchTerm] = useState(new URLSearchParams(location.search).get('query') || '');

@@ -19,6 +19,10 @@ function GovernmentSupportDetails() {
   const { key } = useParams();
 
   useEffect(() => {
+    localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
+
+  useEffect(() => {
     const getSupportDetails = async () => {
       try {
         const response = await fetchSupportDetails(key);

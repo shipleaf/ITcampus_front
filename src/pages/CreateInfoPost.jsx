@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoImageOutline } from "react-icons/io5";
 import styled from 'styled-components';
 import UserHeader from '../components/modules/header/UserHeader';
@@ -17,6 +17,11 @@ function CreateInfoPost() {
   const isLoggedIn = useRecoilValue(loginState);
 
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
 
   const handlePost = () => {
     navigate('/informationlist');

@@ -30,6 +30,10 @@ function Recruitment() {
         work_type: []
     });
 
+    useEffect(() => {
+        localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+      }, [isLoggedIn]);
+
     const navigate = useNavigate();
     const location = useLocation();
     const [searchTerm, setSearchTerm] = useState('');

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoImageOutline } from "react-icons/io5";
 import styled from 'styled-components';
 import UserHeader from '../components/modules/header/UserHeader';
@@ -44,7 +44,9 @@ function CreateStudyPost() {
     };
     reader.readAsDataURL(file);
   };
-
+  useEffect(() => {
+    localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
   const handleImageChange2 = (event) => {
     const file = event.target.files[0];
     console.log('Image 2 selected:', file);
