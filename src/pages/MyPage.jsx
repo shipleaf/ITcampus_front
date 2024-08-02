@@ -3,7 +3,7 @@ import styled from "styled-components";
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from "../components/modules/header/UserHeader";
 import { myPageAPI } from "../APIs/myPageAPI";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { loginState } from "../state/atoms";
 import Post from "../components/post/Post";
 import CompanyPost from "../components/post/CompanyPost";
@@ -11,6 +11,8 @@ import RecruitmentPost from "../components/post/RecruitmentPost";
 import StudyPost from "../components/post/StudyPost";
 import EditProfileModal from "../components/modules/mypage/EditProfileModal";
 import { FaPen } from "react-icons/fa";
+import { deleteProfile } from "../APIs/myPageAPI";
+import { useNavigate } from 'react-router-dom';
 
 function MyPage() {
     const [userData, setUserData] = useState(null);
@@ -18,9 +20,10 @@ function MyPage() {
     const [selectedWriteTab, setSelectedWriteTab] = useState('정보게시판');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [showAll, setShowAll] = useState(false);
-    const isLoggedIn = useRecoilValue(loginState);
+    const [isLoggedIn, setIsLoggedIn] = useRecoilState(loginState);
     const scrapSectionRef = useRef(null);
     const writtenSectionRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,10 +43,28 @@ function MyPage() {
     const handleSidebarClick = (tab, isWriteTab = false) => {
         if (isWriteTab) {
             setSelectedWriteTab(tab);
-            writtenSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                writtenSectionRef.current.scrollIntoView({ behavior: 'smooth' })
+            }, 50)
         } else {
             setSelectedTab(tab);
-            scrapSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                scrapSectionRef.current.scrollIntoView({ behavior: 'smooth' })
+            }, 50);
+        }
+    };
+
+    const handleDeleteProfile = async () => {
+        const confirmed = window.confirm("정말로 회원탈퇴를 하시겠습니까?");
+        if (confirmed) {
+            try {
+                await deleteProfile();
+                alert('회원탈퇴가 완료되었습니다.');
+                setIsLoggedIn(false);
+                navigate('/');
+            } catch (error) {
+                alert('회원 탈퇴 실패: ' + error.message);
+            }
         }
     };
 
@@ -153,7 +174,7 @@ function MyPage() {
                             )))}
                     </ContentList>
                 );
-                case '학생지원':
+            case '학생지원':
                 return (
                     <ContentList>
                         {renderScrapItems(userData.user.Scraps && userData.user.Scraps
@@ -232,7 +253,7 @@ function MyPage() {
                             <SidebarItem onClick={() => handleSidebarClick('스터디게시판', true)}>스터디게시판</SidebarItem>
                         </SidebarItemContainer>
                     </SidebarTitle>
-                    <SidebarTitle>회원탈퇴</SidebarTitle>
+                    <SidebarTitle onClick={handleDeleteProfile}>회원탈퇴</SidebarTitle>
                 </SidebarContainer>
                 <Container>
                     <Header>
@@ -240,7 +261,7 @@ function MyPage() {
                         <WelcomeMessage>
                             <UserName>{userData.user.name}님 환영합니다!</UserName>
                             <UserStatus> {userData.user.job}</UserStatus>
-                            <UserEdit onClick={() => setIsModalOpen(true)}><FaPen style={{ fontSize: "15px", marginRight: "5px"}} />개인정보 수정</UserEdit>
+                            <UserEdit onClick={() => setIsModalOpen(true)}><FaPen style={{ fontSize: "15px", marginRight: "5px" }} />개인정보 수정</UserEdit>
                         </WelcomeMessage>
                     </Header>
                     <ContentFrame ref={scrapSectionRef}>
@@ -280,11 +301,12 @@ function MyPage() {
 export default MyPage;
 
 const Frame = styled.div`
+  height: 100%;
 `
 
 const MainContainer = styled.div`
   display: flex;
-  flex : 1;
+  flex: 1;
   background-color: #F2F4F7;
   flex-direction: row;
   justify-content: center;
@@ -417,7 +439,11 @@ const SidebarTitle = styled.div`
     padding: 5px;
     padding-bottom: 20px;
     font-weight: bold;
-    border-bottom: 1px solid #e0e0e0; 
+    border-bottom: 1px solid #e0e0e0;
+
+    &:hover{
+        cursor: pointer;
+    }
 `
 
 const SidebarItemContainer = styled.div`
