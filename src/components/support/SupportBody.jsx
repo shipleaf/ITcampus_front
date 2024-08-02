@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import Modal from 'react-modal';
 
 function SupportBody({ supportdata }) {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalImage, setModalImage] = useState(null);
+
+  const openModal = (image) => {
+    setModalImage(image);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setModalImage(null);
+  };
+
   const formatDate = ( dateString ) => {
     const date = new window.Date(dateString);
     const year = date.getFullYear();
@@ -44,11 +58,14 @@ function SupportBody({ supportdata }) {
       </Container>
       <Title>참고 자료</Title>
       <ImgContainer>
-        {supportdata.pic1 && <Img src={supportdata.pic1} />}
-        {supportdata.pic2 && <Img src={supportdata.pic2} />}
-        {supportdata.pic3 && <Img src={supportdata.pic3} />}
-        {supportdata.pic4 && <Img src={supportdata.pic4}/>}
+        {supportdata.pic1 && <Img src={supportdata.pic1} onClick={() => openModal(supportdata.pic1)}/>}
+        {supportdata.pic2 && <Img src={supportdata.pic2} onClick={() => openModal(supportdata.pic2)} />}
+        {supportdata.pic3 && <Img src={supportdata.pic3} onClick={() => openModal(supportdata.pic3)}/>}
+        {supportdata.pic4 && <Img src={supportdata.pic4} onClick={() => openModal(supportdata.pic4)}/>}
       </ImgContainer>
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
+        <ModalImage src={modalImage} />
+      </Modal>
     </>
   );
 }
@@ -131,3 +148,25 @@ const Img = styled.img`
   max-width: 100%;
   object-fit: cover;
 `
+const ModalImage = styled.img`
+  width: 100%;
+  max-width: 1000px;
+  height: 100%;
+  max-height: 600px;
+  object-fit: contain;
+`
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    maxWidth: "1000px",
+    maxHeight: "600px",
+    padding: 0,
+    overflow: 'hidden',
+  },
+}
