@@ -14,6 +14,7 @@ function Post({ itKey, supKey, title, body, agency, pic1, scrapCount, startdate,
     };
 
     const handleClick = () => {
+        window.scrollTo(0, 0);
         if (itKey) {
             navigate(`/licensedetails/${itKey}`)
         }

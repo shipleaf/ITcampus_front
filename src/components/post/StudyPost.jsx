@@ -3,16 +3,19 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import commentImg from '../../assets/commentImg.png';
 
-function StudyPost({studyKey, infoKey, title, body, id, pic1, date, commentCount, width }) {
+function StudyPost({studyKey, infoKey, title, body, id, pic1, date, commentCount, width, onClick }) {
     const navigate = useNavigate();
 
     const handleClick =() =>{
         console.log("Clicked", studyKey, infoKey);
-        if(studyKey){
-            navigate(`/studydetails/${studyKey}`);
-        }
-        else if(infoKey){
-            navigate(`/informationdetails/${infoKey}`);
+        if (onClick) {
+            onClick();
+        } else {
+            if (studyKey) {
+                navigate(`/studydetails/${studyKey}`);
+            } else if (infoKey) {
+                navigate(`/informationdetails/${infoKey}`);
+            }
         }
     }
     
