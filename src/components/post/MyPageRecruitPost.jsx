@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import star from '../../assets/scrap.png';
 import { useNavigate } from 'react-router-dom';
 
-function RecruitmentPost({ postKey, title, body, companyname, pic1, scrapCount, startdate, enddate, recruit_part, stack, experience, width }) {
+function MyPageRecruitPost({ postKey, title, body, companyname, pic1, scrapCount, startdate, enddate, recruit_part, stack, experience, width }) {
     const navigate = useNavigate();
     const formatDate = (dateString) => {
         const date = new window.Date(dateString);
@@ -18,7 +18,7 @@ function RecruitmentPost({ postKey, title, body, companyname, pic1, scrapCount, 
     };
 
     // 최대 너비 계산을 위한 로직
-    const MAX_WIDTH = 600; // 예시로 ContentContainer의 최대 너비를 설정합니다.
+    const MAX_WIDTH = 540; // 예시로 ContentContainer의 최대 너비를 설정합니다.
     const MARGIN = 10; // Requirement 사이의 간격
     const requirements = [
         ...(recruit_part ? [recruit_part] : []),
@@ -63,7 +63,7 @@ function RecruitmentPost({ postKey, title, body, companyname, pic1, scrapCount, 
     );
 }
 
-export default RecruitmentPost;
+export default MyPageRecruitPost;
 
 const ButtonFrame = styled.button`
     display: flex;
@@ -129,7 +129,7 @@ const RequirementContainer = styled.div`
 `
 
 const Requirement = styled.div`
-    font-size: 15px;
+    font-size: 11px;
     color: #666;
     background-color: #f3f3f3;
     padding: 5px 10px;
@@ -142,20 +142,6 @@ const Requirement = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     box-sizing: border-box;
-
-    @media (max-width: 1580px) {
-        font-size: 13px;
-    }
-
-    @media (max-width: 1440px) {
-        font-size: 11px;
-    }
-    @media (max-width: 1280px) {
-        font-size: 9px; 
-    }
-    @media (max-width: 1040px) {
-        font-size: 7px; 
-    }
 `;
 
 const Footer = styled.div`
