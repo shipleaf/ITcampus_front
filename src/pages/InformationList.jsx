@@ -184,6 +184,7 @@ const PageNumber = styled.button`
     border: 1px solid #ddd;
     padding: 10px 20px;
     margin: 0 5px;
+    margin-bottom: 30px;
     cursor: pointer;
     border-radius: 5px;
     &:hover {
