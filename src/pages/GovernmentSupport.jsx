@@ -163,7 +163,7 @@ function GovernmentSupport() {
               agency={post.agency}
               startdate={post.startdate}
               enddate={post.enddate}
-              logo={post.pic1}
+              pic1={post.pic1}
               scrapCount={post.scrapCount}
             />
           ))
