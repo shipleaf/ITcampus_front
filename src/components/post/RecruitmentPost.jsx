@@ -46,7 +46,7 @@ function RecruitmentPost({ postKey, title, body, companyname, pic1, scrapCount, 
                         <Requirement key={index} title={req}>{req}</Requirement>
                     ))}
                 </RequirementContainer>
-                <Content>{body}</Content>
+                <Content dangerouslySetInnerHTML={{ __html: body }} />
                 <Footer>
                     <Writer>{companyname}</Writer>
                     <Date>{`${formatDate(startdate)} ~ ${formatDate(enddate)}`}</Date>

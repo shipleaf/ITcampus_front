@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IoImageOutline } from "react-icons/io5";
+import { IoImageOutline, IoCloseOutline } from "react-icons/io5";
 import styled from 'styled-components';
 import UserHeader from '../components/modules/header/UserHeader';
 import { loginState } from '../state/atoms';
@@ -7,7 +7,6 @@ import GuestHeader from '../components/modules/header/GuestHeader';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { postStudy } from '../APIs/studyAPI';
-
 
 function CreateStudyPost() {
   const [title, setTitle] = useState('');
@@ -44,9 +43,11 @@ function CreateStudyPost() {
     };
     reader.readAsDataURL(file);
   };
+
   useEffect(() => {
     localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
   }, [isLoggedIn]);
+
   const handleImageChange2 = (event) => {
     const file = event.target.files[0];
     console.log('Image 2 selected:', file);
@@ -61,7 +62,7 @@ function CreateStudyPost() {
   };
 
   const handleCancel = () => {
-    navigate('/studylist')
+    navigate('/studylist');
     console.log('Canceled');
   };
 
@@ -90,17 +91,26 @@ function CreateStudyPost() {
     }
   };
 
+  const handleRemoveImage1 = () => {
+    setImageBase64('');
+    setFileName1('');
+  };
+
+  const handleRemoveImage2 = () => {
+    setImageBase642('');
+    setFileName2('');
+  };
+
   return (
     <>
       {isLoggedIn ? (
         <UserHeader />
       ) : (
         <GuestHeader />
-      )
-      }
+      )}
       <Frame onSubmit={handleSubmit}>
         <IntroContainer>
-          <Intro> 게시글 작성</Intro>
+          <Intro> 게시글 작성<span style={{ marginLeft: '5px', fontWeight: 'bold', borderBottom: '1px solid #000' }}>스터디</span></Intro>
         </IntroContainer>
         <PostCreateFrame>
           <TitleContainer>
@@ -112,27 +122,27 @@ function CreateStudyPost() {
             />
           </TitleContainer>
           <Textarea
-            placeholder="내용을 입력하세요."
+            placeholder="내용을 입력해 주세요."
             value={body}
             onChange={handleBodyChange}
           />
           <StyledImgContainer>
-            <Label htmlFor="imageUpload1">
+            <ImageLabel htmlFor="imageUpload1" isSelected={!!imageBase64}>
               <StyledIoImageOutline />
               <span>{fileName1 || '이미지 선택'}</span>
-            </Label>
+              {imageBase64 && <RemoveButton onClick={handleRemoveImage1}><IoCloseOutline /></RemoveButton>}
+            </ImageLabel>
             <HiddenFileInput
               id="imageUpload1"
               type="file"
               accept="image/*"
               onChange={handleImageChange}
             />
-          </StyledImgContainer>
-          <StyledImgContainer>
-            <Label htmlFor="imageUpload2">
+            <ImageLabel htmlFor="imageUpload2" isSelected={!!imageBase642}>
               <StyledIoImageOutline />
               <span>{fileName2 || '이미지 선택'}</span>
-            </Label>
+              {imageBase642 && <RemoveButton onClick={handleRemoveImage2}><IoCloseOutline /></RemoveButton>}
+            </ImageLabel>
             <HiddenFileInput
               id="imageUpload2"
               type="file"
@@ -155,39 +165,27 @@ export default CreateStudyPost;
 const Frame = styled.div`
   display: flex;
   flex-direction: column;
-  width: 800px;
+  width: 100%;
   height: auto;
   margin: 30px auto;
-  margin-top: 80px;
+  margin-top: 40px;
+  margin-bottom: 50px !important;
 `;
-const Label = styled.label`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border-radius: 10px;
-  & span{
-    font-family: "Noto Sans KR", sans-serif;
-  }
-  &:hover{
-    cursor: pointer;
-    background-color: #f0f0f0;
-  }
-`
 
 const IntroContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100px;
-  margin: 10px auto;
-  padding-left: 10px;
 `;
 
 const Intro = styled.div`
-  margin-left: 10px;
-  font-size: 35px;
-  font-weight: bold;
+  width: 40%;
+  font-size: 25px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: '300';
 `;
 
 const PostCreateFrame = styled.form`
@@ -195,7 +193,7 @@ const PostCreateFrame = styled.form`
   flex-direction: column;
   align-items: flex-start;
   padding: 0 20px;
-  width: 800px;
+  width: 40%;
   margin: 10px auto;
 `;
 
@@ -205,15 +203,53 @@ const TitleContainer = styled.div`
   width: 100%;
 `;
 
-const StyledImgContainer = styled.label`
+const StyledImgContainer = styled.div`
+  box-sizing: border-box;
+  width: 100%;
   display: flex;
-  cursor: pointer;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-bottom: 5px;
+  border: 1px solid #ccc;
+  border-top: none;
+`;
+
+const ImageLabel = styled.label`
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  margin-top: 5px;
+  cursor: ${(props) => (props.isSelected ? 'default' : 'pointer')};
+  background-color: ${(props) => (props.isSelected ? '#fff' : 'white')};
+
+  & span {
+    font-family: "Noto Sans KR", sans-serif;
+    color: #999;
+  }
 `;
 
 const StyledIoImageOutline = styled(IoImageOutline)`
-  font-size: 50px;
+  font-size: 30px;
   color: #ccc;
   margin-left: 10px;
+  cursor: pointer;
+`;
+
+const RemoveButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ff0000;
+  font-size: 24px;
+  margin-left: auto;
+  padding-right: 10px;
+
+  &:hover {
+    color: #ff6666;
+  }
 `;
 
 const HiddenFileInput = styled.input`
@@ -221,26 +257,37 @@ const HiddenFileInput = styled.input`
 `;
 
 const TitleInput = styled.input`
+  width: 100%;
+  height: 40px;
   flex: 1;
-  padding: 10px;
-  padding-top: 15px;
-  font-size: 25px;
-  border-radius: 10px;
+  font-size: 15px;
+  border-radius: 5px;
   border: 1px solid #ccc;
   background-color: white;
-  margin-right: 10px;
+  font-family: "Noto Sans KR", sans-serif;
+  box-sizing: border-box;
+  padding-left: 10px;
+  &:focus{
+    outline: none;
+    border: 1px solid #999;
+  }
 `;
 
 const Textarea = styled.textarea`
   align-self: center;
   width: 100%;
   height: 400px;
+  font-size: 15px;
+  border-radius: 5px;
   padding: 10px;
-  font-size: 18px;
-  margin-left: 15px;
-  border-radius: 4px;
   border: 1px solid #ccc;
   resize: none;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+  &:focus{
+    outline: none;
+    border: 1px solid #999;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -251,26 +298,32 @@ const ButtonContainer = styled.div`
 `;
 
 const CancelButton = styled.button`
-  margin-right: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
   background-color: white;
   color: #000;
-  font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
   height: 40px;
-  width: 80px;
-  border: 1px solid #999;
+  width: 60px;
+  border: 1px solid #ccc;
   border-radius: 10px;
   cursor: pointer;
+  font-family: "Noto Sans KR", sans-serif;
 `;
 
 const SaveButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #79bfff;
-  font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
   height: 40px;
-  width: 80px;
+  width: 60px;
   color: white;
   border: none;
   border-radius: 10px;
   cursor: pointer;
+  font-family: "Noto Sans KR", sans-serif;
 `;
