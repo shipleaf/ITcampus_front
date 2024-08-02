@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Top from "../components/post/Top";
 import StudyPost from "../components/post/StudyPost";
-// import { fetchStudyList, searchStudy } from "../APIs/studyAPI"; // 주석 처리된 API 호출
+import { fetchStudyList, searchStudy } from "../APIs/studyAPI";
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from "../components/modules/header/UserHeader";
 import { useRecoilValue } from 'recoil';
@@ -10,223 +10,8 @@ import { loginState } from "../state/atoms";
 import Modal from 'react-modal';
 import LoginModal from "../components/login/LoginModal";
 
-const dummyData = [
-    {
-        "key": 1,
-        "id": "testuser1",
-        "title": "JavaScript 스터디 모집",
-        "body": "JavaScript를 공부할 초보자를 모집합니다. 많은 참여 부탁드립니다.",
-        "date": "2024-07-31T12:05:25.000Z",
-        "pic1": {
-            "type": "Buffer",
-            "data": [166, 39, 53, 142, 152]
-        },
-        "pic2": {
-            "type": "Buffer",
-            "data": [166, 39, 54, 142, 152]
-        }
-    },
-    {
-        "key": 2,
-        "id": "testuser2",
-        "title": "Python 스터디 모집",
-        "body": "Python을 함께 공부할 초보자들을 모집합니다.",
-        "date": "2024-07-31T12:05:26.000Z",
-        "pic1": {
-            "type": "Buffer",
-            "data": [166, 39, 53, 142, 152]
-        },
-        "pic2": {
-            "type": "Buffer",
-            "data": [166, 39, 54, 142, 152]
-        }
-    },
-    // 더미 데이터를 더 추가할 수 있습니다.
-    {
-        "key": 3,
-        "id": "testuser3",
-        "title": "React 스터디 모집",
-        "body": "React를 공부할 초보자를 모집합니다. 많은 참여 부탁드립니다.",
-        "date": "2024-07-31T12:05:27.000Z",
-        "pic1": {
-            "type": "Buffer",
-            "data": [166, 39, 53, 142, 152]
-        },
-        "pic2": {
-            "type": "Buffer",
-            "data": [166, 39, 54, 142, 152]
-        }
-    },
-    {
-        "key": 5,
-        "id": "testuser4",
-        "title": "Java 스터디 모집",
-        "body": "Java를 공부할 초보자를 모집합니다. 많은 참여 부탁드립니다.",
-        "date": "2024-07-31T12:05:28.000Z",
-        "pic1": {
-            "type": "Buffer",
-            "data": [166, 39, 53, 142, 152]
-        },
-        "pic2": {
-            "type": "Buffer",
-            "data": [166, 39, 54, 142, 152]
-        }
-    }
-    ,
-    {
-        "key": 6,
-        "id": "testuser4",
-        "title": "Java 스터디 모집",
-        "body": "Java를 공부할 초보자를 모집합니다. 많은 참여 부탁드립니다.",
-        "date": "2024-07-31T12:05:28.000Z",
-        "pic1": {
-            "type": "Buffer",
-            "data": [166, 39, 53, 142, 152]
-        },
-        "pic2": {
-            "type": "Buffer",
-            "data": [166, 39, 54, 142, 152]
-        }
-    },
-    {
-        "key": 7,
-        "id": "testuser4",
-        "title": "Java 스터디 모집",
-        "body": "Java를 공부할 초보자를 모집합니다. 많은 참여 부탁드립니다.",
-        "date": "2024-07-31T12:05:28.000Z",
-        "pic1": {
-            "type": "Buffer",
-            "data": [166, 39, 53, 142, 152]
-        },
-        "pic2": {
-            "type": "Buffer",
-            "data": [166, 39, 54, 142, 152]
-        }
-    },
-    {
-        "key": 8,
-        "id": "testuser4",
-        "title": "Java 스터디 모집",
-        "body": "Java를 공부할 초보자를 모집합니다. 많은 참여 부탁드립니다.",
-        "date": "2024-07-31T12:05:28.000Z",
-        "pic1": {
-            "type": "Buffer",
-            "data": [166, 39, 53, 142, 152]
-        },
-        "pic2": {
-            "type": "Buffer",
-            "data": [166, 39, 54, 142, 152]
-        }
-    },
-    {
-        "key": 9,
-        "id": "testuser4",
-        "title": "Java 스터디 모집",
-        "body": "Java를 공부할 초보자를 모집합니다. 많은 참여 부탁드립니다.",
-        "date": "2024-07-31T12:05:28.000Z",
-        "pic1": {
-            "type": "Buffer",
-            "data": [166, 39, 53, 142, 152]
-        },
-        "pic2": {
-            "type": "Buffer",
-            "data": [166, 39, 54, 142, 152]
-        }
-    },
-    {
-        "key": 10,
-        "id": "testuser4",
-        "title": "Java 스터디 모집",
-        "body": "Java를 공부할 초보자를 모집합니다. 많은 참여 부탁드립니다.",
-        "date": "2024-07-31T12:05:28.000Z",
-        "pic1": {
-            "type": "Buffer",
-            "data": [166, 39, 53, 142, 152]
-        },
-        "pic2": {
-            "type": "Buffer",
-            "data": [166, 39, 54, 142, 152]
-        }
-    },
-    {
-        "key": 11,
-        "id": "testuser4",
-        "title": "Java 스터디 모집",
-        "body": "Java를 공부할 초보자를 모집합니다. 많은 참여 부탁드립니다.",
-        "date": "2024-07-31T12:05:28.000Z",
-        "pic1": {
-            "type": "Buffer",
-            "data": [166, 39, 53, 142, 152]
-        },
-        "pic2": {
-            "type": "Buffer",
-            "data": [166, 39, 54, 142, 152]
-        }
-    },
-    {
-        "key": 12,
-        "id": "testuser4",
-        "title": "Java 스터디 모집",
-        "body": "Java를 공부할 초보자를 모집합니다. 많은 참여 부탁드립니다.",
-        "date": "2024-07-31T12:05:28.000Z",
-        "pic1": {
-            "type": "Buffer",
-            "data": [166, 39, 53, 142, 152]
-        },
-        "pic2": {
-            "type": "Buffer",
-            "data": [166, 39, 54, 142, 152]
-        }
-    },
-    {
-        "key": 13,
-        "id": "testuser4",
-        "title": "Java 스터디 모집",
-        "body": "Java를 공부할 초보자를 모집합니다. 많은 참여 부탁드립니다.",
-        "date": "2024-07-31T12:05:28.000Z",
-        "pic1": {
-            "type": "Buffer",
-            "data": [166, 39, 53, 142, 152]
-        },
-        "pic2": {
-            "type": "Buffer",
-            "data": [166, 39, 54, 142, 152]
-        }
-    },
-    {
-        "key": 14,
-        "id": "testuser4",
-        "title": "Java 스터디 모집",
-        "body": "Java를 공부할 초보자를 모집합니다. 많은 참여 부탁드립니다.",
-        "date": "2024-07-31T12:05:28.000Z",
-        "pic1": {
-            "type": "Buffer",
-            "data": [166, 39, 53, 142, 152]
-        },
-        "pic2": {
-            "type": "Buffer",
-            "data": [166, 39, 54, 142, 152]
-        }
-    },
-    {
-        "key": 15,
-        "id": "testuser4",
-        "title": "Java 스터디 모집",
-        "body": "Java를 공부할 초보자를 모집합니다. 많은 참여 부탁드립니다.",
-        "date": "2024-07-31T12:05:28.000Z",
-        "pic1": {
-            "type": "Buffer",
-            "data": [166, 39, 53, 142, 152]
-        },
-        "pic2": {
-            "type": "Buffer",
-            "data": [166, 39, 54, 142, 152]
-        }
-    }
-];
-
 function StudyList() {
-    const [posts, setPosts] = useState([]); // 주석 처리된 API 호출 대신 더미 데이터를 사용할 것이므로 초기 상태를 빈 배열로 설정합니다.
+    const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [isFilterActive,] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -236,32 +21,18 @@ function StudyList() {
 
     const isLoggedIn = useRecoilValue(loginState);
 
-    // 주석 처리된 API 호출을 주석 처리하고 더미 데이터를 사용하는 함수
     const getStudies = async (query = '') => {
         try {
-            setLoading(true);
             let response;
             if (query) {
-                // 주석 처리된 검색 API 호출
-                // response = await searchStudy(query);
-                // setPosts(response.data);
-
-                // 더미 데이터 사용
-                const filteredData = dummyData.filter(post =>
-                    post.title.includes(query) || post.body.includes(query)
-                );
-                response = { data: filteredData, status: 200 };
+                response = await searchStudy(query);
             } else {
-                // 주석 처리된 기본 목록 API 호출
-                // response = await fetchStudyList();
-                
-                // 더미 데이터 사용
-                response = { data: dummyData, status: 200 };
+                response = await fetchStudyList();
             }
 
             if (response.status >= 200 && response.status < 300) {
                 setPosts(response.data);
-                setError(null);
+                setError(null); 
             }
         } catch (error) {
             if (query && error.response && error.response.status === 404) {
@@ -279,6 +50,10 @@ function StudyList() {
         getStudies();
     }, []);
 
+    useEffect(() => {
+        window.scrollTo(0, 0); // 페이지 변경 후 스크롤 맨 위로
+    }, [currentPage]);
+
     const filteredPosts = posts.filter((post) => {
         if (!isFilterActive) return true;
         return post.title.includes("example");
@@ -290,10 +65,8 @@ function StudyList() {
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
-        console.log("Scrolling to top");
-        window.scrollTo(0, 0);
     };
-    
+
     const handleWriteClick = () => {
         if (isLoggedIn) {
             window.location.href = '/createstudypost';
@@ -416,7 +189,6 @@ const PageNumber = styled.button`
         color: #fff;
     }
 `
-
 const customStyles = {
     content: {
         top: '50%',
