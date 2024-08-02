@@ -168,7 +168,7 @@ function MyPage() {
                                     agency={scrap.QualificationInfoModel.agency}
                                     startdate={scrap.QualificationInfoModel.startdate}
                                     enddate={scrap.QualificationInfoModel.enddate}
-                                    pic1={scrap.QualificationInfoModel.pic1}
+                                    pic1={scrap.QualificationInfoModel.logo}
                                     scrapCount={scrap.qualificationScrapCount}//없음
                                 />
                             )))}
