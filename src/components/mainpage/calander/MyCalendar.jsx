@@ -121,7 +121,11 @@ const MyCalendar = forwardRef(({ onDateClick }, ref) => {
                         return null;
                     }
 
+                    const startDate = new Date(event.startdate);
+                    startDate.setHours(startDate.getHours() + 9);
+
                     const endDate = new Date(event.enddate);
+                    endDate.setHours(endDate.getHours() + 9);
                     endDate.setDate(endDate.getDate() + 1);
 
                     return {

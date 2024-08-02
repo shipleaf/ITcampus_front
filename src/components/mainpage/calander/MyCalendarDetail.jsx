@@ -123,7 +123,9 @@ const MyCalendarDetail = ({ style, date, animate, onClose }) => {
             minute: '2-digit',
             hour12: false
         };
-        return new Date(dateTimeString).toLocaleString('ko-KR', options).replace(',', '');
+        const date = new Date(dateTimeString);
+        date.setHours(date.getHours() + 9); // 9시간 더해줌
+        return date.toLocaleString('ko-KR', options).replace(',', '');
     };
 
     const isEventWithinDateRange = (event) => {

@@ -281,6 +281,7 @@ export default MyPage;
 
 const Frame = styled.div`
   background-color: #F2F4F7;
+  height: 100%;
 `
 
 const MainContainer = styled.div`
