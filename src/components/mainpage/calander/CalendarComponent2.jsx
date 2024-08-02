@@ -149,6 +149,7 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
                         backgroundColor: getColor(event.whatis),
                         isScrapped: event.isScrapped
                     };
+                    
                 }).filter(event => event !== null);
                 console.log("Formatted events:", formattedEvents);
                 setEvents(formattedEvents);

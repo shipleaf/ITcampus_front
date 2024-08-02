@@ -37,13 +37,11 @@ function Post({ itKey, supKey, title, body, agency, logo, scrapCount, startdate,
                     </Footer>
                 </Remain>
             </ContentContainer>
-            {{ logo } ? (
+            {logo ? (
                 <ThumbnailContainer>
                     <Thumbnail src={logo} />
                 </ThumbnailContainer>
-            ) : (
-                ''
-            )}
+            ) : null}
         </ButtonFrame>
     );
 }

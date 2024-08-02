@@ -124,6 +124,7 @@ const ImgContainer = styled.div`
   border-top: 1px solid black;
   border-bottom: 1px solid black;
   box-sizing: border-box;
+  margin-bottom: 100px;
 `
 
 const Img = styled.img`

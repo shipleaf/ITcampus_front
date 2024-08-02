@@ -47,7 +47,7 @@ const AppRouter = () => {
         <Route path='/licensedetails/:key' element={<ITLicenseDetails />} />
         <Route path='/studylist' element={<StudyList/>} />
         <Route path='/createstudypost' element = {<CreateStudyPost/>} />
-        <Route path='/createInfopost' element = {<CreateInfoPost/>} />
+        <Route path='/createInfopost' element = {<CreateInfoPost/>} />  
         <Route path='/studydetails/:key' element={<StudyDetails />} />
         <Route path='/informationlist' element={<InformationList/>} />
         <Route path='/informationdetails/:key' element={<InformationDetails/>} />
