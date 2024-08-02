@@ -9,13 +9,27 @@ import ScrapButtonDiv from '../components/modules/recruit/ScrapButtonDiv';
 import CompanyPost from '../components/post/CompanyPost';
 import { loginState } from '../state/atoms';
 import { useRecoilValue } from 'recoil';
+import Modal from 'react-modal';
+
 
 function CompanyDetails() {
     const [companyDetailData, setCompanyDetailData] = useState(null);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalImage, setModalImage] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isExpanded] = useState(false);
     const isLoggedIn = useRecoilValue(loginState);
+
+    const openModal = (image) => {
+        setModalImage(image);
+        setModalIsOpen(true);
+      };
+    
+      const closeModal = () => {
+        setModalIsOpen(false);
+        setModalImage(null);
+      };
 
     const { key } = useParams();
 
@@ -42,7 +56,7 @@ function CompanyDetails() {
     }
 
     if (error || !companyDetailData) {
-        return <p>회사 정보 불러오기 실패: {error.message}</p>;
+        return <p>회사 정보 불러오기 실패: {error?.message || 'Unknown error'}</p>;
     }
 
     const topCompanies = [...companyDetailData.otherCompanies]
@@ -69,7 +83,7 @@ function CompanyDetails() {
                 <Divder />
                 <CompanyHeader data={companyDetailData} />
                 <ScrapContainer>
-                    <ScrapButtonDiv apiEndpoint={`/api/company/${key}/scrap`} isScrapped={companyDetailData.isScrapped} type="company"/>
+                    <ScrapButtonDiv apiEndpoint={`/api/company/${key}/scrap`} isScrapped={companyDetailData.isScrapped} type="company" />
                 </ScrapContainer>
                 <Section>
                     <SectionTitle>회사 소개</SectionTitle>
@@ -82,7 +96,7 @@ function CompanyDetails() {
                 {imageSources.length > 0 && (
                     <ImageGallery>
                         {imageSources.map((src, index) => (
-                            <GalleryImage key={index} src={src} alt={`이미지${index + 1}`} />
+                            <GalleryImage key={index} src={src} onClick={() => openModal(src)} alt={`이미지${index + 1}`} />
                         ))}
                     </ImageGallery>
                 )}
@@ -109,12 +123,21 @@ function CompanyDetails() {
                         </CompanyPostContainer>
                     ))}
                 </OtherCompany>
+                <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
+                    <ModalImage src={modalImage} />
+                </Modal>
             </Container>
         </>
     );
 }
 
 export default CompanyDetails;
+
+const ModalImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+`
 
 const Container = styled.div`
     width: 60%;
@@ -164,8 +187,8 @@ const SectionContent = styled.div`
 const ImageGallery = styled.div`
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin: 20px 0;
+    justify-content: flex-start;
+    margin: 30px 0;
 `
 
 const GalleryImage = styled.img`
@@ -183,3 +206,18 @@ const OtherCompany = styled.div`
 const CompanyPostContainer = styled.div`
     margin-bottom: -20px; 
 `
+const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      maxWidth: '90%',
+      maxHeight: '90%',
+      padding: 0,
+      overflow: 'hidden',
+    },
+  }
+  
