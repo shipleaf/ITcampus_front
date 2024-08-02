@@ -26,7 +26,7 @@ function Post({ itKey, supKey, title, body, agency, pic1, scrapCount, startdate,
         <ButtonFrame width={width} onClick={handleClick}>
             <ContentContainer>
                 <Title>{title}</Title>
-                <Content>{body}</Content>
+                <Content dangerouslySetInnerHTML={{ __html: body }} />
                 <Remain>
                     <Footer>
                         <Writer>{agency}</Writer>

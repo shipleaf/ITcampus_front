@@ -8,13 +8,15 @@ const InfoPostComments = ({ comments = [], InfoKey, fetchComments }) => {
   const { key } = useParams();
 
   const formatDate = (dateString) => {
-    const date = new window.Date(dateString);
+    const date = new Date(dateString);
     const year = date.getFullYear();
-    const month = date.getMonth() + 1; 
+    const month = date.getMonth() + 1;
     const day = date.getDate();
-    const hour =date.getUTCHours();
+    const hour = date.getUTCHours() + 9; // 9시간 더하기
     const minute = date.getMinutes();
-    return `${year}. ${month}. ${day} / ${hour}:${minute}`;
+    const formattedHour = hour >= 24 ? hour - 24 : hour; // 24시간 형식 맞추기
+    const nextDay = hour >= 24 ? day + 1 : day; // 다음 날로 넘기기
+    return `${year}. ${month}. ${nextDay} / ${formattedHour}:${minute}`;
   };
 
 
@@ -22,7 +24,7 @@ const InfoPostComments = ({ comments = [], InfoKey, fetchComments }) => {
     try {
       await deleteInfoComment(InfoKey, commentKey);
       alert('댓글이 삭제되었습니다.');
-      fetchComments(); 
+      fetchComments();
     } catch (error) {
       console.error('댓글 삭제 실패:', error);
       alert('댓글을 삭제할 수 없습니다.');
@@ -70,8 +72,8 @@ const InfoPostComments = ({ comments = [], InfoKey, fetchComments }) => {
         ))}
         <CommentInputContainer>
           <UserName>나</UserName>
-          <CommentTextArea 
-            placeholder="댓글을 남겨보세요" 
+          <CommentTextArea
+            placeholder="댓글을 남겨보세요"
             value={newComment}
             onChange={handleCommentChange}
           />

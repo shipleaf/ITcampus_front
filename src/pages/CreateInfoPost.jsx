@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IoImageOutline } from "react-icons/io5";
+import { IoImageOutline, IoCloseOutline } from "react-icons/io5";
 import styled from 'styled-components';
 import UserHeader from '../components/modules/header/UserHeader';
 import { loginState } from '../state/atoms';
@@ -17,7 +17,6 @@ function CreateInfoPost() {
   const isLoggedIn = useRecoilValue(loginState);
 
   const navigate = useNavigate();
-
 
   useEffect(() => {
     localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
@@ -37,33 +36,28 @@ function CreateInfoPost() {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    console.log('Image 1 selected:', file);
     setFileName1(file.name);
 
     const reader = new FileReader();
     reader.onloadend = () => {
       setImageBase64(reader.result);
-      console.log('Image 1 Base64:', reader.result);
     };
     reader.readAsDataURL(file);
   };
 
   const handleImageChange2 = (event) => {
     const file = event.target.files[0];
-    console.log('Image 2 selected:', file);
     setFileName2(file.name);
 
     const reader = new FileReader();
     reader.onloadend = () => {
       setImageBase642(reader.result);
-      console.log('Image 2 Base64:', reader.result);
     };
     reader.readAsDataURL(file);
   };
 
   const handleCancel = () => {
-    window.location.href = '/informationlist';
-    console.log('Canceled');
+    navigate('/informationlist');
   };
 
   const handleSubmit = async (event) => {
@@ -114,17 +108,26 @@ function CreateInfoPost() {
     }
   };
 
+  const handleRemoveImage1 = () => {
+    setImageBase64('');
+    setFileName1('');
+  };
+
+  const handleRemoveImage2 = () => {
+    setImageBase642('');
+    setFileName2('');
+  };
+
   return (
     <>
       {isLoggedIn ? (
         <UserHeader />
       ) : (
         <GuestHeader />
-      )
-      }
+      )}
       <Frame onSubmit={handleSubmit}>
         <IntroContainer>
-          <Intro> 게시글 작성</Intro>
+          <Intro> 게시글 작성<span style={{ marginLeft: '5px', fontWeight: 'bold', borderBottom: '1px solid #000' }}>정보</span></Intro>
         </IntroContainer>
         <PostCreateFrame>
           <TitleContainer>
@@ -141,22 +144,22 @@ function CreateInfoPost() {
             onChange={handleBodyChange}
           />
           <StyledImgContainer>
-            <Label htmlFor="imageUpload1">
+            <ImageLabel htmlFor="imageUpload1" isSelected={!!imageBase64}>
               <StyledIoImageOutline />
               <span>{fileName1 || '이미지 선택'}</span>
-            </Label>
+              {imageBase64 && <RemoveButton onClick={handleRemoveImage1}><IoCloseOutline /></RemoveButton>}
+            </ImageLabel>
             <HiddenFileInput
               id="imageUpload1"
               type="file"
               accept="image/*"
               onChange={handleImageChange}
             />
-          </StyledImgContainer>
-          <StyledImgContainer>
-            <Label htmlFor="imageUpload2">
+            <ImageLabel htmlFor="imageUpload2" isSelected={!!imageBase642}>
               <StyledIoImageOutline />
               <span>{fileName2 || '이미지 선택'}</span>
-            </Label>
+              {imageBase642 && <RemoveButton onClick={handleRemoveImage2}><IoCloseOutline /></RemoveButton>}
+            </ImageLabel>
             <HiddenFileInput
               id="imageUpload2"
               type="file"
@@ -179,120 +182,165 @@ export default CreateInfoPost;
 const Frame = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   width: 100%;
-`
+  height: auto;
+  margin: 30px auto;
+  margin-top: 40px;
+  margin-bottom: 50px !important;
+`;
 
 const IntroContainer = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  width : 40%;
+  width: 100%;
   height: 100px;
-`
+`;
 
 const Intro = styled.div`
-  width: 100%;
-  margin-left: 10px;
-  font-size: 30px;
+  width: 40%;
+  font-size: 25px;
   font-family: "Noto Sans KR", sans-serif;
-`
+  font-weight: '300';
+`;
 
 const PostCreateFrame = styled.form`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding: 0 20px;
   width: 40%;
   margin: 10px auto;
-`
+`;
 
 const TitleContainer = styled.div`
   display: flex;
   margin-bottom: 20px;
   width: 100%;
-`
+`;
 
-const StyledImgContainer = styled.label`
-  display : flex;
-  flex-direction: row;
+const StyledImgContainer = styled.div`
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-bottom: 5px;
+  border: 1px solid #ccc;
+  border-top: none;
+`;
+
+const ImageLabel = styled.label`
+  display: flex;
   align-items: center;
+  border-radius: 10px;
+  margin-top: 5px;
+  cursor: ${(props) => (props.isSelected ? 'default' : 'pointer')};
+  background-color: ${(props) => (props.isSelected ? '#fff' : 'white')};
 
-`
+  & span {
+    font-family: "Noto Sans KR", sans-serif;
+    color: #999;
+  }
+`;
 
 const StyledIoImageOutline = styled(IoImageOutline)`
   font-size: 30px;
-  color: #ccc; 
-`
-const Label = styled.label`
+  color: #ccc;
+  margin-left: 10px;
+  cursor: pointer;
+`;
+
+const RemoveButton = styled.button`
   display: flex;
-  flex-direction: row;
   align-items: center;
-  border-radius: 10px;
-  & span{
-    font-family: "Noto Sans KR", sans-serif;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ff0000;
+  font-size: 24px;
+  margin-left: auto;
+  padding-right: 10px;
+
+  &:hover {
+    color: #ff6666;
   }
-  &:hover{
-    cursor: pointer;
-    background-color: #f0f0f0;
-  }
-`
+`;
 
 const HiddenFileInput = styled.input`
   display: none;
-`
+`;
 
 const TitleInput = styled.input`
   width: 100%;
+  height: 40px;
   flex: 1;
-  padding: 10px;
-  padding-top: 15px;
-  font-size: 25px;
-  border-radius: 10px;
+  font-size: 15px;
+  border-radius: 5px;
   border: 1px solid #ccc;
   background-color: white;
-  margin-right: 10px;
-`
+  font-family: "Noto Sans KR", sans-serif;
+  box-sizing: border-box;
+  padding-left: 10px;
+  &:focus{
+    outline: none;
+    border: 1px solid #999;
+  }
+`;
 
 const Textarea = styled.textarea`
   align-self: center;
   width: 100%;
   height: 400px;
-  box-sizing: border-box;
-  font-size: 18px;
-  border-radius: 4px;
+  font-size: 15px;
+  border-radius: 5px;
+  padding: 10px;
   border: 1px solid #ccc;
   resize: none;
-`
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+  &:focus{
+    outline: none;
+    border: 1px solid #999;
+  }
+`;
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
   margin-top: 20px;
-`
+`;
 
 const CancelButton = styled.button`
-  margin-right: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
   background-color: white;
   color: #000;
-  font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
   height: 40px;
-  width: 80px;
-  border: 1px solid #999;
+  width: 60px;
+  border: 1px solid #ccc;
   border-radius: 10px;
   cursor: pointer;
-`
+  font-family: "Noto Sans KR", sans-serif;
+`;
 
 const SaveButton = styled.button`
-  background-color: #79BFFF;
-  font-weight: bold;
-  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #79bfff;
+  font-size: 18px;
   height: 40px;
-  width: 80px;
+  width: 60px;
   color: white;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-`
+  font-family: "Noto Sans KR", sans-serif;
+`;
