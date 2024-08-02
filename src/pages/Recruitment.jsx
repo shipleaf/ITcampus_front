@@ -156,6 +156,7 @@ function Recruitment() {
 
     const handleSearch = (query) => {
         navigate(`/recruitlist?query=${query}`);
+        setCurrentPage(1);
     };
 
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
