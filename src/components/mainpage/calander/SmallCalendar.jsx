@@ -92,28 +92,28 @@ const SmallCalendarContainer = styled.div`
     grid-template-columns: repeat(7, 1fr);
   }
 
-  .react-calendar__month-view__weekdays__weekday:nth-child(1) {
-    order: 2; /* 월요일을 마지막으로 배치 */
+  /* .react-calendar__month-view__weekdays__weekday:nth-child(1) {
+    order: 2;
   }
   .react-calendar__month-view__weekdays__weekday:nth-child(2) {
-    order: 3; /* 화요일을 첫 번째로 배치 */
+    order: 3;
   }
   .react-calendar__month-view__weekdays__weekday:nth-child(3) {
-    order: 4; /* 수요일을 두 번째로 배치 */
+    order: 4;
   }
   .react-calendar__month-view__weekdays__weekday:nth-child(4) {
-    order: 5; /* 목요일을 세 번째로 배치 */
+    order: 5;
   }
   .react-calendar__month-view__weekdays__weekday:nth-child(5) {
-    order: 6; /* 금요일을 네 번째로 배치 */
+    order: 6;
   }
   .react-calendar__month-view__weekdays__weekday:nth-child(6) {
-    order: 7; /* 토요일을 다섯 번째로 배치 */
+    order: 7;
   }
   .react-calendar__month-view__weekdays__weekday:nth-child(7) {
-    order: 1; /* 일요일을 여섯 번째로 배치 */
-  }
-`;
+    order: 1;
+  } */
+`
 
 const SmallCalendar = () => {
   const [date, setDate] = useState(new Date());
@@ -146,7 +146,7 @@ const SmallCalendar = () => {
         next2Label={null}
         prev2Label={null}
         formatDay={formatDay}
-        calendarType="ISO 8601" // 월요일을 주의 시작으로 설정
+        calendarType='gregory'
       />
     </SmallCalendarContainer>
   );
