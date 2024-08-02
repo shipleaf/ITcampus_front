@@ -3,7 +3,7 @@ import styled from "styled-components";
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from "../components/modules/header/UserHeader";
 import { myPageAPI } from "../APIs/myPageAPI";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { loginState } from "../state/atoms";
 import Post from "../components/post/Post";
 import CompanyPost from "../components/post/CompanyPost";
@@ -20,7 +20,7 @@ function MyPage() {
     const [selectedWriteTab, setSelectedWriteTab] = useState('정보게시판');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [showAll, setShowAll] = useState(false);
-    const isLoggedIn = useRecoilValue(loginState);
+    const [isLoggedIn, setIsLoggedIn] = useRecoilState(loginState);
     const scrapSectionRef = useRef(null);
     const writtenSectionRef = useRef(null);
     const navigate = useNavigate();
@@ -43,10 +43,14 @@ function MyPage() {
     const handleSidebarClick = (tab, isWriteTab = false) => {
         if (isWriteTab) {
             setSelectedWriteTab(tab);
-            writtenSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                writtenSectionRef.current.scrollIntoView({ behavior: 'smooth' })
+            }, 50)
         } else {
             setSelectedTab(tab);
-            scrapSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                scrapSectionRef.current.scrollIntoView({ behavior: 'smooth' })
+            }, 50);
         }
     };
 
@@ -56,7 +60,8 @@ function MyPage() {
             try {
                 await deleteProfile();
                 alert('회원탈퇴가 완료되었습니다.');
-                navigate('/');  // 회원탈퇴 후 메인 페이지로 이동
+                setIsLoggedIn(false);
+                navigate('/');
             } catch (error) {
                 alert('회원 탈퇴 실패: ' + error.message);
             }
@@ -256,7 +261,7 @@ function MyPage() {
                         <WelcomeMessage>
                             <UserName>{userData.user.name}님 환영합니다!</UserName>
                             <UserStatus> {userData.user.job}</UserStatus>
-                            <UserEdit onClick={() => setIsModalOpen(true)}><FaPen style={{ fontSize: "15px", marginRight: "5px"}} />개인정보 수정</UserEdit>
+                            <UserEdit onClick={() => setIsModalOpen(true)}><FaPen style={{ fontSize: "15px", marginRight: "5px" }} />개인정보 수정</UserEdit>
                         </WelcomeMessage>
                     </Header>
                     <ContentFrame ref={scrapSectionRef}>
@@ -296,12 +301,13 @@ function MyPage() {
 export default MyPage;
 
 const Frame = styled.div`
-  background-color: #F2F4F7;
   height: 100%;
 `
 
 const MainContainer = styled.div`
   display: flex;
+  flex: 1;
+  background-color: #F2F4F7;
   flex-direction: row;
   justify-content: center;
 `
@@ -433,7 +439,11 @@ const SidebarTitle = styled.div`
     padding: 5px;
     padding-bottom: 20px;
     font-weight: bold;
-    border-bottom: 1px solid #e0e0e0; 
+    border-bottom: 1px solid #e0e0e0;
+
+    &:hover{
+        cursor: pointer;
+    }
 `
 
 const SidebarItemContainer = styled.div`
