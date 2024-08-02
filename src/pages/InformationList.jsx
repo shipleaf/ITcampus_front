@@ -31,7 +31,7 @@ function InformationList() {
 
             if (response.status >= 200 && response.status < 300) {
                 setPosts(response.data);
-                setError(null);  
+                setError(null);
             }
         } catch (error) {
             if (query && error.response && error.response.status === 404) {
@@ -48,6 +48,10 @@ function InformationList() {
     useEffect(() => {
         getInfos();
     }, []);
+
+    useEffect(() => {
+        window.scrollTo(0, 0); // 페이지 변경 후 스크롤 맨 위로
+    }, [currentPage]);
 
     const filteredPosts = posts.filter((post) => {
         if (!isFilterActive) return true;
@@ -79,6 +83,7 @@ function InformationList() {
     const handleSearch = (query) => {
         setLoading(true);
         getInfos(query);
+        setCurrentPage(1);
     };
 
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
@@ -103,12 +108,12 @@ function InformationList() {
                     <p>현재 정보게시판의 게시글이 없습니다</p>
                 ) : (
                     currentPosts.map((post) => (
-                            <StudyPost
-                                key={post.key}
-                                infoKey={post.key}
-                                postKey={post.key}
-                                {...post}
-                            />
+                        <StudyPost
+                            key={post.key}
+                            infoKey={post.key}
+                            postKey={post.key}
+                            {...post}
+                        />
                     ))
                 )}
                 <Pagination>

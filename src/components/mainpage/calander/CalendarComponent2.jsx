@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useImperativeHandle, forwardRef, useCallback } from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -9,20 +9,20 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { filterState, mainEventState, currentDateState, mainShowEventState } from '../../../state/atoms'; // currentDateState, mainShowEventState 추가
 import { fetchEvents, fetchShowEvents } from '../../../APIs/CalendarDetailAPI';
 
-const MoreButton = styled.button`
-    border: none;
-    background-color: #fff;
-    font-size: 12px;
-    font-family: "Noto Sans KR", sans-serif;
+// const MoreButton = styled.button`
+//     border: none;
+//     background-color: #fff;
+//     font-size: 12px;
+//     font-family: "Noto Sans KR", sans-serif;
 
-    &:focus{
-        outline: none;
-    }
+//     &:focus{
+//         outline: none;
+//     }
 
-    &:hover{
-        background-color: #f0f0f0 !important;
-    }
-`;
+//     &:hover{
+//         background-color: #f0f0f0 !important;
+//     }
+// `;
 
 const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
     const calendarRef = useRef(null);
@@ -236,12 +236,13 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
                 moreLinkClick="popover"
                 moreLinkContent={(arg) => (
                     <div style={{ width: '100%', pointerEvents: 'none' }}>
-                        <MoreButton type="button" className="fc-more-button" style={{ pointerEvents: 'none' }}>
+                        <div style={{ pointerEvents: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             {arg.num}개 더보기
-                        </MoreButton>
+                        </div>
                     </div>
                 )}
             />
+
         </div>
     );
 });

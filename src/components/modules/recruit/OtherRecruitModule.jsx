@@ -72,6 +72,7 @@ function OtherRecruitModule({ notice }) {
     };
     const handleClick = () => {
         navigate(`/recruitmentdetails/${notice.key}`);
+        window.scrollTo(0, 0);
     };
 
     return (

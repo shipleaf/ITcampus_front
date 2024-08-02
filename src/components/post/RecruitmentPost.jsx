@@ -141,6 +141,7 @@ const Requirement = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    box-sizing: border-box;
 `
 
 const Footer = styled.div`

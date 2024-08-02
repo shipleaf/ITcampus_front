@@ -14,7 +14,7 @@ function CompanyDetails() {
     const [companyDetailData, setCompanyDetailData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [isExpanded, ] = useState(false);
+    const [isExpanded] = useState(false);
     const isLoggedIn = useRecoilValue(loginState);
 
     const { key } = useParams();
@@ -36,10 +36,6 @@ function CompanyDetails() {
 
         getCompanyDetails();
     }, [key]);
-
-    // const handleExpandClick = () => {
-    //     setIsExpanded(!isExpanded);
-    // };
 
     if (loading) {
         return <p>Loading...</p>;
@@ -73,7 +69,7 @@ function CompanyDetails() {
                 <Divder />
                 <CompanyHeader data={companyDetailData} />
                 <ScrapContainer>
-                    <ScrapButtonDiv apiEndpoint={`/api/company/${key}/scrap `} isScrapped={companyDetailData.isScrapped} type="company"/>
+                    <ScrapButtonDiv apiEndpoint={`/api/company/${key}/scrap`} isScrapped={companyDetailData.isScrapped} type="company"/>
                 </ScrapContainer>
                 <Section>
                     <SectionTitle>회사 소개</SectionTitle>
@@ -82,15 +78,14 @@ function CompanyDetails() {
                             <p key={index}>{line}</p>
                         ))}
                     </SectionContent>
-                    {/* <ExpandButton onClick={handleExpandClick}>
-                        {isExpanded ? '접기 ▲' : '펼치기 ▼'}
-                    </ExpandButton> */}
                 </Section>
-                <ImageGallery>
-                    {imageSources.map((src, index) => (
-                        <GalleryImage key={index} src={src} alt={`이미지${index + 1}`} />
-                    ))}
-                </ImageGallery>
+                {imageSources.length > 0 && (
+                    <ImageGallery>
+                        {imageSources.map((src, index) => (
+                            <GalleryImage key={index} src={src} alt={`이미지${index + 1}`} />
+                        ))}
+                    </ImageGallery>
+                )}
                 <Section>
                     <SectionTitle>복지 및 혜택</SectionTitle>
                     <SectionContent>
@@ -104,7 +99,7 @@ function CompanyDetails() {
                     {topCompanies.map((company) => (
                         <CompanyPostContainer key={company.companyID}>
                             <CompanyPost
-                                postKey = {company.companyID}
+                                postKey={company.companyID}
                                 companyName={company.companyName}
                                 stack={company.stack}
                                 track={company.track}
@@ -165,21 +160,6 @@ const SectionContent = styled.div`
     max-height: ${({ isExpanded }) => (isExpanded ? 'none' : '110px')};
     overflow: hidden;
 `
-
-// const ExpandButton = styled.button`
-//     display: block;
-//     width: 100%;
-//     height: 50px;
-//     margin: 10px auto;
-//     padding: 5px 10px;
-//     background-color: white;
-//     font-size: 20px;
-//     font-weight: bold;
-//     color: black;
-//     border: 1px solid #999;
-//     border-radius: 5px;
-//     cursor: pointer;
-// `
 
 const ImageGallery = styled.div`
     display: flex;

@@ -32,6 +32,7 @@ function ITLicense() {
             let response;
             if (query) {
                 response = await searchLicense(query);
+                setCurrentPage(1);
             } else {
                 response = await fetchLicenseList();
             }
@@ -58,8 +59,13 @@ function ITLicense() {
         getLicenses(query);
     }, [location.search]);
 
+    useEffect(() => {
+        window.scrollTo(0, 0); // 페이지 변경 후 스크롤 맨 위로
+    }, [currentPage]);
+
     const handleSearch = (query) => {
         navigate(`/licenselist?query=${query}`);
+        setCurrentPage(1);
     };
 
     const today = new Date();

@@ -50,6 +50,10 @@ function StudyList() {
         getStudies();
     }, []);
 
+    useEffect(() => {
+        window.scrollTo(0, 0); // 페이지 변경 후 스크롤 맨 위로
+    }, [currentPage]);
+
     const filteredPosts = posts.filter((post) => {
         if (!isFilterActive) return true;
         return post.title.includes("example");
@@ -78,6 +82,7 @@ function StudyList() {
     const handleSearch = (query) => {
         setLoading(true);
         getStudies(query);
+        setCurrentPage(1);
     };
 
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);

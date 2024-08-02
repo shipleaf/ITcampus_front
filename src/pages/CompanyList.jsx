@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate, useLocation } from "react-router-dom"; 
+import { useNavigate, useLocation } from "react-router-dom";
 import GuestHeader from "../components/modules/header/GuestHeader";
 import UserHeader from "../components/modules/header/UserHeader";
 import { useRecoilValue } from "recoil";
@@ -22,8 +22,8 @@ function CompanyList() {
     const postsPerPage = 7;
 
     const navigate = useNavigate();
-    const location = useLocation();  
-    const [searchTerm, setSearchTerm] = useState(new URLSearchParams(location.search).get('query') || '');  
+    const location = useLocation();
+    const [searchTerm, setSearchTerm] = useState(new URLSearchParams(location.search).get('query') || '');
 
     const getCompanies = async (query = '') => {
         try {
@@ -36,7 +36,7 @@ function CompanyList() {
 
             if (200 <= response.status && response.status < 300) {
                 setPosts(response.data);
-                setError(null); 
+                setError(null);
             }
         } catch (error) {
             if (query && error.response && error.response.status === 404) {
@@ -59,10 +59,15 @@ function CompanyList() {
     useEffect(() => {
         if (searchTerm) {
             navigate(`/companylist?query=${searchTerm}`);
+            setCurrentPage(1);
         } else {
             navigate(`/companylist`);
         }
     }, [searchTerm, navigate]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0); // 페이지 변경 후 스크롤 맨 위로
+    }, [currentPage]);
 
     const handleCompanyClick = async (companyId) => {
         try {
@@ -114,7 +119,7 @@ function CompanyList() {
                 <GuestHeader />
             )}
             <Container>
-                <Top title='기업 소개' onSearch={handleSearch} searchQuery={searchTerm} /> 
+                <Top title='기업 소개' onSearch={handleSearch} searchQuery={searchTerm} />
                 <SortContainer>
                     <Right>
                         <CustomSelect
