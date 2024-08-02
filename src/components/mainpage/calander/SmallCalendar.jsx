@@ -146,6 +146,7 @@ const SmallCalendar = () => {
         next2Label={null}
         prev2Label={null}
         formatDay={formatDay}
+        calendarType="ISO 8601" // 월요일을 주의 시작으로 설정
       />
     </SmallCalendarContainer>
   );

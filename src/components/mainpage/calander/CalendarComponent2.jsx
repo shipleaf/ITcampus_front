@@ -250,8 +250,6 @@ const CalendarComponent = forwardRef(({ onDateClick }, ref) => {
         </div>
     )}
 />
-
-
         </div>
     );
 });
