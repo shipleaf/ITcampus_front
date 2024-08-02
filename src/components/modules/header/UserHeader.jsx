@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom'; // useNavigate 훅을 import
 import Logo from '../../header/Logo';
 import DropdownMenu from '../../header/DropdownMenu';
-import { FaRegBell } from "react-icons/fa";
 import { FaRegUserCircle } from "react-icons/fa";
 import { VscTriangleDown } from "react-icons/vsc";
 import UserDropdownMenu from './UserDropdownMenu';
@@ -61,7 +60,7 @@ const MenuBar = styled.div`
 `;
 
 const HeaderRight = styled.div`
-  width: 20%;
+  width: 25%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -69,28 +68,6 @@ const HeaderRight = styled.div`
   position: relative;
 `;
 
-const NoticeButton = styled.div`
-  width: 10%;
-  margin-left: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 10px;
-
-  & button {
-    width: 100px;
-    height: 100%;
-    border: none;
-    box-shadow: 0 0 0 0.5px #000;
-    border-radius: 10px;
-    background-color: #fff;
-    font-weight: 500;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-`;
 
 const MenuItem = styled.div`
   span {
@@ -200,12 +177,9 @@ function UserHeader() {
               <CiSearch style={{ color: '#00ACEE' }} size={25} />
               <input type='text' />
             </SearchBar> */}
-            <NoticeButton>
-              <FaRegBell style={{ color: '#00ACEE' }} size={25} />
-            </NoticeButton>
             <UserButton onClick={() => setShowUserDropdown(!showUserDropdown)}>
               <FaRegUserCircle style={{ color: '#bbb' }} size={30} />
-              <div style={{ fontSize: '12px', marginLeft: '5px', width: '50%' }}>{name}</div>
+              <span style={{ fontSize: '12px', width: 'auto', marginLeft: '5px' }}>{name}</span>
               <VscTriangleDown size={10} />
               {showUserDropdown && (
                 <div ref={userDropdownRef}>
