@@ -55,7 +55,7 @@ const TitleContainer = styled.div`
 
 const Title = styled.div`
   width: 100%;
-  font-size: 35px;
+  font-size: 32px;
   margin-bottom: 30px;
   font-weight: 350;
   font-family: "Noto Sans KR", sans-serif;

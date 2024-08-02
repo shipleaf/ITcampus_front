@@ -64,9 +64,10 @@ const ButtonFrame = styled.button`
     align-items: center;
     justify-content: space-between;
     background-color: #ffffff;
-    border: 2px solid #fff;
+    border: 2px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
+    box-sizing: border-box;
 
     &:hover {
     border: 2px solid #36bef1;
@@ -111,9 +112,10 @@ const Content = styled.div`
 const Footer = styled.div`
     display : flex;
     flex-direction: row;
-    align-items: center;
+    align-items: end;
     height: 100%;
     width: 100%;
+    padding-bottom: 15px;
 `
 const Writer = styled.div`
     display: block;
@@ -138,12 +140,13 @@ const Date = styled.div`
 const ScrapContainer = styled.div`
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-left: 40px;
 `
 
 const ScrapImg = styled.img`
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 `
 
 const ScrapCount = styled.div`

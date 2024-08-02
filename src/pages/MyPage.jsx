@@ -70,7 +70,7 @@ function MyPage() {
 
     useEffect(() => {
         localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
-      }, [isLoggedIn]);
+    }, [isLoggedIn]);
 
     const renderWriterContent = () => {
         if (!userData) return null;
@@ -185,15 +185,15 @@ function MyPage() {
                             .filter(scrap => scrap.studentSupportInfoKey)
                             .map((scrap, index) => (
                                 <Post
-                                key={index}
-                                supKey={scrap.studentSupportInfoKey}
-                                title={scrap.StudentSupportInfoModel.title}
-                                body={scrap.StudentSupportInfoModel.body}
-                                agency={scrap.StudentSupportInfoModel.agency}
-                                startdate={scrap.StudentSupportInfoModel.startdate}
-                                enddate={scrap.StudentSupportInfoModel.enddate}
-                                pic1={scrap.StudentSupportInfoModel.pic1}
-                                scrapCount={scrap.studentSupportScrapCount}//없음
+                                    key={index}
+                                    supKey={scrap.studentSupportInfoKey}
+                                    title={scrap.StudentSupportInfoModel.title}
+                                    body={scrap.StudentSupportInfoModel.body}
+                                    agency={scrap.StudentSupportInfoModel.agency}
+                                    startdate={scrap.StudentSupportInfoModel.startdate}
+                                    enddate={scrap.StudentSupportInfoModel.enddate}
+                                    pic1={scrap.StudentSupportInfoModel.pic1}
+                                    scrapCount={scrap.studentSupportScrapCount}//없음
                                 />
                             )))}
                     </ContentList>
@@ -242,7 +242,7 @@ function MyPage() {
             <MainContainer>
                 <SidebarContainer>
                     <SidebarTitle>바로가기</SidebarTitle>
-                    <SidebarTitle>개인정보 수정</SidebarTitle>
+                    <SidebarTitle onClick={() => setIsModalOpen(true)}>개인정보 수정</SidebarTitle>
                     <SidebarTitle>스크랩 정보
                         <SidebarItemContainer>
                             <SidebarItem onClick={() => handleSidebarClick('기업')}>기업 스크랩</SidebarItem>
@@ -280,7 +280,7 @@ function MyPage() {
                             {renderContent()}
                         </Content>
                     </ContentFrame>
-                    <ContentFrame ref={writtenSectionRef}>
+                    <ContentFrame2 ref={writtenSectionRef}>
                         <ContentTitle>내가 작성한 글</ContentTitle>
                         <Content>
                             <Section>
@@ -289,7 +289,7 @@ function MyPage() {
                             </Section>
                             {renderWriterContent()}
                         </Content>
-                    </ContentFrame>
+                    </ContentFrame2>
                 </Container>
             </MainContainer>
             <EditProfileModal
@@ -306,13 +306,13 @@ export default MyPage;
 
 const Frame = styled.div`
   height: 100%;
-  background-color: #F2F4F7;
+  background-color: #fff;
 `
 
 const MainContainer = styled.div`
   display: flex;
   flex: 1;
-  background-color: #F2F4F7;
+  background-color: #fff;
   flex-direction: row;
   justify-content: center;
 `
@@ -328,10 +328,9 @@ const Container = styled.div`
 const Header = styled.header`
   display: flex;
   align-items: center;
-  padding: 5px;
-  width: 900px;
+  width: 100%;
   height: 180px;
-  border: 2px solid #e4e4e4;
+  border: 1px solid #ccc;
   background-color: white;
 `
 
@@ -352,12 +351,14 @@ const UserName = styled.div`
   margin: 0;
   font-size: 25px;
   font-weight: bold;
+  font-family: "Noto Sans KR", sans-serif;
 `
 
 const UserStatus = styled.div`
   margin-top: 10px;
   font-size: 18px;
   color: gray;
+  font-family: "Noto Sans KR", sans-serif;
 `
 
 const UserEdit = styled.a`
@@ -366,6 +367,7 @@ const UserEdit = styled.a`
   font-size: 18px;
   font-weight: bold;
   color: #002AFF;
+  font-family: "Noto Sans KR", sans-serif;
 
   &:hover {
     color: #ffd500;
@@ -380,17 +382,22 @@ const ContentFrame = styled.div`
   margin-top: 20px;
   justify-content: center;
   flex-direction: column;
+  border: 1px solid #ccc;
+`
 
-  border: 2px solid #e4e4e4;
+const ContentFrame2 = styled(ContentFrame)`
+    margin-bottom: 50px;
 `
 
 const ContentTitle = styled.div`
   display: flex;
-  font-size: 25px;
+  font-size: 20px;
   padding: 20px;
-  font-weight: bold;
-  background-color: #e6f7ff3b;
-  border-bottom: 2px solid #e4e4e4;
+  padding-left: 25px;
+  font-family: "Noto Sans KR", sans-serif;
+  background-color: #fff;
+  color: #444;
+  border-bottom: 1px solid #e4e4e4;
 `
 
 const Content = styled.div`
@@ -403,10 +410,12 @@ const Content = styled.div`
 const Section = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 25px;
 `
 
 const SectionTitle = styled.div`
-  font-size: 30px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 20px;
   align-items: center;
   margin: 10px 20px;
   font-weight: bold;
@@ -435,6 +444,12 @@ const SidebarContainer = styled.div`
   border-color: #e4e4e4;
   padding: 20px;
   margin-right: 20px;
+  position: sticky;
+  top: 20px;
+
+  & div{
+    font-family: "Noto Sans KR", sans-serif;
+  }
 `
 
 const SidebarTitle = styled.div`
@@ -462,6 +477,7 @@ const SidebarItem = styled.div`
     color: #999;
     font-size: 15px;
     cursor: pointer;
+    font-family: "Noto Sans KR", sans-serif;
 `
 
 const ShowMoreButton = styled.button`
@@ -478,3 +494,4 @@ const ShowMoreButton = styled.button`
     background-color: #577074;
   }
 `
+
