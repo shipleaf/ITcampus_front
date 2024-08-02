@@ -48,7 +48,7 @@ function Recruitment() {
 
             if (response.status >= 200 && response.status < 300) {
                 setPosts(response.data);
-                setError(null);  
+                setError(null);
             }
         } catch (error) {
             if (query && error.response && error.response.status === 404) {
@@ -67,10 +67,6 @@ function Recruitment() {
         setSearchTerm(query || '');
         getRecruitments(query);
     }, [location.search]);
-
-    useEffect(() => {
-        window.scrollTo(0, 0); // 페이지 변경 후 스크롤 맨 위로
-    }, [currentPage]);
 
     const postsPerPage = 7;
     const today = new Date();
@@ -129,6 +125,7 @@ function Recruitment() {
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
+        window.scrollTo(0, 0);
     };
 
     const handleSortChange = (value) => {
@@ -191,7 +188,7 @@ function Recruitment() {
                 <GuestHeader />
             )}
             <Container>
-                <Top title='채용 공고' onSearch={handleSearch} searchQuery={searchTerm} /> 
+                <Top title='채용 공고' onSearch={handleSearch} searchQuery={searchTerm} />
                 <DetailSearch filterOptions={filterOptions} onFilterChange={handleFilterChange} />
                 <SortContainer>
                     <FilterButton onClick={handleFilterToggle} isActive={isFilterActive} prop='지원 가능' />
