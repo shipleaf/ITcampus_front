@@ -18,6 +18,7 @@ const Date = styled.div`
 
 const RecruitContainer = styled.div`
     width: 200px;
+    height: 233px;
     border-radius: 10px;
     border: 1px solid #999;
     overflow: hidden;
@@ -25,17 +26,27 @@ const RecruitContainer = styled.div`
 `;
 
 const Header = styled.div`
+    width: 100%;
     height: 57%;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    background-color: #f0f0f0; /* optional: to ensure background when image is missing */
 `;
 
 const StyledImage = styled.img`
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+`;
+
+const IconContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 `;
 
 const BodyContainer = styled.div`
@@ -81,7 +92,9 @@ function OtherRecruitModule({ notice }) {
                 {notice.pic1 ? (
                     <StyledImage src={notice.pic1} />
                 ) : (
-                    <FaBuilding />
+                    <IconContainer>
+                        <FaBuilding size={50} color="#ccc"/>
+                    </IconContainer>
                 )}
             </Header>
             <BodyContainer>
