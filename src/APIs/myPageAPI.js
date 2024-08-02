@@ -29,3 +29,19 @@ export const editProfileAPI = async (profileData) => {
         throw error;
     }
 };
+
+// 회원 탈퇴 로직
+
+export const deleteProfile = async () => {
+    try {
+        const response = await axiosInstance.delete(`/api/profile`);
+        if (response.status >= 200 && response.status < 300) {
+
+        } else {
+            throw new Error('회원 탈퇴 실패');
+        }
+    } catch (error) {
+        console.error('회원탈퇴 실패: ', error);
+        throw error;
+    }
+}

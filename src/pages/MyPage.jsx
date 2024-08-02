@@ -11,6 +11,8 @@ import RecruitmentPost from "../components/post/RecruitmentPost";
 import StudyPost from "../components/post/StudyPost";
 import EditProfileModal from "../components/modules/mypage/EditProfileModal";
 import { FaPen } from "react-icons/fa";
+import { deleteProfile } from "../APIs/myPageAPI";
+import { useNavigate } from 'react-router-dom';
 
 function MyPage() {
     const [userData, setUserData] = useState(null);
@@ -21,6 +23,7 @@ function MyPage() {
     const isLoggedIn = useRecoilValue(loginState);
     const scrapSectionRef = useRef(null);
     const writtenSectionRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,6 +47,19 @@ function MyPage() {
         } else {
             setSelectedTab(tab);
             scrapSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    const handleDeleteProfile = async () => {
+        const confirmed = window.confirm("정말로 회원탈퇴를 하시겠습니까?");
+        if (confirmed) {
+            try {
+                await deleteProfile();
+                alert('회원탈퇴가 완료되었습니다.');
+                navigate('/');  // 회원탈퇴 후 메인 페이지로 이동
+            } catch (error) {
+                alert('회원 탈퇴 실패: ' + error.message);
+            }
         }
     };
 
@@ -153,7 +169,7 @@ function MyPage() {
                             )))}
                     </ContentList>
                 );
-                case '학생지원':
+            case '학생지원':
                 return (
                     <ContentList>
                         {renderScrapItems(userData.user.Scraps && userData.user.Scraps
@@ -232,7 +248,7 @@ function MyPage() {
                             <SidebarItem onClick={() => handleSidebarClick('스터디게시판', true)}>스터디게시판</SidebarItem>
                         </SidebarItemContainer>
                     </SidebarTitle>
-                    <SidebarTitle>회원탈퇴</SidebarTitle>
+                    <SidebarTitle onClick={handleDeleteProfile}>회원탈퇴</SidebarTitle>
                 </SidebarContainer>
                 <Container>
                     <Header>
