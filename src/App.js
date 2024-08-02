@@ -1,27 +1,27 @@
-import React from 'react';
-import { RecoilRoot } from 'recoil';
+import React, { useEffect } from 'react';
+import { RecoilRoot, useSetRecoilState } from 'recoil';
 import AppRouter from './Router';
-// import { loginState } from './state/atoms';
+import { loginState } from './state/atoms';
 
 const App = () => {
-  // const ResetLoginState = () => {
-  //   const setLoginState = useSetRecoilState(loginState);
+  const ResetLoginState = () => {
+    const setLoginState = useSetRecoilState(loginState);
 
-  //   useEffect(() => {
-  //     const isSessionActive = sessionStorage.getItem('isSessionActive');
-  //     if (!isSessionActive) {
-  //       setLoginState(false);
-  //       localStorage.setItem('isLoggedIn', JSON.stringify(false));
-  //       sessionStorage.setItem('isSessionActive', 'true');
-  //     }
-  //   }, [setLoginState]);
+    useEffect(() => {
+      const isSessionActive = sessionStorage.getItem('isSessionActive');
+      if (!isSessionActive) {
+        setLoginState(false);
+        localStorage.setItem('isLoggedIn', JSON.stringify(false));
+        sessionStorage.setItem('isSessionActive', 'true');
+      }
+    }, [setLoginState]);
 
-  //   return null;
-  // };
+    return null;
+  };
 
   return (
     <RecoilRoot>
-      {/* <ResetLoginState /> */}
+      <ResetLoginState />
       <AppRouter />
     </RecoilRoot>
   );
