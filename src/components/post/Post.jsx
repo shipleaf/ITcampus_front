@@ -95,7 +95,7 @@ const Title = styled.div`
     padding: 10px;
 `
 const Content = styled.div`
-  font-size: 12px;
+  font-size: 10px;
   color: #999;
   text-align: left;
   height: auto;
