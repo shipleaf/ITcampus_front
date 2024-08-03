@@ -29,6 +29,7 @@ function RecruitmentDetails() {
 
     const { key } = useParams();
 
+    console.log(jobDetailData.isScrapped);
 
     useEffect(() => {
         localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
