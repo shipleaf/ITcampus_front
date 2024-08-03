@@ -29,8 +29,6 @@ function RecruitmentDetails() {
 
     const { key } = useParams();
 
-    console.log(jobDetailData.isScrapped);
-
     useEffect(() => {
         localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
     }, [isLoggedIn]);
@@ -39,7 +37,7 @@ function RecruitmentDetails() {
         window.scrollTo(0, 0);
         const getJobDetails = async () => {
             try {
-                const data = await fetchRecruitmentDetails(key); // 주석 처리
+                const data = await fetchRecruitmentDetails(key); 
                 console.log("데이터 : ", data);
                 setJobDetailData(data);
             } catch (error) {
@@ -79,7 +77,7 @@ function RecruitmentDetails() {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <ScrapContainer>
                     <ScrapButtonDiv apiEndpoint={`/api/recruitmentNoticeInfo/${key}/scrap`} isScrapped={jobDetailData.isScrapped} type="recruit" />
-                </ScrapContainer>       /api/recruitmentNoticeInfo/:Key
+                </ScrapContainer>      
             </div>
             <RecruitDetailBody jobDetailData={recruitmentNoticeInfo} />
             <Element name="company">
