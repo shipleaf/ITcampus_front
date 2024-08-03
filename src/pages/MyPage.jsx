@@ -328,7 +328,7 @@ const Container = styled.div`
 const Header = styled.header`
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 864px;
   height: 180px;
   border: 1px solid #ccc;
   background-color: white;
