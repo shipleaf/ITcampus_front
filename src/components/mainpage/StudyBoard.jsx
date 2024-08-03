@@ -4,8 +4,9 @@ import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 
 const StudyBoardDiv = styled.div`
+    margin-top: 10px;
     background-color: #fff;
-    width: 900px;
+    width: 46%;
     height: 45px;
     display: flex;
     align-items: center;
@@ -13,7 +14,8 @@ const StudyBoardDiv = styled.div`
     justify-content: space-between;
     border-radius: 10px;
     position: relative;
-    right: 50px;
+    left: 0.5%;
+    margin-bottom: 15px;
 `
 
 const StudyDescrribe = styled.div`
@@ -112,7 +114,7 @@ function StudyBoard() {
     }
 
     return (
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '1000px'}}>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%'}}>
             <StudyBoardDiv>
                 <StudyDescrribe>스터디 모집</StudyDescrribe>
                 <StudyTitle>{studyData[currentIndex].title}</StudyTitle>

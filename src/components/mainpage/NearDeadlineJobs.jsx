@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const DeadlinenJobsContainer = styled.div`
     width: 100%;
-    height: 300px;
+    height: 100%;
     background-color: #fff;
     border-radius: 10px;
     border: 1px solid #eaedf4;
